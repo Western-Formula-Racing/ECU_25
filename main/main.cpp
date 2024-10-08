@@ -6,7 +6,7 @@
 #include "CAN.h"
 #include "Sensors.h"
 #include "IO.h"
-#include "DeviceManager.h"
+#include "Devices.h"
 
 // must extern C since this gets called by a C file for freeRTOS
 extern "C" void app_main(void)

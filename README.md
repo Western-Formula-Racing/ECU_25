@@ -14,3 +14,37 @@ For some reason in setting this project up I realized that the drivers that Wind
 
 ## Project Structure
 _coming soon_
+
+```
+├── CMakeLists.txt
+├── Components                  This is where the core project components live
+│   ├── CAN                     
+│   │   ├── CAN.cpp
+│   │   ├── CAN.h
+│   │   └── CMakeLists.txt
+│   ├── Devices
+│   │   ├── BMS.h
+│   │   ├── BMS.cpp
+│   │   ├── Inverter.h
+│   │   ├── Inverter.cpp
+│   │   ├── Pedals.h
+│   │   ├── Pedals.cpp
+│   │   ├── Devices.cpp
+│   │   ├── Devices.h
+│   │   └── CMakeLists.txt
+│   ├── IO
+│   │   ├── PinMap.h
+│   │   ├── IO.cpp
+│   │   ├── IO.h
+│   │   └── CMakeLists.txt
+│   ├── Sensors
+│   │   ├── Sensors.cpp
+│   │   ├── Sensors.h
+│   │   └── CMakeLists.txt
+├── main
+│   ├── CMakeLists.txt
+│   └── main.c                 Program entry point (but not really)
+└── README.md                  This is the file you are currently reading
+```
+
+## Contribution Guide (Work In Progress)
