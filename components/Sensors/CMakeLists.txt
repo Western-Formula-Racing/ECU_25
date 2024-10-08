@@ -1,0 +1,2 @@
+idf_component_register(SRCS "Sensors.cpp"
+                  INCLUDE_DIRS ".")
