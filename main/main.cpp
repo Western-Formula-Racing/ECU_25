@@ -11,5 +11,5 @@
 // must extern C since this gets called by a C file for freeRTOS
 extern "C" void app_main(void)
 {
-
+    printf("common now dawg\n");
 }
