@@ -1,4 +1,4 @@
 #include "CAN.h"
-int give_0(){
+int give_zero(){
     return 0;
 }
