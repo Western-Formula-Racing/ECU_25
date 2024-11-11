@@ -1,6 +1,9 @@
 #include "unity.h"
 #include "CAN.h"
 #include <unity.h>
+#include <stdio.h>
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
 
 void setUp(void)
 {
@@ -21,9 +24,11 @@ void test_testing(void)
 
 extern "C" void app_main()
 {
-  UNITY_BEGIN();
+    vTaskDelay(1000);
+    printf("this is kinda getting absurd\n");
+    UNITY_BEGIN();
 
-  RUN_TEST(test_testing);
+    RUN_TEST(test_testing);
 
-  UNITY_END();
+    UNITY_END();
 }

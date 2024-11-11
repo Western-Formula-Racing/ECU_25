@@ -11,8 +11,10 @@
 // must extern C since this gets called by a C file for freeRTOS
 extern "C" void app_main(void)
 {
+    int x = 0;
     while(true){
-        printf("bruh");
+        printf("x: %d\n", x);
+        x++;
         vTaskDelay(10);
     }
     
