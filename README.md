@@ -1,4 +1,4 @@
-# _WFR ECU 2024 Firmware_
+# _WFR ECU 2025 Firmware_
 
 ## Setup
 Vanilla Espressif-IDF was too yucky, I ported it back to platformio, If you wanna use just ESP-IDF you are on your own. For Platformio, just add the extension to your VSCode intallation and it should handle the rest.
