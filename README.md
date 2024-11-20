@@ -47,6 +47,9 @@ _coming soon_
 └── README.md                  This is the file you are currently reading
 ```
 
+## Serial Monitoring
+I use the serial monitor extention in VSCode for serial monitoring because the Platformio one sucks. One quick note, if you notice that opening and closing the serial port causes the serial output to stop, disable DTS and RTS in the settings of the serial monitor.
+
 ## Contribution Guide (Work In Progress)
 In order to keep things clean and orderly we need to set some kinda contribution standards or else I will lose my mind. And if i lose my mind you sure as hell will be losing yours. 
 
