@@ -19,6 +19,8 @@ public:
     BMS(BMS &&) = delete;
     BMS &operator=(BMS &&) = delete;
     static BMS* Get();
+    int voltage;
+
 
 };
 

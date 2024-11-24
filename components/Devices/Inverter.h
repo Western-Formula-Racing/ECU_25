@@ -20,6 +20,7 @@ public:
     Inverter &operator=(Inverter &&) = delete;
     static Inverter* Get();
 
+
 };
 
 #endif
