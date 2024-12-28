@@ -28,4 +28,26 @@ CAN::CAN(gpio_num_t CAN_TX_Pin, gpio_num_t CAN_RX_Pin, twai_mode_t twai_mode)
         ESP_LOGI(TAG,"Failed to start driver\n");
         return;
     }
+    // Create the task
+    xTaskCreatePinnedToCore(CAN::rx_task_wrapper, "CAN_rx", 4096, this, configMAX_PRIORITIES - 1, nullptr, tskNO_AFFINITY);
+}
+
+void CAN::rx_task_wrapper(void *arg)
+{
+    CAN *instance = static_cast<CAN*>(arg);
+    instance->rx_task();
+}
+
+void CAN::rx_task()
+{
+    // xSemaphoreTake(rx_sem, portMAX_DELAY);
+
+    while (true) {
+        twai_message_t rx_msg;
+        twai_receive(&rx_msg, portMAX_DELAY);
+        ESP_LOGI(TAG, "Received message with ID %" PRIu32, rx_msg.identifier);
+        for (int i = 0; i < rx_msg.data_length_code; i++) {
+             ESP_LOGI(TAG, "  %d" , rx_msg.data[i]);
+        }
+    }
 }
