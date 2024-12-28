@@ -17,15 +17,15 @@ CAN::CAN(gpio_num_t CAN_TX_Pin, gpio_num_t CAN_RX_Pin, twai_mode_t twai_mode)
     twai_filter_config_t f_config = TWAI_FILTER_CONFIG_ACCEPT_ALL();
     g_config.controller_id = 0;
     if (twai_driver_install_v2(&g_config, &t_config, &f_config, &twai_handle) == ESP_OK) {
-        printf("Driver installed\n");
+        ESP_LOGI(TAG,"Driver installed\n");
     } else {
-        printf("Failed to install driver\n");
+        ESP_LOGI(TAG,"Failed to install driver\n");
         return;
     }
     if (twai_start_v2(twai_handle) == ESP_OK) {
-        printf("Driver started\n");
+        ESP_LOGI(TAG,"Driver started\n");
     } else {
-        printf("Failed to start driver\n");
+        ESP_LOGI(TAG,"Failed to start driver\n");
         return;
     }
 }
