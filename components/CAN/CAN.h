@@ -3,7 +3,7 @@
 
 #include <map>
 #include "driver/twai.h"
-#include "etl/vector.h"
+#include "etl/queue.h"
 
 class CAN
 {
