@@ -19,8 +19,10 @@ CAN can0{GPIO_NUM_47, GPIO_NUM_48, TWAI_MODE_NORMAL};
 extern "C" void app_main(void)
 {
     ESP_LOGI(TAG, "Main Has begun");
+    vTaskDelay(pdMS_TO_TICKS(5000));
+    can0.begin();
     while(true){
-        printf("test\n");
+        // printf("test\n");
         vTaskDelay(10);
     }
     
