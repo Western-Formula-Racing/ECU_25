@@ -3,16 +3,16 @@
 
 #include <map>
 #include "driver/twai.h"
-#include "etl/queue.h"
+#include "etl/vector.h"
 #include <stdio.h>
 #include "esp_log.h"
+#include <variant>
 
 class CAN
 {
 public:
     CAN(gpio_num_t CAN_TX_Pin, gpio_num_t CAN_RX_Pin, twai_mode_t twai_mode);
     void begin();
-
 private:
     twai_handle_t twai_handle;
     twai_general_config_t g_config;
