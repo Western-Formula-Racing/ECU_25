@@ -70,26 +70,6 @@ void CAN::rx_task()
                 if(CAN_Map.find(rx_msg.identifier) != CAN_Map.end()){
                     for (const auto &signal: CAN_Map[rx_msg.identifier]){
                         signal->set_raw(can_getSignal<uint64_t>(rx_msg.data, signal->startBit, signal->length, signal->isIntel));
-                        // switch(signal->dataType){
-                        //     case 0:
-                        //         switch(signal->length){
-                        //             case 8:
-                        //                 signal->set_raw(can_getSignal<int8_t>(rx_msg.data, signal->startBit, signal->length, signal->isIntel));
-                        //                 break;
-                        //             case 16:
-                        //                 signal->set_raw(can_getSignal<int16_t>(rx_msg.data, signal->startBit, signal->length, signal->isIntel));
-                        //                 break;
-                        //             default:
-                        //                 ESP_LOGW(TAG, "Unsupported length for signed value, do better");
-                        //         }
-                        //         break;
-                        //     case 1:
-                        //         signal->set_raw(can_getSignal<uint64_t>(rx_msg.data, signal->startBit, signal->length, signal->isIntel));
-                        //         break;
-                        //     case 2:
-                        //         signal->set_raw(can_getSignal<float>(rx_msg.data, signal->startBit, signal->length, signal->isIntel));
-                        //         break;
-                        // }
                         
                     }
                 }

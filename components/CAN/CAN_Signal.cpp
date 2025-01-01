@@ -44,7 +44,7 @@ float CAN_Signal::get_float()
         return static_cast<float>(((int16_t)raw_value * scale) + offset);
     }
     else{
-        return static_cast<float>((raw_value * scale) + offset);
+        return static_cast<float>(((int32_t)raw_value * scale) + offset);
     }
     
 }
