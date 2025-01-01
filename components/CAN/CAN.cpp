@@ -1,6 +1,8 @@
 #include "CAN.h"
 #include <stdio.h>
 #include "esp_log.h"
+#include "CAN_Config.hpp"
+#include "can_helpers.hpp"
 static const char* TAG = "CAN"; //Used for ESP_LOGx commands. See ESP-IDF Documentation
 static SemaphoreHandle_t rx_sem = xSemaphoreCreateBinary();
 
@@ -61,10 +63,37 @@ void CAN::rx_task()
                     ESP_LOGW(TAG, "rx queue full: msg dropped");
                 }
             while (twai_receive(&rx_msg, portMAX_DELAY) == ESP_OK) {
-                // ESP_LOGI(TAG, "Rx'd ID %" PRIu32, rx_msg.identifier);
-                // for (int i = 0; i < rx_msg.data_length_code; i++) {
-                //     ESP_LOGI(TAG, "  %d", rx_msg.data[i]);
-                // }
+                ESP_LOGI(TAG, "Rx'd ID %" PRIu32, rx_msg.identifier);
+                for (int i = 0; i < rx_msg.data_length_code; i++) {
+                    ESP_LOGI(TAG, "  %d", rx_msg.data[i]);
+                }
+                if(CAN_Map.find(rx_msg.identifier) != CAN_Map.end()){
+                    for (const auto &signal: CAN_Map[rx_msg.identifier]){
+                        signal->set_raw(can_getSignal<uint64_t>(rx_msg.data, signal->startBit, signal->length, signal->isIntel));
+                        // switch(signal->dataType){
+                        //     case 0:
+                        //         switch(signal->length){
+                        //             case 8:
+                        //                 signal->set_raw(can_getSignal<int8_t>(rx_msg.data, signal->startBit, signal->length, signal->isIntel));
+                        //                 break;
+                        //             case 16:
+                        //                 signal->set_raw(can_getSignal<int16_t>(rx_msg.data, signal->startBit, signal->length, signal->isIntel));
+                        //                 break;
+                        //             default:
+                        //                 ESP_LOGW(TAG, "Unsupported length for signed value, do better");
+                        //         }
+                        //         break;
+                        //     case 1:
+                        //         signal->set_raw(can_getSignal<uint64_t>(rx_msg.data, signal->startBit, signal->length, signal->isIntel));
+                        //         break;
+                        //     case 2:
+                        //         signal->set_raw(can_getSignal<float>(rx_msg.data, signal->startBit, signal->length, signal->isIntel));
+                        //         break;
+                        // }
+                        
+                    }
+                }
+                
             }
             xSemaphoreGive(rx_sem);
         } else {
