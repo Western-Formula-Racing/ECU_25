@@ -6,7 +6,16 @@
 static const char *TAG = "CAN"; // Used for ESP_LOGx commands. See ESP-IDF Documentation
 static SemaphoreHandle_t rx_sem = xSemaphoreCreateBinary();
 static TimerHandle_t timerHandle;
-
+static twai_message_t tx_message = {
+                // Message type and format settings
+                .extd = 1,              // Standard vs extended format
+                .rtr = 0,               // Data vs RTR frame
+                .ss = 0,                // Whether the message is single shot (i.e., does not repeat on error)
+                .self = 0,              // Whether the message is a self reception request (loopback)
+                .dlc_non_comp = 0,      // DLC is less than 8
+                // Message ID and payload
+                .data_length_code = 8,
+            };
 int give_zero()
 {
     printf("kill me please I can't keep doing this\n");
@@ -124,10 +133,20 @@ void CAN::tx_CallBack()
     // I don't believe in 1ms messages in 2025. nothing's that important
 
     // 10ms messages
-
+    for(const auto &identifier : CAN_Tx_10ms_IDs){
+        for(const auto &signal: CAN_Map[identifier]){
+            tx_message.identifier = identifier;
+            tx_message.data_length_code = 8;
+            can_setSignal<uint64_t>(tx_message.data, signal->get_raw(), signal->startBit, signal->length, signal->isIntel, signal->scale, signal->offset);
+        }
+        if (twai_transmit(&tx_message, pdMS_TO_TICKS(1000)) != ESP_OK) {
+            ESP_LOGE(TAG, "failed to tx message");
+        } 
+    }
     // 100ms messages
     if (txCallBackCounter % 10 == 0)
     {
+        
     }
     // 1000ms messages
     if (txCallBackCounter % 100 == 0)
