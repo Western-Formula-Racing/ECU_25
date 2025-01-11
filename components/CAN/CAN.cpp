@@ -3,17 +3,15 @@
 #include "esp_log.h"
 #include "CAN_Config.hpp"
 #include "can_helpers.hpp"
-static const char* TAG = "CAN"; //Used for ESP_LOGx commands. See ESP-IDF Documentation
+static const char *TAG = "CAN"; // Used for ESP_LOGx commands. See ESP-IDF Documentation
 static SemaphoreHandle_t rx_sem = xSemaphoreCreateBinary();
+static TimerHandle_t timerHandle;
 
-
-int give_zero(){
+int give_zero()
+{
     printf("kill me please I can't keep doing this\n");
     return 0;
 }
-
-
-
 
 CAN::CAN(gpio_num_t CAN_TX_Pin, gpio_num_t CAN_RX_Pin, twai_mode_t twai_mode)
 {
@@ -22,63 +20,117 @@ CAN::CAN(gpio_num_t CAN_TX_Pin, gpio_num_t CAN_RX_Pin, twai_mode_t twai_mode)
     twai_timing_config_t t_config = TWAI_TIMING_CONFIG_500KBITS();
     twai_filter_config_t f_config = TWAI_FILTER_CONFIG_ACCEPT_ALL();
     g_config.controller_id = 0;
-    if (twai_driver_install_v2(&g_config, &t_config, &f_config, &twai_handle) == ESP_OK) {
-        ESP_LOGI(TAG,"Driver installed\n");
-    } else {
-        ESP_LOGI(TAG,"Failed to install driver\n");
-        return;
-    }
-    if (twai_start_v2(twai_handle) == ESP_OK) {
-        ESP_LOGI(TAG,"Driver started\n");
-    } else {
-        ESP_LOGI(TAG,"Failed to start driver\n");
-        return;
-    }
-    twai_reconfigure_alerts_v2(twai_handle, TWAI_ALERT_RX_QUEUE_FULL, NULL);
 
+    txCallBackCounter = 0;
+
+    if (twai_driver_install_v2(&g_config, &t_config, &f_config, &twai_handle) == ESP_OK)
+    {
+        ESP_LOGI(TAG, "Driver installed\n");
+    }
+    else
+    {
+        ESP_LOGI(TAG, "Failed to install driver\n");
+        return;
+    }
+    if (twai_start_v2(twai_handle) == ESP_OK)
+    {
+        ESP_LOGI(TAG, "Driver started\n");
+    }
+    else
+    {
+        ESP_LOGE(TAG, "Failed to start driver\n");
+        return;
+    }
 }
 
 void CAN::begin()
 {
     xSemaphoreGive(rx_sem); // you have to give the semaphore on startup lol
     // Create the task
+    twai_reconfigure_alerts_v2(twai_handle, TWAI_ALERT_RX_QUEUE_FULL, NULL);
+    timerHandle = xTimerCreate("canTx", pdMS_TO_TICKS(10), pdTRUE, (void *)this, tx_CallBack_wrapper);
+    if (timerHandle == NULL)
+    {
+        ESP_LOGE(TAG, "failed to start CAN TxTimer\n");
+    }
+    else
+    {
+        if (xTimerStart(timerHandle, 0) != pdPASS)
+        {
+            ESP_LOGE(TAG, "failed to start CAN TxTimer\n");
+        }
+    }
     xTaskCreatePinnedToCore(CAN::rx_task_wrapper, "CAN_rx", 4096, this, configMAX_PRIORITIES - 20, nullptr, 1);
 }
 
 void CAN::rx_task_wrapper(void *arg)
 {
-    CAN *instance = static_cast<CAN*>(arg);
+    CAN *instance = static_cast<CAN *>(arg);
     instance->rx_task();
+}
+
+void CAN::tx_CallBack_wrapper(TimerHandle_t xTimer)
+{
+    CAN *instance = static_cast<CAN *>(static_cast<void *>(xTimer));
+    instance->tx_CallBack();
 }
 
 void CAN::rx_task()
 {
-    
-    while (true) {
+
+    while (true)
+    {
         // Try to take the semaphore without blocking
-        if (xSemaphoreTake(rx_sem, 0) == pdTRUE) {
+        if (xSemaphoreTake(rx_sem, 0) == pdTRUE)
+        {
             twai_message_t rx_msg;
             twai_read_alerts_v2(twai_handle, &twai_alerts, 0);
-            if(twai_alerts & TWAI_ALERT_RX_QUEUE_FULL){
-                    ESP_LOGW(TAG, "rx queue full: msg dropped");
-                }
-            while (twai_receive(&rx_msg, portMAX_DELAY) == ESP_OK) {
-                ESP_LOGI(TAG, "Rx'd ID %" PRIu32, rx_msg.identifier);
-                for (int i = 0; i < rx_msg.data_length_code; i++) {
-                    ESP_LOGI(TAG, "  %d", rx_msg.data[i]);
-                }
-                if(CAN_Map.find(rx_msg.identifier) != CAN_Map.end()){
-                    for (const auto &signal: CAN_Map[rx_msg.identifier]){
-                        signal->set_raw(can_getSignal<uint64_t>(rx_msg.data, signal->startBit, signal->length, signal->isIntel));
-                        
+            if (twai_alerts & TWAI_ALERT_RX_QUEUE_FULL)
+            {
+                ESP_LOGW(TAG, "rx queue full: msg dropped");
+            }
+            while (twai_receive(&rx_msg, portMAX_DELAY) == ESP_OK)
+            {
+                if (CAN_Rx_IDs.find(rx_msg.identifier) != CAN_Rx_IDs.end())
+                {
+                    ESP_LOGI(TAG, "Rx'd ID %" PRIu32, rx_msg.identifier);
+                    for (int i = 0; i < rx_msg.data_length_code; i++)
+                    {
+                        ESP_LOGI(TAG, "  %d", rx_msg.data[i]);
+                    }
+                    if (CAN_Map.find(rx_msg.identifier) != CAN_Map.end())
+                    {
+                        for (const auto &signal : CAN_Map[rx_msg.identifier])
+                        {
+                            signal->set_raw(can_getSignal<uint64_t>(rx_msg.data, signal->startBit, signal->length, signal->isIntel));
+                        }
                     }
                 }
-                
             }
             xSemaphoreGive(rx_sem);
-        } else {
+        }
+        else
+        {
             // Could not get semaphore, yield
             taskYIELD();
         }
+    }
+}
+
+void CAN::tx_CallBack()
+{
+    txCallBackCounter = (txCallBackCounter < 1000) ? txCallBackCounter + 1 : 0;
+
+    // I don't believe in 1ms messages in 2025. nothing's that important
+
+    // 10ms messages
+
+    // 100ms messages
+    if (txCallBackCounter % 10 == 0)
+    {
+    }
+    // 1000ms messages
+    if (txCallBackCounter % 100 == 0)
+    {
     }
 }
