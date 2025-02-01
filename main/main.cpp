@@ -23,8 +23,23 @@ extern "C" void app_main(void)
     ESP_LOGI(TAG, "Main Has begun");
     can0.begin();
     
+    float torque = 100.0f;
+    int directionCommand = 1;
+    bool inverterEnable = false;
+    bool inverterDischarge = false;
+    bool speedModeEnable = false;
+    float torqueLimit = 200.0f;
 
     while(true){
+
+        torque = torque *-1;
+        torqueRequest_Signal.set(torque);
+        directionCommand_Signal.set(directionCommand);
+        inverterEnable_Signal.set(directionCommand);
+        inverterDischarge_Signal.set(inverterDischarge);
+        speedModeEnable_Signal.set(speedModeEnable);
+        torqueLimit_Signal.set(torqueLimit);
+        inverterEnable_Signal.set(inverterEnable);
         // printf("inverter torque req raw: %lld\n", torqueRequest_Signal.get_raw());
         // printf("inverter torque req uint: %lld\n", torqueRequest_Signal.get_uint64());
         // printf("inverter torque req int: %d\n", torqueRequest_Signal.get_int());

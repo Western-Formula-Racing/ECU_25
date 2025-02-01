@@ -56,17 +56,17 @@ void CAN_Signal::set_raw(uint64_t value)
 
 void CAN_Signal::set(uint64_t value)
 {
-
+    raw_value = static_cast<uint64_t>((value - offset) / scale);
 }
-void CAN_Signal::set(int64_t value)
+void CAN_Signal::set(int value)
 {
-
+    raw_value = static_cast<uint64_t>((value - offset) / scale);
 }
 void CAN_Signal::set(bool value)
 {
-
+    raw_value = static_cast<uint64_t>(value);
 }
 void CAN_Signal::set(float value)
 {
-    
+    raw_value = static_cast<uint64_t>((value - offset) / scale);   
 }
