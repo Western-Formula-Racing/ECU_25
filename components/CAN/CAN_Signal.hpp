@@ -27,7 +27,7 @@ public:
     float get_float();
 
     void set(uint64_t value);
-    void set(int64_t value);
+    void set(int value);
     void set(bool value);
     void set(float value);
     void set_raw(uint64_t raw_value);

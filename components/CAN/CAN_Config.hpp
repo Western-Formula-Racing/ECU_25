@@ -12,7 +12,7 @@ inline CAN_Signal directionCommand_Signal{true, 32, 1};
 inline CAN_Signal inverterEnable_Signal{true, 40, 1};
 inline CAN_Signal inverterDischarge_Signal{true, 41, 1};
 inline CAN_Signal speedModeEnable_Signal{true, 42, 1};
-inline CAN_Signal torqueLimit_Signal{true, 48, 16};
+inline CAN_Signal torqueLimit_Signal{true, 48, 16, FLOAT, 0.1f};
 
 #define INV_M176_Fast_Info 176
 inline CAN_Signal INV_Fast_DC_Bus_Voltage{true, 48, 16, FLOAT, 0.1f};
@@ -40,10 +40,10 @@ inline etl::map CAN_Map
         }},
 };
 
-inline etl::set CAN_Rx_IDs = {176, 192};
+inline etl::set CAN_Rx_IDs = {176};
 inline etl::set CAN_Tx_10ms_IDs = {192};
-// inline etl::set CAN_Tx_100ms_IDs = {};
-// inline etl::set CAN_Tx_1000ms_IDs = {};
+inline etl::set CAN_Tx_100ms_IDs = {192};
+inline etl::set CAN_Tx_1000ms_IDs = {192};
 //they don't like to be empty 
 
 #endif 
