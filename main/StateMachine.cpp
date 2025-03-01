@@ -61,7 +61,7 @@ void StateMachine::StateMachineLoop(void *)
     for(;;){ 
         state = states[state]();
         printf("state machine running!\n");
-        vTaskDelay(pdMS_TO_TICKS(100));
+        vTaskDelay(pdMS_TO_TICKS(10));
     }
 
 }
