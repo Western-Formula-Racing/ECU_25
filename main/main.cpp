@@ -30,9 +30,8 @@ extern "C" void app_main(void)
     bool inverterDischarge = false;
     bool speedModeEnable = false;
     float torqueLimit = 200.0f;
-
+    xTaskCreatePinnedToCore(StateMachine::StateMachineLoop, "StateMachineLoop", 4096, NULL, configMAX_PRIORITIES - 1, nullptr, 1);
     while(true){
-        xTaskCreatePinnedToCore(StateMachine::StateMachineLoop, "StateMachineLoop", 4096, NULL, configMAX_PRIORITIES - 1, nullptr, 1);
         torque = torque *-1;
         torqueRequest_Signal.set(torque);
         directionCommand_Signal.set(directionCommand);
