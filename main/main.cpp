@@ -21,7 +21,7 @@ extern "C" void app_main(void)
 {
     vTaskDelay(pdMS_TO_TICKS(5000));
     ESP_LOGI(TAG, "Main Has begun");
-    //can0.begin();
+    can0.begin();
     
     float torque = 100.0f;
     int directionCommand = 1;
@@ -30,11 +30,7 @@ extern "C" void app_main(void)
     bool speedModeEnable = false;
     float torqueLimit = 200.0f;
 
-    xTaskCreate(io_task, "IO Task", 8192, NULL, 5, NULL);  // Increase stack size
-
     while(true){
-      
-
       torque = torque *-1;
       torqueRequest_Signal.set(torque);
       directionCommand_Signal.set(directionCommand);
