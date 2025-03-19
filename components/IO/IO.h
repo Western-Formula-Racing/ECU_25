@@ -6,9 +6,7 @@
 #include "freertos/semphr.h"
 #include "driver/spi_master.h"
 #include "PinMap.h"
-
-#define ADC_CMD_READ    0b00010000
-#define ADC_CMD_WRITE   0b00001000
+#include "TLA2518.h"
 
 
 class IO{
@@ -26,11 +24,7 @@ private:
     IO(IO &&) = delete;
     IO &operator=(IO &&) = delete;
     static IO* Get();
-    void Setup();
+    void setupSPI();
 
 };
-
-void io_task(void *pvParameters);
-void adcSetup(spi_device_handle_t devHandle);
-void adcRead(spi_device_handle_t devHandle, uint8_t channel ,uint8_t *rx_buffer);
 #endif
