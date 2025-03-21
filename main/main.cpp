@@ -46,7 +46,7 @@ extern "C" void app_main(void)
         // printf("inverter torque req bool: %d\n", torqueRequest_Signal.get_bool());
         // printf("inverter torque req float: %f\n", torqueRequest_Signal.get_float());
         printf("heart beat!\n");
-        vTaskDelay(100);
+        vTaskDelay(pdMS_TO_TICKS(100));
     }
     
 }
