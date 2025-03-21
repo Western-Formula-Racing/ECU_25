@@ -12,3 +12,5 @@ set(ETL_LIB_PATH "${CMAKE_SOURCE_DIR}/.pio/libdeps/esp32-s3-devkitm-1/Embedded T
 include_directories("${ETL_LIB_PATH}")
 
 project(ECU_25)
+
+set(CONFIG_ESP_MAIN_TASK_STACK_SIZE 8192)

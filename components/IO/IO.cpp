@@ -26,3 +26,20 @@ IO *IO::Get()
     }
     return instancePtr;
 }
+
+void IO::setupSPI(){
+
+  spi_bus_config_t spiConfig = {
+    
+    .mosi_io_num = MOSI_PIN,
+    .miso_io_num = MISO_PIN,
+    .sclk_io_num = SPI_CLK_PIN,
+    .quadwp_io_num = -1,  // Required for non-quad SPI
+    .quadhd_io_num = -1,  // Required for non-quad SPI
+    .max_transfer_sz = SOC_SPI_MAXIMUM_BUFFER_SIZE,
+    .flags = SPICOMMON_BUSFLAG_MASTER, 
+  };
+
+  ESP_ERROR_CHECK(spi_bus_initialize(SPI2_HOST,&spiConfig,SPI_DMA_CH_AUTO));
+  
+}
