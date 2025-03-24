@@ -8,6 +8,7 @@
 #include "driver/i2c_master.h"
 #include "PinMap.h"
 #include "TLA2518.h"
+#include "driver/gpio.h"
 #include "FXL6408UMX.h"
 
 class IO{
@@ -18,6 +19,8 @@ private:
     static SemaphoreHandle_t mutex;
     spi_device_handle_t adc1Handle;
     spi_device_handle_t adc2Handle;
+    TLA2518* adc1_handle;
+    TLA2518* adc2_handle;
     i2c_master_bus_handle_t i2c_handle;
     FXL6408UMX* hsd_handle;
     public:
@@ -28,7 +31,10 @@ private:
     IO &operator=(IO &&) = delete;
     static IO* Get();
     void setupSPI();
-    void setupI2C();
+    int analogRead(ECU_ANALOG_PIN pin);
+    double analogReadVoltage(ECU_ANALOG_PIN pin);
+    void digitalRead(ECU_IO_PIN pin);
+    void digitalWrite(ECU_IO_PIN pin);    void setupI2C();
     void HSDWrite(ECU_HSD_PIN channel, bool level);
 
 };

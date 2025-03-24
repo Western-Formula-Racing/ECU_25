@@ -31,7 +31,9 @@ extern "C" void app_main(void)
     bool speedModeEnable = false;
     float torqueLimit = 200.0f;
     xTaskCreatePinnedToCore(StateMachine::StateMachineLoop, "StateMachineLoop", 4096, NULL, configMAX_PRIORITIES - 1, nullptr, 1);
+    bool onboard_LED = 0;
     while(true){
+        onboard_LED = !onboard_LED;
         torque = torque *-1;
         torqueRequest_Signal.set(torque);
         directionCommand_Signal.set(directionCommand);
@@ -40,11 +42,15 @@ extern "C" void app_main(void)
         speedModeEnable_Signal.set(speedModeEnable);
         torqueLimit_Signal.set(torqueLimit);
         inverterEnable_Signal.set(inverterEnable);
+
+        IO::Get();// setup IO for demo purposes
+        gpio_set_level(GPIO_NUM_48, onboard_LED);    
         // printf("inverter torque req raw: %lld\n", torqueRequest_Signal.get_raw());
         // printf("inverter torque req uint: %lld\n", torqueRequest_Signal.get_uint64());
         // printf("inverter torque req int: %d\n", torqueRequest_Signal.get_int());
         // printf("inverter torque req bool: %d\n", torqueRequest_Signal.get_bool());
         // printf("inverter torque req float: %f\n", torqueRequest_Signal.get_float());
+        printf("ADC1 read: %d\n", IO::Get()->analogRead(ECU_1_A1));
         printf("heart beat!\n");
         vTaskDelay(pdMS_TO_TICKS(100));
     }

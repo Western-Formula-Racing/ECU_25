@@ -7,7 +7,20 @@ SemaphoreHandle_t IO::mutex = xSemaphoreCreateMutex();
 
 IO::IO()
 {
+    //setup ESP32 native GPIO
+    gpio_config_t io_conf = {};
+    io_conf.intr_type = GPIO_INTR_DISABLE;
+    io_conf.mode = GPIO_MODE_OUTPUT;
+    io_conf.pin_bit_mask = (1ULL<<GPIO_NUM_48);
+    io_conf.pull_down_en = GPIO_PULLDOWN_DISABLE;
+    io_conf.pull_up_en = GPIO_PULLUP_DISABLE;
+    gpio_config(&io_conf);
+
+    setupSPI();
+    adc1_handle =  new TLA2518(SPI2_HOST, GPIO_NUM_41);
+    adc2_handle = new TLA2518(SPI2_HOST, GPIO_NUM_42);
     ESP_LOGI(TAG, "IO Initialized");
+    
 }
 
 IO *IO::Get()
@@ -42,6 +55,25 @@ void IO::setupSPI(){
 
   ESP_ERROR_CHECK(spi_bus_initialize(SPI2_HOST,&spiConfig,SPI_DMA_CH_AUTO));
   
+}
+
+int IO::analogRead(ECU_ANALOG_PIN pin)
+{
+    if(pin <= ECU_7_A7){
+        return adc1_handle->readChannel(pin);
+    }
+    else{
+        return adc1_handle->readChannel(pin);
+    }
+}
+double IO::analogReadVoltage(ECU_ANALOG_PIN pin)
+{
+    if(pin <= ECU_7_A7){
+        return adc1_handle->readVoltage(pin);
+    }
+    else{
+        return adc1_handle->readVoltage(pin);
+    }
 }
 
 void IO::setupI2C(){
