@@ -14,7 +14,7 @@
 #include "StateMachine.hpp"
 
 static const char* TAG = "Main"; //Used for ESP_LOGx commands. See ESP-IDF Documentation
-CAN can0{GPIO_NUM_47, GPIO_NUM_48, TWAI_MODE_NORMAL};
+CAN can0{GPIO_NUM_16, GPIO_NUM_15, TWAI_MODE_NORMAL};
 
 
 // must extern C since this gets called by a C file for freeRTOS
