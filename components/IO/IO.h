@@ -5,9 +5,10 @@
 #include "freertos/task.h"
 #include "freertos/semphr.h"
 #include "driver/spi_master.h"
+#include "driver/i2c_master.h"
 #include "PinMap.h"
 #include "TLA2518.h"
-
+#include "FXL6408UMX.h"
 
 class IO{
 private:
@@ -17,7 +18,9 @@ private:
     static SemaphoreHandle_t mutex;
     spi_device_handle_t adc1Handle;
     spi_device_handle_t adc2Handle;
-  public:
+    i2c_master_bus_handle_t i2c_handle;
+    FXL6408UMX HSD;
+    public:
     //Deleting the copy constructor and copy reference constructor to prevent copies
     IO(const IO &) = delete;
     IO &operator=(const IO &) = delete;
@@ -25,6 +28,8 @@ private:
     IO &operator=(IO &&) = delete;
     static IO* Get();
     void setupSPI();
+    void setupI2C();
+    void HSDWrite(ECU_HSD_PIN channel, bool level);
 
 };
 #endif

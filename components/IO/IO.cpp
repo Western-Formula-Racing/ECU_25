@@ -43,3 +43,23 @@ void IO::setupSPI(){
   ESP_ERROR_CHECK(spi_bus_initialize(SPI2_HOST,&spiConfig,SPI_DMA_CH_AUTO));
   
 }
+
+void IO::setupI2C(){
+  i2c_master_bus_config_t i2c_mst_config = {
+    .i2c_port = -1,
+    .sda_io_num = (gpio_num_t)I2C_SDA_PIN,
+    .scl_io_num = (gpio_num_t)I2C_SCL_PIN,
+    .clk_source = I2C_CLK_SRC_DEFAULT,
+    .glitch_ignore_cnt = 7,
+    .flags = {
+      .enable_internal_pullup = true
+    }
+  };
+
+  ESP_ERROR_CHECK(i2c_new_master_bus(&i2c_mst_config, &i2c_handle));
+  HSD.setup(i2c_handle);
+};
+
+void IO::HSDWrite(ECU_HSD_PIN channel, bool level){
+  HSD.writeLevel(channel,level);
+}
