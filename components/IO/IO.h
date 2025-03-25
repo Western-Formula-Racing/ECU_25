@@ -7,7 +7,7 @@
 #include "driver/spi_master.h"
 #include "PinMap.h"
 #include "TLA2518.h"
-
+#include "ICM-20948.h"
 
 class IO{
 private:
@@ -15,11 +15,10 @@ private:
     IO();
     static IO* instancePtr;
     static SemaphoreHandle_t mutex;
-    spi_device_handle_t adc1Handle;
-    spi_device_handle_t adc2Handle;
     TLA2518 adc1;
     TLA2518 adc2;
-  public:
+    public:
+    ICM20948 imu;
     //Deleting the copy constructor and copy reference constructor to prevent copies
     IO(const IO &) = delete;
     IO &operator=(const IO &) = delete;
