@@ -1,6 +1,6 @@
 #include "FXL6408UMX.h"
 
-void FXL6408UMX::setup(i2c_master_bus_handle_t busHandle){
+FXL6408UMX::FXL6408UMX(i2c_master_bus_handle_t busHandle){
   i2c_busHandle = busHandle;
   i2c_device_config_t dev_cfg = {
     .dev_addr_length = I2C_ADDR_BIT_LEN_7,
@@ -27,7 +27,7 @@ void FXL6408UMX::test(){
   printf("Output Status: %d\n",rx);
 }
 
-void FXL6408UMX::writeLevel(ECU_HSD_PIN channel, bool level){
+void FXL6408UMX::writeLevel(int channel, bool level){
   if(level==0){
     outputStatus = outputStatus & ~(1<<channel);
   }

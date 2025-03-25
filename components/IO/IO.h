@@ -19,7 +19,7 @@ private:
     spi_device_handle_t adc1Handle;
     spi_device_handle_t adc2Handle;
     i2c_master_bus_handle_t i2c_handle;
-    FXL6408UMX HSD;
+    FXL6408UMX* hsd_handle;
     public:
     //Deleting the copy constructor and copy reference constructor to prevent copies
     IO(const IO &) = delete;

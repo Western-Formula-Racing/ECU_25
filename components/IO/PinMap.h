@@ -1,3 +1,6 @@
+#ifndef _PINMAP_
+#define _PINMAP_
+
 #define MOSI_PIN      38  //MOSI pin
 #define MISO_PIN      39  //MISO pin
 #define SPI_CLK_PIN   40  //SPI Clock pin
@@ -18,3 +21,5 @@ typedef enum{
 
 
 }ECU_HSD_PIN;
+
+#endif

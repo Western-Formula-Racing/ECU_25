@@ -1,6 +1,6 @@
 #include "TLA2518.h"
 
-void TLA2518::setup(spi_host_device_t spiHost,int cs_pin){
+TLA2518::TLA2518(spi_host_device_t spiHost,int cs_pin){
 
   adcCfg = {
     .command_bits = 0,

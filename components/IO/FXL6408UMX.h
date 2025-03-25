@@ -5,7 +5,6 @@
 *
 ***************************/ 
 #include "driver/i2c_master.h"
-#include "PinMap.h"
 
 class FXL6408UMX{
   private:
@@ -13,8 +12,7 @@ class FXL6408UMX{
   i2c_master_dev_handle_t i2c_devHandle;
   uint8_t outputStatus = 0;
   public:
-  
-  void setup(i2c_master_bus_handle_t busHandle);
+  FXL6408UMX(i2c_master_bus_handle_t busHandle);
   void test();
-  void writeLevel(ECU_HSD_PIN channel, bool level);
+  void writeLevel(int channel, bool level);
 };
