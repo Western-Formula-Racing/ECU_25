@@ -17,8 +17,8 @@ private:
     static SemaphoreHandle_t mutex;
     TLA2518 adc1;
     TLA2518 adc2;
+    ICM20948* imu_handle;
     public:
-    ICM20948 imu;
     //Deleting the copy constructor and copy reference constructor to prevent copies
     IO(const IO &) = delete;
     IO &operator=(const IO &) = delete;
@@ -28,6 +28,12 @@ private:
     void setupSPI();
     int analogRead(analogInputChannel channel);
     double analogReadVoltage(analogInputChannel channel);
+    double getAccelX();
+    double getAccelY();
+    double getAccelZ();
+    double getGyroX();
+    double getGyroY();
+    double getGyroZ();
 
 };
 #endif
