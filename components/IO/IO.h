@@ -37,6 +37,12 @@ private:
     void digitalRead(ECU_IO_PIN pin);
     void digitalWrite(ECU_IO_PIN pin);    void setupI2C();
     void HSDWrite(ECU_HSD_PIN channel, bool level);
+    double getAccelX();
+    double getAccelY();
+    double getAccelZ();
+    double getGyroX();
+    double getGyroY();
+    double getGyroZ();
 
 };
 #endif
