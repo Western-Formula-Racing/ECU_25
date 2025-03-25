@@ -9,6 +9,7 @@
 #define I2C_SCL_PIN   7
 #define I2C_SDA_PIN   17
 #define IMU_CS        8
+
 // ECU PINS are all prefixed with ECU_#_ 
 // The format is ECU_#_<connector pin numer>_<function><number>
 // Functions are A = Analog input, IO = 5v IO, and HSD = 24v high side drivers

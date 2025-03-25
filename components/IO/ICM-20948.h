@@ -22,7 +22,7 @@ class ICM20948{
   spi_device_interface_config_t imuConfig;
   
   public:
-  void setup(spi_host_device_t spiHost, int cs_pin);
+  ICM20948(spi_host_device_t spiHost, int cs_pin);
   void selfTest();
   
 };

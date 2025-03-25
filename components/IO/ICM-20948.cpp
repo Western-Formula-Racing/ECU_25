@@ -1,6 +1,6 @@
 #include "ICM-20948.h"
 
-void ICM20948::setup(spi_host_device_t spiHost,int cs_pin){
+ICM20948::ICM20948(spi_host_device_t spiHost,int cs_pin){
   imuConfig = {
     .command_bits = 0,
     .address_bits = 0,

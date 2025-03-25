@@ -22,7 +22,7 @@ private:
     TLA2518* adc2_handle;
     i2c_master_bus_handle_t i2c_handle;
     FXL6408UMX* hsd_handle;
-    ICM20948 imu;
+    ICM20948* imu_handle;
     public:
     
     //Deleting the copy constructor and copy reference constructor to prevent copies
