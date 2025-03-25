@@ -10,6 +10,7 @@
 #include "TLA2518.h"
 #include "driver/gpio.h"
 #include "FXL6408UMX.h"
+#include "ICM-20948.h"
 
 class IO{
 private:
@@ -17,13 +18,13 @@ private:
     IO();
     static IO* instancePtr;
     static SemaphoreHandle_t mutex;
-    spi_device_handle_t adc1Handle;
-    spi_device_handle_t adc2Handle;
     TLA2518* adc1_handle;
     TLA2518* adc2_handle;
     i2c_master_bus_handle_t i2c_handle;
     FXL6408UMX* hsd_handle;
+    ICM20948 imu;
     public:
+    
     //Deleting the copy constructor and copy reference constructor to prevent copies
     IO(const IO &) = delete;
     IO &operator=(const IO &) = delete;

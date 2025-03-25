@@ -54,7 +54,13 @@ void IO::setupSPI(){
   };
 
   ESP_ERROR_CHECK(spi_bus_initialize(SPI2_HOST,&spiConfig,SPI_DMA_CH_AUTO));
+<<<<<<< HEAD
   
+=======
+  adc1.setup(SPI2_HOST,ADC_1_CS);
+  adc2.setup(SPI2_HOST,ADC_2_CS);
+  imu.setup(SPI2_HOST,IMU_CS);
+>>>>>>> c7f861d (established communication with IMU)
 }
 
 int IO::analogRead(ECU_ANALOG_PIN pin)
