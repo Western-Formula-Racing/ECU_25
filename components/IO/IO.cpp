@@ -41,5 +41,36 @@ void IO::setupSPI(){
   };
 
   ESP_ERROR_CHECK(spi_bus_initialize(SPI2_HOST,&spiConfig,SPI_DMA_CH_AUTO));
-  
+  adc1.setup(SPI2_HOST,ADC_1_CS);
+  adc2.setup(SPI2_HOST,ADC_2_CS);
+}
+
+int IO::analogRead(analogInputChannel channel){
+  int value;
+  if(channel>16 || channel < 0){
+    ESP_LOGE(TAG,"ADC Channel out of range!");
+    return 0;
+  }
+  if(channel<9){
+    value = adc1.readChannel(channel);
+  }
+  else if(channel>8){
+    value = adc2.readChannel(channel-8);
+  }
+  return value;
+};
+
+double IO::analogReadVoltage(analogInputChannel channel){
+  double value;
+  if(channel>16 || channel < 0){
+    ESP_LOGE(TAG,"ADC Channel out of range!");
+    return 0;
+  }
+  if(channel<9){
+    value = adc1.readVoltage(channel);
+  }
+  else if(channel>8){
+    value = adc2.readVoltage(channel-8);
+  }
+  return value;
 }

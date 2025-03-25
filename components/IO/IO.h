@@ -17,6 +17,8 @@ private:
     static SemaphoreHandle_t mutex;
     spi_device_handle_t adc1Handle;
     spi_device_handle_t adc2Handle;
+    TLA2518 adc1;
+    TLA2518 adc2;
   public:
     //Deleting the copy constructor and copy reference constructor to prevent copies
     IO(const IO &) = delete;
@@ -25,6 +27,8 @@ private:
     IO &operator=(IO &&) = delete;
     static IO* Get();
     void setupSPI();
+    int analogRead(analogInputChannel channel);
+    double analogReadVoltage(analogInputChannel channel);
 
 };
 #endif
