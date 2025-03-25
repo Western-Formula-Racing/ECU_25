@@ -8,6 +8,7 @@
 #define ADC_2_CS      42  //ADC2 Chip Select pin
 #define I2C_SCL_PIN   7
 #define I2C_SDA_PIN   17
+#define IMU_CS        8
 
 // ECU PINS are all prefixed with ECU_#_ 
 // The format is ECU_#_<connector pin numer>_<function><number>
