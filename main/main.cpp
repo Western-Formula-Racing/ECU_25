@@ -12,6 +12,7 @@
 #include "driver/twai.h"
 #include "CAN_Config.hpp"
 #include "StateMachine.hpp"
+#include "Pedals.h"
 
 static const char* TAG = "Main"; //Used for ESP_LOGx commands. See ESP-IDF Documentation
 CAN can0{GPIO_NUM_16, GPIO_NUM_15, TWAI_MODE_NORMAL};
@@ -44,15 +45,16 @@ extern "C" void app_main(void)
         inverterEnable_Signal.set(inverterEnable);
 
         IO::Get();// setup IO for demo purposes
-        gpio_set_level(GPIO_NUM_48, onboard_LED);    
+        gpio_set_level(GPIO_NUM_48, onboard_LED);  // heart beat LED  
         // printf("inverter torque req raw: %lld\n", torqueRequest_Signal.get_raw());
         // printf("inverter torque req uint: %lld\n", torqueRequest_Signal.get_uint64());
         // printf("inverter torque req int: %d\n", torqueRequest_Signal.get_int());
         // printf("inverter torque req bool: %d\n", torqueRequest_Signal.get_bool());
         // printf("inverter torque req float: %f\n", torqueRequest_Signal.get_float());
-        printf("ADC1 read: %d\n", IO::Get()->analogRead(ECU_1_A1));
-        printf("heart beat!\n");
-        vTaskDelay(pdMS_TO_TICKS(100));
+        // printf("ADC1 read: %d\n", IO::Get()->analogRead(ECU_1_A1));
+        printf("throttle: %.2f\n", Pedals::Get()->getThrottle());
+        // printf("heart beat!\n");
+        vTaskDelay(pdMS_TO_TICKS(500));
     }
     
 }
