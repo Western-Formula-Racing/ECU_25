@@ -20,6 +20,11 @@ inline CAN_Signal INV_Fast_Motor_Speed{true, 32, 16};
 inline CAN_Signal INV_Fast_Torque_Command{true, 0, 16, FLOAT, 0.1f};
 inline CAN_Signal INV_Fast_Torque_Feedback{true, 16, 16, FLOAT, 0.1f};
 
+#define TEST_THROTTLE 1
+inline CAN_Signal apps1_voltage_signal{true, 0, 8, FLOAT, 0.01f};
+inline CAN_Signal apps2_voltage_signal{true, 8, 8, FLOAT, 0.01f};
+
+
 //define the CAN Map here
 //all entries in the map must have the exact same types which means all the vectors have to be the same size
 inline etl::map CAN_Map
@@ -38,9 +43,13 @@ inline etl::map CAN_Map
         &INV_Fast_Torque_Command,
         &INV_Fast_Torque_Feedback,
         }},
+    etl::pair{TEST_THROTTLE, etl::vector<CAN_Signal*, 8>{ 
+        &apps1_voltage_signal,
+        &apps2_voltage_signal,
+        }},
 };
 
-inline etl::set CAN_Rx_IDs = {176};
+inline etl::set CAN_Rx_IDs = {1,176};
 inline etl::set CAN_Tx_10ms_IDs = {192};
 inline etl::set CAN_Tx_100ms_IDs = {192};
 inline etl::set CAN_Tx_1000ms_IDs = {192};
