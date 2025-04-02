@@ -63,7 +63,7 @@ int IO::analogRead(ECU_ANALOG_PIN pin)
         return adc1_handle->readChannel(pin);
     }
     else{
-        return adc1_handle->readChannel(pin);
+        return adc2_handle->readChannel(pin-8);
     }
 }
 double IO::analogReadVoltage(ECU_ANALOG_PIN pin)
@@ -72,7 +72,7 @@ double IO::analogReadVoltage(ECU_ANALOG_PIN pin)
         return adc1_handle->readVoltage(pin);
     }
     else{
-        return adc1_handle->readVoltage(pin);
+        return adc2_handle->readVoltage(pin-8);
     }
 }
 
