@@ -52,9 +52,9 @@ extern "C" void app_main(void)
         // printf("inverter torque req bool: %d\n", torqueRequest_Signal.get_bool());
         // printf("inverter torque req float: %f\n", torqueRequest_Signal.get_float());
         // printf("ADC1 read: %d\n", IO::Get()->analogRead(ECU_1_A1));
-        printf("throttle: %.2f\n", Pedals::Get()->getThrottle());
+        printf(">throttle:%.2f\n", Pedals::Get()->getThrottle());
         // printf("heart beat!\n");
-        vTaskDelay(pdMS_TO_TICKS(500));
+        vTaskDelay(pdMS_TO_TICKS(100));
     }
     
 }

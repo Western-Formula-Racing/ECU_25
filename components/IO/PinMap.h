@@ -22,13 +22,13 @@ typedef enum{
     ECU_5_A5,
     ECU_6_A6,
     ECU_7_A7,
-    ECU_8_A8 = 0,
-    ECU_9_A9 = 1,
-    ECU_13_A10 = 2,
-    ECU_14_A11 = 3,
-    ECU_15_A12 = 4,
-    ECU_16_A13 = 5,
-    ECU_17_A14 = 6,
+    ECU_8_A8 ,
+    ECU_9_A9 ,
+    ECU_13_A10,
+    ECU_14_A11,
+    ECU_15_A12,
+    ECU_16_A13,
+    ECU_17_A14,
 }ECU_ANALOG_PIN;
 
 typedef enum{
