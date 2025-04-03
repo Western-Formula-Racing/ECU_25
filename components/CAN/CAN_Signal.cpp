@@ -1,8 +1,8 @@
 #include "CAN_Signal.hpp"
 
 
-CAN_Signal::CAN_Signal(bool isIntel, uint8_t startBit, uint8_t length, DataType type, float scale, float offset, int32_t default_value)
-: isIntel(isIntel), startBit(startBit), length(length), dataType(type) ,scale(scale), offset(offset), default_value(default_value)
+CAN_Signal::CAN_Signal(bool isIntel, uint8_t startBit, uint8_t length, float scale, float offset, int32_t default_value)
+: isIntel(isIntel), startBit(startBit), length(length), scale(scale), offset(offset), default_value(default_value)
 {
 
 }
