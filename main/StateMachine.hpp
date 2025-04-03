@@ -3,6 +3,8 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "etl/array.h"
+#include "CAN_Config.hpp"
+#include "IO.h"
 
 namespace StateMachine{
 enum State
@@ -15,6 +17,16 @@ enum State
     PRECHARGE_ERROR,
     DEVICE_FAULT,
 };
+
+enum PACK_STATE
+{
+    PACK_IDLE,
+    PACK_PRECHARGE,
+    PACK_ACTIVE,
+    PACK_CHARGING,
+    PACK_FAULT
+};
+
 // Creating a type for state function pointers
 typedef State (*state_function_t)();
 

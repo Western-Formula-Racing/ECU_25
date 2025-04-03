@@ -30,13 +30,12 @@ typedef enum{
     ECU_16_A13,
     ECU_17_A14,
 }ECU_ANALOG_PIN;
-
 typedef enum{
+    ECU_TEST = 47,
     ECU_10_IO1 = 4,
-    ECU_11_IO1 = 5,
-    ECU_12_IO1 = 6,
+    ECU_11_IO2 = 5,
+    ECU_12_IO3 = 6,
 }ECU_IO_PIN;
-
 typedef enum{
     ECU_37_HSD1 = 7,
     ECU_38_HSD2 = 6,

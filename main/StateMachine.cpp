@@ -5,6 +5,17 @@ using namespace StateMachine;
 State StateMachine::handle_start()
 {
     State nextState = START;
+    int rtd_button = IO::Get()->digitalRead(ECU_TEST);
+    // int rtd_button = 1;
+    PACK_STATE pack_status = (PACK_STATE)PackStatus_ID1056.get_int();
+    printf(">status_raw:%lld\n", PackStatus_ID1056.get_raw());
+    printf(">RTD_BUTTON:%d\n>pack_status:%d\n", rtd_button, pack_status);
+
+    if (pack_status == PACK_ACTIVE && rtd_button)
+    {
+        nextState = STARTUP_DELAY;
+    }
+
 
     return nextState;
 }
@@ -60,7 +71,7 @@ void StateMachine::StateMachineLoop(void *)
     
     for(;;){ 
         state = states[state]();
-        // printf("state machine running!\n");
+        printf(">state:%d\n", state);
         vTaskDelay(pdMS_TO_TICKS(10));
     }
 

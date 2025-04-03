@@ -15,6 +15,16 @@ IO::IO()
     io_conf.pull_down_en = GPIO_PULLDOWN_DISABLE;
     io_conf.pull_up_en = GPIO_PULLUP_DISABLE;
     gpio_config(&io_conf);
+    
+    io_conf = {};
+    io_conf.intr_type = GPIO_INTR_DISABLE;
+    io_conf.mode = GPIO_MODE_INPUT;
+    io_conf.pin_bit_mask = (1ULL<<ECU_TEST) | (1ULL<<ECU_10_IO1) | (1ULL<<ECU_11_IO2) | (1ULL<<ECU_12_IO3);
+    io_conf.pull_down_en = GPIO_PULLDOWN_DISABLE;
+    io_conf.pull_up_en = GPIO_PULLUP_DISABLE;
+    gpio_config(&io_conf);
+
+
 
     setupSPI();
     adc1_handle =  new TLA2518(SPI2_HOST, GPIO_NUM_41);
@@ -95,6 +105,11 @@ void IO::setupI2C(){
 
 void IO::HSDWrite(ECU_HSD_PIN channel, bool level){
     hsd_handle->writeLevel(channel,level);
+}
+
+
+int IO::digitalRead(ECU_IO_PIN pin){
+    return gpio_get_level((gpio_num_t)pin);
 }
 
 double IO::getAccelX(){

@@ -4,20 +4,11 @@
 #include "esp_log.h"
 #include <variant>
 
-typedef enum{
-    INT,
-    UINT,
-    FLOAT
-}DataType;
-
-
-
-
 class CAN_Signal
 {
 public:
     CAN_Signal(bool isIntel, uint8_t startBit, uint8_t length, 
-    DataType type = UINT, float scale = 1.0f, float offset = 0.0f,
+    float scale = 1.0f, float offset = 0.0f,
     int32_t default_value = 0);
 
     uint64_t get_raw();
@@ -36,7 +27,6 @@ public:
     bool isIntel;
     uint8_t startBit;
     uint8_t length;
-    DataType dataType;
     float scale;
     float offset;
 private:

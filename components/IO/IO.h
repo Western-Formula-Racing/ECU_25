@@ -34,8 +34,9 @@ private:
     void setupSPI();
     int analogRead(ECU_ANALOG_PIN pin);
     double analogReadVoltage(ECU_ANALOG_PIN pin);
-    void digitalRead(ECU_IO_PIN pin);
-    void digitalWrite(ECU_IO_PIN pin);    void setupI2C();
+    int digitalRead(ECU_IO_PIN pin);
+    void digitalWrite(ECU_IO_PIN pin);   
+    void setupI2C();
     void HSDWrite(ECU_HSD_PIN channel, bool level);
     double getAccelX();
     double getAccelY();
