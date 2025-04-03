@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+    <header>
+        <style>
+            body {
+                font-family: Arial, Helvetica, sans-serif;
+                background-color: rgb(14, 14, 14);
+                color: white;
+                width: 100vw;
+                margin: 0;
+            }
+            .head {
+                font-size: medium;
+                align-content: center;
+                background-color: rgb(32, 32, 32);
+                width: 100vw;
+                height: 6rem;
+                padding-top: 0;
+                margin-bottom: 2cqb;
+            }
+            .title_text {
+                justify-self: center;
+            }
+            .data_wrapper {}
+            #data {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                width: 100vw;
+            }
+            .data_entry {
+                display: flex;
+                flex-direction: row;
+                width: 97vw;
+                height: 3rem;
+                border-width: 1rem;
+                border-color: white;
+                margin-top: 0;
+                margin-bottom: 0;
+                border: 0.1rem solid white;
+                border-radius: 0.2rem;
+                align-self: center;
+                align-content: center;
+            }
+            .data_key {
+                width: 30vw;
+                align-content: center;
+                margin: 0;
+                margin-left: 2rem;
+                height: 3rem;
+                border-right: 0.1rem solid white;
+                font-weight: bold;
+            }
+            .data_value {
+                margin-left: 1rem       
+            }
+        </style>
+    </header>
+    <body>
+        <div class="main_wrapper wrapper">
+            <div class="head">
+                <h1 class="title_text">WFR Dashboard</h1>
+            </div>
+            <div class="data_wrapper">
+                <div id="data"></div>
+            </div>
+        </div>
+        <script>
+            let entries = new Map()
+            let order = []
+            
+            setTimeout(retrieve_entries, 200) //200ms
+
+            function is_sendable_entry(key) {
+                entry = entries.key(key);
+                
+                return entry.type.startsWith("sendable")
+            }
+
+            function update_sendables() {
+                order.forEach((key) => {
+                    entry = entries.get(key)
+
+                    element = document.getElementById(key)
+                    
+                    if (entry.type.startsWith("sendable")) {
+                        element.innerHTML = `<p class="data_key">${key}</p><p class="data_value">${entry.value}</p>`
+                    }
+                })
+            }
+
+            function retrieve_entries() {
+                fetch("/update", {
+                    method: "GET"
+                }).then((response) => {
+                    response.text().then((raw) => {
+                        console.log(raw)
+                        const obj_updated_values = JSON.parse(raw)
+                        
+                        // Iterate through object and update values
+                        Object.entries(obj_updated_values).forEach((value) => {
+                            if (!entries.has(value[0])) {
+                                order.push(value[1])
+
+                                if (value[1].type.startsWith("recievable")) {
+                                    recievable_type = value[1].type.split(">")[1]
+
+                                } else {
+                                    entries_html = document.getElementById("entries")
+                                    entries_html += `<div class="data_entry" id=${value[0]}><p class="data_key">${value[0]}</p><p class="data_value">${value[1].value}</p></div>`
+                                }
+                            }
+
+                            entries.set(value[0], {"value": value[1].value, "type": value[1].type})
+                        })
+
+                        update_sendables()
+                    })
+                    
+                })
+            }
+
+            // handles changes to recievables
+            function update_recievable(key) {
+                const recievable = entries.get(key)
+                let content = recievable.key + "\n" + recievable.value + "\n" + recievable.type
+
+                fetch("/recievable", {
+                    method: "PUT",
+                    body: content,
+                    headers: {
+                        "Content-type": 'application/text; charset=UTF-8'
+                    },
+                })
+            }
+
+        </script>
+    </body>
+</html>
