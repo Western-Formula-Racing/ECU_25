@@ -4,8 +4,23 @@ static const char *TAG = "GUI"; // Used for ESP_LOGx commands. See ESP-IDF Docum
 GUI *GUI::instancePtr = nullptr;
 SemaphoreHandle_t GUI::mutex = xSemaphoreCreateMutex();
 
+std::unordered_map<char*, int(*)()> GUI::int_callables = {};
+std::unordered_map<char*, float(*)()> GUI::float_callables = {};
+std::unordered_map<char*, char*(*)()> GUI::string_callables = {};
+std::unordered_map<char*, bool(*)()> GUI::bool_callables = {};
+std::unordered_map<char*, Recievable<int>*> GUI::int_recievables = {};
+std::unordered_map<char*, Recievable<float>*> GUI::float_recievables = {};
+std::unordered_map<char*, Recievable<char*>*> GUI::string_recievables = {};
+
 GUI::GUI()
 {
+    esp_vfs_spiffs_conf_t conf = {
+        .base_path = "/spiffs",
+        .partition_label = NULL,
+        .max_files = 1,
+        .format_if_mount_failed = true
+    };
+    esp_vfs_spiffs_register(&conf);
     ESP_ERROR_CHECK(start_soft_ap());
     ESP_ERROR_CHECK(start_webserver());
     ESP_LOGI(TAG, "GUI Initialized");
@@ -33,17 +48,19 @@ esp_err_t GUI::handle_root(httpd_req_t *req)
 
 esp_err_t GUI::handle_update(httpd_req_t *req) 
 {
-    const char* sndb_str = serialize_sndb_to_json();
-    const char* rcvb_str = serialize_rcvb_to_json();
-    size_t buff_size = strlen(sndb_str) + strlen(rcvb_str);
-    char* resp_str = new char[strlen(sndb_str) + strlen(rcvb_str)];
-    strncpy(resp_str, "{", buff_size);
-    strncat(resp_str, sndb_str, buff_size);
+    char* sndb_str = serialize_sndb_to_json();
+    printf(sndb_str);
+    //const char* rcvb_str = serialize_rcvb_to_json();
+    size_t buff_size = strlen(sndb_str)+10;
+    char* resp_str = new char[buff_size];
+    strcpy(resp_str, "{");
+    strcat(resp_str,  sndb_str);
+
     if (!strcmp("", sndb_str)) {
-        strncat(resp_str, ",", buff_size);
+        strcat(resp_str, ",");
     }
-    strncat(resp_str, rcvb_str, buff_size);
-    strncat(resp_str, "}", buff_size);
+    //strncat(resp_str, rcvb_str, buff_size-1);
+    strcat(resp_str, "}");
     httpd_resp_set_status(req, "200 OK");
     httpd_resp_set_type(req, "text/json");
     httpd_resp_send(req, resp_str, strlen(resp_str));
@@ -93,22 +110,24 @@ esp_err_t GUI::handle_recievable(httpd_req_t *req)
     }
     
     // Edit recievable value
-    if (strcmp(type, "int") || strcmp(type, "option<int>"))
-    {
-        int value = atoi(s_value);
+    if (is_recievable_registered(key)) {
+        if (strcmp(type, "int") || strcmp(type, "option<int>"))
+        {
+            int value = atoi(s_value);
 
-        Recievable<int>* r = int_recievables.at(key);
-        r->set_value(value);
-    } else if (strcmp(type, "float") || strcmp(type, "option<float>"))
-    {
-        float value = atof(s_value);
+            Recievable<int>* rcbl = int_recievables.at(key);
+            rcbl->set_value(value);
+        } else if (strcmp(type, "float") || strcmp(type, "option<float>"))
+        {
+            float value = atof(s_value);
 
-        Recievable<float>* r = float_recievables.at(key);
-        r->set_value(value);
-    } else if (strcmp(type, "string") || strcmp(type, "option<string>"))
-    {
-        Recievable<char*>* r = string_recievables.at(key);
-        r->set_value(s_value);
+            Recievable<float>* rcbl = float_recievables.at(key);
+            rcbl->set_value(value);
+        } else if (strcmp(type, "string") || strcmp(type, "option<string>"))
+        {
+            Recievable<char*>* rcbl = string_recievables.at(key);
+            rcbl->set_value(s_value);
+        }
     }
 
     // Send response
@@ -190,15 +209,15 @@ esp_err_t GUI::start_webserver(void)
             .handler = GUI::handle_update,
             .user_ctx = NULL};
 
-        httpd_uri_t recievable_uri = {
-            .uri = "/recievable",
-            .method = HTTP_PUT,
-            .handler = GUI::handle_recievable,
-            .user_ctx = NULL};
+        //httpd_uri_t recievable_uri = {
+        //    .uri = "/recievable",
+        //    .method = HTTP_PUT,
+        //    .handler = GUI::handle_recievable,
+        //    .user_ctx = NULL};
 
         httpd_register_uri_handler(server, &root_uri);
         httpd_register_uri_handler(server, &update_uri);
-        httpd_register_uri_handler(server, &recievable_uri);
+        //httpd_register_uri_handler(server, &recievable_uri);
 
         return ESP_OK;
     }
@@ -438,19 +457,16 @@ bool GUI::is_recievable_registered(char *key)
 char* GUI::serialize_sndb_to_json() 
 {
     size_t buffer_size = int_callables.size() * ENTRY_BUFFER_SIZE \
-                                 + float_callables.size() * ENTRY_BUFFER_SIZE \
-                                 + string_callables.size() * ENTRY_BUFFER_SIZE \
-                                 + bool_callables.size() * ENTRY_BUFFER_SIZE;
+                         + float_callables.size() * ENTRY_BUFFER_SIZE \
+                         + string_callables.size() * ENTRY_BUFFER_SIZE \
+                         + bool_callables.size() * ENTRY_BUFFER_SIZE;
+
+    bool first = true;
 
     if (buffer_size == 0)
     {
         return "";
     }
-
-    bool first = true;
-
-    // Buffer to store serialized data
-    char* buffer = new char[buffer_size];
 
     size_t int_buf_size = int_callables.size() * ENTRY_BUFFER_SIZE;
     char* int_buf = new char[int_buf_size];
@@ -460,22 +476,22 @@ char* GUI::serialize_sndb_to_json()
         int value = int_entry.second();
         char* int_val_buf = new char[16];
         snprintf(int_val_buf, (size_t)15, "%d", value);
-        if (first)
+        if (!first)
         {
-            strncpy(int_buf, ",\"", int_buf_size-1);
-            first = false;
+            strcpy(int_buf, ",\"");
         } else
         {
-            strncpy(int_buf, "\"", int_buf_size-1);
+            strcpy(int_buf, "\"");
+            first = false;
         }
 
-        strncat(int_buf, key, int_buf_size-1);
-        strncat(int_buf, "\"{", int_buf_size-1);
-        strncat(int_buf, "\"value\":", int_buf_size-1);
-        strncat(int_buf, int_val_buf, int_buf_size-1);
-        strncat(int_buf, ",\"type\":\"sendable>int\"}", int_buf_size-1);
+        strcat(int_buf, key);
+        strcat(int_buf, "\":{");
+        strcat(int_buf, "\"value\":");
+        strcat(int_buf, int_val_buf);
+        strcat(int_buf, ",\"type\":\"sendable>int\"}");
     }
-
+    
     size_t float_buf_size = float_callables.size() * ENTRY_BUFFER_SIZE;
     char* float_buf = new char[float_buf_size];
     for (std::pair<char*, float(*)()> float_entry: float_callables)
@@ -484,23 +500,23 @@ char* GUI::serialize_sndb_to_json()
         float value = float_entry.second();
         char* float_val_buf = new char[20];
         // only 5 decimal places
-        snprintf(float_val_buf, 20, "%.5f", value);
-        if (first)
+        snprintf(float_val_buf, 19, "%.5f", value);
+        if (!first)
         {
-            strncpy(float_buf, ",\"", float_buf_size-1);
-            first = false;
+            strcpy(float_buf, ",\"");
         } else
         {
-            strncpy(float_buf, "\"", float_buf_size-1);
+            strcpy(float_buf, "\"");
+            first = false;
         }
 
-        strncat(float_buf, key, float_buf_size-1);
-        strncat(float_buf, "\"{", float_buf_size-1);
-        strncat(float_buf, "\"value\":", float_buf_size-1);
-        strncat(float_buf, float_val_buf, float_buf_size-1);
-        strncat(float_buf, ",\"type\":\"sendable>float\"}", float_buf_size-1);
+        strcat(float_buf, key);
+        strcat(float_buf, ":\"{");
+        strcat(float_buf, "\"value\":");
+        strcat(float_buf, float_val_buf);
+        strcat(float_buf, ",\"type\":\"sendable>float\"}");
     }
-
+    
     size_t string_buf_size = string_callables.size() * ENTRY_BUFFER_SIZE;
     char* string_buf = new char[string_buf_size];
     for (std::pair<char*, char*(*)()> string_entry: string_callables)
@@ -508,22 +524,22 @@ char* GUI::serialize_sndb_to_json()
         char* key = string_entry.first;
         char* value = string_entry.second();
         
-        if (first)
+        if (!first)
         {
-            strncpy(string_buf, ",\"", string_buf_size-1);
-            first = false;
+            strcpy(string_buf, ",\":");
         } else
         {
-            strncpy(string_buf, "\"", string_buf_size-1);
+            strcpy(string_buf, "\":");
+            first = false;
         }
 
-        strncat(string_buf, key, string_buf_size-1);
-        strncat(string_buf, "\"{", string_buf_size-1);
-        strncat(string_buf, "\"value\":", string_buf_size-1);
-        strncat(string_buf, value, string_buf_size-1);
-        strncat(string_buf, ",\"type\":\"sendable>string\"}", string_buf_size-1);
+        strcat(string_buf, key);
+        strcat(string_buf, "\":{");
+        strcat(string_buf, "\"value\":");
+        strcat(string_buf, value);
+        strcat(string_buf, ",\"type\":\"sendable>string\"}");
     }
-
+    
     size_t bool_buf_size = bool_callables.size() * ENTRY_BUFFER_SIZE;
     char* bool_buf = new char[bool_buf_size];
     for (std::pair<char*, bool(*)()> bool_entry: bool_callables)
@@ -541,26 +557,29 @@ char* GUI::serialize_sndb_to_json()
         }
         
         
-        if (first)
+        if (!first)
         {
-            strncpy(bool_buf, ",\"", bool_buf_size-1);
-            first = false;
+            strcpy(bool_buf, ",\":");
         } else
         {
-            strncpy(bool_buf, "\"", bool_buf_size-1);
+            strcpy(bool_buf, "\":");
+            first = false;
         }
 
-        strncat(bool_buf, key, bool_buf_size-1);
-        strncat(bool_buf, "\"{", bool_buf_size-1);
-        strncat(bool_buf, "\"value\":", bool_buf_size-1);
-        strncat(bool_buf, str_value, bool_buf_size-1);
-        strncat(bool_buf, ",\"type\":\"sendable>bool\"}", bool_buf_size-1);
+        strcpy(bool_buf, key);
+        strcat(bool_buf, "\":{");
+        strcat(bool_buf, "\"value\":");
+        strcat(bool_buf, str_value);
+        strcat(bool_buf, ",\"type\":\"sendable>bool\"}");
     }
 
-    strncat(buffer, int_buf, buffer_size);
-    strncat(buffer, float_buf, buffer_size);
-    strncat(buffer, string_buf, buffer_size);
-    strncat(buffer, bool_buf, buffer_size);
+    // Buffer to store serialized data
+    char* buffer = new char[strlen(int_buf) + strlen(float_buf) + strlen(string_buf) + strlen(bool_buf)];
+
+    strncpy(buffer, int_buf, strlen(int_buf)-1);
+    strncat(buffer, float_buf, strlen(float_buf)-1);
+    strncat(buffer, string_buf, strlen(string_buf)-1);
+    strncat(buffer, bool_buf, strlen(bool_buf)-1);
     return buffer;
 }
 
@@ -572,7 +591,7 @@ char* GUI::serialize_rcvb_to_json()
 
     bool first = true;
     char* buffer = new char[buffer_size];
-    strncpy(buffer, "", buffer_size+1);
+    
 
     if (buffer_size == 0)
     {
@@ -581,44 +600,47 @@ char* GUI::serialize_rcvb_to_json()
 
     size_t int_buffer_size = RECV_BUFFER_SIZE * int_recievables.size();
     char* int_buffer = new char[int_buffer_size];
+
     for (std::pair<char*, Recievable<int>*> recievable : int_recievables)
     {
         if (first)
         {
-            strncat(int_buffer, ",\"", buffer_size+1);
+            strncpy(int_buffer, ",\"", buffer_size-1);
             first = false;
         } else {
-            strncat(int_buffer, "\"", buffer_size+1);
+            strncpy(int_buffer, "\"", buffer_size-1);
         }
 
-        strncat(int_buffer, recievable.second->serialize_to_json(), buffer_size+1);
+        strncat(int_buffer, recievable.second->serialize_to_json(), buffer_size-1);
     }
 
     size_t float_buffer_size = RECV_BUFFER_SIZE * float_recievables.size();
     char* float_buffer = new char[float_buffer_size];
+    memset(float_buffer, 0, float_buffer_size);
     for (std::pair<char*, Recievable<float>*> recievable : float_recievables)
     {
         if (first)
         {
-            strncat(float_buffer, ",\"", buffer_size+1);
+            strncpy(float_buffer, ",\"", buffer_size-1);
             first = false;
         } else {
-            strncat(float_buffer, "\"", buffer_size+1);
+            strncpy(float_buffer, "\"", buffer_size-1);
         }
 
-        strncat(float_buffer, recievable.second->serialize_to_json(), buffer_size+1);
+        strncat(float_buffer, recievable.second->serialize_to_json(), buffer_size-1);
     }
 
     size_t string_buffer_size = RECV_BUFFER_SIZE * string_recievables.size();
     char* string_buffer = new char[string_buffer_size];
+    memset(string_buffer, 0, string_buffer_size);
     for (std::pair<char*, Recievable<char*>*> recievable : string_recievables)
     {
         if (first)
         {
-            strncat(string_buffer, ",\"", buffer_size+1);
+            strncpy(string_buffer, ",\"", buffer_size-1);
             first = false;
         } else {
-            strncat(string_buffer, "\"", buffer_size+1);
+            strncpy(string_buffer, "\"", buffer_size-1);
         }
 
         strncat(string_buffer, recievable.second->serialize_to_json(), buffer_size+1);
@@ -627,6 +649,8 @@ char* GUI::serialize_rcvb_to_json()
     strncat(buffer, int_buffer, buffer_size);
     strncat(buffer, float_buffer, buffer_size);
     strncat(buffer, string_buffer, buffer_size);
+
+    ESP_LOGI(TAG, "Buffer: %s", buffer);
 
     return buffer;
 }
