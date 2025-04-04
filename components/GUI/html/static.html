@@ -21,8 +21,27 @@
             .title_text {
                 justify-self: center;
             }
+            .connection_status_wrapper {
+                width: 100vw;
+                height: 4rem;
+                font-size: small;
+                align-self: center;
+                align-content: center;
+            }
+            .connected {
+                width: 2rem;
+                height: 2rem;
+                background-color: rgb(0, 170, 0);
+                border-radius: 1rem;
+            }
+            .disconnected {
+                width: 2rem;
+                height: 2rem;
+                background-color: rgb(255, 2, 2);
+                border-radius: 1rem;
+            }
             .data_wrapper {}
-            #data {
+            .data {
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
@@ -54,12 +73,23 @@
             .data_value {
                 margin-left: 1rem       
             }
+            .option_select {
+                background-color: rgb(14, 14, 14);
+                border: 0;
+            }
+            .option {
+                background-color: rgb(14, 14, 14);
+                border: 0;
+            }
         </style>
     </header>
     <body>
         <div class="main_wrapper wrapper">
             <div class="head">
                 <h1 class="title_text">WFR Dashboard</h1>
+            </div>
+            <div class="connection_status_wrapper">
+                <div class="connected"></div><p>Connected</p>
             </div>
             <div class="data_wrapper">
                 <div id="data"></div>
@@ -77,11 +107,12 @@
                 return entry.type.startsWith("sendable")
             }
 
-            function update_sendables() {
+            function update_html() {
+                // Iterate through all registered key-values
                 order.forEach((key) => {
-                    entry = entries.get(key)
+                    let entry = entries.get(key)
 
-                    element = document.getElementById(key)
+                    let element = document.getElementById(key)
                     
                     if (entry.type.startsWith("sendable")) {
                         element.innerHTML = `<p class="data_key">${key}</p><p class="data_value">${entry.value}</p>`
@@ -93,6 +124,11 @@
                 fetch("/update", {
                     method: "GET"
                 }).then((response) => {
+                    if (response.status !== 200) {
+                        alert("Cannot reach to server");
+                        return;
+                    }
+
                     response.text().then((raw) => {
                         console.log(raw)
                         const obj_updated_values = JSON.parse(raw)
@@ -102,28 +138,54 @@
                             if (!entries.has(value[0])) {
                                 order.push(value[1])
 
-                                if (value[1].type.startsWith("recievable")) {
-                                    recievable_type = value[1].type.split(">")[1]
+                                let entries_html = document.getElementById("entries")
 
+                                if (value[1].type.startsWith("recievable")) {
+                                    const recievable_type = value[1].type.split(">")[1]
+                                    
+                                    if (recievable_type !== "option") {
+                                        html = `<div class="data_entry" id="${value[0]}_option""><p>${value[0]}</p><select class="options_select"> onchange=""`;
+                                        
+                                        value[1].value.options.forEach((option) => {
+                                            html += `<option class="option">${option}</option>`
+                                        })
+
+                                        html += `</select></div>`
+
+                                        entries_html += html
+
+                                    } else {
+                                        entries_html += `<div class="data_entry" id=${value[0]}><p>${value[0]}</p><input type="text"></input></div>`
+                                    }
+
+                                    // Now select value
+                                    let options = document.getElementById(value[0])
+                                    for (let i = 0; i < options.length; i++) {
+                                        if (options.value === value[1].value.value) {
+                                            options.options[i].selected = true
+                                        } else {
+                                            options.options[i].selected = false
+                                        }
+                                    }
                                 } else {
-                                    entries_html = document.getElementById("entries")
-                                    entries_html += `<div class="data_entry" id=${value[0]}><p class="data_key">${value[0]}</p><p class="data_value">${value[1].value}</p></div>`
+                                    entries_html.innerHTML += `<div class="data_entry" id=${value[0]}><p class="data_key">${value[0]}</p><p class="data_value">${value[1].value}</p></div>`
                                 }
                             }
 
                             entries.set(value[0], {"value": value[1].value, "type": value[1].type})
                         })
-
-                        update_sendables()
+                        
+                        // Update
+                        update_html()
                     })
                     
                 })
             }
 
             // handles changes to recievables
-            function update_recievable(key) {
-                const recievable = entries.get(key)
-                let content = recievable.key + "\n" + recievable.value + "\n" + recievable.type
+            function update_recievable(entry) {
+                const recievable = entry
+                let content = key + "\n" + recievable.value + "\n" + recievable.type
 
                 fetch("/recievable", {
                     method: "PUT",
@@ -131,7 +193,30 @@
                     headers: {
                         "Content-type": 'application/text; charset=UTF-8'
                     },
+                }).then((response) => {
+                    if (response.status !== 200) {
+                        console.error(`There is an error updating recievable, key: ${key}`)
+                    }
                 })
+            }
+
+            function handleInputChange(element) {
+                const value = element.value
+                const key = element.id
+
+                let entry = entries.get(key)
+                
+                const recievable_type = key.split(">")[1]
+
+                if (recievable_type === "option") {
+                    entry.value.value = value
+                } else {
+                    entry.value = value
+                }
+
+                entries.set(key, entry)
+
+                update_recievable(entry)
             }
 
         </script>
