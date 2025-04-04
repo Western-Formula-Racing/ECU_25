@@ -142,7 +142,7 @@ esp_err_t GUI::start_soft_ap(void)
             .password = WIFI_PASS,
             .ssid_len = strlen(WIFI_SSID),
             .authmode = WIFI_AUTH_WPA_WPA2_PSK,
-            .max_connection = 4,
+            .max_connection = 1,
             .beacon_interval = 100, // ms
         },
     };
