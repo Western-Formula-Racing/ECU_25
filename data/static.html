@@ -16,29 +16,36 @@
                 width: 100vw;
                 height: 6rem;
                 padding-top: 0;
-                margin-bottom: 2cqb;
             }
             .title_text {
                 justify-self: center;
             }
             .connection_status_wrapper {
-                width: 100vw;
-                height: 4rem;
+                display: flex;
+                flex-direction: row;
+                width: 98vw;
+                height: 2rem;
+                margin-right: 2vw;
                 font-size: small;
                 align-self: center;
                 align-content: center;
+                justify-content: end;
             }
             .connected {
-                width: 2rem;
-                height: 2rem;
+                width: 1rem;
+                height: 1rem;
                 background-color: rgb(0, 170, 0);
                 border-radius: 1rem;
+                align-self: center;
+                justify-self: center;
             }
             .disconnected {
-                width: 2rem;
-                height: 2rem;
+                width: 1rem;
+                height: 1rem;
                 background-color: rgb(255, 2, 2);
-                border-radius: 1rem;
+                border-radius: 0.5rem;
+                align-self: center;
+                justify-self: center;
             }
             .data_wrapper {}
             .data {
@@ -99,7 +106,7 @@
             let entries = new Map()
             let order = []
             
-            setTimeout(retrieve_entries, 200) //200ms
+            setTimeout(update_entries, 200) //200ms
 
             function is_sendable_entry(key) {
                 entry = entries.key(key);
@@ -120,8 +127,8 @@
                 })
             }
 
-            function retrieve_entries() {
-                fetch("/update", {
+            function update_entries() {
+                fetch("http://192.168.4.1:3000/update", {
                     method: "GET"
                 }).then((response) => {
                     if (response.status !== 200) {
