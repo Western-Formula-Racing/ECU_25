@@ -45,7 +45,7 @@ char *Option<T>::serialize_to_json()
 {
     char* buffer = new char[OPTION_BUFFER_SIZE];
 
-    strncpy(buffer, "{\"value\":", OPTION_BUFFER_SIZE-1);
+    strncpy(buffer, "{\"value\": {\"value\": ", OPTION_BUFFER_SIZE-1);
     
     size_t value_buffer_size = 20;
     char* value_buffer = new char[value_buffer_size];
@@ -53,17 +53,40 @@ char *Option<T>::serialize_to_json()
     {
         snprintf(value_buffer, value_buffer_size, "%d", get_value());
         strncat(buffer, value_buffer, OPTION_BUFFER_SIZE - 1);
-        strncat(buffer, "\"type\":\"recievable>option>int\"}", OPTION_BUFFER_SIZE - 1);
+        strncat(buffer, "}, options: [", OPTION_BUFFER_SIZE - 1);
+
+        for (T option : options)
+        {
+            snprintf(value_buffer, value_buffer_size, "%d", option);
+            strncat(buffer, value_buffer, OPTION_BUFFER_SIZE - 1);
+        }
+
+        strncat(buffer, "]\"type\":\"recievable>option>int\"}", OPTION_BUFFER_SIZE - 1);
     } else if (typeid(T) == typeid(float))
     {
         snprintf(value_buffer, value_buffer_size, "%.5f", get_value());
         strncat(buffer, value_buffer, OPTION_BUFFER_SIZE - 1);
-        strncat(buffer, "\"type\":\"recievable>option>float\"}", OPTION_BUFFER_SIZE - 1);
+        strncat(buffer, "}, options: [", OPTION_BUFFER_SIZE - 1);
+
+        for (T option : options)
+        {
+            snprintf(value_buffer, value_buffer_size, "%.5f", option);
+            strncat(buffer, value_buffer, OPTION_BUFFER_SIZE - 1);
+        }
+
+        strncat(buffer, "]\"type\":\"recievable>option>float\"}", OPTION_BUFFER_SIZE - 1);
     } else 
     {
         snprintf(value_buffer, value_buffer_size, "%s", get_value());
         strncat(buffer, value_buffer, OPTION_BUFFER_SIZE - 1);
-        strncat(buffer, "\"type\":\"recievable>option>string\"}", OPTION_BUFFER_SIZE - 1);
+        strncat(buffer, "}, options: [", OPTION_BUFFER_SIZE - 1);
+
+        for (T option : options)
+        {
+            strncat(buffer, option, OPTION_BUFFER_SIZE - 1);
+        }
+
+        strncat(buffer, "]\"type\":\"recievable>option>string\"}", OPTION_BUFFER_SIZE - 1);
     } 
 
     return buffer;
