@@ -6,7 +6,7 @@
 #include <vector>
 #include <typeinfo>
 
-#define OPTION_BUFFER_SIZE 100
+#define OPTION_BUFFER_SIZE 300
 
 // While there is a template here only int, float and string are supported
 template<class T>
