@@ -5,6 +5,9 @@
 #include "etl/array.h"
 #include "CAN_Config.hpp"
 #include "IO.h"
+#include "Pedals.h"
+
+#define RTD_TIME 2000
 
 namespace StateMachine{
 enum State

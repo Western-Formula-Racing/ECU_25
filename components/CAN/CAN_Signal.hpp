@@ -3,6 +3,9 @@
 #include <stdio.h>
 #include "esp_log.h"
 #include <variant>
+#include "esp_timer.h"
+
+#define TIMEOUT 2000
 
 class CAN_Signal
 {
