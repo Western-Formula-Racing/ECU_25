@@ -7,6 +7,7 @@
 #include <esp_spiffs.h>
 #include <stdio.h>
 #include <cstring>
+#include <string>
 #include <unordered_map>
 #include <Recievable.h>
 #include <FloatRecievable.h>
@@ -17,8 +18,8 @@
 #define WIFI_SSID "WFR-ECU-AP"
 #define WIFI_PASS "123456789" 
 #define SERVER_PORT 3000
-#define ENTRY_BUFFER_SIZE 50
-#define HTML_SIZE 4815
+#define ENTRY_BUFFER_SIZE 150
+#define HTML_SIZE 8650
 
 class GUI
 {
@@ -52,8 +53,6 @@ private:
 
     // Serialize sendables to json
     static char* serialize_rcvb_to_json(void);
-
-    // Serialize 
 
     // Maps
     static std::unordered_map<char*, int(*)()> int_callables;
@@ -112,10 +111,10 @@ public:
     void remove_sendable(char* key);
 
     // Checks sendable is registered from key
-    bool is_sendable_registered(char* key);
+    static bool is_sendable_registered(char* key);
 
     // Checks if recievable exists
-    bool is_recievable_registered(char* key);
+    static bool is_recievable_registered(char* key);
 
     // Deleting the copy constructor and copy reference constructor to prevent copies
     GUI(const GUI &) = delete;
