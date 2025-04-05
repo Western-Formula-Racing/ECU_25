@@ -25,29 +25,12 @@ extern "C" void app_main(void)
     ESP_LOGI(TAG, "Main Has begun");
     can0.begin();
     
-    float torque = 100;
-    int directionCommand = 1;
-    bool inverterEnable = false;
-    bool inverterDischarge = false;
-    bool speedModeEnable = false;
-    float torqueLimit = 200.0f;
     IO::Get();// setup IO for heart beat
     xTaskCreatePinnedToCore(StateMachine::StateMachineLoop, "StateMachineLoop", 4096, NULL, configMAX_PRIORITIES - 1, nullptr, 1);
     bool onboard_LED = 0;
     while(true){
         onboard_LED = !onboard_LED;
-        torque = torque *-1;
-        VCU_INV_Torque_Command_ID192.set(torque);
-
         gpio_set_level(GPIO_NUM_48, onboard_LED);  // heart beat LED  
-        // printf("inverter torque req raw: %lld\n", torqueRequest_Signal.get_raw());
-        // printf("inverter torque req uint: %lld\n", torqueRequest_Signal.get_uint64());
-        // printf("inverter torque req int: %d\n", torqueRequest_Signal.get_int());
-        // printf("inverter torque req bool: %d\n", torqueRequest_Signal.get_bool());
-        // printf("inverter torque req float: %f\n", torqueRequest_Signal.get_float());
-        // printf("ADC1 read: %d\n", IO::Get()->analogRead(ECU_1_A1));
-        // printf(">throttle:%.2f\n", Pedals::Get()->getThrottle());
-        // printf("heart beat!\n");
         vTaskDelay(pdMS_TO_TICKS(100));
     }
     

@@ -2,13 +2,14 @@
 
 using namespace StateMachine;
 int64_t rtd_start_time;
+float throttle;
+int rtd_button;
 
 State StateMachine::handle_start()
 {
     State nextState = START;
     VCU_INV_Torque_Command_ID192.set(0);
-    int rtd_button = IO::Get()->digitalRead(ECU_TEST);
-    // int rtd_button = 1;
+    
     PACK_STATE pack_status = (PACK_STATE)PackStatus_ID1056.get_int();
     printf(">packStatus:%d\n", pack_status);
     if (pack_status == PACK_ACTIVE && rtd_button)
@@ -39,7 +40,7 @@ State StateMachine::handle_startup_delay()
 {
     State nextState = START;
     VCU_INV_Torque_Command_ID192.set(0);
-    int rtd_button = IO::Get()->digitalRead(ECU_TEST);
+    rtd_button = IO::Get()->digitalRead(ECU_TEST);
     // int rtd_button = 1;
     PACK_STATE pack_status = (PACK_STATE)PackStatus_ID1056.get_int();
     int64_t current_time = esp_timer_get_time()/1000;
@@ -89,6 +90,8 @@ void StateMachine::StateMachineLoop(void *)
     State state = START;
     
     for(;;){ 
+        //Sensors checked in all states:
+        rtd_button = IO::Get()->digitalRead(ECU_TEST);
         state = states[state]();
         printf(">state:%d\n", state);
         vTaskDelay(pdMS_TO_TICKS(10));
