@@ -9,6 +9,11 @@ State StateMachine::handle_start()
 {
     State nextState = START;
     VCU_INV_Torque_Command_ID192.set(0);
+    VCU_INV_Inverter_Enable_ID192.set(false);
+    VCU_INV_Torque_Limit_Command_ID192.set(0);
+    BMS_Max_Discharge_Current_ID514.set(5);
+    BMS_Max_Charge_Current_ID514.set(0);
+
     
     PACK_STATE pack_status = (PACK_STATE)PackStatus_ID1056.get_int();
     printf(">packStatus:%d\n", pack_status);
@@ -26,6 +31,8 @@ State StateMachine::handle_precharge_enable()
 {
     State nextState = PRECHARGE_ERROR;
     VCU_INV_Torque_Command_ID192.set(0);
+    VCU_INV_Inverter_Enable_ID192.set(false);
+    VCU_INV_Torque_Limit_Command_ID192.set(0);
     return nextState;
 }
 
@@ -33,6 +40,8 @@ State StateMachine::handle_precharge_ok()
 {
     State nextState = PRECHARGE_OK;
     VCU_INV_Torque_Command_ID192.set(0);
+    VCU_INV_Inverter_Enable_ID192.set(false);
+    VCU_INV_Torque_Limit_Command_ID192.set(0);
     return nextState;
 }
 
@@ -40,6 +49,8 @@ State StateMachine::handle_startup_delay()
 {
     State nextState = START;
     VCU_INV_Torque_Command_ID192.set(0);
+    VCU_INV_Inverter_Enable_ID192.set(false);
+    VCU_INV_Torque_Limit_Command_ID192.set(0);
     rtd_button = IO::Get()->digitalRead(ECU_TEST);
     // int rtd_button = 1;
     PACK_STATE pack_status = (PACK_STATE)PackStatus_ID1056.get_int();
@@ -59,6 +70,8 @@ State StateMachine::handle_startup_delay()
 State StateMachine::handle_drive()
 {
     State nextState = START;
+    VCU_INV_Inverter_Enable_ID192.set(true);
+    VCU_INV_Torque_Limit_Command_ID192.set(50);
     PACK_STATE pack_status = (PACK_STATE)PackStatus_ID1056.get_int();
     if(pack_status == PACK_ACTIVE){
         nextState = DRIVE;
@@ -69,10 +82,16 @@ State StateMachine::handle_drive()
 }
 State StateMachine::handle_precharge_error()
 {
+    VCU_INV_Torque_Command_ID192.set(0);
+    VCU_INV_Inverter_Enable_ID192.set(false);
+    VCU_INV_Torque_Limit_Command_ID192.set(0);
     return PRECHARGE_ERROR;
 }
 State StateMachine::handle_device_fault()
 {
+    VCU_INV_Torque_Command_ID192.set(0);
+    VCU_INV_Inverter_Enable_ID192.set(false);
+    VCU_INV_Torque_Limit_Command_ID192.set(0);
     return DEVICE_FAULT;
 }
 
