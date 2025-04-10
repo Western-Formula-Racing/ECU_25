@@ -7,6 +7,7 @@
 #include "Sensors.h"
 #include "IO.h"
 #include "Devices.h"
+#include "GUI.h"
 #include "esp_log.h"
 #include "CAN.h"
 #include "driver/twai.h"
@@ -54,5 +55,4 @@ extern "C" void app_main(void)
         printf("heart beat!\n");
         vTaskDelay(pdMS_TO_TICKS(100));
     }
-    
 }
