@@ -4,6 +4,7 @@ using namespace StateMachine;
 int64_t rtd_start_time;
 float throttle;
 int rtd_button;
+PACK_STATE pack_status;
 
 State StateMachine::handle_start()
 {
@@ -15,8 +16,7 @@ State StateMachine::handle_start()
     BMS_Max_Charge_Current_ID514.set(0);
 
     
-    PACK_STATE pack_status = (PACK_STATE)PackStatus_ID1056.get_int();
-    printf(">packStatus:%d\n", pack_status);
+    pack_status = (PACK_STATE)PackStatus_ID1056.get_int();
     if (pack_status == PACK_ACTIVE && rtd_button)
     {
         rtd_start_time = esp_timer_get_time()/1000;
@@ -53,7 +53,7 @@ State StateMachine::handle_startup_delay()
     VCU_INV_Torque_Limit_Command_ID192.set(0);
     rtd_button = IO::Get()->digitalRead(ECU_TEST);
     // int rtd_button = 1;
-    PACK_STATE pack_status = (PACK_STATE)PackStatus_ID1056.get_int();
+    pack_status = (PACK_STATE)PackStatus_ID1056.get_int();
     int64_t current_time = esp_timer_get_time()/1000;
     if (pack_status == PACK_ACTIVE && rtd_button && (current_time - rtd_start_time) < RTD_TIME )
     {
@@ -72,7 +72,7 @@ State StateMachine::handle_drive()
     State nextState = START;
     VCU_INV_Inverter_Enable_ID192.set(true);
     VCU_INV_Torque_Limit_Command_ID192.set(50);
-    PACK_STATE pack_status = (PACK_STATE)PackStatus_ID1056.get_int();
+    pack_status = (PACK_STATE)PackStatus_ID1056.get_int();
     if(pack_status == PACK_ACTIVE){
         nextState = DRIVE;
         VCU_INV_Torque_Command_ID192.set(50*Pedals::Get()->getThrottle());
@@ -110,8 +110,10 @@ void StateMachine::StateMachineLoop(void *)
     
     for(;;){ 
         //Sensors checked in all states:
-        rtd_button = IO::Get()->digitalRead(ECU_TEST);
+        Sensors::Get()->poll_sensors();
+        rtd_button = IO::Get()->digitalRead(ECU_TEST);;
         state = states[state]();
+        printf(">packStatus:%d\n", pack_status);
         printf(">state:%d\n", state);
         vTaskDelay(pdMS_TO_TICKS(10));
     }

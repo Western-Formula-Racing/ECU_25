@@ -6,6 +6,7 @@
 #include "CAN_Config.hpp"
 #include "IO.h"
 #include "Pedals.h"
+#include "Sensors.h"
 
 #define RTD_TIME 2000
 

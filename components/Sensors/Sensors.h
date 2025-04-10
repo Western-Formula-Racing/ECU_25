@@ -4,7 +4,8 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "freertos/semphr.h"
-
+#include "IO.h"
+#include "etl/array.h"
 
 class Sensors{
 private:
@@ -12,6 +13,8 @@ private:
     static Sensors* instancePtr;
     static SemaphoreHandle_t mutex;
     Sensors();
+    etl::array<float, 14> sensor_voltages;
+
 public:
     //Deleting the copy constructor and copy reference constructor to prevent copies
     Sensors(const Sensors &) = delete;
@@ -19,6 +22,13 @@ public:
     Sensors(Sensors &&) = delete;
     Sensors &operator=(Sensors &&) = delete;
     static Sensors* Get();
+    void poll_sensors();
+    etl::array<float,14> get_sensor_voltages();
+
+    typedef enum{
+        APPS1 = ECU_9_A9,
+        APPS2 = ECU_17_A14,
+    }SENSOR_INDEX;
 
 };
 
