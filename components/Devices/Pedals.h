@@ -7,7 +7,7 @@
 #include "IO.h"
 #include "driver/gpio.h"
 #include "CAN_Config.hpp"
-
+#include "Sensors.h"
 
 #define BRAKE_PRESSURE_FACTOR 1.0f
 #define BRAKE_PRESSURE_OFFSET 0.0f

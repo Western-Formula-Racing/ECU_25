@@ -75,7 +75,7 @@ State StateMachine::handle_drive()
     pack_status = (PACK_STATE)PackStatus_ID1056.get_int();
     if(pack_status == PACK_ACTIVE){
         nextState = DRIVE;
-        VCU_INV_Torque_Command_ID192.set(50*Pedals::Get()->getThrottle());
+        VCU_INV_Torque_Command_ID192.set(10*throttle);
     }
 
     return nextState;
@@ -111,7 +111,8 @@ void StateMachine::StateMachineLoop(void *)
     for(;;){ 
         //Sensors checked in all states:
         Sensors::Get()->poll_sensors();
-        rtd_button = IO::Get()->digitalRead(ECU_TEST);;
+        rtd_button = IO::Get()->digitalRead(ECU_TEST);
+        throttle = Pedals::Get()->getThrottle();
         state = states[state]();
         printf(">packStatus:%d\n", pack_status);
         printf(">state:%d\n", state);

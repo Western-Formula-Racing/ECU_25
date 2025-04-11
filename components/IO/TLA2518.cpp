@@ -37,7 +37,7 @@ int TLA2518::readChannel(uint8_t channel){
   t.rxlength = 8*sizeof(rx_buffer);
   t.rx_buffer = rx_buffer;
   spi_device_transmit(adcHandle,&t);
-
+  vTaskDelay(pdMS_TO_TICKS(1));  
   return ((int)rx_buffer[0]<<4 | (int)rx_buffer[1]>>4);
 
 };

@@ -70,7 +70,7 @@ void IO::setupSPI(){
 
 int IO::analogRead(ECU_ANALOG_PIN pin)
 {
-    if(pin <= ECU_7_A7){
+    if(pin <= ECU_8_A8){
         return adc1_handle->readChannel(pin);
     }
     else{
@@ -79,11 +79,15 @@ int IO::analogRead(ECU_ANALOG_PIN pin)
 }
 double IO::analogReadVoltage(ECU_ANALOG_PIN pin)
 {
-    if(pin <= ECU_7_A7){
-        return adc2_handle->readVoltage(pin);
+    if(pin <= ECU_8_A8){
+        float value = adc1_handle->readVoltage(pin);
+        printf(">adc1_channel_%d:%.2f\n",pin, value);
+        return value;
     }
     else{
-        return adc2_handle->readVoltage(pin-8);
+        float value = adc2_handle->readVoltage(pin-8);
+        printf(">adc2_channel_%d:%.2f\n",pin-8, value);
+        return value;
     }
 }
 

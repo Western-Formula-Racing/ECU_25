@@ -18,8 +18,7 @@ private:
     IO();
     static IO* instancePtr;
     static SemaphoreHandle_t mutex;
-    TLA2518* adc1_handle;
-    TLA2518* adc2_handle;
+    
     i2c_master_bus_handle_t i2c_handle;
     FXL6408UMX* hsd_handle;
     ICM20948* imu_handle;
@@ -44,6 +43,8 @@ private:
     double getGyroX();
     double getGyroY();
     double getGyroZ();
+    TLA2518* adc1_handle;
+    TLA2518* adc2_handle;
 
 };
 #endif

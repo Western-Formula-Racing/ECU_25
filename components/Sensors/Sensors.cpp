@@ -31,7 +31,7 @@ void Sensors::poll_sensors()
 {
     for (int i = 0; i <= 13; i++){
         sensor_voltages[i] = IO::Get()->analogReadVoltage(static_cast<ECU_ANALOG_PIN>(i));
-        printf(">sensor[%d]_voltage:%.2f\n", i, sensor_voltages[i]);
+        printf(">ADC%d_voltage:%.2f\n", i, sensor_voltages[i]);
     }
 }
 
