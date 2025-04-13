@@ -28,20 +28,25 @@ void TLA2518::writeRegister(uint8_t address, uint8_t value){
 };
 
 int TLA2518::readChannel(uint8_t channel){
-
+  if (channel <= 5){
+    channel = channel  + 2;
+  }
+  else{
+    channel = channel - 6; 
+  }
   uint8_t tx_buffer[3] = {TLA_CMD_WRITE,TLA_CHANNEL_SEL,channel};
   uint8_t rx_buffer[2] = {0,0};
   spi_transaction_t t = {};
   t.length = 8*sizeof(tx_buffer);
   t.tx_buffer = tx_buffer;
   t.rxlength = 8*sizeof(rx_buffer);
-  t.rx_buffer = rx_buffer;
-  spi_device_transmit(adcHandle,&t);
-  vTaskDelay(pdMS_TO_TICKS(1));  
+  t.rx_buffer = rx_buffer;  
+  spi_device_transmit(adcHandle,&t);  
   return ((int)rx_buffer[0]<<4 | (int)rx_buffer[1]>>4);
 
 };
 
-double TLA2518::readVoltage(uint8_t channel){
-  return readChannel(channel)*(5.0/4096.0);
+float TLA2518::readVoltage(uint8_t channel){
+  float value = readChannel(channel)*(5.0f/4096.0f); 
+  return value;
 }

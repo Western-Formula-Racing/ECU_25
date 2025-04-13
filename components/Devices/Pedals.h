@@ -28,7 +28,8 @@ private:
     float apps1_max_voltage;
     float apps2_min_voltage;
     float apps2_max_voltage;
-
+    float apps1_voltage;
+    float apps2_voltage;
     float apps_sensor1_percent;
     float apps_sensor2_percent;
     float throttle;

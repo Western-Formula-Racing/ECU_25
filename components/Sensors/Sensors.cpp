@@ -29,10 +29,23 @@ Sensors *Sensors::Get()
 
 void Sensors::poll_sensors()
 {
-    for (int i = 0; i <= 13; i++){
-        sensor_voltages[i] = IO::Get()->analogReadVoltage(static_cast<ECU_ANALOG_PIN>(i));
-        printf(">ADC%d_voltage:%.2f\n", i, sensor_voltages[i]);
+
+for (int i = 0; i<=7; i++){
+        float value = IO::Get()->adc1_handle->readVoltage(i);
+        sensor_voltages[i] = value;
+        printf(">adc1_%d:%.2f\n", i, value);
     }
+    for (int i = 0; i<=5; i++){
+        float value = IO::Get()->adc2_handle->readVoltage(i);
+        sensor_voltages[i+8] = value;
+        printf(">adc2_%d:%.2f\n", i, value);
+    }
+
+    // for (int i = 0; i <= 13; i++){
+        
+    //     sensor_voltages[i] = IO::Get()->analogReadVoltage(static_cast<ECU_ANALOG_PIN>(i));
+    //     printf(">ADC%d_voltage:%.2f\n", i+1, sensor_voltages[i]);
+    // }
 }
 
 etl::array<float,14> Sensors::get_sensor_voltages(){
