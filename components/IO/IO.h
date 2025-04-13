@@ -32,17 +32,17 @@ private:
     static IO* Get();
     void setupSPI();
     int analogRead(ECU_ANALOG_PIN pin);
-    double analogReadVoltage(ECU_ANALOG_PIN pin);
+    float analogReadVoltage(int pin);
     int digitalRead(ECU_IO_PIN pin);
     void digitalWrite(ECU_IO_PIN pin);   
     void setupI2C();
     void HSDWrite(ECU_HSD_PIN channel, bool level);
-    double getAccelX();
-    double getAccelY();
-    double getAccelZ();
-    double getGyroX();
-    double getGyroY();
-    double getGyroZ();
+    float getAccelX();
+    float getAccelY();
+    float getAccelZ();
+    float getGyroX();
+    float getGyroY();
+    float getGyroZ();
     TLA2518* adc1_handle;
     TLA2518* adc2_handle;
 

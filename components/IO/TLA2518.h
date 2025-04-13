@@ -48,7 +48,7 @@ class TLA2518{
   
   TLA2518(spi_host_device_t spiHost, int cs_pin); 
   int readChannel(uint8_t channel);
-  double readVoltage(uint8_t channel);
+  float readVoltage(uint8_t channel);
   void writeRegister(uint8_t address, uint8_t value);
 };
 

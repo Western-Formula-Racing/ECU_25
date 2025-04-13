@@ -74,20 +74,20 @@ int IO::analogRead(ECU_ANALOG_PIN pin)
         return adc1_handle->readChannel(pin);
     }
     else{
-        return adc2_handle->readChannel(pin-8);
+        pin = static_cast<ECU_ANALOG_PIN>(static_cast<int>(pin) - 8);
+        return adc2_handle->readChannel(pin);
     }
 }
-double IO::analogReadVoltage(ECU_ANALOG_PIN pin)
+float IO::analogReadVoltage(int pin)
 {
-    if(pin <= ECU_8_A8){
-        float value = adc1_handle->readVoltage(pin);
-        printf(">adc1_channel_%d:%.2f\n",pin, value);
-        return value;
+    if(pin >= 8){
+      pin -= 8;
+      float value = adc2_handle->readVoltage(pin);
+      // printf(">pin%d:%.2f\n", pin, value);
+      return value;
     }
     else{
-        float value = adc2_handle->readVoltage(pin-8);
-        printf(">adc2_channel_%d:%.2f\n",pin-8, value);
-        return value;
+      return 0;
     }
 }
 
@@ -116,26 +116,26 @@ int IO::digitalRead(ECU_IO_PIN pin){
     return gpio_get_level((gpio_num_t)pin);
 }
 
-double IO::getAccelX(){
+float IO::getAccelX(){
   return imu_handle->getAccelX();
 }
 
-double IO::getAccelY(){
+float IO::getAccelY(){
   return imu_handle->getAccelY();
 }
 
-double IO::getAccelZ(){
+float IO::getAccelZ(){
   return imu_handle->getAccelZ();
 }
 
-double IO::getGyroX(){
+float IO::getGyroX(){
   return imu_handle->getGyroX();
 }
 
-double IO::getGyroY(){
+float IO::getGyroY(){
   return imu_handle->getGyroY();
 }
 
-double IO::getGyroZ(){
+float IO::getGyroZ(){
   return imu_handle->getGyroZ();
 }
