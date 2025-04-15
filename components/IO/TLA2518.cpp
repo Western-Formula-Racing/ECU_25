@@ -34,7 +34,7 @@ int TLA2518::readChannel(uint8_t channel){
   else{
     channel = channel - 6; 
   }
-  uint8_t tx_buffer[3] = {TLA_CMD_WRITE,TLA_CHANNEL_SEL,channel};
+  uint8_t tx_buffer[4] = {TLA_CMD_WRITE,TLA_CHANNEL_SEL,channel};
   uint8_t rx_buffer[2] = {0,0};
   spi_transaction_t t = {};
   t.length = 8*sizeof(tx_buffer);
@@ -42,7 +42,8 @@ int TLA2518::readChannel(uint8_t channel){
   t.rxlength = 8*sizeof(rx_buffer);
   t.rx_buffer = rx_buffer;  
   spi_device_transmit(adcHandle,&t);  
-  return ((int)rx_buffer[0]<<4 | (int)rx_buffer[1]>>4);
+  int val = ((int)rx_buffer[0]<<4 | (int)rx_buffer[1]>>4);
+  return val;
 
 };
 

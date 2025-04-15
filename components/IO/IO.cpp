@@ -3,7 +3,7 @@
 static const char *TAG = "IO"; // Used for ESP_LOGx commands. See ESP-IDF Documentation
 
 IO *IO::instancePtr = nullptr;
-SemaphoreHandle_t IO::mutex = xSemaphoreCreateMutex();
+  SemaphoreHandle_t IO::mutex = xSemaphoreCreateMutex();
 
 IO::IO()
 {
