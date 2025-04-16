@@ -23,25 +23,33 @@ void TLA2518::writeRegister(uint8_t address, uint8_t value){
   uint8_t tx_buffer[3] = {TLA_CMD_WRITE,address,value};
   spi_transaction_t t = {};
   t.length = 8*sizeof(tx_buffer);
-  t.tx_buffer = tx_buffer;
+  t.tx_buffer = (const void*)tx_buffer;
   spi_device_transmit(adcHandle,&t);
 };
 
 int TLA2518::readChannel(uint8_t channel){
-  if (channel <= 5){
-    channel = channel  + 2;
-  }
-  else{
-    channel = channel - 6; 
-  }
-  uint8_t tx_buffer[4] = {TLA_CMD_WRITE,TLA_CHANNEL_SEL,channel};
-  uint8_t rx_buffer[2] = {0,0};
+  volatile uint8_t tx_buffer[3] = {TLA_CMD_WRITE,TLA_CHANNEL_SEL,channel};
+  volatile uint8_t rx_buffer[2] = {0,0};
   spi_transaction_t t = {};
   t.length = 8*sizeof(tx_buffer);
-  t.tx_buffer = tx_buffer;
+  t.tx_buffer = (const void*)tx_buffer;
   t.rxlength = 8*sizeof(rx_buffer);
-  t.rx_buffer = rx_buffer;  
+  t.rx_buffer = (void*)rx_buffer;  
+
+  printf("t.flags: %ld, t.cmd: %d, t.addr: %lld, t.length: %d\n", t.flags, t.cmd, t.addr, t.length);
+  for(int i = 0; i <= 2; i++){
+    printf("tx_buffer[%d]: %d ", i, tx_buffer[i]);
+  }
+  printf("\n");
+  printf("tx_buffer:%p\n", tx_buffer);
+  printf("t.tx_buffer:%p\n", t.tx_buffer);
+  for(int i = 0; i <= 3; i++){
+    printf("t.tx_buffer[%d]: %d ", i, ((uint8_t*)t.tx_buffer)[i]);
+  }
+  printf("\n");
   spi_device_transmit(adcHandle,&t);  
+  spi_device_transmit(adcHandle,&t);
+  spi_device_transmit(adcHandle,&t);
   int val = ((int)rx_buffer[0]<<4 | (int)rx_buffer[1]>>4);
   return val;
 

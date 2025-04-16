@@ -2,8 +2,10 @@
 #include "esp_log.h"
 static const char *TAG = "IO"; // Used for ESP_LOGx commands. See ESP-IDF Documentation
 
-IO *IO::instancePtr = nullptr;
-  SemaphoreHandle_t IO::mutex = xSemaphoreCreateMutex();
+IO* IO::instancePtr = nullptr;
+SemaphoreHandle_t IO::mutex = xSemaphoreCreateMutex();
+TLA2518* IO::adc1_handle = nullptr;
+TLA2518* IO::adc2_handle = nullptr;
 
 IO::IO()
 {
@@ -30,17 +32,19 @@ IO::IO()
     adc1_handle =  new TLA2518(SPI2_HOST, GPIO_NUM_41);
     adc2_handle = new TLA2518(SPI2_HOST, GPIO_NUM_42);
     imu_handle = new ICM20948(SPI2_HOST,IMU_CS);
+    printf("IO initialized\n");
     ESP_LOGI(TAG, "IO Initialized");
     
 }
 
-IO *IO::Get()
+IO*  IO::Get()
 {
     if (instancePtr == nullptr && IO::mutex)
     {
         if (xSemaphoreTake(IO::mutex, (TickType_t)10) == pdTRUE)
         {
-            instancePtr = new IO();
+            IO* volatile temp = new IO();          
+            instancePtr = temp;
             xSemaphoreGive(IO::mutex);
         }
         else
@@ -48,10 +52,11 @@ IO *IO::Get()
             ESP_LOGW(TAG, "Mutex couldn't be obtained");
         }
     }
+    printf("instance %#010x returned!\n", (int)instancePtr); 
     return instancePtr;
 }
 
-void IO::setupSPI(){
+void IO::setupSPI()  {
 
   spi_bus_config_t spiConfig = {
     
@@ -71,23 +76,24 @@ void IO::setupSPI(){
 int IO::analogRead(ECU_ANALOG_PIN pin)
 {
     if(pin <= ECU_8_A8){
-        return adc1_handle->readChannel(pin);
+        return IO::adc1_handle->readChannel(pin);
     }
     else{
         pin = static_cast<ECU_ANALOG_PIN>(static_cast<int>(pin) - 8);
-        return adc2_handle->readChannel(pin);
+        return IO::adc2_handle->readChannel(pin);
     }
 }
 float IO::analogReadVoltage(int pin)
 {
     if(pin >= 8){
       pin -= 8;
-      float value = adc2_handle->readVoltage(pin);
+      float value = IO::adc2_handle->readVoltage(pin);
       // printf(">pin%d:%.2f\n", pin, value);
       return value;
     }
     else{
-      return 0;
+      float value = IO::adc1_handle->readVoltage(pin);
+      return value;
     }
 }
 

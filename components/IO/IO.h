@@ -43,8 +43,8 @@ private:
     float getGyroX();
     float getGyroY();
     float getGyroZ();
-    TLA2518* adc1_handle;
-    TLA2518* adc2_handle;
+    static TLA2518* adc1_handle;
+    static TLA2518* adc2_handle;
 
 };
 #endif
