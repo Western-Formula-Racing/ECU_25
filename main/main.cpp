@@ -25,33 +25,10 @@ extern "C" void app_main(void)
     ESP_LOGI(TAG, "Main Has begun");
     can0.begin();
     
-    // IO::Get();// setup IO for heart beat
-    // xTaskCreatePinnedToCore(StateMachine::StateMachineLoop, "StateMachineLoop", 4096, NULL, configMAX_PRIORITIES - 1, nullptr, 1);
+    xTaskCreatePinnedToCore(StateMachine::StateMachineLoop, "StateMachineLoop", 4096, NULL, configMAX_PRIORITIES - 1, nullptr, 1);
     bool onboard_LED = 0;
     while(true){
         onboard_LED = !onboard_LED;
-        // printf(">A8:%.2f\n", IO::Get()->analogReadVoltage(ECU_8_A8));
-        // printf(">A9:%.2f\n", IO::Get()->analogReadVoltage(ECU_9_A9));
-        // printf(">adc2_channel_0:%.2f\n", IO::Get()->adc2_handle->readVoltage(0));
-        
-        // printf(">adc2_channel_0:%2.f\n", IO::Get()->adc2_handle->readVoltage(0));
-        // printf(">A9:%2.f\n", IO::Get()->analogReadVoltage(ECU_9_A9));
-        // for (int i = 0; i<=7; i++){
-        //     printf(">adc1_%d:%.2f\n", i, IO::Get()->adc1_handle->readVoltage(i));
-        // }
-        for (int i = 0; i<=13; i++){
-            printf(">A%d:%.2f\n", i, IO::Get()->analogReadVoltage(i));
-        }
-        for (int i = 0; i<=7; i++){
-            printf(">adc1_%d:%.2f\n", i, IO::Get()->adc1_handle->readVoltage(i));
-        }
-        for (int i = 0; i<=7; i++){
-            printf(">adc2_%d:%.2f\n", i, IO::Get()->adc2_handle->readVoltage(i));
-        }
-        
-        
-
-
         gpio_set_level(GPIO_NUM_48, onboard_LED);  // heart beat LED  
         vTaskDelay(pdMS_TO_TICKS(600));
     }

@@ -83,12 +83,11 @@ int IO::analogRead(ECU_ANALOG_PIN pin)
         return IO::adc2_handle->readChannel(pin);
     }
 }
-float IO::analogReadVoltage(int pin)
+float IO::analogReadVoltage(ECU_ANALOG_PIN pin)
 {
     if(pin >= 8){
-      pin -= 8;
+      pin = static_cast<ECU_ANALOG_PIN>(static_cast<int>(pin) - 8);
       float value = IO::adc2_handle->readVoltage(pin);
-      // printf(">pin%d:%.2f\n", pin, value);
       return value;
     }
     else{

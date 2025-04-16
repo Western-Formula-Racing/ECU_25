@@ -32,7 +32,7 @@ private:
     static IO* Get();
     void setupSPI();
     int analogRead(ECU_ANALOG_PIN pin);
-    float analogReadVoltage(int pin);
+    float analogReadVoltage(ECU_ANALOG_PIN pin);
     int digitalRead(ECU_IO_PIN pin);
     void digitalWrite(ECU_IO_PIN pin);   
     void setupI2C();

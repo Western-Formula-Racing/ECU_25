@@ -35,18 +35,6 @@ int TLA2518::readChannel(uint8_t channel){
   t.tx_buffer = (const void*)tx_buffer;
   t.rxlength = 8*sizeof(rx_buffer);
   t.rx_buffer = (void*)rx_buffer;  
-
-  printf("t.flags: %ld, t.cmd: %d, t.addr: %lld, t.length: %d\n", t.flags, t.cmd, t.addr, t.length);
-  for(int i = 0; i <= 2; i++){
-    printf("tx_buffer[%d]: %d ", i, tx_buffer[i]);
-  }
-  printf("\n");
-  printf("tx_buffer:%p\n", tx_buffer);
-  printf("t.tx_buffer:%p\n", t.tx_buffer);
-  for(int i = 0; i <= 3; i++){
-    printf("t.tx_buffer[%d]: %d ", i, ((uint8_t*)t.tx_buffer)[i]);
-  }
-  printf("\n");
   spi_device_transmit(adcHandle,&t);  
   spi_device_transmit(adcHandle,&t);
   spi_device_transmit(adcHandle,&t);

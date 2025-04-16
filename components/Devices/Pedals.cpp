@@ -35,8 +35,8 @@ float Pedals::getThrottle()
     apps2_min_voltage = 2.5f;
     apps1_max_voltage = 1.0f;
     apps2_max_voltage = 4.0f;
-    apps1_voltage = IO::Get()->adc2_handle->readVoltage(0);
-    apps2_voltage = IO::Get()->adc2_handle->readVoltage(5);
+    apps1_voltage = Sensors::Get()->get_sensor_voltage(Sensors::APPS1);
+    apps2_voltage = Sensors::Get()->get_sensor_voltage(Sensors::APPS2);
     printf(">sensor1:%.2f\n>sensor2:%.2f\n", apps1_voltage, apps2_voltage);
     
     apps_sensor1_percent = min(1, max(0, (apps1_voltage - apps1_min_voltage) / (apps1_max_voltage - apps1_min_voltage)));

@@ -16,6 +16,10 @@ private:
     etl::array<float, 14> sensor_voltages;
 
 public:
+    typedef enum{
+        APPS1 = ECU_9_A9,
+        APPS2 = ECU_17_A14,
+    }SENSOR_INDEX;
     //Deleting the copy constructor and copy reference constructor to prevent copies
     Sensors(const Sensors &) = delete;
     Sensors &operator=(const Sensors &) = delete;
@@ -24,11 +28,9 @@ public:
     static Sensors* Get();
     void poll_sensors();
     etl::array<float,14> get_sensor_voltages();
+    float get_sensor_voltage(SENSOR_INDEX index);
 
-    typedef enum{
-        APPS1 = ECU_9_A9,
-        APPS2 = ECU_17_A14,
-    }SENSOR_INDEX;
+    
 
 };
 
