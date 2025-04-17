@@ -14,12 +14,14 @@
 #include <IntRecievable.h>
 #include <StringRecievable.h>
 #include <Option.h>
+#include <ButtonRecievable.h>
 
 #define WIFI_SSID "WFR-ECU-AP"
 #define WIFI_PASS "123456789" 
 #define SERVER_PORT 3000
 #define ENTRY_BUFFER_SIZE 150
-#define HTML_SIZE 8650
+#define BUTTON_BUFFER_SIZE 50
+#define HTML_SIZE 10224
 
 class GUI
 {
@@ -47,6 +49,8 @@ private:
     static esp_err_t handle_root(httpd_req_t *req);
     static esp_err_t handle_update(httpd_req_t *req);
     static esp_err_t handle_recievable(httpd_req_t *req);
+    static esp_err_t handle_fetch_recievables(httpd_req_t *req);
+    static esp_err_t handle_button_command(httpd_req_t *req);
 
     // Serialize sendables to json
     static char* serialize_sndb_to_json(void);
@@ -63,6 +67,7 @@ private:
     static std::unordered_map<char*, Recievable<int>*> int_recievables;
     static std::unordered_map<char*, Recievable<float>*> float_recievables;
     static std::unordered_map<char*, Recievable<char*>*> string_recievables;
+    static std::unordered_map<char*, ButtonRecievable*> button_recievables;
 
 public:
     // Register int sendables
@@ -85,6 +90,9 @@ public:
 
     // Register string recievable
     void register_string_recievable(char* key, Recievable<char*>* string_recievable);
+
+    // Register button recievable
+    void register_button_recievable(char* key, ButtonRecievable* button_recievable);
 
     // Get int recievable
     Recievable<int>* get_int_recievable(char* key);
