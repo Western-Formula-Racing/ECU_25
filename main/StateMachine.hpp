@@ -7,6 +7,8 @@
 #include "IO.h"
 #include "Pedals.h"
 #include "Sensors.h"
+#include "Inverter.h"
+#include "BMS.h"
 
 #define RTD_TIME 2000
 
@@ -22,14 +24,6 @@ enum State
     DEVICE_FAULT,
 };
 
-enum PACK_STATE
-{
-    PACK_IDLE,
-    PACK_PRECHARGE,
-    PACK_ACTIVE,
-    PACK_CHARGING,
-    PACK_FAULT
-};
 
 // Creating a type for state function pointers
 typedef State (*state_function_t)();

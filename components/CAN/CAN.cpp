@@ -8,7 +8,7 @@ static SemaphoreHandle_t rx_sem = xSemaphoreCreateBinary();
 static TimerHandle_t timerHandle;
 static twai_message_t tx_message = {
     // Message type and format settings
-    .extd = 1,         // Standard vs extended format
+    .extd = 0,         // Standard vs extended format
     .rtr = 0,          // Data vs RTR frame
     .ss = 0,           // Whether the message is single shot (i.e., does not repeat on error)
     .self = 0,         // Whether the message is a self reception request (loopback)

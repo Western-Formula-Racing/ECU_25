@@ -4,20 +4,27 @@ using namespace StateMachine;
 int64_t rtd_start_time;
 float throttle;
 int rtd_button;
-PACK_STATE pack_status;
+BMS::STATE pack_status;
+
+static const char* TAG = "State Machine"; //Used for ESP_LOGx commands. See ESP-IDF Documentation
 
 State StateMachine::handle_start()
 {
     State nextState = START;
-    VCU_INV_Torque_Command_ID192.set(0);
-    VCU_INV_Inverter_Enable_ID192.set(false);
-    VCU_INV_Torque_Limit_Command_ID192.set(0);
-    BMS_Max_Discharge_Current_ID514.set(5);
-    BMS_Max_Charge_Current_ID514.set(0);
-
+    Inverter::Get()->Disable();
     
-    pack_status = (PACK_STATE)PackStatus_ID1056.get_int();
-    if (pack_status == PACK_ACTIVE && rtd_button)
+    if (pack_status == BMS::FAULT)
+    {
+        ESP_LOGE(TAG, "BMS FAULT Detected");
+        nextState = DEVICE_FAULT;
+    }
+
+    else if (pack_status == BMS::PRECHARGE)
+    {
+        nextState = PRECHARGE_ENABLE;
+    }
+
+    else if (pack_status == BMS::ACTIVE && rtd_button)
     {
         rtd_start_time = esp_timer_get_time()/1000;
         nextState = STARTUP_DELAY;
@@ -29,38 +36,58 @@ State StateMachine::handle_start()
 
 State StateMachine::handle_precharge_enable()
 {
-    State nextState = PRECHARGE_ERROR;
-    VCU_INV_Torque_Command_ID192.set(0);
-    VCU_INV_Inverter_Enable_ID192.set(false);
-    VCU_INV_Torque_Limit_Command_ID192.set(0);
+    State nextState = PRECHARGE_ENABLE;
+    Inverter::Get()->Disable();
+    
+    if (pack_status == BMS::FAULT)
+    {
+        ESP_LOGE(TAG, "BMS Encountered an error during precharge");
+        nextState = PRECHARGE_ERROR;
+    }
+    
+    else if (pack_status == BMS::ACTIVE)
+    {
+        nextState = PRECHARGE_OK;
+    }
     return nextState;
 }
 
 State StateMachine::handle_precharge_ok()
 {
     State nextState = PRECHARGE_OK;
-    VCU_INV_Torque_Command_ID192.set(0);
-    VCU_INV_Inverter_Enable_ID192.set(false);
-    VCU_INV_Torque_Limit_Command_ID192.set(0);
+    Inverter::Get()->Disable();
+
+    if (pack_status == BMS::ACTIVE && rtd_button)
+    {
+        rtd_start_time = esp_timer_get_time()/1000;
+        nextState = STARTUP_DELAY;
+    }
+
+    else if (pack_status == BMS::FAULT)
+    {
+        return DEVICE_FAULT;
+    }
+
     return nextState;
 }
 
 State StateMachine::handle_startup_delay()
 {
     State nextState = START;
-    VCU_INV_Torque_Command_ID192.set(0);
-    VCU_INV_Inverter_Enable_ID192.set(false);
-    VCU_INV_Torque_Limit_Command_ID192.set(0);
-    rtd_button = IO::Get()->digitalRead(ECU_TEST);
-    // int rtd_button = 1;
-    pack_status = (PACK_STATE)PackStatus_ID1056.get_int();
+    Inverter::Get()->Disable();
+    
+   
     int64_t current_time = esp_timer_get_time()/1000;
-    if (pack_status == PACK_ACTIVE && rtd_button && (current_time - rtd_start_time) < RTD_TIME )
+    if (pack_status == BMS::FAULT){
+        ESP_LOGE(TAG, "BMS FAULT Detected during startup delay");
+        nextState = DEVICE_FAULT;
+    }
+    else if (pack_status == BMS::ACTIVE && rtd_button && (current_time - rtd_start_time) < RTD_TIME )
     {
         // sound buzzer
         nextState = STARTUP_DELAY;
     }
-    else if(pack_status == PACK_ACTIVE && rtd_button && (current_time - rtd_start_time) >= RTD_TIME )
+    else if(pack_status == BMS::ACTIVE && rtd_button && (current_time - rtd_start_time) >= RTD_TIME )
     {
         nextState = DRIVE;
     }
@@ -70,28 +97,27 @@ State StateMachine::handle_startup_delay()
 State StateMachine::handle_drive()
 {
     State nextState = START;
-    VCU_INV_Inverter_Enable_ID192.set(true);
-    VCU_INV_Torque_Limit_Command_ID192.set(50);
-    pack_status = (PACK_STATE)PackStatus_ID1056.get_int();
-    if(pack_status == PACK_ACTIVE){
+    Inverter::Get()->Enable();
+    if (pack_status == BMS::FAULT){
+        ESP_LOGE(TAG, "BMS FAULT Detected during drive");
+        nextState = DEVICE_FAULT;
+    }
+
+    else if(pack_status == BMS::ACTIVE){
         nextState = DRIVE;
-        VCU_INV_Torque_Command_ID192.set(10*throttle);
+        Inverter::Get()->SetTorqueRequest(throttle);
     }
 
     return nextState;
 }
 State StateMachine::handle_precharge_error()
 {
-    VCU_INV_Torque_Command_ID192.set(0);
-    VCU_INV_Inverter_Enable_ID192.set(false);
-    VCU_INV_Torque_Limit_Command_ID192.set(0);
+    Inverter::Get()->Disable();
     return PRECHARGE_ERROR;
 }
 State StateMachine::handle_device_fault()
 {
-    VCU_INV_Torque_Command_ID192.set(0);
-    VCU_INV_Inverter_Enable_ID192.set(false);
-    VCU_INV_Torque_Limit_Command_ID192.set(0);
+    Inverter::Get()->Disable();
     return DEVICE_FAULT;
 }
 
@@ -109,13 +135,20 @@ void StateMachine::StateMachineLoop(void *)
     State state = START;
     
     for(;;){ 
+        // anything that runs in all state's should go here
         //Sensors checked in all states:
         Sensors::Get()->poll_sensors();
+
+        pack_status = BMS::Get()->getPackState();
         rtd_button = IO::Get()->digitalRead(ECU_TEST);
         throttle = Pedals::Get()->getThrottle();
-        state = states[state]();
+        
+        State_ID2002.set(state);
+
         printf(">packStatus:%d\n", pack_status);
         printf(">state:%d\n", state);
+
+        state = states[state]();
         vTaskDelay(pdMS_TO_TICKS(10));
     }
 
