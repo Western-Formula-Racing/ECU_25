@@ -24,10 +24,10 @@ public:
     T get_value();
     
     // Sets the value
-    void set_value(T value);
+    inline void set_value(T value);
 
     // Checks if option exists 
-    bool exists(T value);
+    inline bool exists(T value);
 
     // Serializes data to string
     char* serialize_to_json();
