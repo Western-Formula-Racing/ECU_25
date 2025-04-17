@@ -8,11 +8,8 @@ StringRecievable::StringRecievable(char* default_value):Recievable<char*>(defaul
 
 char *StringRecievable::serialize_to_json(void)
 {
-    char* buffer = new char[RECV_BUFFER_SIZE];
-
-    strncpy(buffer, "{\"value:\"", RECV_BUFFER_SIZE-1);
-    strncat(buffer, get_value(), RECV_BUFFER_SIZE-1);
-    strncat(buffer, ", type:\"string\"}", RECV_BUFFER_SIZE-1);
-
+    char buffer[RECV_BUFFER_SIZE];
+    memset(buffer, 0, RECV_BUFFER_SIZE);
+    snprintf(buffer, RECV_BUFFER_SIZE-1, "{\"value\":\"%s\", \"type\":\"recievable>string\"}", get_value());
     return buffer;
 }

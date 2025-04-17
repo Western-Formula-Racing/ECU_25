@@ -10,13 +10,13 @@ Option<T>::Option(T* options, T default_option):Recievable<T>(default_option)
 }
 
 template <class T>
-T Option<T>::get_value()
+inline T Option<T>::get_value()
 {
     return value;
 }
 
 template <class T>
-void Option<T>::set_value(T val)
+inline void Option<T>::set_value(T val)
 {
     if (exists(value))
     {
@@ -25,7 +25,7 @@ void Option<T>::set_value(T val)
 }
 
 template <class T>
-bool Option<T>::exists(T val)
+inline bool Option<T>::exists(T val)
 {
     bool exists = false;
     for (T option : options) 
@@ -44,49 +44,65 @@ template <class T>
 char *Option<T>::serialize_to_json()
 {
     char* buffer = new char[OPTION_BUFFER_SIZE];
-
-    strncpy(buffer, "{\"value\": {\"value\": ", OPTION_BUFFER_SIZE-1);
+    memset(buffer, 0, OPTION_BUFFER_SIZE);
+    strcpy(buffer, "{\"value\": {\"value\":");
     
+    bool first = true;
+
     size_t value_buffer_size = 20;
-    char* value_buffer = new char[value_buffer_size];
+    char value_buffer[value_buffer_size];
+    memset(value_buffer, 0, value_buffer_size);
     if (typeid(T) == typeid(int))
     {
-        snprintf(value_buffer, value_buffer_size, "%d", get_value());
-        strncat(buffer, value_buffer, OPTION_BUFFER_SIZE - 1);
-        strncat(buffer, "}, options: [", OPTION_BUFFER_SIZE - 1);
+        snprintf(value_buffer, value_buffer_size, "%d,", get_value());
+        strcat(buffer, value_buffer);
+        strcat(buffer, "\"options\": [");
 
         for (T option : options)
         {
+            if (!first) {
+                strcat(buffer, ",");
+            }
+            first = false;
             snprintf(value_buffer, value_buffer_size, "%d", option);
-            strncat(buffer, value_buffer, OPTION_BUFFER_SIZE - 1);
+            strcat(buffer, value_buffer);
         }
 
-        strncat(buffer, "]\"type\":\"recievable>option>int\"}", OPTION_BUFFER_SIZE - 1);
+        strcat(buffer, "]},\"type\":\"recievable>option>int\"}");
     } else if (typeid(T) == typeid(float))
     {
-        snprintf(value_buffer, value_buffer_size, "%.5f", get_value());
-        strncat(buffer, value_buffer, OPTION_BUFFER_SIZE - 1);
-        strncat(buffer, "}, options: [", OPTION_BUFFER_SIZE - 1);
+        snprintf(value_buffer, value_buffer_size, "%.5f,", get_value());
+        strcat(buffer, value_buffer);
+        strcat(buffer, "\"options\": [");
 
         for (T option : options)
         {
+            if (!first) {
+                strcat(buffer, ",");
+            }
+            first = false;
             snprintf(value_buffer, value_buffer_size, "%.5f", option);
-            strncat(buffer, value_buffer, OPTION_BUFFER_SIZE - 1);
+            strcat(buffer, value_buffer);
         }
 
-        strncat(buffer, "]\"type\":\"recievable>option>float\"}", OPTION_BUFFER_SIZE - 1);
+        strcat(buffer, "]},\"type\":\"recievable>option>float\"}");
     } else 
     {
-        snprintf(value_buffer, value_buffer_size, "%s", get_value());
-        strncat(buffer, value_buffer, OPTION_BUFFER_SIZE - 1);
-        strncat(buffer, "}, options: [", OPTION_BUFFER_SIZE - 1);
+        snprintf(value_buffer, value_buffer_size, "\"%s\",", get_value());
+        strcat(buffer, value_buffer);
+        strcat(buffer, "\"options\": [");
 
         for (T option : options)
         {
-            strncat(buffer, option, OPTION_BUFFER_SIZE - 1);
+            if (!first) {
+                strcat(buffer, ",");
+            }
+            first = false;
+            snprintf(value_buffer, OPTION_BUFFER_SIZE-1, "\"%s\"", option);
+            strcat(buffer, option);
         }
 
-        strncat(buffer, "]\"type\":\"recievable>option>string\"}", OPTION_BUFFER_SIZE - 1);
+        strcat(buffer, "]},\"type\":\"recievable>option>string\"}");
     } 
 
     return buffer;
