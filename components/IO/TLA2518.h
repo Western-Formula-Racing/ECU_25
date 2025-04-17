@@ -37,6 +37,7 @@
 #define TLA_CHANNEL_SEL     0x11
 #define TLA_AUTO_SEQ_CH_SEL 0x12
 
+#define ADC_VOLTAGE_SCALE_FACTOR (5.0f/4096.0f)
 class TLA2518{
   
   private:

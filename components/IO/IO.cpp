@@ -32,7 +32,6 @@ IO::IO()
     adc1_handle =  new TLA2518(SPI2_HOST, GPIO_NUM_41);
     adc2_handle = new TLA2518(SPI2_HOST, GPIO_NUM_42);
     imu_handle = new ICM20948(SPI2_HOST,IMU_CS);
-    printf("IO initialized\n");
     ESP_LOGI(TAG, "IO Initialized");
     
 }

@@ -44,6 +44,6 @@ int TLA2518::readChannel(uint8_t channel){
 };
 
 float TLA2518::readVoltage(uint8_t channel){
-  float value = readChannel(channel)*(5.0f/4096.0f); 
+  float value = readChannel(channel)*ADC_VOLTAGE_SCALE_FACTOR; 
   return value;
 }

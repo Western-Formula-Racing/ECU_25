@@ -47,7 +47,7 @@ float Pedals::getThrottle()
     // Case 1: sensor open circuit
     if(apps1_voltage <= 0.01f || apps2_voltage <= 0.01f)
     {
-        printf("open circuit\n");
+        ESP_LOGW(TAG, "open circuit\n");
         fault_latch = true;
         throttle = 0;
     }
@@ -55,7 +55,7 @@ float Pedals::getThrottle()
     // Case 2: pedal implausability
     else if((max(apps_sensor1_percent, apps_sensor2_percent) - min(apps_sensor1_percent, apps_sensor2_percent)) >= BRAKE_PLAUSABILITY_THRESHOLD)
     {
-        printf("implausability\n");
+        ESP_LOGW(TAG, "implausability\n");
         fault_latch = true;
         throttle = 0;
     }

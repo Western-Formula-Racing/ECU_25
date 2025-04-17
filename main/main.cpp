@@ -14,6 +14,8 @@
 #include "StateMachine.hpp"
 #include "Pedals.h"
 
+#define MAIN_DELAY 600
+
 static const char* TAG = "Main"; //Used for ESP_LOGx commands. See ESP-IDF Documentation
 CAN can0{GPIO_NUM_16, GPIO_NUM_15, TWAI_MODE_NORMAL};
 
@@ -30,7 +32,7 @@ extern "C" void app_main(void)
     while(true){
         onboard_LED = !onboard_LED;
         gpio_set_level(GPIO_NUM_48, onboard_LED);  // heart beat LED  
-        vTaskDelay(pdMS_TO_TICKS(600));
+        vTaskDelay(pdMS_TO_TICKS(MAIN_DELAY));
     }
     
 }
