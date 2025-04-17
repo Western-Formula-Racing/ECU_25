@@ -11,6 +11,7 @@ std::unordered_map<char*, bool(*)()> GUI::bool_callables = {};
 std::unordered_map<char*, Recievable<int>*> GUI::int_recievables = {};
 std::unordered_map<char*, Recievable<float>*> GUI::float_recievables = {};
 std::unordered_map<char*, Recievable<char*>*> GUI::string_recievables = {};
+std::unordered_map<char*, ButtonRecievable*> GUI::button_recievables = {};
 
 GUI::GUI()
 {
@@ -39,7 +40,6 @@ esp_err_t GUI::handle_root(httpd_req_t *req)
     char* buffer = new char[HTML_SIZE];
     memset(buffer, 0, HTML_SIZE);
     fread(buffer, 1, HTML_SIZE, f_html);
-    httpd_resp_set_status(req, "200 OK");
     httpd_resp_set_type(req, "text/html");
     httpd_resp_send(req, buffer, HTML_SIZE);
     fclose(f_html);
@@ -48,22 +48,9 @@ esp_err_t GUI::handle_root(httpd_req_t *req)
 
 esp_err_t GUI::handle_update(httpd_req_t *req) 
 {
-    char* sndb_str = serialize_sndb_to_json();
-    printf(sndb_str);
-    //const char* rcvb_str = serialize_rcvb_to_json();
-    size_t buff_size = strlen(sndb_str)+10;
-    char* resp_str = new char[buff_size];
-    strcpy(resp_str, "{");
-    strcat(resp_str,  sndb_str);
-
-    if (!strcmp("", sndb_str)) {
-        strcat(resp_str, ",");
-    }
-    //strncat(resp_str, rcvb_str, buff_size-1);
-    strcat(resp_str, "}");
-    httpd_resp_set_status(req, "200 OK");
-    httpd_resp_set_type(req, "text/json");
-    httpd_resp_send(req, resp_str, strlen(resp_str));
+    char* resp_str = serialize_sndb_to_json();
+    httpd_resp_set_type(req, HTTPD_TYPE_JSON);
+    httpd_resp_sendstr(req, resp_str);
     return ESP_OK;
 }
 
@@ -111,19 +98,19 @@ esp_err_t GUI::handle_recievable(httpd_req_t *req)
     
     // Edit recievable value
     if (is_recievable_registered(key)) {
-        if (strcmp(type, "int") || strcmp(type, "option<int>"))
+        if (strcmp(type, "recievable>int") == 0|| strcmp(type, "recievable>option>int") == 0)
         {
             int value = atoi(s_value);
 
             Recievable<int>* rcbl = int_recievables.at(key);
             rcbl->set_value(value);
-        } else if (strcmp(type, "float") || strcmp(type, "option<float>"))
+        } else if (strcmp(type, "recievable>float") == 0 || strcmp(type, "recievable>option>float") == 0)
         {
             float value = atof(s_value);
 
             Recievable<float>* rcbl = float_recievables.at(key);
             rcbl->set_value(value);
-        } else if (strcmp(type, "string") || strcmp(type, "option<string>"))
+        } else if (strcmp(type, "recievable>string") == 0 || strcmp(type, "recievable>option>string") == 0)
         {
             Recievable<char*>* rcbl = string_recievables.at(key);
             rcbl->set_value(s_value);
@@ -132,9 +119,45 @@ esp_err_t GUI::handle_recievable(httpd_req_t *req)
 
     // Send response
     httpd_resp_set_status(req, "200 OK");
-    httpd_resp_set_type(req, "text/html");
+    httpd_resp_set_type(req, "application/text");
     const char* resp_str = "Update Successful";
     httpd_resp_send(req, resp_str, strlen(resp_str));
+
+    printf(req_content);
+    ESP_LOGI(TAG, "Recievable \"%s\" edited", key);
+
+    return ESP_OK;
+}
+
+esp_err_t GUI::handle_fetch_recievables(httpd_req_t *req)
+{
+    char* resp_str = serialize_rcvb_to_json();
+
+    // Send response
+    httpd_resp_set_type(req, HTTPD_TYPE_JSON);
+    httpd_resp_send(req, resp_str, strlen(resp_str));
+
+    return ESP_OK;
+}
+
+esp_err_t GUI::handle_button_command(httpd_req_t *req) {
+    char* req_content = new char[BUTTON_BUFFER_SIZE];
+    httpd_req_recv(req, req_content, BUTTON_BUFFER_SIZE);    
+
+    // Get recievable
+    if (is_recievable_registered(req_content))
+    {
+        ButtonRecievable* button_recievable = button_recievables.at(req_content);
+        button_recievable->call();
+    }
+
+    // Send response
+    httpd_resp_set_status(req, "200 OK");
+    httpd_resp_set_type(req, HTTPD_TYPE_TEXT);
+    const char* resp_str = "Successful";
+    httpd_resp_send(req, resp_str, strlen(resp_str));
+
+    ESP_LOGI(TAG, "Button \"%s\" clicked", req_content);
 
     return ESP_OK;
 }
@@ -209,15 +232,29 @@ esp_err_t GUI::start_webserver(void)
             .handler = GUI::handle_update,
             .user_ctx = NULL};
 
-        //httpd_uri_t recievable_uri = {
-        //    .uri = "/recievable",
-        //    .method = HTTP_PUT,
-        //    .handler = GUI::handle_recievable,
-        //    .user_ctx = NULL};
+        httpd_uri_t recievable_uri = {
+            .uri = "/recievable",
+            .method = HTTP_PUT,
+            .handler = GUI::handle_recievable,
+            .user_ctx = NULL};
+
+        httpd_uri_t fetch_revievables_uri = {
+            .uri = "/fetch_recievables",
+            .method = HTTP_GET,
+            .handler = GUI::handle_fetch_recievables,
+            .user_ctx = NULL};
+
+        httpd_uri_t button_uri {
+            .uri = "/button",
+            .method = HTTP_PUT,
+            .handler = GUI::handle_button_command,
+            .user_ctx = NULL};
 
         httpd_register_uri_handler(server, &root_uri);
         httpd_register_uri_handler(server, &update_uri);
-        //httpd_register_uri_handler(server, &recievable_uri);
+        httpd_register_uri_handler(server, &recievable_uri);
+        httpd_register_uri_handler(server, &fetch_revievables_uri);
+        httpd_register_uri_handler(server, &button_uri);
 
         return ESP_OK;
     }
@@ -243,44 +280,44 @@ esp_err_t GUI::stop_webserver(void)
     return ESP_OK;
 }
 
-void GUI::register_int_sendable(char *key, int (*callback)())
+void GUI::register_int_sendable(char *key, int (*callable)())
 {
     if (!is_sendable_registered(key)) 
     {
-        int_callables.insert(std::pair<char*, int(*)()>{key, callback});
+        int_callables.insert(std::pair<char*, int(*)()>{key, callable});
     } else 
     {
         ESP_LOGW(TAG, "Int sendable \"%s\" is already registered.", key);
     }
 }
 
-void GUI::register_float_sendable(char *key, float (*callback)()) 
+void GUI::register_float_sendable(char *key, float (*callable)()) 
 {
     if (!is_sendable_registered(key)) 
     {
-        float_callables.insert(std::pair<char*, float(*)()>{key, callback});
+        float_callables.insert(std::pair<char*, float(*)()>{key, callable});
     } else 
     {
         ESP_LOGW(TAG, "Float sendable \"%s\" is already registered.", key);
     }
 }
 
-void GUI::register_string_sendable(char *key, char*(*callback)()) 
+void GUI::register_string_sendable(char *key, char*(*callable)()) 
 {
     if (!is_sendable_registered(key)) 
     {
-        string_callables.insert(std::pair<char*, char*(*)()>{key, callback});
+        string_callables.insert(std::pair<char*, char*(*)()>{key, callable});
     } else 
     {
         ESP_LOGW(TAG, "String sendable \"%s\" is already registered.", key);
     }
 }
 
-void GUI::register_bool_sendable(char *key, bool(*callback)()) 
+void GUI::register_bool_sendable(char *key, bool(*callable)()) 
 {
     if (!is_sendable_registered(key))
     {
-        bool_callables.insert(std::pair<char*, bool(*)()>{key, callback});
+        bool_callables.insert(std::pair<char*, bool(*)()>{key, callable});
     } else
     {
         ESP_LOGW(TAG, "Bool sendable \"%s\" is already registered.", key);
@@ -309,7 +346,7 @@ void GUI::register_float_recievable(char *key, Recievable<float>* float_recievab
     }
 }
 
-void GUI::register_string_recievable(char *key, Recievable<char *>* string_recievable)
+void GUI::register_string_recievable(char *key, Recievable<char*>* string_recievable)
 {
     if (is_recievable_registered(key))
     {
@@ -317,6 +354,17 @@ void GUI::register_string_recievable(char *key, Recievable<char *>* string_recie
     } else
     {
         ESP_LOGW(TAG, "String recievable \"%s\" is already registered", key);
+    }
+}
+
+void GUI::register_button_recievable(char *key, ButtonRecievable* button_recievable)
+{
+    if (is_recievable_registered(key))
+    {
+        button_recievables.insert(std::pair<char*, ButtonRecievable*>{key, button_recievable});
+    } else
+    {
+        ESP_LOGW(TAG, "Button recievable \"%s\" is already registered", key);
     }
 }
 
@@ -351,7 +399,7 @@ Recievable<char*>* GUI::get_string_recievable(char *key)
         return string_recievables.at(key);
     } else
     {
-        ESP_LOGW(TAG, "Int recievable \"%s\" is not registered", key);
+        ESP_LOGW(TAG, "String recievable \"%s\" is not registered", key);
         return nullptr;
     }
 }
@@ -441,11 +489,12 @@ bool GUI::is_sendable_registered(char *key)
     }
 }
 
-bool GUI::is_recievable_registered(char *key)
+bool GUI::is_recievable_registered(char* key)
 {
     if (int_recievables.find(key) != int_recievables.end() || \
         float_recievables.find(key) != float_recievables.end() || \
-        string_recievables.find(key) != string_recievables.end())
+        string_recievables.find(key) != string_recievables.end() || \
+        button_recievables.find(key) != button_recievables.end())
     {
         return true;
     } else
@@ -459,127 +508,108 @@ char* GUI::serialize_sndb_to_json()
     size_t buffer_size = int_callables.size() * ENTRY_BUFFER_SIZE \
                          + float_callables.size() * ENTRY_BUFFER_SIZE \
                          + string_callables.size() * ENTRY_BUFFER_SIZE \
-                         + bool_callables.size() * ENTRY_BUFFER_SIZE;
+                         + bool_callables.size() * ENTRY_BUFFER_SIZE + 100;
+
 
     bool first = true;
 
-    if (buffer_size == 0)
+    if (buffer_size == 100)
     {
-        return "";
+        return "{}";
     }
 
-    size_t int_buf_size = int_callables.size() * ENTRY_BUFFER_SIZE;
-    char* int_buf = new char[int_buf_size];
+    // Buffer to store serialized data
+    char* buffer = new char[buffer_size];
+    memset(buffer, '\0', buffer_size);
+    strcat(buffer, "{");
+
     for (std::pair<char*,int(*)()> int_entry: int_callables)
     {
+        char entry_buf[ENTRY_BUFFER_SIZE];
+        memset(entry_buf, '\0', ENTRY_BUFFER_SIZE);
+
         char* key = int_entry.first;
         int value = int_entry.second();
-        char* int_val_buf = new char[16];
-        snprintf(int_val_buf, (size_t)15, "%d", value);
         if (!first)
         {
-            strcpy(int_buf, ",\"");
-        } else
-        {
-            strcpy(int_buf, "\"");
-            first = false;
-        }
+            strcat(buffer, ",");
+        } 
+        
+        first = false;
 
-        strcat(int_buf, key);
-        strcat(int_buf, "\":{");
-        strcat(int_buf, "\"value\":");
-        strcat(int_buf, int_val_buf);
-        strcat(int_buf, ",\"type\":\"sendable>int\"}");
+        snprintf(entry_buf, ENTRY_BUFFER_SIZE-1, "\"%s\":{\"value\":\"%d\", \"type\":\"sendable>int\"}", key, value);
+        strcat(buffer, entry_buf);
     }
     
-    size_t float_buf_size = float_callables.size() * ENTRY_BUFFER_SIZE;
-    char* float_buf = new char[float_buf_size];
     for (std::pair<char*, float(*)()> float_entry: float_callables)
     {
+        char* entry_buf = new char[ENTRY_BUFFER_SIZE];
+        memset(entry_buf, '\0', ENTRY_BUFFER_SIZE);
+        
         char* key = float_entry.first;
         float value = float_entry.second();
-        char* float_val_buf = new char[20];
-        // only 5 decimal places
-        snprintf(float_val_buf, 19, "%.5f", value);
         if (!first)
         {
-            strcpy(float_buf, ",\"");
-        } else
-        {
-            strcpy(float_buf, "\"");
-            first = false;
+            strcat(buffer, ",");
         }
-
-        strcat(float_buf, key);
-        strcat(float_buf, ":\"{");
-        strcat(float_buf, "\"value\":");
-        strcat(float_buf, float_val_buf);
-        strcat(float_buf, ",\"type\":\"sendable>float\"}");
+        
+        first = false;
+    
+        snprintf(entry_buf, ENTRY_BUFFER_SIZE-1, "\"%s\":{\"value\":\"%.5f\", \"type\":\"sendable>float\"}", key, value);
+        strcat(buffer, entry_buf);
     }
     
-    size_t string_buf_size = string_callables.size() * ENTRY_BUFFER_SIZE;
-    char* string_buf = new char[string_buf_size];
     for (std::pair<char*, char*(*)()> string_entry: string_callables)
     {
+        char entry_buf[ENTRY_BUFFER_SIZE];
+        memset(entry_buf, '\0', ENTRY_BUFFER_SIZE);
+
         char* key = string_entry.first;
         char* value = string_entry.second();
         
         if (!first)
         {
-            strcpy(string_buf, ",\":");
-        } else
-        {
-            strcpy(string_buf, "\":");
-            first = false;
-        }
+            strcat(buffer, ",");
+        } 
+        
+        first = false;
 
-        strcat(string_buf, key);
-        strcat(string_buf, "\":{");
-        strcat(string_buf, "\"value\":");
-        strcat(string_buf, value);
-        strcat(string_buf, ",\"type\":\"sendable>string\"}");
+        snprintf(entry_buf, ENTRY_BUFFER_SIZE-1, "\"%s\":{\"value\":\"%s\", \"type\":\"sendable>string\"}", key, value);
+        strcat(buffer, entry_buf);
     }
     
-    size_t bool_buf_size = bool_callables.size() * ENTRY_BUFFER_SIZE;
-    char* bool_buf = new char[bool_buf_size];
+    
     for (std::pair<char*, bool(*)()> bool_entry: bool_callables)
     {
+        char* entry_buf = new char[ENTRY_BUFFER_SIZE];
+        memset(entry_buf, '\0', ENTRY_BUFFER_SIZE);
+
         char* key = bool_entry.first;
         bool value = bool_entry.second();
         char* str_value;
 
         if (value) 
         {
-            str_value = "true";    
+            str_value = "True";    
         } else
         {
-            str_value = "false";
+            str_value = "False";
         }
         
         
         if (!first)
         {
-            strcpy(bool_buf, ",\":");
-        } else
-        {
-            strcpy(bool_buf, "\":");
-            first = false;
+            strcat(buffer, ",");
         }
 
-        strcpy(bool_buf, key);
-        strcat(bool_buf, "\":{");
-        strcat(bool_buf, "\"value\":");
-        strcat(bool_buf, str_value);
-        strcat(bool_buf, ",\"type\":\"sendable>bool\"}");
+        first = false;
+
+        snprintf(entry_buf, ENTRY_BUFFER_SIZE-1, "\"%s\":{\"value\":\"%s\", \"type\":\"sendable>bool\"}", key, str_value);
+        strcat(buffer, entry_buf);
     }
 
-    // Buffer to store serialized data
-    char* buffer = new char[strlen(int_buf) + strlen(float_buf) + strlen(string_buf) + strlen(bool_buf)];
+    strcat(buffer, "}");
 
-    strncpy(buffer, int_buf, strlen(int_buf)-1);
-    strncat(buffer, float_buf, strlen(float_buf)-1);
-    strncat(buffer, string_buf, strlen(string_buf)-1);
-    strncat(buffer, bool_buf, strlen(bool_buf)-1);
     return buffer;
 }
 
@@ -587,70 +617,75 @@ char* GUI::serialize_rcvb_to_json()
 {
     size_t buffer_size = (RECV_BUFFER_SIZE * int_recievables.size()) \
                          + (RECV_BUFFER_SIZE * float_recievables.size()) \
-                         + (RECV_BUFFER_SIZE * string_recievables.size());
+                         + (RECV_BUFFER_SIZE * string_recievables.size()) \
+                         + (RECV_BUFFER_SIZE * button_recievables.size()) + 75; // To compensate for characters outide buffer
 
     bool first = true;
     char* buffer = new char[buffer_size];
     
-
     if (buffer_size == 0)
     {
         return buffer;
     }
 
-    size_t int_buffer_size = RECV_BUFFER_SIZE * int_recievables.size();
-    char* int_buffer = new char[int_buffer_size];
-
+    size_t int_buffer_size = RECV_BUFFER_SIZE * int_recievables.size() + 15;
     for (std::pair<char*, Recievable<int>*> recievable : int_recievables)
     {
+        char int_buffer[int_buffer_size];
+        memset(int_buffer, 0, int_buffer_size);
+        char* key = recievable.first;
         if (first)
         {
-            strncpy(int_buffer, ",\"", buffer_size-1);
+            strncpy(int_buffer, ",", buffer_size-1);
             first = false;
-        } else {
-            strncpy(int_buffer, "\"", buffer_size-1);
         }
-
-        strncat(int_buffer, recievable.second->serialize_to_json(), buffer_size-1);
+        snprintf(int_buffer, int_buffer_size-1, "\"key\":\"%s\":%s", key, recievable.second->serialize_to_json());
+        strcat(buffer, int_buffer);
     }
 
-    size_t float_buffer_size = RECV_BUFFER_SIZE * float_recievables.size();
-    char* float_buffer = new char[float_buffer_size];
-    memset(float_buffer, 0, float_buffer_size);
+    size_t float_buffer_size = RECV_BUFFER_SIZE * float_recievables.size() + 15;
     for (std::pair<char*, Recievable<float>*> recievable : float_recievables)
     {
+        char float_buffer[float_buffer_size];
+        memset(float_buffer, 0, float_buffer_size);
+        char* key = recievable.first;
         if (first)
         {
-            strncpy(float_buffer, ",\"", buffer_size-1);
+            strncpy(float_buffer, ",", buffer_size-1);
             first = false;
-        } else {
-            strncpy(float_buffer, "\"", buffer_size-1);
         }
-
-        strncat(float_buffer, recievable.second->serialize_to_json(), buffer_size-1);
+        snprintf(float_buffer, float_buffer_size-1, "\"key\":\"%s\":%s", key, recievable.second->serialize_to_json());
+        strcat(buffer, float_buffer);
     }
 
-    size_t string_buffer_size = RECV_BUFFER_SIZE * string_recievables.size();
-    char* string_buffer = new char[string_buffer_size];
-    memset(string_buffer, 0, string_buffer_size);
+    size_t string_buffer_size = RECV_BUFFER_SIZE * string_recievables.size() + 15;
     for (std::pair<char*, Recievable<char*>*> recievable : string_recievables)
     {
+        char string_buffer[string_buffer_size];
+        memset(string_buffer, 0, string_buffer_size);
+        char* key = recievable.first;
         if (first)
         {
-            strncpy(string_buffer, ",\"", buffer_size-1);
+            strncpy(string_buffer, ",", buffer_size-1);
             first = false;
-        } else {
-            strncpy(string_buffer, "\"", buffer_size-1);
         }
-
-        strncat(string_buffer, recievable.second->serialize_to_json(), buffer_size+1);
+        snprintf(string_buffer, string_buffer_size-1, "\"key\":\"%s\":%s", key, recievable.second->serialize_to_json());
+        strcat(buffer, string_buffer);
     }
-
-    strncat(buffer, int_buffer, buffer_size);
-    strncat(buffer, float_buffer, buffer_size);
-    strncat(buffer, string_buffer, buffer_size);
-
-    ESP_LOGI(TAG, "Buffer: %s", buffer);
+    
+    size_t button_buffer_size = RECV_BUFFER_SIZE * button_recievables.size() + 30;
+    for (std::pair<char*, ButtonRecievable*> recievable : button_recievables) {
+        char button_buffer[button_buffer_size];
+        memset(button_buffer, 0, button_buffer_size);
+        char* key = recievable.first;
+        if (first)
+        {
+            strcat(buffer, ",");
+            first = false;
+        }
+        snprintf(button_buffer, button_buffer_size-1, "\"key\":\"%s\": {\"value\":\"%s\"}", key, key);
+        strcat(buffer, button_buffer);
+    }
 
     return buffer;
 }
