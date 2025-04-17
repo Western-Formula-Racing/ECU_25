@@ -4,6 +4,8 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "freertos/semphr.h"
+#include "IO.h"
+#include "driver/gpio.h"
 
 
 class Pedals{
