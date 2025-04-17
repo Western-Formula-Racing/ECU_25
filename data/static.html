@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html>
-    <header>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <title>WFR Dashboard</title>
         <style>
             body {
                 font-family: Arial, Helvetica, sans-serif;
@@ -21,33 +25,21 @@
                 justify-self: center;
             }
             .connection_status_wrapper {
-                display: flex;
-                flex-direction: row;
                 width: 98vw;
                 height: 2rem;
-                margin-right: 2vw;
+                margin-right: 2rem;
                 font-size: small;
                 align-self: center;
-                align-content: center;
                 justify-content: end;
             }
-            .connected {
-                width: 1rem;
-                height: 1rem;
-                background-color: rgb(0, 170, 0);
-                border-radius: 1rem;
+            .online {
+                color: white;
                 align-self: center;
-                justify-self: center;
             }
-            .disconnected {
-                width: 1rem;
-                height: 1rem;
-                background-color: rgb(255, 2, 2);
-                border-radius: 0.5rem;
+            .offline {
+                color: #888888;
                 align-self: center;
-                justify-self: center;
             }
-            .data_wrapper {}
             .data {
                 display: flex;
                 flex-direction: column;
@@ -61,12 +53,21 @@
                 height: 3rem;
                 border-width: 1rem;
                 border-color: white;
-                margin-top: 0;
-                margin-bottom: 0;
+                margin-top: .5rem;
+                margin-bottom: .5rem;
                 border: 0.1rem solid white;
                 border-radius: 0.2rem;
                 align-self: center;
                 align-content: center;
+            }
+            .button_entry {
+                width: 97vw;
+                height: 3rem;
+                box-shadow: 0 .5rem .5rem 0 rgba(0,0,0,0.35), 0 .5rem 1.5rem 0 rgba(0, 0, 0, 0.3);
+                background-color: rgb(216, 216, 216);
+            }
+            .button_entry:hover {
+                box-shadow: 0 1rem 1rem 0 rgba(0,0,0,0.35), 0 1.5rem 2.5rem 0 rgba(0,0,0,0.3);
             }
             .data_key {
                 width: 30vw;
@@ -89,29 +90,65 @@
                 border: 0;
             }
         </style>
-    </header>
+    </head>
     <body>
         <div class="main_wrapper wrapper">
             <div class="head">
                 <h1 class="title_text">WFR Dashboard</h1>
             </div>
-            <div class="connection_status_wrapper">
-                <div class="connected"></div><p>Connected</p>
+            <div class="connection_status_wrapper" id="connection_obj">
+                <div class="online"><p>Online</p></div>
             </div>
             <div class="data_wrapper">
-                <div id="data"></div>
+                <div class="data" id="sendables"></div>
+            </div>
+            <div class="data_wrapper">
+                <div class="data" id="recievables"></div>
             </div>
         </div>
-        <script>
+        <script nonce="randomNonceHere" >
             let entries = new Map()
             let order = []
-            
-            setTimeout(update_entries, 200) //200ms
 
-            function is_sendable_entry(key) {
-                entry = entries.key(key);
-                
-                return entry.type.startsWith("sendable")
+            setInterval(update_entries, 500) // 100ms
+            //setTimeout(register_recievables, 1000) // 1s
+
+            function update_entries() {
+                fetch("http://192.168.4.1:3000/update", {method: "GET"}).then((response) => {
+                    if (response.status !== 200) {
+                        let connection_obj = document.getElementById("connection_obj");
+                        connection_obj.innerHTML = `<div class="offline"><p>Offline</p></div>`
+                        return;
+                    } else {
+                        let connection_obj = document.getElementById("connection_obj");
+                        connection_obj.innerHTML = `<div class="online"><p>Online</p></div>`
+                    }
+                    
+                    response.text().then((sendable_raw) => {
+                        let sendable_data = JSON.parse(sendable_raw)
+                    
+                        // Iterate through sendables and update values
+                        Object.entries(sendable_data).forEach((sendable) => {
+                            if (!entries.has(sendable[0])) {
+                                order.push(sendable[0])
+
+                                let sendables_html = document.getElementById("sendables")
+
+                                if (!sendables_html) {
+                                    sendables_html.innerHTML = ""
+                                }
+
+                                sendables_html.innerHTML += `<div class="data_entry" id="${sendable[0]}""><p class="data_key">${sendable[0]}</p><p class="data_value">${sendable[1].value}</p></div>`
+                            }
+
+                            entries.set(sendable[0], {"value": sendable[1].value, "type": sendable[1].type})
+                        })
+
+                        update_html()
+                    })
+                }).catch((error) => {
+                    console.error("Error fetching data:", error);
+                });
             }
 
             function update_html() {
@@ -121,89 +158,42 @@
 
                     let element = document.getElementById(key)
                     
-                    if (entry.type.startsWith("sendable")) {
-                        element.innerHTML = `<p class="data_key">${key}</p><p class="data_value">${entry.value}</p>`
-                    }
+                    element.innerHTML = `<p class="data_key">${key}</p><p class="data_value">${entry.value}</p>`
                 })
             }
 
-            function update_entries() {
-                fetch("http://192.168.4.1:3000/update", {
-                    method: "GET"
-                }).then((response) => {
-                    if (response.status !== 200) {
-                        alert("Cannot reach to server");
-                        return;
-                    }
+            // This is only called once
+            function register_recievables() {
+                fetch("/fetch_revievables", {method:"GET"}).then((response) => {
+                    response.text().then((recievable_raw) => {
+                        Object.entries(recievables_json).forEach((recievable) => {
+                            let recievables_element = document.getElementById("recievables")
 
-                    response.text().then((raw) => {
-                        console.log(raw)
-                        const obj_updated_values = JSON.parse(raw)
-                        
-                        // Iterate through object and update values
-                        Object.entries(obj_updated_values).forEach((value) => {
-                            if (!entries.has(value[0])) {
-                                order.push(value[1])
-
-                                let entries_html = document.getElementById("entries")
-
-                                if (value[1].type.startsWith("recievable")) {
-                                    const recievable_type = value[1].type.split(">")[1]
-                                    
-                                    if (recievable_type !== "option") {
-                                        html = `<div class="data_entry" id="${value[0]}_option""><p>${value[0]}</p><select class="options_select"> onchange=""`;
-                                        
-                                        value[1].value.options.forEach((option) => {
-                                            html += `<option class="option">${option}</option>`
-                                        })
-
-                                        html += `</select></div>`
-
-                                        entries_html += html
-
+                            if (recievable[1].type.split(">")[1] === "option") {
+                                html = `<div class="data_entry" id="${recievable[0]}_option"><p class="data_key">${recievable[0]}</p><select id="${recievable[0]}" class="options_select"> onchange="handleInputChange(this)"`;
+                                
+                                recievable[1].recievable.options.forEach((option) => {
+                                    if (recievable[0] === option) {
+                                        html += `<option class="option">${option}</option>`
                                     } else {
-                                        entries_html += `<div class="data_entry" id=${value[0]}><p>${value[0]}</p><input type="text"></input></div>`
+                                        html += `<option class="option">${option}</option>`
                                     }
+                                })
 
-                                    // Now select value
-                                    let options = document.getElementById(value[0])
-                                    for (let i = 0; i < options.length; i++) {
-                                        if (options.value === value[1].value.value) {
-                                            options.options[i].selected = true
-                                        } else {
-                                            options.options[i].selected = false
-                                        }
-                                    }
-                                } else {
-                                    entries_html.innerHTML += `<div class="data_entry" id=${value[0]}><p class="data_key">${value[0]}</p><p class="data_value">${value[1].value}</p></div>`
-                                }
+                                html += `</select></div>`
+
+                                recievables_element += html
+                            } else if(recievable[1].type.split(">")[1] === "button") {
+                                recievables_element += `<button class="button_entry" id="${recievable[0]}" onclick="onButtonRecievableClick(this)"></button>`
+                            } else {
+                                recievables_element += `<div class="data_entry" id="${recievable[0]}_input"><p>${recievable[0]}</p><input id="${recievable[0]}" onchange="handleInputChange(this)" type="text"></div>`
                             }
-
-                            entries.set(value[0], {"value": value[1].value, "type": value[1].type})
                         })
-                        
-                        // Update
-                        update_html()
+                    }).catch((error) => {
+                        console.error("Error fetching data:", error)
                     })
-                    
-                })
-            }
-
-            // handles changes to recievables
-            function update_recievable(entry) {
-                const recievable = entry
-                let content = key + "\n" + recievable.value + "\n" + recievable.type
-
-                fetch("/recievable", {
-                    method: "PUT",
-                    body: content,
-                    headers: {
-                        "Content-type": 'application/text; charset=UTF-8'
-                    },
-                }).then((response) => {
-                    if (response.status !== 200) {
-                        console.error(`There is an error updating recievable, key: ${key}`)
-                    }
+                }).catch((error) => {
+                    console.error("Error fetching data:", error)
                 })
             }
 
@@ -226,6 +216,38 @@
                 update_recievable(entry)
             }
 
+            // handles changes to recievable
+            function update_recievable(entry) {
+                const recievable = entry
+                let content = recievable.id + "\n" + recievable.value + "\n" + recievable.type
+
+                fetch("/recievable", {
+                    method: "PUT",
+                    body: content,
+                    headers: {
+                        "Content-type": 'application/text; charset=UTF-8'
+                    },
+                }).then((response) => {
+                    if (response.status !== 200) {
+                        console.error(`There is an error updating recievable, key: ${key}`)
+                    }
+                })
+            }
+
+            // handles button recievables
+            function onButtonRecievableClick(entry) {
+                fetch("/button", {
+                    method: "PUT",
+                    body: entry.id,
+                    headers: {
+                        "Content-type": 'application/text; charset=UTF-8'
+                    },
+                }).then((response) => {
+                    if (response.status !== 200) {
+                        console.error(`There is an error updating recievable, key: ${key}`)
+                    }
+                })
+            }
         </script>
     </body>
 </html>
