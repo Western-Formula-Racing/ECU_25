@@ -9,14 +9,20 @@ class Recievable
 protected:
     T value;
 public:
-    // Constructors
-    Recievable(T init_value);
+    // Constructor
+    Recievable(T init_value) {
+        value = init_value;
+    }
 
     // Sets value of recievable
-    void set_value(T val);
+    inline void set_value(T val) {
+        value = val;
+    }
 
-    // Gets value in recievable
-    T get_value();
+    // Gets value in recievable 
+    inline T get_value() {
+        return value;
+    }
 
     // Serializes data to string
     virtual char* serialize_to_json() = 0;
