@@ -42,7 +42,7 @@ etl::array<float,14> Sensors::get_sensor_voltages(){
 float Sensors::get_sensor_voltage(SENSOR_INDEX index)
 {
     if(index < sensor_voltages.max_size()){
-        return -1;
+        return sensor_voltages[index];
     }
-    return sensor_voltages[index];
+    return -1;
 }
