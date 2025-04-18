@@ -26,3 +26,23 @@ Sensors *Sensors::Get()
     }
     return instancePtr;
 }
+
+void Sensors::poll_sensors()
+{
+    for (int i = 0; i <= 13; i++){
+        sensor_voltages[i] = IO::Get()->analogReadVoltage(static_cast<ECU_ANALOG_PIN>(i));
+        printf(">ADC%d_voltage:%.2f\n", i+1, sensor_voltages[i]);
+    }
+}
+
+etl::array<float,14> Sensors::get_sensor_voltages(){
+    return sensor_voltages;
+}
+
+float Sensors::get_sensor_voltage(SENSOR_INDEX index)
+{
+    if(index < sensor_voltages.max_size()){
+        return sensor_voltages[index];
+    }
+    return -1;
+}

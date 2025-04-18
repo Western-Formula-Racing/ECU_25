@@ -22,21 +22,20 @@ typedef enum{
     ECU_5_A5,
     ECU_6_A6,
     ECU_7_A7,
-    ECU_8_A8 = 0,
-    ECU_9_A9 = 1,
-    ECU_13_A10 = 2,
-    ECU_14_A11 = 3,
-    ECU_15_A12 = 4,
-    ECU_16_A13 = 5,
-    ECU_17_A14 = 6,
+    ECU_8_A8 ,
+    ECU_9_A9 ,
+    ECU_13_A10,
+    ECU_14_A11,
+    ECU_15_A12,
+    ECU_16_A13,
+    ECU_17_A14,
 }ECU_ANALOG_PIN;
-
 typedef enum{
+    ECU_TEST = 47,
     ECU_10_IO1 = 4,
-    ECU_11_IO1 = 5,
-    ECU_12_IO1 = 6,
+    ECU_11_IO2 = 5,
+    ECU_12_IO3 = 6,
 }ECU_IO_PIN;
-
 typedef enum{
     ECU_37_HSD1 = 7,
     ECU_38_HSD2 = 6,

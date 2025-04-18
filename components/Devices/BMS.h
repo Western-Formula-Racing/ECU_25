@@ -4,7 +4,7 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "freertos/semphr.h"
-
+#include "CAN_Config.hpp"
 
 class BMS{
 private:
@@ -12,6 +12,8 @@ private:
     static BMS* instancePtr;
     static SemaphoreHandle_t mutex;
     BMS();
+    int max_discharge_current;
+    int max_charge_current;
 public:
     //Deleting the copy constructor and copy reference constructor to prevent copies
     BMS(const BMS &) = delete;
@@ -19,8 +21,18 @@ public:
     BMS(BMS &&) = delete;
     BMS &operator=(BMS &&) = delete;
     static BMS* Get();
-    int voltage;
 
+    enum STATE
+    {
+        IDLE,
+        PRECHARGE,
+        ACTIVE,
+        CHARGING,
+        FAULT
+    };
+
+    int getPackVoltage();
+    STATE getPackState();
 
 };
 

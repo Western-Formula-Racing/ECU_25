@@ -7,6 +7,7 @@ SemaphoreHandle_t Inverter::mutex = xSemaphoreCreateMutex();
 
 Inverter::Inverter()
 {
+    torqueLimit = 10; // get this from memory later
     ESP_LOGI(TAG, "Inverter Initialized");
 }
 
@@ -25,4 +26,22 @@ Inverter *Inverter::Get()
         }
     }
     return instancePtr;
+}
+
+void Inverter::Disable()
+{
+    VCU_INV_Torque_Command_ID192.set(0);
+    VCU_INV_Inverter_Enable_ID192.set(false);
+    VCU_INV_Torque_Limit_Command_ID192.set(0);
+}
+
+void Inverter::Enable()
+{
+    VCU_INV_Inverter_Enable_ID192.set(true);
+    VCU_INV_Torque_Limit_Command_ID192.set(torqueLimit);
+}
+
+void Inverter::SetTorqueRequest(float throttle)
+{
+    VCU_INV_Torque_Command_ID192.set(throttle*torqueLimit);
 }
