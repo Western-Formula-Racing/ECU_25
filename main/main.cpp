@@ -7,6 +7,7 @@
 #include "Sensors.h"
 #include "IO.h"
 #include "Devices.h"
+#include "GUI.h"
 #include "esp_log.h"
 #include "CAN.h"
 #include "driver/twai.h"
@@ -34,5 +35,4 @@ extern "C" void app_main(void)
         gpio_set_level(GPIO_NUM_48, onboard_LED);  // heart beat LED  
         vTaskDelay(pdMS_TO_TICKS(MAIN_DELAY));
     }
-    
 }
