@@ -14,6 +14,7 @@
 #include "CAN_Config.hpp"
 #include "StateMachine.hpp"
 #include "Pedals.h"
+#include "RearECU.h"
 
 #define MAIN_DELAY 600
 
@@ -27,8 +28,17 @@ extern "C" void app_main(void)
     vTaskDelay(pdMS_TO_TICKS(5000));
     ESP_LOGI(TAG, "Main Has begun");
     can0.begin();
+    if(IO::Get()->digitalRead(ECU_SELECT)){
+        //Front ECU
+        printf("FRONT ECU SELECTED!\n");
+        xTaskCreatePinnedToCore(StateMachine::StateMachineLoop, "StateMachineLoop", 4096, NULL, configMAX_PRIORITIES - 1, nullptr, 1);
+    }
+    else{
+        //Rear ECU
+        printf("REAR ECU SELECTED!\n");
+        xTaskCreatePinnedToCore(RearECU::rearECU_Task, "RearECULoop", 4096, NULL, configMAX_PRIORITIES - 1, nullptr, 1);
+    }
     
-    xTaskCreatePinnedToCore(StateMachine::StateMachineLoop, "StateMachineLoop", 4096, NULL, configMAX_PRIORITIES - 1, nullptr, 1);
     bool onboard_LED = 0;
     while(true){
         onboard_LED = !onboard_LED;
