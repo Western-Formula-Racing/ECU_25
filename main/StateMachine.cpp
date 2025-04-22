@@ -12,7 +12,7 @@ State StateMachine::handle_start()
 {
     State nextState = START;
     Inverter::Get()->Disable();
-    
+    IO::Get()->HSDWrite(ECU_39_HSD3, false);
     if (pack_status == BMS::FAULT)
     {
         ESP_LOGE(TAG, "BMS FAULT Detected");
@@ -38,7 +38,7 @@ State StateMachine::handle_precharge_enable()
 {
     State nextState = PRECHARGE_ENABLE;
     Inverter::Get()->Disable();
-    
+    IO::Get()->HSDWrite(ECU_39_HSD3, false);
     if (pack_status == BMS::FAULT)
     {
         ESP_LOGE(TAG, "BMS Encountered an error during precharge");
@@ -56,7 +56,7 @@ State StateMachine::handle_precharge_ok()
 {
     State nextState = PRECHARGE_OK;
     Inverter::Get()->Disable();
-
+    IO::Get()->HSDWrite(ECU_39_HSD3, false);
     if (pack_status == BMS::ACTIVE && rtd_button)
     {
         rtd_start_time = esp_timer_get_time()/1000;
@@ -75,7 +75,7 @@ State StateMachine::handle_startup_delay()
 {
     State nextState = START;
     Inverter::Get()->Disable();
-    
+    IO::Get()->HSDWrite(ECU_39_HSD3, false);
    
     int64_t current_time = esp_timer_get_time()/1000;
     if (pack_status == BMS::FAULT){
@@ -84,7 +84,7 @@ State StateMachine::handle_startup_delay()
     }
     else if (pack_status == BMS::ACTIVE && rtd_button && (current_time - rtd_start_time) < RTD_TIME )
     {
-        // sound buzzer
+        IO::Get()->HSDWrite(ECU_48_HSD6, true);
         nextState = STARTUP_DELAY;
     }
     else if(pack_status == BMS::ACTIVE && rtd_button && (current_time - rtd_start_time) >= RTD_TIME )
@@ -98,6 +98,7 @@ State StateMachine::handle_drive()
 {
     State nextState = START;
     Inverter::Get()->Enable();
+    IO::Get()->HSDWrite(ECU_39_HSD3, true);
     if (pack_status == BMS::FAULT){
         ESP_LOGE(TAG, "BMS FAULT Detected during drive");
         nextState = DEVICE_FAULT;
@@ -113,11 +114,13 @@ State StateMachine::handle_drive()
 State StateMachine::handle_precharge_error()
 {
     Inverter::Get()->Disable();
+    IO::Get()->HSDWrite(ECU_39_HSD3, false);
     return PRECHARGE_ERROR;
 }
 State StateMachine::handle_device_fault()
 {
     Inverter::Get()->Disable();
+    IO::Get()->HSDWrite(ECU_39_HSD3, false);
     return DEVICE_FAULT;
 }
 
@@ -147,6 +150,16 @@ void StateMachine::StateMachineLoop(void *)
 
         printf(">packStatus:%d\n", pack_status);
         printf(">state:%d\n", state);
+        //lights
+        IO::Get()->HSDWrite(ECU_48_HSD6, false);
+        if(Pedals::Get()->getBrakePressure() >= BRAKE_THRESHOLD){
+            HSD5_ID2012.set(true);
+        }
+        else{
+            HSD5_ID2012.set(false);
+        }
+        IO::Get()->HSDWrite(ECU_41_HSD5, !IMDRelay_ID1056.get_bool());
+        IO::Get()->HSDWrite(ECU_48_HSD6, !AMSRelay_ID1056.get_bool());
 
         state = states[state]();
         vTaskDelay(pdMS_TO_TICKS(10));

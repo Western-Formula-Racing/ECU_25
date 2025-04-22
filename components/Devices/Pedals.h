@@ -46,6 +46,7 @@ public:
     Pedals &operator=(Pedals &&) = delete;
     static Pedals *Get();
     float getThrottle();
+    float getBrakePressure();
 
 };
 

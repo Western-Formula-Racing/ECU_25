@@ -74,3 +74,8 @@ float Pedals::getThrottle()
     return throttle;
 
 }
+
+float Pedals::getBrakePressure()
+{
+    return Sensors::Get()->get_sensor_voltage(Sensors::BPS1);
+}

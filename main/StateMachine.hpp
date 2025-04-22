@@ -11,7 +11,7 @@
 #include "BMS.h"
 
 #define RTD_TIME 2000
-
+#define BRAKE_THRESHOLD 2.5f
 namespace StateMachine{
 enum State
 {
