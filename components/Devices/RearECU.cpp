@@ -6,6 +6,7 @@ using namespace RearECU;
 
 void RearECU::rearECU_Task(void*)
 {
+    
     // remove uneeded CAN Rx messages
     CAN_Tx_10ms_IDs.erase(M192_COMMAND_MESSAGE);
     CAN_Tx_100ms_IDs.erase(BMS_CURRENT_LIMIT);
@@ -22,7 +23,6 @@ void RearECU::rearECU_Task(void*)
     CAN_Tx_100ms_IDs.insert(VCU_REAR_SENSORS_2);
     CAN_Tx_100ms_IDs.insert(VCU_REAR_SENSORS_3);
     CAN_Tx_100ms_IDs.insert(VCU_REAR_SENSORS_4);
-    
     for(;;){
         // poll sensors
         Sensors::Get()->poll_sensors();

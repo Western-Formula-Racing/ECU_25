@@ -27,8 +27,9 @@ IO::IO()
     gpio_config(&io_conf);
 
 
-
+    
     setupSPI();
+    setupI2C();
     adc1_handle =  new TLA2518(SPI2_HOST, GPIO_NUM_41);
     adc2_handle = new TLA2518(SPI2_HOST, GPIO_NUM_42);
     imu_handle = new ICM20948(SPI2_HOST,IMU_CS);
@@ -42,7 +43,7 @@ IO*  IO::Get()
     {
         if (xSemaphoreTake(IO::mutex, (TickType_t)10) == pdTRUE)
         {
-            IO* volatile temp = new IO();          
+            IO* temp = new IO();          
             instancePtr = temp;
             xSemaphoreGive(IO::mutex);
         }
@@ -50,8 +51,7 @@ IO*  IO::Get()
         {
             ESP_LOGW(TAG, "Mutex couldn't be obtained");
         }
-    }
-    printf("instance %#010x returned!\n", (int)instancePtr); 
+    } 
     return instancePtr;
 }
 
@@ -69,7 +69,6 @@ void IO::setupSPI()  {
   };
 
   ESP_ERROR_CHECK(spi_bus_initialize(SPI2_HOST,&spiConfig,SPI_DMA_CH_AUTO));
-  imu_handle = new ICM20948(SPI2_HOST,IMU_CS);
 }
 
 int IO::analogRead(ECU_ANALOG_PIN pin)
@@ -97,7 +96,7 @@ float IO::analogReadVoltage(ECU_ANALOG_PIN pin)
 
 void IO::setupI2C(){
   i2c_master_bus_config_t i2c_mst_config = {
-    .i2c_port = -1,
+    .i2c_port = I2C_NUM_0,
     .sda_io_num = (gpio_num_t)I2C_SDA_PIN,
     .scl_io_num = (gpio_num_t)I2C_SCL_PIN,
     .clk_source = I2C_CLK_SRC_DEFAULT,
