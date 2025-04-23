@@ -71,6 +71,8 @@ esp_err_t GUI::handle_update(httpd_req_t *req)
     char* resp_str = serialize_sndb_to_json();
     httpd_resp_set_type(req, HTTPD_TYPE_JSON);
     httpd_resp_send(req, resp_str, strlen(resp_str));
+
+    delete[] resp_str;
     return ESP_OK;
 }
 
@@ -544,69 +546,57 @@ char* GUI::serialize_sndb_to_json()
     // Buffer to store serialized data
     char* buffer = new char[buffer_size];
     memset(buffer, '\0', buffer_size);
-    strcat(buffer, "{");
+    
+    size_t pos = 0;
+
+    pos += sniprintf(buffer + pos, buffer_size - pos, "{");
 
     for (std::pair<char*,int(*)()> int_entry: int_callables)
     {
-        char entry_buf[ENTRY_BUFFER_SIZE];
-        memset(entry_buf, '\0', ENTRY_BUFFER_SIZE);
-
         char* key = int_entry.first;
         int value = int_entry.second();
         if (!first)
         {
-            strcat(buffer, ",");
+            pos += sniprintf(buffer + pos, buffer_size - pos, ",");
         } 
         
         first = false;
 
-        snprintf(entry_buf, ENTRY_BUFFER_SIZE-1, "\"%s\":{\"value\":\"%d\", \"type\":\"sendable>int\"}", key, value);
-        strcat(buffer, entry_buf);
+        pos += snprintf(buffer + pos, buffer_size - pos, "\"%s\":{\"value\":\"%d\", \"type\":\"sendable>int\"}", key, value);
     }
     
     for (std::pair<char*, float(*)()> float_entry: float_callables)
     {
-        char entry_buf[ENTRY_BUFFER_SIZE];
-        memset(entry_buf, '\0', ENTRY_BUFFER_SIZE);
-        
         char* key = float_entry.first;
         float value = float_entry.second();
         if (!first)
         {
-            strcat(buffer, ",");
+            pos += sniprintf(buffer + pos, buffer_size - pos, ",");
         }
         
         first = false;
     
-        snprintf(entry_buf, ENTRY_BUFFER_SIZE-1, "\"%s\":{\"value\":\"%.5f\", \"type\":\"sendable>float\"}", key, value);
-        strcat(buffer, entry_buf);
+        pos += snprintf(buffer + pos, buffer_size - pos, "\"%s\":{\"value\":\"%.5f\", \"type\":\"sendable>float\"}", key, value);
     }
     
     for (std::pair<char*, char*(*)()> string_entry: string_callables)
     {
-        char entry_buf[ENTRY_BUFFER_SIZE];
-        memset(entry_buf, '\0', ENTRY_BUFFER_SIZE);
-
         char* key = string_entry.first;
         char* value = string_entry.second();
         
         if (!first)
         {
-            strcat(buffer, ",");
+            pos += sniprintf(buffer + pos, buffer_size - pos, ",");
         } 
         
         first = false;
 
-        snprintf(entry_buf, ENTRY_BUFFER_SIZE-1, "\"%s\":{\"value\":\"%s\", \"type\":\"sendable>string\"}", key, value);
-        strcat(buffer, entry_buf);
+        pos += snprintf(buffer + pos, buffer_size - pos, "\"%s\":{\"value\":\"%s\", \"type\":\"sendable>string\"}", key, value);
     }
     
     
     for (std::pair<char*, bool(*)()> bool_entry: bool_callables)
     {
-        char entry_buf[ENTRY_BUFFER_SIZE];
-        memset(entry_buf, '\0', ENTRY_BUFFER_SIZE);
-
         char* key = bool_entry.first;
         bool value = bool_entry.second();
         char* str_value;
@@ -622,16 +612,15 @@ char* GUI::serialize_sndb_to_json()
         
         if (!first)
         {
-            strcat(buffer, ",");
+            pos += sniprintf(buffer + pos, buffer_size - pos, ",");
         }
 
         first = false;
 
-        snprintf(entry_buf, ENTRY_BUFFER_SIZE-1, "\"%s\":{\"value\":\"%s\", \"type\":\"sendable>bool\"}", key, str_value);
-        strcat(buffer, entry_buf);
+        pos += snprintf(buffer + pos, buffer_size - pos, "\"%s\":{\"value\":\"%s\", \"type\":\"sendable>bool\"}", key, str_value);
     }
 
-    strcat(buffer, "}");
+    pos += sniprintf(buffer + pos, buffer_size - pos, "}");
 
     if (strlen(buffer) > buffer_size)
     {
