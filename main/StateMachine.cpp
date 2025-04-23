@@ -141,9 +141,23 @@ void StateMachine::StateMachineLoop(void *)
         // anything that runs in all state's should go here
         //Sensors checked in all states:
         Sensors::Get()->poll_sensors();
+        //this should get bundled into the sensor class later
+        A1_ID2014.set(Sensors::Get()->get_sensor_voltage(static_cast<Sensors::SENSOR_INDEX>(0)));
+        A2_ID2014.set(Sensors::Get()->get_sensor_voltage(static_cast<Sensors::SENSOR_INDEX>(1)));
+        A3_ID2014.set(Sensors::Get()->get_sensor_voltage(static_cast<Sensors::SENSOR_INDEX>(2)));
+        A4_ID2014.set(Sensors::Get()->get_sensor_voltage(static_cast<Sensors::SENSOR_INDEX>(3)));
+        A5_ID2015.set(Sensors::Get()->get_sensor_voltage(static_cast<Sensors::SENSOR_INDEX>(4)));
+        A6_ID2015.set(Sensors::Get()->get_sensor_voltage(static_cast<Sensors::SENSOR_INDEX>(5)));
+        A7_ID2015.set(Sensors::Get()->get_sensor_voltage(static_cast<Sensors::SENSOR_INDEX>(6)));
+        A8_ID2015.set(Sensors::Get()->get_sensor_voltage(static_cast<Sensors::SENSOR_INDEX>(7)));
+        A9_ID2016.set(Sensors::Get()->get_sensor_voltage(static_cast<Sensors::SENSOR_INDEX>(8)));
+        A10_ID2016.set(Sensors::Get()->get_sensor_voltage(static_cast<Sensors::SENSOR_INDEX>(9)));
+        A11_ID2016.set(Sensors::Get()->get_sensor_voltage(static_cast<Sensors::SENSOR_INDEX>(10)));
+        A12_ID2016.set(Sensors::Get()->get_sensor_voltage(static_cast<Sensors::SENSOR_INDEX>(11)));
+        A13_ID2017.set(Sensors::Get()->get_sensor_voltage(static_cast<Sensors::SENSOR_INDEX>(12)));
 
         pack_status = BMS::Get()->getPackState();
-        rtd_button = IO::Get()->digitalRead(ECU_TEST);
+        rtd_button = !IO::Get()->digitalRead(ECU_10_IO1);
         throttle = Pedals::Get()->getThrottle();
         
         State_ID2002.set(state);
