@@ -18,10 +18,11 @@
 
 #define WIFI_SSID "WFR-ECU-AP"
 #define WIFI_PASS "123456789" 
-#define SERVER_PORT 3000
+#define SERVER_PORT 80
 #define ENTRY_BUFFER_SIZE 150
 #define BUTTON_BUFFER_SIZE 50
-#define HTML_SIZE 10224
+#define HTML_SIZE 4953
+#define JS_SIZE 5889
 
 class GUI
 {
@@ -47,6 +48,7 @@ private:
 
     // Handlers
     static esp_err_t handle_root(httpd_req_t *req);
+    static esp_err_t handle_js(httpd_req_t *req);
     static esp_err_t handle_update(httpd_req_t *req);
     static esp_err_t handle_recievable(httpd_req_t *req);
     static esp_err_t handle_fetch_recievables(httpd_req_t *req);
@@ -58,16 +60,35 @@ private:
     // Serialize sendables to json
     static char* serialize_rcvb_to_json(void);
 
-    // Maps
-    static std::unordered_map<char*, int(*)()> int_callables;
-    static std::unordered_map<char*, float(*)()> float_callables;
-    static std::unordered_map<char*, char*(*)()> string_callables;
-    static std::unordered_map<char*, bool(*)()> bool_callables;
+    // For maps
+    struct CStringHash
+    {
+        size_t operator()(const char* s) const
+        {
+            return std::hash<std::string>()(std::string(s));
+        }
+    };
+    
 
-    static std::unordered_map<char*, Recievable<int>*> int_recievables;
-    static std::unordered_map<char*, Recievable<float>*> float_recievables;
-    static std::unordered_map<char*, Recievable<char*>*> string_recievables;
-    static std::unordered_map<char*, ButtonRecievable*> button_recievables;
+    // Comparison for char* for maps
+    struct CStringEqual
+    {
+        bool operator()(const char* s1, const char* s2) const
+        {
+            return strcmp(s1, s2) == 0;
+        }
+    };
+    
+    // Maps
+    static std::unordered_map<char*, int(*)(), CStringHash, CStringEqual> int_callables;
+    static std::unordered_map<char*, float(*)(), CStringHash, CStringEqual> float_callables;
+    static std::unordered_map<char*, char*(*)(), CStringHash, CStringEqual> string_callables;
+    static std::unordered_map<char*, bool(*)(), CStringHash, CStringEqual> bool_callables;
+
+    static std::unordered_map<char*, Recievable<int>*, CStringHash, CStringEqual> int_recievables;
+    static std::unordered_map<char*, Recievable<float>*, CStringHash, CStringEqual> float_recievables;
+    static std::unordered_map<char*, Recievable<char*>*, CStringHash, CStringEqual> string_recievables;
+    static std::unordered_map<char*, ButtonRecievable*, CStringHash, CStringEqual> button_recievables;
 
 public:
     // Register int sendables
