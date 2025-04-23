@@ -4,21 +4,21 @@ static const char *TAG = "GUI"; // Used for ESP_LOGx commands. See ESP-IDF Docum
 GUI *GUI::instancePtr = nullptr;
 SemaphoreHandle_t GUI::mutex = xSemaphoreCreateMutex();
 
-std::unordered_map<char*, int(*)()> GUI::int_callables = {};
-std::unordered_map<char*, float(*)()> GUI::float_callables = {};
-std::unordered_map<char*, char*(*)()> GUI::string_callables = {};
-std::unordered_map<char*, bool(*)()> GUI::bool_callables = {};
-std::unordered_map<char*, Recievable<int>*> GUI::int_recievables = {};
-std::unordered_map<char*, Recievable<float>*> GUI::float_recievables = {};
-std::unordered_map<char*, Recievable<char*>*> GUI::string_recievables = {};
-std::unordered_map<char*, ButtonRecievable*> GUI::button_recievables = {};
+std::unordered_map<char*, int(*)(), GUI::CStringHash, GUI::CStringEqual> GUI::int_callables = {};
+std::unordered_map<char*, float(*)(), GUI::CStringHash, GUI::CStringEqual> GUI::float_callables = {};
+std::unordered_map<char*, char*(*)(), GUI::CStringHash, GUI::CStringEqual> GUI::string_callables = {};
+std::unordered_map<char*, bool(*)(), GUI::CStringHash, GUI::CStringEqual> GUI::bool_callables = {};
+std::unordered_map<char*, Recievable<int>*, GUI::CStringHash, GUI::CStringEqual> GUI::int_recievables = {};
+std::unordered_map<char*, Recievable<float>*, GUI::CStringHash, GUI::CStringEqual> GUI::float_recievables = {};
+std::unordered_map<char*, Recievable<char*>*, GUI::CStringHash, GUI::CStringEqual> GUI::string_recievables = {};
+std::unordered_map<char*, ButtonRecievable*, GUI::CStringHash, GUI::CStringEqual> GUI::button_recievables = {};
 
 GUI::GUI()
 {
     esp_vfs_spiffs_conf_t conf = {
         .base_path = "/spiffs",
         .partition_label = NULL,
-        .max_files = 1,
+        .max_files = 2,
         .format_if_mount_failed = true
     };
     esp_vfs_spiffs_register(&conf);
@@ -46,11 +46,31 @@ esp_err_t GUI::handle_root(httpd_req_t *req)
     return ESP_OK;
 }
 
+esp_err_t GUI::handle_js(httpd_req_t *req)
+{
+    FILE* f_js = fopen("/spiffs/static.js", "r");
+
+    if (f_js == NULL)
+    {
+        ESP_LOGE(TAG, "Could not find js file in SPIFFS");
+        return ESP_FAIL;
+    }
+
+    char* buffer = new char[JS_SIZE];
+    memset(buffer, 0, JS_SIZE);
+    fread(buffer, 1, JS_SIZE, f_js);
+    httpd_resp_set_type(req, "application/text");
+    httpd_resp_send(req, buffer, JS_SIZE);
+    fclose(f_js);
+    
+    return ESP_OK;
+}
+
 esp_err_t GUI::handle_update(httpd_req_t *req) 
 {
     char* resp_str = serialize_sndb_to_json();
     httpd_resp_set_type(req, HTTPD_TYPE_JSON);
-    httpd_resp_sendstr(req, resp_str);
+    httpd_resp_send(req, resp_str, strlen(resp_str));
     return ESP_OK;
 }
 
@@ -61,7 +81,7 @@ esp_err_t GUI::handle_recievable(httpd_req_t *req)
 
     // Parse content
     char* buffer = new char[ENTRY_BUFFER_SIZE];
-    strncpy(buffer, "", ENTRY_BUFFER_SIZE);
+    memset(buffer, '\0', ENTRY_BUFFER_SIZE);
 
     int i = 0;
     int entry = 0;
@@ -70,35 +90,38 @@ esp_err_t GUI::handle_recievable(httpd_req_t *req)
     char* s_value = new char[ENTRY_BUFFER_SIZE];
     char* type = new char[ENTRY_BUFFER_SIZE];
 
-
     while (req_content[i] != '\0' && entry < 3)
     {
-        strncat(buffer, "" + req_content[i], ENTRY_BUFFER_SIZE);
-        
-        if (req_content[i] == '\n') {
+        if (req_content[i] == '\n') 
+        {
             if (entry == 0)
             {
-                key = buffer;
+                snprintf(key, ENTRY_BUFFER_SIZE-1, "%s", buffer);
             } else if (entry == 1)
             {
-                s_value = buffer;
+                snprintf(s_value, ENTRY_BUFFER_SIZE-1, "%s", buffer);
             } else if (entry == 2)
             {
-                type = buffer;
+                snprintf(type, ENTRY_BUFFER_SIZE-1, "%s", buffer);
             }
             
-            
-            buffer = new char[ENTRY_BUFFER_SIZE];
-            strncpy(buffer, "", ENTRY_BUFFER_SIZE);
+            strcpy(buffer, "");
             entry++;
+        } else 
+        {
+            size_t len = strlen(buffer);
+            buffer[len] = req_content[i];
+            buffer[len + 1] = '\0';
         }
 
         i++;
     }
-    
+
+    delete[] buffer;
+
     // Edit recievable value
     if (is_recievable_registered(key)) {
-        if (strcmp(type, "recievable>int") == 0|| strcmp(type, "recievable>option>int") == 0)
+        if (strcmp(type, "recievable>int") == 0 || strcmp(type, "recievable>option>int") == 0)
         {
             int value = atoi(s_value);
 
@@ -117,14 +140,8 @@ esp_err_t GUI::handle_recievable(httpd_req_t *req)
         }
     }
 
-    // Send response
-    httpd_resp_set_status(req, "200 OK");
     httpd_resp_set_type(req, "application/text");
-    const char* resp_str = "Update Successful";
-    httpd_resp_send(req, resp_str, strlen(resp_str));
-
-    printf(req_content);
-    ESP_LOGI(TAG, "Recievable \"%s\" edited", key);
+    httpd_resp_send(req, "Successful", 11);
 
     return ESP_OK;
 }
@@ -141,7 +158,8 @@ esp_err_t GUI::handle_fetch_recievables(httpd_req_t *req)
 }
 
 esp_err_t GUI::handle_button_command(httpd_req_t *req) {
-    char* req_content = new char[BUTTON_BUFFER_SIZE];
+    char req_content[BUTTON_BUFFER_SIZE];
+    memset(req_content, '\0', BUTTON_BUFFER_SIZE);
     httpd_req_recv(req, req_content, BUTTON_BUFFER_SIZE);    
 
     // Get recievable
@@ -151,13 +169,8 @@ esp_err_t GUI::handle_button_command(httpd_req_t *req) {
         button_recievable->call();
     }
 
-    // Send response
-    httpd_resp_set_status(req, "200 OK");
-    httpd_resp_set_type(req, HTTPD_TYPE_TEXT);
-    const char* resp_str = "Successful";
-    httpd_resp_send(req, resp_str, strlen(resp_str));
-
-    ESP_LOGI(TAG, "Button \"%s\" clicked", req_content);
+    httpd_resp_set_type(req, "application/text");
+    httpd_resp_send(req, "Successful", 11);
 
     return ESP_OK;
 }
@@ -190,6 +203,7 @@ esp_err_t GUI::start_soft_ap(void)
     };
 
     ESP_ERROR_CHECK(esp_wifi_set_mode(WIFI_MODE_AP));
+    ESP_ERROR_CHECK(esp_wifi_set_ps(WIFI_PS_NONE)); // Disable power save mode
     ESP_ERROR_CHECK(esp_wifi_set_config(WIFI_IF_AP, &wifi_config));
     ESP_ERROR_CHECK(esp_wifi_start());
 
@@ -216,6 +230,8 @@ esp_err_t GUI::start_webserver(void)
     httpd_config_t config = HTTPD_DEFAULT_CONFIG();
     config.lru_purge_enable = true;
     config.server_port = SERVER_PORT;
+    config.task_priority = 20;
+    config.stack_size = 8192;
 
     ESP_LOGI(TAG, "Starting server on port: '%d'", config.server_port);
     if (httpd_start(&server, &config) == ESP_OK)
@@ -224,6 +240,12 @@ esp_err_t GUI::start_webserver(void)
             .uri = "/",
             .method = HTTP_GET,
             .handler = GUI::handle_root,
+            .user_ctx = NULL};
+
+        httpd_uri_t js_uri = {
+            .uri = "/static.js",
+            .method = HTTP_GET,
+            .handler = GUI::handle_js,
             .user_ctx = NULL};
 
         httpd_uri_t update_uri = {
@@ -251,6 +273,7 @@ esp_err_t GUI::start_webserver(void)
             .user_ctx = NULL};
 
         httpd_register_uri_handler(server, &root_uri);
+        httpd_register_uri_handler(server, &js_uri);
         httpd_register_uri_handler(server, &update_uri);
         httpd_register_uri_handler(server, &recievable_uri);
         httpd_register_uri_handler(server, &fetch_revievables_uri);
@@ -326,7 +349,7 @@ void GUI::register_bool_sendable(char *key, bool(*callable)())
 
 void GUI::register_int_recievable(char *key, Recievable<int>* int_recievable)
 {
-    if (is_recievable_registered(key))
+    if (!is_recievable_registered(key))
     {
         int_recievables.insert(std::pair<char*, Recievable<int>*>{key, int_recievable});
     } else
@@ -337,7 +360,7 @@ void GUI::register_int_recievable(char *key, Recievable<int>* int_recievable)
 
 void GUI::register_float_recievable(char *key, Recievable<float>* float_recievable)
 {
-    if (is_recievable_registered(key))
+    if (!is_recievable_registered(key))
     {
         float_recievables.insert(std::pair<char*, Recievable<float>*>{key, float_recievable});
     } else
@@ -348,7 +371,7 @@ void GUI::register_float_recievable(char *key, Recievable<float>* float_recievab
 
 void GUI::register_string_recievable(char *key, Recievable<char*>* string_recievable)
 {
-    if (is_recievable_registered(key))
+    if (!is_recievable_registered(key))
     {
         string_recievables.insert(std::pair<char*, Recievable<char*>*>{key, string_recievable});
     } else
@@ -359,7 +382,7 @@ void GUI::register_string_recievable(char *key, Recievable<char*>* string_reciev
 
 void GUI::register_button_recievable(char *key, ButtonRecievable* button_recievable)
 {
-    if (is_recievable_registered(key))
+    if (!is_recievable_registered(key))
     {
         button_recievables.insert(std::pair<char*, ButtonRecievable*>{key, button_recievable});
     } else
@@ -543,7 +566,7 @@ char* GUI::serialize_sndb_to_json()
     
     for (std::pair<char*, float(*)()> float_entry: float_callables)
     {
-        char* entry_buf = new char[ENTRY_BUFFER_SIZE];
+        char entry_buf[ENTRY_BUFFER_SIZE];
         memset(entry_buf, '\0', ENTRY_BUFFER_SIZE);
         
         char* key = float_entry.first;
@@ -581,7 +604,7 @@ char* GUI::serialize_sndb_to_json()
     
     for (std::pair<char*, bool(*)()> bool_entry: bool_callables)
     {
-        char* entry_buf = new char[ENTRY_BUFFER_SIZE];
+        char entry_buf[ENTRY_BUFFER_SIZE];
         memset(entry_buf, '\0', ENTRY_BUFFER_SIZE);
 
         char* key = bool_entry.first;
@@ -610,6 +633,13 @@ char* GUI::serialize_sndb_to_json()
 
     strcat(buffer, "}");
 
+    if (strlen(buffer) > buffer_size)
+    {
+        ESP_LOGE(TAG, "Buffer size exceeded. Buffer size: %d", buffer_size);
+        delete[] buffer;
+        return nullptr;
+    }
+
     return buffer;
 }
 
@@ -622,71 +652,88 @@ char* GUI::serialize_rcvb_to_json()
 
     bool first = true;
     char* buffer = new char[buffer_size];
-    
+    memset(buffer, '\0', buffer_size);
+    strcat(buffer, "{");
+
     if (buffer_size == 0)
     {
         return buffer;
     }
 
-    size_t int_buffer_size = RECV_BUFFER_SIZE * int_recievables.size() + 15;
     for (std::pair<char*, Recievable<int>*> recievable : int_recievables)
     {
-        char int_buffer[int_buffer_size];
-        memset(int_buffer, 0, int_buffer_size);
+        char int_buffer[RECV_BUFFER_SIZE];
+        memset(int_buffer, '\0', RECV_BUFFER_SIZE);
         char* key = recievable.first;
-        if (first)
+        if (!first)
         {
-            strncpy(int_buffer, ",", buffer_size-1);
-            first = false;
+            strcat(buffer, ",");
         }
-        snprintf(int_buffer, int_buffer_size-1, "\"key\":\"%s\":%s", key, recievable.second->serialize_to_json());
+
+        first = false;
+
+        snprintf(int_buffer, RECV_BUFFER_SIZE-1, "\"%s\":%s", key, recievable.second->serialize_to_json());
         strcat(buffer, int_buffer);
     }
 
-    size_t float_buffer_size = RECV_BUFFER_SIZE * float_recievables.size() + 15;
     for (std::pair<char*, Recievable<float>*> recievable : float_recievables)
     {
-        char float_buffer[float_buffer_size];
-        memset(float_buffer, 0, float_buffer_size);
+        char float_buffer[RECV_BUFFER_SIZE];
+        memset(float_buffer, '\0', RECV_BUFFER_SIZE);
         char* key = recievable.first;
-        if (first)
+        if (!first)
         {
-            strncpy(float_buffer, ",", buffer_size-1);
-            first = false;
+            strcat(buffer, ",");
         }
-        snprintf(float_buffer, float_buffer_size-1, "\"key\":\"%s\":%s", key, recievable.second->serialize_to_json());
+
+        first = false;
+
+        snprintf(float_buffer, RECV_BUFFER_SIZE-1, "\"%s\":%s", key, recievable.second->serialize_to_json());
         strcat(buffer, float_buffer);
     }
 
-    size_t string_buffer_size = RECV_BUFFER_SIZE * string_recievables.size() + 15;
     for (std::pair<char*, Recievable<char*>*> recievable : string_recievables)
     {
-        char string_buffer[string_buffer_size];
-        memset(string_buffer, 0, string_buffer_size);
+        char string_buffer[RECV_BUFFER_SIZE];
+        memset(string_buffer, '\0', RECV_BUFFER_SIZE);
         char* key = recievable.first;
-        if (first)
+        if (!first)
         {
-            strncpy(string_buffer, ",", buffer_size-1);
-            first = false;
+            strcat(buffer, ",");
+            
         }
-        snprintf(string_buffer, string_buffer_size-1, "\"key\":\"%s\":%s", key, recievable.second->serialize_to_json());
+
+        first = false;
+
+        snprintf(string_buffer, RECV_BUFFER_SIZE-1, "\"%s\":%s", key, recievable.second->serialize_to_json());
         strcat(buffer, string_buffer);
     }
     
     size_t button_buffer_size = RECV_BUFFER_SIZE * button_recievables.size() + 30;
     for (std::pair<char*, ButtonRecievable*> recievable : button_recievables) {
         char button_buffer[button_buffer_size];
-        memset(button_buffer, 0, button_buffer_size);
+        memset(button_buffer, '\0', button_buffer_size);
         char* key = recievable.first;
-        if (first)
+        if (!first)
         {
             strcat(buffer, ",");
-            first = false;
         }
-        snprintf(button_buffer, button_buffer_size-1, "\"key\":\"%s\": {\"value\":\"%s\"}", key, key);
+
+        first = false;
+
+        snprintf(button_buffer, button_buffer_size-1, "\"%s\":{\"type\":\"recievable>button\"}", key);
         strcat(buffer, button_buffer);
     }
 
+    strcat(buffer, "}");
+    
+    if (strlen(buffer) > buffer_size)
+    {
+        ESP_LOGE(TAG, "Buffer size exceeded. Buffer size: %d", buffer_size);
+        delete[] buffer;
+        return nullptr;
+    }
+    
     return buffer;
 }
 
