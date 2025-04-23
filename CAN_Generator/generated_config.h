@@ -44,6 +44,7 @@
 #define VCU_REAR_SENSORS_2 2019
 #define VCU_REAR_SENSORS_3 2020
 #define VCU_REAR_SENSORS_4 2021
+#define BMS_MIN_VCELL 999
 
 inline CAN_Signal HSD1_ID2012{true, 0, 8};
 inline CAN_Signal HSD2_ID2012{true, 8, 8};
@@ -251,11 +252,12 @@ inline CAN_Signal A13_ID2021{true, 0, 16, 0.01f};
 inline CAN_Signal A14_ID2021{true, 16, 16, 0.01f};
 inline CAN_Signal A15_ID2021{true, 32, 16, 0.01f};
 inline CAN_Signal A16_ID2021{true, 48, 16, 0.01f};
+inline CAN_Signal Absolute_min_cell_voltage_ID999{true, 0, 16, 0.0001f};
 
 // Define the CAN Map
 inline etl::map CAN_Map
 { 
-    etl::pair{VCU_PDM_REAR_CMD, etl::vector<CAN_Signal*, 8>{ 
+    etl::pair{VCU_PDM_REAR_CMD, etl::vector<CAN_Signal*, 16>{ 
         &HSD1_ID2012,
         &HSD2_ID2012,
         &HSD3_ID2012,
@@ -265,28 +267,28 @@ inline etl::map CAN_Map
         &HSD7_ID2012,
         &HSD8_ID2012 
         } },
-    etl::pair{M173_MODULATION_AND_FLUX_INFO, etl::vector<CAN_Signal*, 8>{ 
+    etl::pair{M173_MODULATION_AND_FLUX_INFO, etl::vector<CAN_Signal*, 16>{ 
         &INV_Modulation_Index_ID173,
         &INV_Flux_Weakening_Output_ID173,
         &INV_Id_Command_ID173,
         &INV_Iq_Command_ID173 
         } },
-    etl::pair{M172_TORQUE_AND_TIMER_INFO, etl::vector<CAN_Signal*, 8>{ 
+    etl::pair{M172_TORQUE_AND_TIMER_INFO, etl::vector<CAN_Signal*, 16>{ 
         &INV_Commanded_Torque_ID172,
         &INV_Torque_Feedback_ID172,
         &INV_Power_On_Timer_ID172 
         } },
-    etl::pair{M194_READ_WRITE_PARAM_RESPONSE, etl::vector<CAN_Signal*, 8>{ 
+    etl::pair{M194_READ_WRITE_PARAM_RESPONSE, etl::vector<CAN_Signal*, 16>{ 
         &INV_Parameter_Response_Addr_ID194,
         &INV_Parameter_Response_Write_OK_ID194,
         &INV_Parameter_Response_Data_ID194 
         } },
-    etl::pair{M193_READ_WRITE_PARAM_COMMAND, etl::vector<CAN_Signal*, 8>{ 
+    etl::pair{M193_READ_WRITE_PARAM_COMMAND, etl::vector<CAN_Signal*, 16>{ 
         &VCU_INV_Parameter_Address_ID193,
         &VCU_INV_Parameter_RW_Command_ID193,
         &VCU_INV_Parameter_Data_ID193 
         } },
-    etl::pair{M192_COMMAND_MESSAGE, etl::vector<CAN_Signal*, 8>{ 
+    etl::pair{M192_COMMAND_MESSAGE, etl::vector<CAN_Signal*, 16>{ 
         &VCU_INV_Torque_Command_ID192,
         &VCU_INV_Speed_Command_ID192,
         &VCU_INV_Direction_Command_ID192,
@@ -295,13 +297,13 @@ inline etl::map CAN_Map
         &VCU_INV_Speed_Mode_Enable_ID192,
         &VCU_INV_Torque_Limit_Command_ID192 
         } },
-    etl::pair{M171_FAULT_CODES, etl::vector<CAN_Signal*, 8>{ 
+    etl::pair{M171_FAULT_CODES, etl::vector<CAN_Signal*, 16>{ 
         &INV_Post_Fault_Lo_ID171,
         &INV_Post_Fault_Hi_ID171,
         &INV_Run_Fault_Lo_ID171,
         &INV_Run_Fault_Hi_ID171 
         } },
-    etl::pair{M170_INTERNAL_STATES, etl::vector<CAN_Signal*, 8>{ 
+    etl::pair{M170_INTERNAL_STATES, etl::vector<CAN_Signal*, 16>{ 
         &INV_VSM_State_ID170,
         &INV_PWM_Frequency_ID170,
         &INV_Inverter_State_ID170,
@@ -329,37 +331,37 @@ inline etl::map CAN_Map
         &INV_Limit_Coolant_Derating_ID170,
         &INV_Limit_Stall_Burst_Model_ID170 
         } },
-    etl::pair{M169_INTERNAL_VOLTAGES, etl::vector<CAN_Signal*, 8>{ 
+    etl::pair{M169_INTERNAL_VOLTAGES, etl::vector<CAN_Signal*, 16>{ 
         &INV_Ref_Voltage_1_5_ID169,
         &INV_Ref_Voltage_2_5_ID169,
         &INV_Ref_Voltage_5_0_ID169,
         &INV_Ref_Voltage_12_0_ID169 
         } },
-    etl::pair{M168_FLUX_ID_IQ_INFO, etl::vector<CAN_Signal*, 8>{ 
+    etl::pair{M168_FLUX_ID_IQ_INFO, etl::vector<CAN_Signal*, 16>{ 
         &INV_Vd_ff_ID168,
         &INV_Vq_ff_ID168,
         &INV_Id_ID168,
         &INV_Iq_ID168 
         } },
-    etl::pair{M167_VOLTAGE_INFO, etl::vector<CAN_Signal*, 8>{ 
+    etl::pair{M167_VOLTAGE_INFO, etl::vector<CAN_Signal*, 16>{ 
         &INV_DC_Bus_Voltage_ID167,
         &INV_Output_Voltage_ID167,
         &INV_VAB_Vd_Voltage_ID167,
         &INV_VBC_Vq_Voltage_ID167 
         } },
-    etl::pair{M166_CURRENT_INFO, etl::vector<CAN_Signal*, 8>{ 
+    etl::pair{M166_CURRENT_INFO, etl::vector<CAN_Signal*, 16>{ 
         &INV_Phase_A_Current_ID166,
         &INV_Phase_B_Current_ID166,
         &INV_Phase_C_Current_ID166,
         &INV_DC_Bus_Current_ID166 
         } },
-    etl::pair{M165_MOTOR_POSITION_INFO, etl::vector<CAN_Signal*, 8>{ 
+    etl::pair{M165_MOTOR_POSITION_INFO, etl::vector<CAN_Signal*, 16>{ 
         &INV_Motor_Angle_Electrical_ID165,
         &INV_Motor_Speed_ID165,
         &INV_Electrical_Output_Frequency_ID165,
         &INV_Delta_Resolver_Filtered_ID165 
         } },
-    etl::pair{M164_DIGITAL_INPUT_STATUS, etl::vector<CAN_Signal*, 8>{ 
+    etl::pair{M164_DIGITAL_INPUT_STATUS, etl::vector<CAN_Signal*, 16>{ 
         &INV_Digital_Input_1_ID164,
         &INV_Digital_Input_2_ID164,
         &INV_Digital_Input_3_ID164,
@@ -369,7 +371,7 @@ inline etl::map CAN_Map
         &INV_Digital_Input_7_ID164,
         &INV_Digital_Input_8_ID164 
         } },
-    etl::pair{M163_ANALOG_INPUT_VOLTAGES, etl::vector<CAN_Signal*, 8>{ 
+    etl::pair{M163_ANALOG_INPUT_VOLTAGES, etl::vector<CAN_Signal*, 16>{ 
         &INV_Analog_Input_1_ID163,
         &INV_Analog_Input_2_ID163,
         &INV_Analog_Input_3_ID163,
@@ -377,31 +379,31 @@ inline etl::map CAN_Map
         &INV_Analog_Input_5_ID163,
         &INV_Analog_Input_6_ID163 
         } },
-    etl::pair{M162_TEMPERATURE_SET_3, etl::vector<CAN_Signal*, 8>{ 
+    etl::pair{M162_TEMPERATURE_SET_3, etl::vector<CAN_Signal*, 16>{ 
         &INV_Coolant_Temp_ID162,
         &INV_Hot_Spot_Temp_ID162,
         &INV_Motor_Temp_ID162,
         &INV_Torque_Shudder_ID162 
         } },
-    etl::pair{M161_TEMPERATURE_SET_2, etl::vector<CAN_Signal*, 8>{ 
+    etl::pair{M161_TEMPERATURE_SET_2, etl::vector<CAN_Signal*, 16>{ 
         &INV_Control_Board_Temp_ID161,
         &INV_RTD1_Temperature_ID161,
         &INV_RTD2_Temperature_ID161,
         &INV_Stall_Burst_Model_Temp_ID161 
         } },
-    etl::pair{M160_TEMPERATURE_SET_1, etl::vector<CAN_Signal*, 8>{ 
+    etl::pair{M160_TEMPERATURE_SET_1, etl::vector<CAN_Signal*, 16>{ 
         &INV_Module_A_Temp_ID160,
         &INV_Module_B_Temp_ID160,
         &INV_Module_C_Temp_ID160,
         &INV_Gate_Driver_Board_Temp_ID160 
         } },
-    etl::pair{M174_FIRMWARE_INFO, etl::vector<CAN_Signal*, 8>{ 
+    etl::pair{M174_FIRMWARE_INFO, etl::vector<CAN_Signal*, 16>{ 
         &INV_Project_Code_EEP_Ver_ID174,
         &INV_SW_Version_ID174,
         &INV_DateCode_MMDD_ID174,
         &INV_DateCode_YYYY_ID174 
         } },
-    etl::pair{M175_DIAG_DATA_MESSAGE, etl::vector<CAN_Signal*, 8>{ 
+    etl::pair{M175_DIAG_DATA_MESSAGE, etl::vector<CAN_Signal*, 16>{ 
         &INV_Diag_Record_ID175,
         &INV_Diag_Segment_ID175,
         &INV_Diag_Gamma_Resolver_ID175,
@@ -423,17 +425,17 @@ inline etl::map CAN_Map
         &INV_Diag_Vqs_Cmd_ID175,
         &INV_Diag_Run_Faults_Hi_ID175 
         } },
-    etl::pair{BMS_CURRENT_LIMIT, etl::vector<CAN_Signal*, 8>{ 
+    etl::pair{BMS_CURRENT_LIMIT, etl::vector<CAN_Signal*, 16>{ 
         &BMS_Max_Discharge_Current_ID514,
         &BMS_Max_Charge_Current_ID514 
         } },
-    etl::pair{M176_FAST_INFO, etl::vector<CAN_Signal*, 8>{ 
+    etl::pair{M176_FAST_INFO, etl::vector<CAN_Signal*, 16>{ 
         &INV_Fast_Torque_Command_ID176,
         &INV_Fast_Torque_Feedback_ID176,
         &INV_Fast_Motor_Speed_ID176,
         &INV_Fast_DC_Bus_Voltage_ID176 
         } },
-    etl::pair{VCU_PEDAL_INFO, etl::vector<CAN_Signal*, 8>{ 
+    etl::pair{VCU_PEDAL_INFO, etl::vector<CAN_Signal*, 16>{ 
         &sensorPlausibility_ID2000,
         &pedalPosition_ID2000,
         &sensor1Position_ID2000,
@@ -441,7 +443,7 @@ inline etl::map CAN_Map
         &brakePressure1Signal_ID2000,
         &brakePressure2Signal_ID2000 
         } },
-    etl::pair{VCU_PDM_FRONT, etl::vector<CAN_Signal*, 8>{ 
+    etl::pair{VCU_PDM_FRONT, etl::vector<CAN_Signal*, 16>{ 
         &HSD1_ID2001,
         &HSD2_ID2001,
         &HSD3_ID2001,
@@ -451,15 +453,15 @@ inline etl::map CAN_Map
         &HSD7_ID2001,
         &HSD8_ID2001 
         } },
-    etl::pair{VCU_STATE_INFO, etl::vector<CAN_Signal*, 8>{ 
+    etl::pair{VCU_STATE_INFO, etl::vector<CAN_Signal*, 16>{ 
         &RTD_Button_ID2002,
         &State_ID2002 
         } },
-    etl::pair{VCU_PRECHARGE, etl::vector<CAN_Signal*, 8>{ 
+    etl::pair{VCU_PRECHARGE, etl::vector<CAN_Signal*, 16>{ 
         &Precharge_Enable_ID2003,
         &Precharge_OK_ID2003 
         } },
-    etl::pair{VCU_PDM_REAR, etl::vector<CAN_Signal*, 8>{ 
+    etl::pair{VCU_PDM_REAR, etl::vector<CAN_Signal*, 16>{ 
         &HSD1_ID2004,
         &HSD2_ID2004,
         &HSD3_ID2004,
@@ -469,10 +471,10 @@ inline etl::map CAN_Map
         &HSD7_ID2004,
         &HSD8_ID2004 
         } },
-    etl::pair{M177_TORQUE_CAPABILITY, etl::vector<CAN_Signal*, 8>{ 
+    etl::pair{M177_TORQUE_CAPABILITY, etl::vector<CAN_Signal*, 16>{ 
         &INV_Torque_Capability_ID177 
         } },
-    etl::pair{PACKSTATUS, etl::vector<CAN_Signal*, 8>{ 
+    etl::pair{PACKSTATUS, etl::vector<CAN_Signal*, 16>{ 
         &PackCurrent_ID1056,
         &IMDRelay_ID1056,
         &AMSRelay_ID1056,
@@ -484,58 +486,61 @@ inline etl::map CAN_Map
         &PackStatus_ID1056,
         &Fault_ID1056 
         } },
-    etl::pair{ELCON_LIMITS, etl::vector<CAN_Signal*, 8>{ 
+    etl::pair{ELCON_LIMITS, etl::vector<CAN_Signal*, 16>{ 
         &Max_charge_voltage_ID403105268,
         &Max_charge_current_ID403105268,
         &Control_ID403105268 
         } },
-    etl::pair{VCU_FRONT_SENSORS_1, etl::vector<CAN_Signal*, 8>{ 
+    etl::pair{VCU_FRONT_SENSORS_1, etl::vector<CAN_Signal*, 16>{ 
         &A1_ID2014,
         &A2_ID2014,
         &A3_ID2014,
         &A4_ID2014 
         } },
-    etl::pair{VCU_FRONT_SENSORS_2, etl::vector<CAN_Signal*, 8>{ 
+    etl::pair{VCU_FRONT_SENSORS_2, etl::vector<CAN_Signal*, 16>{ 
         &A5_ID2015,
         &A6_ID2015,
         &A7_ID2015,
         &A8_ID2015 
         } },
-    etl::pair{VCU_FRONT_SENSORS_3, etl::vector<CAN_Signal*, 8>{ 
+    etl::pair{VCU_FRONT_SENSORS_3, etl::vector<CAN_Signal*, 16>{ 
         &A9_ID2016,
         &A10_ID2016,
         &A11_ID2016,
         &A12_ID2016 
         } },
-    etl::pair{VCU_FRONT_SENSORS_4, etl::vector<CAN_Signal*, 8>{ 
+    etl::pair{VCU_FRONT_SENSORS_4, etl::vector<CAN_Signal*, 16>{ 
         &A13_ID2017,
         &A14_ID2017,
         &A15_ID2017,
         &A16_ID2017 
         } },
-    etl::pair{VCU_REAR_SENSORS_1, etl::vector<CAN_Signal*, 8>{ 
+    etl::pair{VCU_REAR_SENSORS_1, etl::vector<CAN_Signal*, 16>{ 
         &A1_ID2018,
         &A2_ID2018,
         &A3_ID2018,
         &A4_ID2018 
         } },
-    etl::pair{VCU_REAR_SENSORS_2, etl::vector<CAN_Signal*, 8>{ 
+    etl::pair{VCU_REAR_SENSORS_2, etl::vector<CAN_Signal*, 16>{ 
         &A5_ID2019,
         &A6_ID2019,
         &A7_ID2019,
         &A8_ID2019 
         } },
-    etl::pair{VCU_REAR_SENSORS_3, etl::vector<CAN_Signal*, 8>{ 
+    etl::pair{VCU_REAR_SENSORS_3, etl::vector<CAN_Signal*, 16>{ 
         &A9_ID2020,
         &A10_ID2020,
         &A11_ID2020,
         &A12_ID2020 
         } },
-    etl::pair{VCU_REAR_SENSORS_4, etl::vector<CAN_Signal*, 8>{ 
+    etl::pair{VCU_REAR_SENSORS_4, etl::vector<CAN_Signal*, 16>{ 
         &A13_ID2021,
         &A14_ID2021,
         &A15_ID2021,
         &A16_ID2021 
+        } },
+    etl::pair{BMS_MIN_VCELL, etl::vector<CAN_Signal*, 16>{ 
+        &Absolute_min_cell_voltage_ID999 
         } }
 };
-inline etl::set CAN_Rx_IDs = {173,172,194,171,170,169,168,167,166,165,164,163,162,161,160,174,175,514,176,1712,1713,1714,406451072,406451073,406451074,406451075,406451076,177,1000,1006,1007,1008,1009,1010,1011,1012,1013,1014,1015,1016,1017,1018,1019,1020,1021,1022,1023,1024,1025,1026,1027,1028,1029,1030,1031,1032,1033,1034,1035,1036,1037,1038,1039,1040,1041,1042,1043,1044,1045,1046,1047,1048,1049,1050,1051,1052,1053,1054,1055,1056,403105268,419385573,1001,1002,1003,1004,1005,};
+inline etl::set CAN_Rx_IDs = {173,172,194,171,170,169,168,167,166,165,164,163,162,161,160,174,175,514,176,1712,1713,1714,406451072,406451073,406451074,406451075,406451076,177,1000,1006,1007,1008,1009,1010,1011,1012,1013,1014,1015,1016,1017,1018,1019,1020,1021,1022,1023,1024,1025,1026,1027,1028,1029,1030,1031,1032,1033,1034,1035,1036,1037,1038,1039,1040,1041,1042,1043,1044,1045,1046,1047,1048,1049,1050,1051,1052,1053,1054,1055,1056,403105268,419385573,1001,1002,1003,1004,1005,999,};
