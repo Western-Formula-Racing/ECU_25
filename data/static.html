@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <title>WFR Dashboard</title>
+        <style>
+            body {
+                font-family: Arial, Helvetica, sans-serif;
+                background-color: rgb(14, 14, 14);
+                color: white;
+                width: 100vw;
+                margin: 0;
+            }
+            .head {
+                font-size: medium;
+                align-content: center;
+                background-color: rgb(32, 32, 32);
+                width: 100vw;
+                height: 6rem;
+                padding-top: 0;
+            }
+            .title_text {
+                justify-self: center;
+            }
+            .connection_status_wrapper {
+                display: flex;
+                width: 97vw;
+                height: 2rem;
+                margin-right: 2rem;
+                font-size: small;
+                align-items: center;
+                justify-content: flex-end;
+                font-weight: bold;
+            }
+            .online {
+                color: rgb(255, 255, 255);
+            }
+            .offline {
+                color: #888888;
+            }
+            .data {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                width: 100vw;
+                margin-bottom: 3rem;
+            }
+            .data_entry {
+                display: flex;
+                flex-direction: row;
+                width: 95vw;
+                height: 3rem;
+                border-width: 1rem;
+                border-color: white;
+                margin-top: .5rem;
+                margin-bottom: .5rem;
+                border: 0.1rem solid white;
+                border-radius: 0.2rem;
+                align-self: center;
+                align-content: center;
+            }
+            .button_entry {
+                width: 95vw;
+                height: 3rem;
+                box-shadow: 0 .5rem .5rem 0 rgba(0,0,0,0.35), 0 .5rem 1.5rem 0 rgba(0, 0, 0, 0.3);
+                background-color: rgba(32, 32, 32, 0.815);
+                color: white;
+                border: 0;
+                align-self: center;
+                justify-self: center;
+                margin-top: .5rem;
+                margin-bottom: .5rem;
+                border-radius: 0.5rem;
+            }
+            .button_entry:hover {
+                box-shadow: 0 1rem 1rem 0 rgba(0,0,0,0.35), 0 1.5rem 2.5rem 0 rgba(0,0,0,0.3);
+            }
+            .data_key {
+                width: 29vw;
+                align-content: center;
+                margin: 0;
+                margin-left: 1vw;
+                height: 3rem;
+                border-right: 0.1rem solid white;
+                font-weight: bold;
+            }
+            .data_value {
+                width: 64vw;
+                padding-left: 1vw;     
+            }
+            .input {
+                width: 64vw;
+                height: 3rem;
+                padding-left: 1vw;
+                align-self: center;
+                align-content: center;
+                border: 0;
+                background-color: rgba(32, 32, 32, 0.623);
+                color: white;
+            }
+            .input:hover {
+                background-color: rgba(32, 32, 32, 0.815);
+            }
+            .input:focus {
+                background-color: rgba(32, 32, 32, 0.815);
+                outline: none;
+            }
+            input::-webkit-outer-spin-button,
+            input::-webkit-inner-spin-button {
+                -webkit-appearance: none;
+                margin: 0;
+            }
+            select {
+                width: 65vw;
+                padding-left: 1vw;
+                background-color: rgba(32, 32, 32, 0.815);
+                border: 0;
+                color: white;
+            }
+            option {
+                width: 65vw;
+                padding-left: 1vw;
+                background-color: rgba(32, 32, 32, 0.815);
+                border: 0;
+                height: 1rem;
+                border-radius: 0.2rem;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="main_wrapper wrapper">
+            <div class="head">
+                <h1 class="title_text">WFR Dashboard</h1>
+            </div>
+            <div class="connection_status_wrapper" id="connection_obj">
+                <div class="online"><p>Online</p></div>
+            </div>
+            <div class="data_wrapper">
+                <div class="data" id="sendables"></div>
+            </div>
+            <div class="data_wrapper">
+                <div class="data" id="recievables"></div>
+            </div>
+        </div>
+        <script src="/static.js"></script>
+    </body>
+</html>
