@@ -6,21 +6,46 @@
 #include "freertos/semphr.h"
 #include "IO.h"
 #include "driver/gpio.h"
+#include "CAN_Config.hpp"
+#include "Sensors.h"
 
+#define BRAKE_PRESSURE_FACTOR 1.0f
+#define BRAKE_PRESSURE_OFFSET 0.0f
+#define BRAKE_PLAUSABILITY_THRESHOLD 0.1f
 
-class Pedals{
+#define max(a, b) ((a) >= (b) ? (a) : (b))
+#define min(a, b) ((a) < (b) ? (a) : (b))
+
+class Pedals
+{
 private:
-    //Singleton device class structure
-    static Pedals* instancePtr;
+    // Singleton device class structure
+    static Pedals *instancePtr;
     static SemaphoreHandle_t mutex;
     Pedals();
+    // Calibration values
+    float apps1_min_voltage;
+    float apps1_max_voltage;
+    float apps2_min_voltage;
+    float apps2_max_voltage;
+    float apps1_voltage;
+    float apps2_voltage;
+    float apps_sensor1_percent;
+    float apps_sensor2_percent;
+    float throttle;
+    float brakePressure_front;
+    float brakePressure_rear;
+
+    bool fault_latch;
+
 public:
-    //Deleting the copy constructor and copy reference constructor to prevent copies
+    // Deleting the copy constructor and copy reference constructor to prevent copies
     Pedals(const Pedals &) = delete;
     Pedals &operator=(const Pedals &) = delete;
     Pedals(Pedals &&) = delete;
     Pedals &operator=(Pedals &&) = delete;
-    static Pedals* Get();
+    static Pedals *Get();
+    float getThrottle();
 
 };
 

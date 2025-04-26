@@ -7,6 +7,12 @@ SemaphoreHandle_t BMS::mutex = xSemaphoreCreateMutex();
 
 BMS::BMS()
 {
+    //get these from storage later
+    max_discharge_current = 5;
+    max_charge_current = 0; 
+    
+    BMS_Max_Discharge_Current_ID514.set(max_discharge_current);
+    BMS_Max_Charge_Current_ID514.set(max_charge_current);
     ESP_LOGI(TAG, "BMS Initialized");
 }
 
@@ -25,4 +31,9 @@ BMS *BMS::Get()
         }
     }
     return instancePtr;
+}
+
+BMS::STATE BMS::getPackState()
+{
+    return (STATE)PackStatus_ID1056.get_int();
 }

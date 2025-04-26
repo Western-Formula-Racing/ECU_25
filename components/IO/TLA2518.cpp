@@ -23,25 +23,27 @@ void TLA2518::writeRegister(uint8_t address, uint8_t value){
   uint8_t tx_buffer[3] = {TLA_CMD_WRITE,address,value};
   spi_transaction_t t = {};
   t.length = 8*sizeof(tx_buffer);
-  t.tx_buffer = tx_buffer;
+  t.tx_buffer = (const void*)tx_buffer;
   spi_device_transmit(adcHandle,&t);
 };
 
 int TLA2518::readChannel(uint8_t channel){
-
-  uint8_t tx_buffer[3] = {TLA_CMD_WRITE,TLA_CHANNEL_SEL,channel};
-  uint8_t rx_buffer[2] = {0,0};
+  volatile uint8_t tx_buffer[3] = {TLA_CMD_WRITE,TLA_CHANNEL_SEL,channel};
+  volatile uint8_t rx_buffer[2] = {0,0};
   spi_transaction_t t = {};
   t.length = 8*sizeof(tx_buffer);
-  t.tx_buffer = tx_buffer;
+  t.tx_buffer = (const void*)tx_buffer;
   t.rxlength = 8*sizeof(rx_buffer);
-  t.rx_buffer = rx_buffer;
+  t.rx_buffer = (void*)rx_buffer;  
+  spi_device_transmit(adcHandle,&t);  
   spi_device_transmit(adcHandle,&t);
-
-  return ((int)rx_buffer[0]<<4 | (int)rx_buffer[1]>>4);
+  spi_device_transmit(adcHandle,&t);
+  int val = ((int)rx_buffer[0]<<4 | (int)rx_buffer[1]>>4);
+  return val;
 
 };
 
-double TLA2518::readVoltage(uint8_t channel){
-  return readChannel(channel)*(5.0/4096.0);
+float TLA2518::readVoltage(uint8_t channel){
+  float value = readChannel(channel)*ADC_VOLTAGE_SCALE_FACTOR; 
+  return value;
 }

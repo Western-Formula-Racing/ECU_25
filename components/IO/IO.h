@@ -18,8 +18,7 @@ private:
     IO();
     static IO* instancePtr;
     static SemaphoreHandle_t mutex;
-    TLA2518* adc1_handle;
-    TLA2518* adc2_handle;
+    
     i2c_master_bus_handle_t i2c_handle;
     FXL6408UMX* hsd_handle;
     ICM20948* imu_handle;
@@ -33,16 +32,19 @@ private:
     static IO* Get();
     void setupSPI();
     int analogRead(ECU_ANALOG_PIN pin);
-    double analogReadVoltage(ECU_ANALOG_PIN pin);
-    void digitalRead(ECU_IO_PIN pin);
-    void digitalWrite(ECU_IO_PIN pin);    void setupI2C();
+    float analogReadVoltage(ECU_ANALOG_PIN pin);
+    int digitalRead(ECU_IO_PIN pin);
+    void digitalWrite(ECU_IO_PIN pin);   
+    void setupI2C();
     void HSDWrite(ECU_HSD_PIN channel, bool level);
-    double getAccelX();
-    double getAccelY();
-    double getAccelZ();
-    double getGyroX();
-    double getGyroY();
-    double getGyroZ();
+    float getAccelX();
+    float getAccelY();
+    float getAccelZ();
+    float getGyroX();
+    float getGyroY();
+    float getGyroZ();
+    static TLA2518* adc1_handle;
+    static TLA2518* adc2_handle;
 
 };
 #endif
