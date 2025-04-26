@@ -55,14 +55,21 @@ float Pedals::getThrottle()
     }
 
     // Case 2: pedal implausability
-    else if((max(apps_sensor1_percent, apps_sensor2_percent) - min(apps_sensor1_percent, apps_sensor2_percent)) >= BRAKE_PLAUSABILITY_THRESHOLD)
+    else if((max(apps_sensor1_percent, apps_sensor2_percent) - min(apps_sensor1_percent, apps_sensor2_percent)) >= APPS_PLAUSABILITY_THRESHOLD)
     {
         ESP_LOGW(TAG, "implausability\n");
         fault_latch = true;
         throttle = 0;
     }
+    // Case 3: brakes pressed
+    else if(getBrakePressure() >= BRAKE_THRESHOLD)
+    {
+        ESP_LOGW(TAG, "brake pressed\n");
+        fault_latch = true;
+        throttle = 0;
+    }
 
-    // Case 3: clear faults
+    //clear faults
     else if(throttle <= 0.05f)
     {
         fault_latch = false;

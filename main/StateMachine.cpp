@@ -169,7 +169,7 @@ void StateMachine::StateMachineLoop(void *)
         printf(">state:%d\n", state);
         //lights
         IO::Get()->HSDWrite(ECU_48_HSD6, false);
-        if(Pedals::Get()->getBrakePressure() >= BRAKE_THRESHOLD){
+        if(Pedals::Get()->getBrakePressure() >= BRAKE_LIGHT_THRESHOLD){
             HSD5_ID2012.set(true);
         }
         else{
