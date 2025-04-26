@@ -108,6 +108,7 @@ void IO::setupI2C(){
 
   ESP_ERROR_CHECK(i2c_new_master_bus(&i2c_mst_config, &i2c_handle));
   hsd_handle = new FXL6408UMX(i2c_handle);
+  rtc_handle = new DS3231(i2c_handle);
 };
 
 void IO::HSDWrite(ECU_HSD_PIN channel, bool level){

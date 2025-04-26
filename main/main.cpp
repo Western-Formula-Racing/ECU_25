@@ -16,6 +16,7 @@
 #include "Pedals.h"
 #include "RearECU.h"
 #include "GUI.h"
+#include "ds3231.h"
 #define MAIN_DELAY 600
 
 static const char* TAG = "Main"; //Used for ESP_LOGx commands. See ESP-IDF Documentation
@@ -43,6 +44,19 @@ extern "C" void app_main(void)
     while(true){
         onboard_LED = !onboard_LED;
         gpio_set_level(GPIO_NUM_48, onboard_LED);  // heart beat LED  
+        
+        tm time;
+        
+        if (IO::Get()->rtc_handle->getTime(time) == ESP_OK) {
+            char buf[32];
+            strftime(buf, sizeof(buf), "%Y-%m-%d %H:%M:%S", &time);
+            printf("RTC Time: %s\n", buf);
+        } else {
+            printf("Failed to read RTC time\n");
+        }
+
+
+
         vTaskDelay(pdMS_TO_TICKS(MAIN_DELAY));
     }
 }
