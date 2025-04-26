@@ -15,7 +15,7 @@
 #include "StateMachine.hpp"
 #include "Pedals.h"
 #include "RearECU.h"
-
+#include "GUI.h"
 #define MAIN_DELAY 600
 
 static const char* TAG = "Main"; //Used for ESP_LOGx commands. See ESP-IDF Documentation

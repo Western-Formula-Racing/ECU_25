@@ -45,6 +45,7 @@
 #define VCU_REAR_SENSORS_3 2020
 #define VCU_REAR_SENSORS_4 2021
 #define BMS_MIN_VCELL 999
+#define VCU_APPS_CALIBRATION 2022
 
 inline CAN_Signal HSD1_ID2012{true, 0, 8};
 inline CAN_Signal HSD2_ID2012{true, 8, 8};
@@ -253,6 +254,10 @@ inline CAN_Signal A14_ID2021{true, 16, 16, 0.01f};
 inline CAN_Signal A15_ID2021{true, 32, 16, 0.01f};
 inline CAN_Signal A16_ID2021{true, 48, 16, 0.01f};
 inline CAN_Signal Absolute_min_cell_voltage_ID999{true, 0, 16, 0.0001f};
+inline CAN_Signal apps1_min_ID2022{true, 0, 16, 0.01f};
+inline CAN_Signal apps1_max_ID2022{true, 16, 16, 0.01f};
+inline CAN_Signal apps2_min_ID2022{true, 32, 16, 0.01f};
+inline CAN_Signal apps2_max_ID2022{true, 48, 16};
 
 // Define the CAN Map
 inline etl::map CAN_Map
@@ -541,6 +546,12 @@ inline etl::map CAN_Map
         } },
     etl::pair{BMS_MIN_VCELL, etl::vector<CAN_Signal*, 16>{ 
         &Absolute_min_cell_voltage_ID999 
+        } },
+    etl::pair{VCU_APPS_CALIBRATION, etl::vector<CAN_Signal*, 16>{ 
+        &apps1_min_ID2022,
+        &apps1_max_ID2022,
+        &apps2_min_ID2022,
+        &apps2_max_ID2022 
         } }
 };
 inline etl::set CAN_Rx_IDs = {173,172,194,171,170,169,168,167,166,165,164,163,162,161,160,174,175,514,176,1712,1713,1714,406451072,406451073,406451074,406451075,406451076,177,1000,1006,1007,1008,1009,1010,1011,1012,1013,1014,1015,1016,1017,1018,1019,1020,1021,1022,1023,1024,1025,1026,1027,1028,1029,1030,1031,1032,1033,1034,1035,1036,1037,1038,1039,1040,1041,1042,1043,1044,1045,1046,1047,1048,1049,1050,1051,1052,1053,1054,1055,1056,403105268,419385573,1001,1002,1003,1004,1005,999,};

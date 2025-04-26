@@ -5,7 +5,7 @@ int64_t rtd_start_time;
 float throttle;
 int rtd_button;
 BMS::STATE pack_status;
-
+nvs_handle_t nvs_storage_handle;
 static const char* TAG = "State Machine"; //Used for ESP_LOGx commands. See ESP-IDF Documentation
 
 State StateMachine::handle_start()
@@ -137,10 +137,13 @@ void StateMachine::StateMachineLoop(void *)
     };
     State state = START;
     
+    setupAppsCalibration();
+
     for(;;){ 
         // anything that runs in all state's should go here
         //Sensors checked in all states:
         Sensors::Get()->poll_sensors();
+        checkNewAppsCalibration();
         //this should get bundled into the sensor class later
         A1_ID2014.set(Sensors::Get()->get_sensor_voltage(static_cast<Sensors::SENSOR_INDEX>(0)));
         A2_ID2014.set(Sensors::Get()->get_sensor_voltage(static_cast<Sensors::SENSOR_INDEX>(1)));
@@ -179,4 +182,107 @@ void StateMachine::StateMachineLoop(void *)
         vTaskDelay(pdMS_TO_TICKS(10));
     }
 
+}
+
+void StateMachine::setupAppsCalibration()
+{
+    esp_err_t err = nvs_flash_init();
+    if (err == ESP_ERR_NVS_NO_FREE_PAGES || err == ESP_ERR_NVS_NEW_VERSION_FOUND) {
+        // NVS partition was truncated and needs to be erased
+        // Retry nvs_flash_init
+        ESP_ERROR_CHECK(nvs_flash_erase());
+        err = nvs_flash_init();
+    }
+    ESP_ERROR_CHECK( err );
+
+    err = nvs_open("storage", NVS_READWRITE, &nvs_storage_handle);
+    if (err != ESP_OK) {
+        printf("Error (%s) opening NVS handle!\n", esp_err_to_name(err));
+    } else {
+        printf("Done\n");
+    }
+    uint16_t app1_stored_min = 0;
+    uint16_t app1_stored_max = 0;
+    uint16_t app2_stored_min = 0;
+    uint16_t app2_stored_max = 0;
+
+    err = nvs_get_u16(nvs_storage_handle, "app1_stored_min", &app1_stored_min);
+    switch (err) {
+        case ESP_OK:
+            printf("Done\n");
+            printf("app1_stored_min = %" PRIu16 "\n", app1_stored_min);
+            break;
+        case ESP_ERR_NVS_NOT_FOUND:
+            printf("The value is not initialized yet!\n");
+            break;
+        default :
+            printf("Error (%s) reading!\n", esp_err_to_name(err));
+    }
+    err = nvs_get_u16(nvs_storage_handle, "app1_stored_max", &app1_stored_max);
+    switch (err) {
+        case ESP_OK:
+            printf("Done\n");
+            printf("app1_stored_max = %" PRIu16 "\n", app1_stored_max);
+            break;
+        case ESP_ERR_NVS_NOT_FOUND:
+            printf("The value is not initialized yet!\n");
+            break;
+        default :
+            printf("Error (%s) reading!\n", esp_err_to_name(err));
+    }
+    err = nvs_get_u16(nvs_storage_handle, "app2_stored_min", &app2_stored_min);
+    switch (err) {
+        case ESP_OK:
+            printf("Done\n");
+            printf("app2_stored_min = %" PRIu16 "\n", app2_stored_min);
+            break;
+        case ESP_ERR_NVS_NOT_FOUND:
+            printf("The value is not initialized yet!\n");
+            break;
+        default :
+            printf("Error (%s) reading!\n", esp_err_to_name(err));
+    }
+    err = nvs_get_u16(nvs_storage_handle, "app2_stored_max", &app2_stored_max);
+    switch (err) {
+        case ESP_OK:
+            printf("Done\n");
+            printf("app2_stored_max = %" PRIu16 "\n", app2_stored_max);
+            break;
+        case ESP_ERR_NVS_NOT_FOUND:
+            printf("The value is not initialized yet!\n");
+            break;
+        default :
+            printf("Error (%s) reading!\n", esp_err_to_name(err));
+    }
+
+    Pedals::Get()->updateAppsCalibration(static_cast<float>(app1_stored_min)/100.f,
+                                        static_cast<float>(app1_stored_max)/100.f,
+                                        static_cast<float>(app2_stored_min)/100.f,
+                                        static_cast<float>(app2_stored_max)/100.f);
+}
+
+
+void StateMachine::checkNewAppsCalibration()
+{
+    float app1_min = apps1_min_ID2022.get_float();
+    float app1_max = apps1_max_ID2022.get_float();
+    float app2_min = apps2_min_ID2022.get_float();
+    float app2_max = apps2_max_ID2022.get_float();
+    if (app1_min != 0.0f && app1_max!=0.0f && app2_min != 0.0f && app2_max != 0.0f){
+        //store values
+        esp_err_t err = nvs_set_u16(nvs_storage_handle, "app1_stored_min", static_cast<uint16_t>(app1_min*100.0f));
+        ESP_LOGW(TAG,"app1_min = %.2f", app1_min);
+        printf((err != ESP_OK) ? "Failed!\n" : "Done\n");
+        err = nvs_set_u16(nvs_storage_handle, "app1_stored_max", static_cast<uint16_t>(app1_max*100.0f));
+        ESP_LOGE(TAG,"app1_max = %.2f", app1_max);
+        printf((err != ESP_OK) ? "Failed!\n" : "Done\n");
+        err = nvs_set_u16(nvs_storage_handle, "app2_stored_min", static_cast<uint16_t>(app2_min*100.0f));
+        ESP_LOGW(TAG,"app2_min = %.2f", app1_min);
+        printf((err != ESP_OK) ? "Failed!\n" : "Done\n");
+        err = nvs_set_u16(nvs_storage_handle, "app2_stored_max", static_cast<uint16_t>(app2_max*100.0f));
+        printf("app2_max = %.2f", app2_max);
+        printf((err != ESP_OK) ? "Failed!\n" : "Done\n");
+        Pedals::Get()->updateAppsCalibration(app1_min,app1_max,app2_min,app2_max);
+    }
+    
 }

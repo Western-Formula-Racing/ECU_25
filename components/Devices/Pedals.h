@@ -47,6 +47,7 @@ public:
     static Pedals *Get();
     float getThrottle();
     float getBrakePressure();
+    void updateAppsCalibration(float app1_min, float app1_max, float app2_min, float app2_max);
 
 };
 
