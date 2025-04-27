@@ -167,6 +167,7 @@ void StateMachine::StateMachineLoop(void *)
 
         printf(">packStatus:%d\n", pack_status);
         printf(">state:%d\n", state);
+        printf(">throttle:%.2f\n", throttle);
         //lights
         IO::Get()->HSDWrite(ECU_48_HSD6, false);
         if(Pedals::Get()->getBrakePressure() >= BRAKE_LIGHT_THRESHOLD){
@@ -175,9 +176,13 @@ void StateMachine::StateMachineLoop(void *)
         else{
             HSD5_ID2012.set(false);
         }
+        printf(">IMD_light:%d\n", !IMDRelay_ID1056.get_bool());
+        printf(">AMS_light:%d\n", !AMSRelay_ID1056.get_bool());
         IO::Get()->HSDWrite(ECU_41_HSD5, !IMDRelay_ID1056.get_bool());
-        IO::Get()->HSDWrite(ECU_48_HSD6, !AMSRelay_ID1056.get_bool());
-
+        IO::Get()->HSDWrite(ECU_40_HSD4, !AMSRelay_ID1056.get_bool());
+        IO::Get()->HSDWrite(ECU_37_HSD1, true);
+        IO::Get()->HSDWrite(ECU_38_HSD2, true);
+        IO::Get()->HSDWrite(ECU_39_HSD3, true);
         state = states[state]();
         vTaskDelay(pdMS_TO_TICKS(10));
     }

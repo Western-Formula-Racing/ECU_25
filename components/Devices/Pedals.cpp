@@ -10,8 +10,9 @@ Pedals::Pedals()
     // Temporary test values
     apps1_min_voltage = 2.5f;
     apps2_min_voltage = 2.5f;
-    apps1_max_voltage = 1.0f;
-    apps2_max_voltage = 4.0f;
+    apps1_max_voltage = 5.0f;
+    apps2_max_voltage = 0.0f;
+    fault_latch =0;
     ESP_LOGI(TAG, "Pedals Initialized");
 }
 
@@ -72,7 +73,7 @@ float Pedals::getThrottle()
     //clear faults
     else if(throttle <= 0.05f)
     {
-        fault_latch = false;
+        fault_latch = 0;
     }
 
 
