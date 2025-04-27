@@ -17,6 +17,7 @@
 #include "RearECU.h"
 #include "GUI.h"
 #include "ds3231.h"
+#include "Logger.h"
 #define MAIN_DELAY 600
 
 static const char* TAG = "Main"; //Used for ESP_LOGx commands. See ESP-IDF Documentation
@@ -29,6 +30,7 @@ extern "C" void app_main(void)
     vTaskDelay(pdMS_TO_TICKS(5000));
     ESP_LOGI(TAG, "Main Has begun");
     can0.begin();
+    Logger::init();
     if(IO::Get()->digitalRead(ECU_SELECT)){
         //Front ECU
         printf("FRONT ECU SELECTED!\n");
@@ -54,7 +56,10 @@ extern "C" void app_main(void)
         } else {
             printf("Failed to read RTC time\n");
         }
-
+        Logger::LogMessage_t test;
+        sprintf(test.message, "MAIN");
+        sprintf(test.message, "yert,1,2,3");
+        Logger::writeLine(test);
 
 
         vTaskDelay(pdMS_TO_TICKS(MAIN_DELAY));
