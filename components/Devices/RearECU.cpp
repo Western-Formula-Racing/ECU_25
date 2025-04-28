@@ -39,7 +39,15 @@ void RearECU::rearECU_Task(void*)
         A11_ID2020.set(Sensors::Get()->get_sensor_voltage(static_cast<Sensors::SENSOR_INDEX>(10)));
         A12_ID2020.set(Sensors::Get()->get_sensor_voltage(static_cast<Sensors::SENSOR_INDEX>(11)));
         A13_ID2021.set(Sensors::Get()->get_sensor_voltage(static_cast<Sensors::SENSOR_INDEX>(12)));
-
+        printf(">HSD1:%d\n", HSD1_ID2012.get_bool());
+        printf(">HSD2:%d\n", HSD2_ID2012.get_bool());
+        printf(">HSD3:%d\n", HSD3_ID2012.get_bool());
+        printf(">HSD4:%d\n", HSD4_ID2012.get_bool());
+        printf(">HSD5:%d\n", HSD5_ID2012.get_bool());
+        printf(">HSD6:%d\n", HSD6_ID2012.get_bool());
+        printf(">HSD7:%d\n", HSD7_ID2012.get_bool());
+        printf(">HSD8:%d\n", HSD8_ID2012.get_bool());
+        
         // set HSD's based on CAN signals
         IO::Get()->HSDWrite(ECU_37_HSD1, HSD1_ID2012.get_bool());
         IO::Get()->HSDWrite(ECU_38_HSD2, HSD2_ID2012.get_bool());

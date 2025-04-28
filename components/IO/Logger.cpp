@@ -1,6 +1,6 @@
 #include "Logger.h"
 static const char* TAG = "Logger";
-char filename[64];
+char filename[128];
 FILE* f;
 void Logger::init()
 {
@@ -47,19 +47,19 @@ void Logger::init()
         ESP_LOGE(TAG, "Failed to mount SD card (%s)", esp_err_to_name(ret));
         return;
     }
-    ESP_LOGI(TAG, "SD card mounted");
+    ESP_LOGW(TAG, "SD card mounted");
     
     tm time;
     char time_string[32];     
     if (IO::Get()->rtc_handle->getTime(time) == ESP_OK) {
         
-        strftime(time_string, sizeof(time_string), "%Y-%m-%d %H:%M:%S", &time);
+        strftime(time_string, sizeof(time_string), "%Y-%m-%d-%H:%M:%S", &time);
         printf("RTC Time: %s\n", time_string);
     } else {
         printf("Failed to read RTC time\n");
     }
 
-
+    // sprintf(filename, "/sdcard/as1---------------f1.csv");
     sprintf(filename, "/sdcard/%s.csv", time_string);
     f = fopen(filename, "w");
     if (f == NULL) {
@@ -76,6 +76,7 @@ void Logger::writeLine(LogMessage_t message)
 {
     f = fopen(filename, "w");
     if (f == NULL) {
+        printf("filename: %s\n", filename);
         ESP_LOGE(TAG, "Failed to open file for writing");
         return;
     }

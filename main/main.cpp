@@ -30,7 +30,7 @@ extern "C" void app_main(void)
     vTaskDelay(pdMS_TO_TICKS(5000));
     ESP_LOGI(TAG, "Main Has begun");
     can0.begin();
-    // Logger::init();
+    
     if(IO::Get()->digitalRead(ECU_SELECT)){
         //Front ECU
         printf("FRONT ECU SELECTED!\n");
@@ -39,6 +39,7 @@ extern "C" void app_main(void)
     else{
         //Rear ECU
         printf("REAR ECU SELECTED!\n");
+        Logger::init();
         xTaskCreatePinnedToCore(RearECU::rearECU_Task, "RearECULoop", 4096, NULL, configMAX_PRIORITIES - 1, nullptr, 1);
     }
     
@@ -47,17 +48,17 @@ extern "C" void app_main(void)
         onboard_LED = !onboard_LED;
         gpio_set_level(GPIO_NUM_48, onboard_LED);  // heart beat LED  
         
-        // tm time;
+        tm time;
         
-        // if (IO::Get()->rtc_handle->getTime(time) == ESP_OK) {
-        //     char buf[32];
-        //     strftime(buf, sizeof(buf), "%Y-%m-%d %H:%M:%S", &time);
-        //     printf("RTC Time: %s\n", buf);
-        // } else {
-        //     printf("Failed to read RTC time\n");
-        // }
+        if (IO::Get()->rtc_handle->getTime(time) == ESP_OK) {
+            char buf[32];
+            strftime(buf, sizeof(buf), "%Y-%m-%d %H:%M:%S", &time);
+            printf("RTC Time: %s\n", buf);
+        } else {
+            printf("Failed to read RTC time\n");
+        }
         // Logger::LogMessage_t test;
-        // sprintf(test.message, "MAIN");
+        // sprintf(test.label, "MAIN");
         // sprintf(test.message, "yert,1,2,3");
         // Logger::writeLine(test);
 

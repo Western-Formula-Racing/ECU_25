@@ -28,6 +28,7 @@ namespace Logger
 
     void init();
     void writeLine(LogMessage_t message);
+    
 
 }
 #endif
