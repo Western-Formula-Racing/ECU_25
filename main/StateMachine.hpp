@@ -9,9 +9,11 @@
 #include "Sensors.h"
 #include "Inverter.h"
 #include "BMS.h"
+#include "nvs_flash.h"
+#include "nvs.h"
 
 #define RTD_TIME 2000
-
+#define BRAKE_LIGHT_THRESHOLD 1.0f
 namespace StateMachine{
 enum State
 {
@@ -37,6 +39,8 @@ State handle_startup_delay();
 State handle_drive();
 State handle_precharge_error();
 State handle_device_fault();
+void setupAppsCalibration();
+void checkNewAppsCalibration();
 
 }
 #endif
