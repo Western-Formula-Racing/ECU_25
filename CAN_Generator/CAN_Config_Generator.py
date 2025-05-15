@@ -41,7 +41,7 @@ def generate_c_code(db):
                 signal_list.append(f"&{signal_name}")
             
             signals_vector = ",\n        ".join(signal_list)
-            can_map_entries.append(f"    etl::pair{{{message_name}, etl::vector<CAN_Signal*, 16>{{ \n        {signals_vector} \n        }} }}")
+            can_map_entries.append(f"    etl::pair{{{message_name}, etl::vector<CAN_Signal*, 8>{{ \n        {signals_vector} \n        }} }}")
     
     c_code += "\n".join(message_definitions) + "\n\n"
     c_code += "\n".join(signal_definitions) + "\n\n"

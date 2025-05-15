@@ -32,7 +32,6 @@ typedef enum{
 }ECU_ANALOG_PIN;
 typedef enum{
     ECU_TEST = 47,
-    ECU_SELECT = 46,
     ECU_10_IO1 = 4,
     ECU_11_IO2 = 5,
     ECU_12_IO3 = 6,

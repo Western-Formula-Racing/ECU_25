@@ -11,7 +11,7 @@
 #include "driver/gpio.h"
 #include "FXL6408UMX.h"
 #include "ICM-20948.h"
-#include "ds3231.h"
+
 class IO{
 private:
     //Singleton device class structure
@@ -45,7 +45,6 @@ private:
     float getGyroZ();
     static TLA2518* adc1_handle;
     static TLA2518* adc2_handle;
-    DS3231* rtc_handle;
 
 };
 #endif
