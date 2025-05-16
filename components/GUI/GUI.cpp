@@ -15,13 +15,50 @@ std::unordered_map<char*, ButtonRecievable*, GUI::CStringHash, GUI::CStringEqual
 
 GUI::GUI()
 {
-    esp_vfs_spiffs_conf_t conf = {
-        .base_path = "/spiffs",
-        .partition_label = NULL,
-        .max_files = 2,
-        .format_if_mount_failed = true
-    };
-    esp_vfs_spiffs_register(&conf);
+    u_int64_t bytes_total, bytes_free;
+    esp_err_t ret = esp_vfs_fat_info("/sdcard", &bytes_total, &bytes_free);
+    // Check if vfs is registered
+    if (ret != ESP_OK) {
+        esp_vfs_fat_sdmmc_mount_config_t mount_config = {
+            .format_if_mount_failed = true,
+            .max_files = 5,
+            .allocation_unit_size = 16 * 1024
+        };
+
+        sdmmc_card_t *card;
+        ESP_LOGI(TAG, "Initializing SD card");
+
+        sdmmc_host_t host = SDMMC_HOST_DEFAULT();
+        host.flags = SDMMC_HOST_FLAG_4BIT;
+        host.max_freq_khz = SDMMC_FREQ_DEFAULT;
+
+        // Custom slot config
+        sdmmc_slot_config_t slot_config = SDMMC_SLOT_CONFIG_DEFAULT();
+        slot_config.width = 4; // or 4 if you use D1-D3 lines too
+
+        // MANUALLY set pins (Important part!)
+        slot_config.clk = GPIO_NUM_11;   // Clock
+        slot_config.cmd = GPIO_NUM_12;   // Command
+        slot_config.d0  = GPIO_NUM_10;    // Data 0
+        // Optional if 4-bit mode:
+        slot_config.d1  = GPIO_NUM_9;
+        slot_config.d2  = GPIO_NUM_14;
+        slot_config.d3  = GPIO_NUM_13;
+
+        // Pullups are still needed
+        gpio_set_pull_mode(slot_config.clk, GPIO_PULLUP_ONLY);
+        gpio_set_pull_mode(slot_config.cmd, GPIO_PULLUP_ONLY);
+        gpio_set_pull_mode(slot_config.d0,  GPIO_PULLUP_ONLY);
+        gpio_set_pull_mode(slot_config.d1,  GPIO_PULLUP_ONLY); // If using
+        gpio_set_pull_mode(slot_config.d2,  GPIO_PULLUP_ONLY);
+        gpio_set_pull_mode(slot_config.d3,  GPIO_PULLUP_ONLY);
+
+        ret = esp_vfs_fat_sdmmc_mount("/sdcard", &host, &slot_config, &mount_config, &card);
+        if (ret != ESP_OK) {
+            ESP_LOGE(TAG, "Failed to mount to SD card (%s)", esp_err_to_name(ret));
+        }
+    }
+    
     ESP_ERROR_CHECK(start_soft_ap());
     ESP_ERROR_CHECK(start_webserver());
     ESP_LOGI(TAG, "GUI Initialized");
@@ -29,7 +66,7 @@ GUI::GUI()
 
 esp_err_t GUI::handle_root(httpd_req_t *req)
 {
-    FILE* f_html = fopen("/spiffs/static.html", "r");
+    FILE* f_html = fopen("/sdcard/static.html", "r");
 
     if (f_html == NULL)
     {
@@ -48,7 +85,7 @@ esp_err_t GUI::handle_root(httpd_req_t *req)
 
 esp_err_t GUI::handle_js(httpd_req_t *req)
 {
-    FILE* f_js = fopen("/spiffs/static.js", "r");
+    FILE* f_js = fopen("/sdcard/static.js", "r");
 
     if (f_js == NULL)
     {
