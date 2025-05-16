@@ -4,7 +4,10 @@
 #include <esp_http_server.h>
 #include <esp_wifi.h>
 #include <nvs_flash.h>
-#include <esp_spiffs.h>
+#include <esp_vfs.h>
+#include <esp_vfs_fat.h>
+#include <driver/sdmmc_host.h>
+#include <sdmmc_cmd.h>
 #include <stdio.h>
 #include <cstring>
 #include <string>
