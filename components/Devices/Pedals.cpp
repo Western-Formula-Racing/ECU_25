@@ -71,7 +71,7 @@ float Pedals::getThrottle()
     }
 
     //clear faults
-    else if(throttle <= 0.05f)
+    else if(throttle <= 0.08f)
     {
         fault_latch = 0;
     }

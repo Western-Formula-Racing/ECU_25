@@ -3,6 +3,7 @@
 using namespace StateMachine;
 int64_t rtd_start_time;
 float throttle;
+float brake_pressure;
 int rtd_button;
 BMS::STATE pack_status;
 nvs_handle_t nvs_storage_handle;
@@ -24,7 +25,7 @@ State StateMachine::handle_start()
         nextState = PRECHARGE_ENABLE;
     }
 
-    else if (pack_status == BMS::ACTIVE && rtd_button)
+    else if (rtd_button && brake_pressure >= BRAKE_THRESHOLD)
     {
         rtd_start_time = esp_timer_get_time()/1000;
         nextState = STARTUP_DELAY;
@@ -82,12 +83,12 @@ State StateMachine::handle_startup_delay()
         ESP_LOGE(TAG, "BMS FAULT Detected during startup delay");
         nextState = DEVICE_FAULT;
     }
-    else if (pack_status == BMS::ACTIVE && rtd_button && (current_time - rtd_start_time) < RTD_TIME )
+    else if ( rtd_button && (current_time - rtd_start_time) < RTD_TIME )
     {
         IO::Get()->HSDWrite(ECU_48_HSD6, true);
         nextState = STARTUP_DELAY;
     }
-    else if(pack_status == BMS::ACTIVE && rtd_button && (current_time - rtd_start_time) >= RTD_TIME )
+    else if(rtd_button && (current_time - rtd_start_time) >= RTD_TIME )
     {
         nextState = DRIVE;
     }
@@ -103,8 +104,8 @@ State StateMachine::handle_drive()
         ESP_LOGE(TAG, "BMS FAULT Detected during drive");
         nextState = DEVICE_FAULT;
     }
-
-    else if(pack_status == BMS::ACTIVE){
+    
+    else if(pack_status==BMS::ACTIVE){
         nextState = DRIVE;
         Inverter::Get()->SetTorqueRequest(throttle);
     }
@@ -168,6 +169,7 @@ void StateMachine::StateMachineLoop(void *)
         printf(">packStatus:%d\n", pack_status);
         printf(">state:%d\n", state);
         printf(">throttle:%.2f\n", throttle);
+        printf(">butoon:%d\n", rtd_button);
         //lights
         IO::Get()->HSDWrite(ECU_48_HSD6, false);
         if(Pedals::Get()->getBrakePressure() >= BRAKE_LIGHT_THRESHOLD){
