@@ -49,7 +49,10 @@ public:
     float getThrottle();
     float getBrakePressure();
     void updateAppsCalibration(float app1_min, float app1_max, float app2_min, float app2_max);
-
+    void set_min(float apps1, float apps2);
+    void set_max(float apps1, float apps2);
+    float get_apps1_voltage();
+    float get_apps2_voltage();
 };
 
 #endif

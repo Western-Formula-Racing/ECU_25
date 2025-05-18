@@ -87,7 +87,7 @@ float Pedals::getThrottle()
 
 float Pedals::getBrakePressure()
 {
-    return Sensors::Get()->get_sensor_voltage(Sensors::BPS1);
+    return (Sensors::Get()->get_sensor_voltage(Sensors::BPS1) + Sensors::Get()->get_sensor_voltage(Sensors::BPS2))/2;
 }
 
 void Pedals::updateAppsCalibration(float app1_min, float app1_max, float app2_min, float app2_max)
@@ -105,4 +105,23 @@ void Pedals::updateAppsCalibration(float app1_min, float app1_max, float app2_mi
         apps2_max_voltage = app2_max;
     }
     
+}
+
+void Pedals::set_min(float apps1, float apps2)
+{
+    apps1_min_voltage = apps1;
+    apps2_min_voltage = apps2;
+}
+void Pedals::set_max(float apps1, float apps2)
+{
+    apps1_max_voltage = apps1;
+    apps2_max_voltage = apps2;
+}
+float Pedals::get_apps1_voltage()
+{
+    return apps1_voltage;
+}
+float Pedals::get_apps2_voltage()
+{
+    return apps2_voltage;
 }

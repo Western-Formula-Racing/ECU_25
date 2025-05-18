@@ -6,34 +6,37 @@
 #include "freertos/semphr.h"
 #include "CAN_Config.hpp"
 
-class BMS{
+class BMS
+{
 private:
-    //Singleton device class structure
-    static BMS* instancePtr;
+    // Singleton device class structure
+    static BMS *instancePtr;
     static SemaphoreHandle_t mutex;
     BMS();
     int max_discharge_current;
     int max_charge_current;
+
 public:
-    //Deleting the copy constructor and copy reference constructor to prevent copies
+    // Deleting the copy constructor and copy reference constructor to prevent copies
     BMS(const BMS &) = delete;
     BMS &operator=(const BMS &) = delete;
     BMS(BMS &&) = delete;
     BMS &operator=(BMS &&) = delete;
-    static BMS* Get();
+    static BMS *Get();
 
     enum STATE
     {
         IDLE,
-        PRECHARGE,
+        PRECHARGE_START,
+        PRECHARGING,
         ACTIVE,
         CHARGING,
+        CHARGE_COMPLETE,
         FAULT
     };
 
     int getPackVoltage();
     STATE getPackState();
-
 };
 
 #endif
