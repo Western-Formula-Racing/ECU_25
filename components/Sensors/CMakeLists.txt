@@ -1,3 +1,3 @@
 idf_component_register(SRCS "Sensors.cpp"
                   INCLUDE_DIRS "."
-                  REQUIRES IO)
+                  REQUIRES CAN IO)
