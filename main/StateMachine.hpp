@@ -13,7 +13,7 @@
 #include "nvs.h"
 
 #define RTD_TIME 2000
-#define BRAKE_LIGHT_THRESHOLD 1.0f
+#define BRAKE_LIGHT_THRESHOLD 0.7f
 namespace StateMachine{
 enum State
 {

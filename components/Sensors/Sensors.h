@@ -6,6 +6,7 @@
 #include "freertos/semphr.h"
 #include "IO.h"
 #include "etl/array.h"
+#include "CAN_Config.hpp"
 
 class Sensors{
 private:
