@@ -159,6 +159,7 @@ void StateMachine::StateMachineLoop(void *)
         printf(">state:%d\n", state);
         printf(">throttle:%.2f\n", throttle);
         printf(">button:%d\n", rtd_button);
+        printf(">brake:%d\n", brake_pressure);
         // lights
         IO::Get()->HSDWrite(ECU_48_HSD6, false);
         if (Pedals::Get()->getBrakePressure() >= BRAKE_LIGHT_THRESHOLD)
