@@ -7,7 +7,7 @@ SemaphoreHandle_t Inverter::mutex = xSemaphoreCreateMutex();
 
 Inverter::Inverter()
 {
-    torqueLimit = 10; // get this from memory later
+    torqueLimit = 70; // get this from memory later
     ESP_LOGI(TAG, "Inverter Initialized");
 }
 
