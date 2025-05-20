@@ -122,7 +122,7 @@ void CAN::rx_task()
                     Logger::LogMessage_t log_message;
                     sprintf(log_message.label, "CAN");
                     sprintf(log_message.message, "%s", log_string);
-                    Logger::writeLine(log_message);
+                    Logger::log(log_message);
                 }
                 if (CAN_Rx_IDs.find(rx_msg.identifier) != CAN_Rx_IDs.end())
                 {
@@ -165,6 +165,19 @@ void CAN::tx_CallBack()
             tx_message.data_length_code = 8;
             can_setSignal<uint64_t>(tx_message.data, signal->get_raw(), signal->startBit, signal->length, signal->isIntel);
         }
+        if(logging){
+            sprintf(log_string, "%ld,", tx_message.identifier);
+            for (int i = 0; i < tx_message.data_length_code; i++)
+            {
+                char val[5];
+                sprintf(val, "%d,",tx_message.data[i]);
+                strcat(log_string, val);
+            }
+            Logger::LogMessage_t log_message;
+            sprintf(log_message.label, "CAN");
+            sprintf(log_message.message, "%s", log_string);
+            Logger::log(log_message);
+        }
         if (twai_transmit(&tx_message, pdMS_TO_TICKS(1000)) != ESP_OK)
         {
             ESP_LOGE(TAG, "failed to tx message\n");
@@ -180,6 +193,19 @@ void CAN::tx_CallBack()
                 tx_message.identifier = identifier;
                 tx_message.data_length_code = 8;
                 can_setSignal<uint64_t>(tx_message.data, signal->get_raw(), signal->startBit, signal->length, signal->isIntel);
+            }
+            if(logging){
+                sprintf(log_string, "%ld,", tx_message.identifier);
+                for (int i = 0; i < tx_message.data_length_code; i++)
+                {
+                    char val[5];
+                    sprintf(val, "%d,",tx_message.data[i]);
+                    strcat(log_string, val);
+                }
+                Logger::LogMessage_t log_message;
+                sprintf(log_message.label, "CAN");
+                sprintf(log_message.message, "%s", log_string);
+                Logger::log(log_message);
             }
             if (twai_transmit(&tx_message, pdMS_TO_TICKS(1000)) != ESP_OK)
             {
@@ -197,6 +223,19 @@ void CAN::tx_CallBack()
                 tx_message.identifier = identifier;
                 tx_message.data_length_code = 8;
                 can_setSignal<uint64_t>(tx_message.data, signal->get_raw(), signal->startBit, signal->length, signal->isIntel);
+            }
+            if(logging){
+                sprintf(log_string, "%ld,", tx_message.identifier);
+                for (int i = 0; i < tx_message.data_length_code; i++)
+                {
+                    char val[5];
+                    sprintf(val, "%d,",tx_message.data[i]);
+                    strcat(log_string, val);
+                }
+                Logger::LogMessage_t log_message;
+                sprintf(log_message.label, "CAN");
+                sprintf(log_message.message, "%s", log_string);
+                Logger::log(log_message);
             }
             if (twai_transmit(&tx_message, pdMS_TO_TICKS(1000)) != ESP_OK)
             {

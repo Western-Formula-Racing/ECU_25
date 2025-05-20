@@ -2,6 +2,8 @@
 static const char* TAG = "Logger";
 char filename[128];
 FILE* f;
+static QueueHandle_t logQueue = NULL;
+
 void Logger::init()
 {
     esp_err_t ret;
@@ -67,9 +69,12 @@ void Logger::init()
         ESP_LOGE(TAG,"Failed to open file for writing");
         return;
     }
-    // fprintf(f, "Manual pin mapping works!\n");
     fclose(f);
     ESP_LOGI(TAG, "File written successfully");
+
+
+    logQueue = xQueueCreate(100, sizeof(LogMessage_t));
+    xTaskCreatePinnedToCore(logTask, "logTask", 4096, NULL, configMAX_PRIORITIES - 1, nullptr, 0);
 
 }
 
@@ -81,9 +86,54 @@ void Logger::writeLine(LogMessage_t message)
         ESP_LOGE(TAG, "Failed to open file for writing");
         return;
     }
-    int64_t current_time = esp_timer_get_time()/1000;
     // printf("%lld,%s,%s\n", current_time, message.label, message.message);
-    fprintf(f, "%lld,%s,%s\n", current_time, message.label, message.message);
+    fprintf(f, "%lld,%s,%s\n", message.timestamp, message.label, message.message);
     fclose(f);
 
+}
+
+void Logger::log(LogMessage_t message)
+{
+    message.timestamp = esp_timer_get_time()/1000;
+    if (logQueue != NULL)
+    {
+        if (xQueueSendToBack(logQueue, &message, 0) != pdTRUE)
+        {
+            ESP_LOGE(TAG, "failed to send message to logQueue");
+        }
+    }
+
+
+}
+
+void Logger::logTask(void *)
+{
+    printf("logging task started!");
+    for(;;)
+    {
+        if (logQueue != NULL)
+        {
+
+            LogMessage_t message;
+            f = fopen(filename, "a");
+            if (f == NULL) {
+                printf("filename: %s\n", filename);
+                ESP_LOGE(TAG, "Failed to open file for writing");
+                return;
+            }
+            while (xQueueReceive(logQueue, &message, 0) == pdTRUE)
+            {
+                if (f == NULL) {
+                    printf("filename: %s\n", filename);
+                    ESP_LOGE(TAG, "Failed to open file for writing");
+                    return;
+                }
+                // printf("%lld,%s,%s\n", current_time, message.label, message.message);
+                fprintf(f, "%lld,%s,%s\n", message.timestamp, message.label, message.message);
+
+            }
+            fclose(f);
+        }
+        vTaskDelay(pdMS_TO_TICKS(10));
+    }
 }
