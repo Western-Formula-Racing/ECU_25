@@ -3,6 +3,9 @@
 #include "esp_log.h"
 #include "CAN_Config.hpp"
 #include "can_helpers.hpp"
+#include "Logger.h"
+
+char log_string[256];
 static const char *TAG = "CAN"; // Used for ESP_LOGx commands. See ESP-IDF Documentation
 static SemaphoreHandle_t rx_sem = xSemaphoreCreateBinary();
 static TimerHandle_t timerHandle;
@@ -24,6 +27,7 @@ int give_zero()
 
 CAN::CAN(gpio_num_t CAN_TX_Pin, gpio_num_t CAN_RX_Pin, twai_mode_t twai_mode)
 {
+    logging = false;
     twai_general_config_t g_config = TWAI_GENERAL_CONFIG_DEFAULT(CAN_TX_Pin, CAN_RX_Pin, twai_mode);
     g_config.rx_queue_len = 1000;
     twai_timing_config_t t_config = TWAI_TIMING_CONFIG_500KBITS();
@@ -107,6 +111,19 @@ void CAN::rx_task()
             }
             while (twai_receive(&rx_msg, portMAX_DELAY) == ESP_OK)
             {
+                if(logging){
+                    sprintf(log_string, "%ld,", rx_msg.identifier);
+                    for (int i = 0; i < rx_msg.data_length_code; i++)
+                    {
+                        char val[5];
+                        sprintf(val, "%d,",rx_msg.data[i]);
+                        strcat(log_string, val);
+                    }
+                    Logger::LogMessage_t log_message;
+                    sprintf(log_message.label, "CAN");
+                    sprintf(log_message.message, "%s", log_string);
+                    Logger::writeLine(log_message);
+                }
                 if (CAN_Rx_IDs.find(rx_msg.identifier) != CAN_Rx_IDs.end())
                 {
                     ESP_LOGI(TAG, "Rx'd ID %" PRIu32, rx_msg.identifier);

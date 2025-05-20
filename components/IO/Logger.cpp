@@ -14,7 +14,7 @@ void Logger::init()
     sdmmc_card_t *card;
     const char mount_point[] = "/sdcard";
 
-    ESP_LOGI(TAG, "Initializing SD card");
+    ESP_LOGW(TAG, "Initializing SD card");
 
     // Create a custom host config
     sdmmc_host_t host = SDMMC_HOST_DEFAULT();
@@ -53,7 +53,7 @@ void Logger::init()
     char time_string[32];     
     if (IO::Get()->rtc_handle->getTime(time) == ESP_OK) {
         
-        strftime(time_string, sizeof(time_string), "%Y-%m-%d-%H:%M:%S", &time);
+        strftime(time_string, sizeof(time_string), "%Y-%m-%d-%H-%M-%S", &time);
         printf("RTC Time: %s\n", time_string);
     } else {
         printf("Failed to read RTC time\n");
@@ -61,12 +61,13 @@ void Logger::init()
 
     // sprintf(filename, "/sdcard/as1---------------f1.csv");
     sprintf(filename, "/sdcard/%s.csv", time_string);
+    // sprintf(filename, "/sdcard/test.csv");
     f = fopen(filename, "w");
     if (f == NULL) {
-        ESP_LOGE(TAG, "Failed to open file for writing");
+        ESP_LOGE(TAG,"Failed to open file for writing");
         return;
     }
-    fprintf(f, "Manual pin mapping works!\n");
+    // fprintf(f, "Manual pin mapping works!\n");
     fclose(f);
     ESP_LOGI(TAG, "File written successfully");
 
@@ -74,13 +75,14 @@ void Logger::init()
 
 void Logger::writeLine(LogMessage_t message)
 {
-    f = fopen(filename, "w");
+    f = fopen(filename, "a");
     if (f == NULL) {
         printf("filename: %s\n", filename);
         ESP_LOGE(TAG, "Failed to open file for writing");
         return;
     }
     int64_t current_time = esp_timer_get_time()/1000;
+    // printf("%lld,%s,%s\n", current_time, message.label, message.message);
     fprintf(f, "%lld,%s,%s\n", current_time, message.label, message.message);
     fclose(f);
 
