@@ -73,7 +73,7 @@ void Logger::init()
     ESP_LOGI(TAG, "File written successfully");
 
 
-    logQueue = xQueueCreate(100, sizeof(LogMessage_t));
+    logQueue = xQueueCreate(512, sizeof(LogMessage_t));
     xTaskCreatePinnedToCore(logTask, "logTask", 4096, NULL, configMAX_PRIORITIES - 1, nullptr, 0);
 
 }
@@ -128,7 +128,7 @@ void Logger::logTask(void *)
                     ESP_LOGE(TAG, "Failed to open file for writing");
                     return;
                 }
-                // printf("%lld,%s,%s\n", current_time, message.label, message.message);
+                // printf("%lld,%s,%s\n", message.timestamp, message.label, message.message);
                 fprintf(f, "%lld,%s,%s\n", message.timestamp, message.label, message.message);
 
             }

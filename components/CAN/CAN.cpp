@@ -5,7 +5,7 @@
 #include "can_helpers.hpp"
 #include "Logger.h"
 
-char log_string[256];
+
 static const char *TAG = "CAN"; // Used for ESP_LOGx commands. See ESP-IDF Documentation
 static SemaphoreHandle_t rx_sem = xSemaphoreCreateBinary();
 static TimerHandle_t timerHandle;
@@ -89,7 +89,7 @@ void CAN::tx_CallBack_wrapper(TimerHandle_t xTimer)
 }
 /*
     One Decision I've made is that the actual CAN handler will not
-    deal with type conversions and scaling. It's only pulling the raw 
+    deal with type conversions and scaling. It's only pulling the raw
     value from the bitfield and handling endian-ness (untested).
     Everything else is left up to the signal handler.
 
@@ -97,7 +97,7 @@ void CAN::tx_CallBack_wrapper(TimerHandle_t xTimer)
 */
 void CAN::rx_task()
 {
-
+    char log_string[256];
     while (true)
     {
         // Try to take the semaphore without blocking
@@ -111,14 +111,20 @@ void CAN::rx_task()
             }
             while (twai_receive(&rx_msg, portMAX_DELAY) == ESP_OK)
             {
-                if(logging){
-                    sprintf(log_string, "%ld,", rx_msg.identifier);
+                if (logging)
+                {
+                    // sprintf(log_string, "%ld,", rx_msg.identifier);
+                    uint8_t can_bytes[8] = {0, 0, 0, 0, 0, 0, 0, 0};
                     for (int i = 0; i < rx_msg.data_length_code; i++)
                     {
-                        char val[5];
-                        sprintf(val, "%d,",rx_msg.data[i]);
-                        strcat(log_string, val);
+                        can_bytes[i] = rx_msg.data[i];
+                        // char val[5];
+                        // sprintf(val, "%d,",rx_msg.data[i]);
+                        // strcat(log_string, val);
                     }
+                    sprintf(log_string, "%ld,%d,%d,%d,%d,%d,%d,%d,%d", rx_msg.identifier,
+                            can_bytes[0], can_bytes[1], can_bytes[2], can_bytes[3], can_bytes[4],
+                            can_bytes[5], can_bytes[6], can_bytes[7]);
                     Logger::LogMessage_t log_message;
                     sprintf(log_message.label, "CAN");
                     sprintf(log_message.message, "%s", log_string);
@@ -153,7 +159,7 @@ void CAN::rx_task()
 void CAN::tx_CallBack()
 {
     txCallBackCounter = (txCallBackCounter < 1000) ? txCallBackCounter + 1 : 0;
-
+    char log_string[256];
     // I don't believe in 1ms messages in 2025. nothing's that important
 
     // 10ms messages
@@ -165,12 +171,13 @@ void CAN::tx_CallBack()
             tx_message.data_length_code = 8;
             can_setSignal<uint64_t>(tx_message.data, signal->get_raw(), signal->startBit, signal->length, signal->isIntel);
         }
-        if(logging){
+        if (logging)
+        {
             sprintf(log_string, "%ld,", tx_message.identifier);
             for (int i = 0; i < tx_message.data_length_code; i++)
             {
                 char val[5];
-                sprintf(val, "%d,",tx_message.data[i]);
+                sprintf(val, "%d,", tx_message.data[i]);
                 strcat(log_string, val);
             }
             Logger::LogMessage_t log_message;
@@ -194,12 +201,13 @@ void CAN::tx_CallBack()
                 tx_message.data_length_code = 8;
                 can_setSignal<uint64_t>(tx_message.data, signal->get_raw(), signal->startBit, signal->length, signal->isIntel);
             }
-            if(logging){
+            if (logging)
+            {
                 sprintf(log_string, "%ld,", tx_message.identifier);
                 for (int i = 0; i < tx_message.data_length_code; i++)
                 {
                     char val[5];
-                    sprintf(val, "%d,",tx_message.data[i]);
+                    sprintf(val, "%d,", tx_message.data[i]);
                     strcat(log_string, val);
                 }
                 Logger::LogMessage_t log_message;
@@ -224,12 +232,13 @@ void CAN::tx_CallBack()
                 tx_message.data_length_code = 8;
                 can_setSignal<uint64_t>(tx_message.data, signal->get_raw(), signal->startBit, signal->length, signal->isIntel);
             }
-            if(logging){
+            if (logging)
+            {
                 sprintf(log_string, "%ld,", tx_message.identifier);
                 for (int i = 0; i < tx_message.data_length_code; i++)
                 {
                     char val[5];
-                    sprintf(val, "%d,",tx_message.data[i]);
+                    sprintf(val, "%d,", tx_message.data[i]);
                     strcat(log_string, val);
                 }
                 Logger::LogMessage_t log_message;
