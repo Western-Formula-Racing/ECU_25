@@ -148,7 +148,12 @@ void StateMachine::StateMachineLoop(void *)
         Sensors::Get()->poll_sensors();
         checkNewAppsCalibration();
         
-
+        Accel_X_ID2024.set(IO::Get()->getAccelX());
+        Accel_Y_ID2024.set(IO::Get()->getAccelY());
+        Accel_Z_ID2024.set(IO::Get()->getAccelZ());
+        Gyro_X_ID2025.set(IO::Get()->getGyroX());
+        Gyro_Y_ID2025.set(IO::Get()->getGyroY());
+        Gyro_Z_ID2025.set(IO::Get()->getGyroZ());
         pack_status = BMS::Get()->getPackState();
         rtd_button = !IO::Get()->digitalRead(ECU_10_IO1);
         throttle = Pedals::Get()->getThrottle();
@@ -160,6 +165,15 @@ void StateMachine::StateMachineLoop(void *)
         printf(">throttle:%.2f\n", throttle);
         printf(">button:%d\n", rtd_button);
         printf(">brake:%.2f\n", brake_pressure);
+        printf(">accel_x:%.2f\n", IO::Get()->getAccelX());
+        printf(">accel_y:%.2f\n", IO::Get()->getAccelY());
+        printf(">accel_z:%.2f\n", IO::Get()->getAccelZ());
+        printf(">gyro_x:%.2f\n", IO::Get()->getGyroX());
+        printf(">gyro_y:%.2f\n", IO::Get()->getGyroY());
+        printf(">gyro_z:%.2f\n", IO::Get()->getGyroZ());
+        
+        Throttle_ID2002.set(throttle);
+        Brake_Percent_ID2002.set(brake_pressure/BRAKES_MAX);
         // lights
         IO::Get()->HSDWrite(ECU_48_HSD6, false);
         if (Pedals::Get()->getBrakePressure() >= BRAKE_LIGHT_THRESHOLD)
