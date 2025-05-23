@@ -23,7 +23,21 @@
 static const char* TAG = "Main"; //Used for ESP_LOGx commands. See ESP-IDF Documentation
 CAN can0{GPIO_NUM_16, GPIO_NUM_15, TWAI_MODE_NORMAL};
 
-
+const char* get_twai_error_state_text(twai_status_info_t* status)
+{
+    if (status->state == TWAI_STATE_STOPPED) return "Stopped";
+    else if (status->state == TWAI_STATE_RUNNING) {
+        if (status->tx_error_counter >= 128 || status->rx_error_counter >= 128) {
+            return "Bus-Off or Error-Passive";
+        } else if (status->tx_error_counter > 0 || status->rx_error_counter > 0) {
+            return "Error-Active (with some errors)";
+        } else {
+            return "Error-Active (no errors)";
+        }
+    } else {
+        return "Unknown";
+    }
+}
 // must extern C since this gets called by a C file for freeRTOS
 extern "C" void app_main(void)
 {
@@ -40,6 +54,7 @@ extern "C" void app_main(void)
         //Rear ECU
         printf("REAR ECU SELECTED!\n");
         Logger::init();
+        can0.logging = true;
         xTaskCreatePinnedToCore(RearECU::rearECU_Task, "RearECULoop", 4096, NULL, configMAX_PRIORITIES - 1, nullptr, 1);
     }
     
@@ -48,19 +63,17 @@ extern "C" void app_main(void)
         onboard_LED = !onboard_LED;
         gpio_set_level(GPIO_NUM_48, onboard_LED);  // heart beat LED  
         
-        tm time;
-        
-        if (IO::Get()->rtc_handle->getTime(time) == ESP_OK) {
-            char buf[32];
-            strftime(buf, sizeof(buf), "%Y-%m-%d %H:%M:%S", &time);
-            printf("RTC Time: %s\n", buf);
+        twai_status_info_t status;
+        esp_err_t ret = twai_get_status_info(&status);
+        if (ret == ESP_OK) {
+            printf("TWAI state: %s | TX errors: %ld | RX errors: %ld | Bus Errors: %ld\n",
+                   get_twai_error_state_text(&status),
+                   status.tx_error_counter,
+                   status.rx_error_counter,
+                   status.bus_error_count);
         } else {
-            printf("Failed to read RTC time\n");
+            printf("Failed to get TWAI status: %s\n", esp_err_to_name(ret));
         }
-        // Logger::LogMessage_t test;
-        // sprintf(test.label, "MAIN");
-        // sprintf(test.message, "yert,1,2,3");
-        // Logger::writeLine(test);
 
 
         vTaskDelay(pdMS_TO_TICKS(MAIN_DELAY));

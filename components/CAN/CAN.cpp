@@ -3,6 +3,9 @@
 #include "esp_log.h"
 #include "CAN_Config.hpp"
 #include "can_helpers.hpp"
+#include "Logger.h"
+
+
 static const char *TAG = "CAN"; // Used for ESP_LOGx commands. See ESP-IDF Documentation
 static SemaphoreHandle_t rx_sem = xSemaphoreCreateBinary();
 static TimerHandle_t timerHandle;
@@ -24,6 +27,7 @@ int give_zero()
 
 CAN::CAN(gpio_num_t CAN_TX_Pin, gpio_num_t CAN_RX_Pin, twai_mode_t twai_mode)
 {
+    logging = false;
     twai_general_config_t g_config = TWAI_GENERAL_CONFIG_DEFAULT(CAN_TX_Pin, CAN_RX_Pin, twai_mode);
     g_config.rx_queue_len = 1000;
     twai_timing_config_t t_config = TWAI_TIMING_CONFIG_500KBITS();
@@ -85,7 +89,7 @@ void CAN::tx_CallBack_wrapper(TimerHandle_t xTimer)
 }
 /*
     One Decision I've made is that the actual CAN handler will not
-    deal with type conversions and scaling. It's only pulling the raw 
+    deal with type conversions and scaling. It's only pulling the raw
     value from the bitfield and handling endian-ness (untested).
     Everything else is left up to the signal handler.
 
@@ -93,7 +97,7 @@ void CAN::tx_CallBack_wrapper(TimerHandle_t xTimer)
 */
 void CAN::rx_task()
 {
-
+    char log_string[256];
     while (true)
     {
         // Try to take the semaphore without blocking
@@ -107,6 +111,25 @@ void CAN::rx_task()
             }
             while (twai_receive(&rx_msg, portMAX_DELAY) == ESP_OK)
             {
+                if (logging)
+                {
+                    // sprintf(log_string, "%ld,", rx_msg.identifier);
+                    uint8_t can_bytes[8] = {0, 0, 0, 0, 0, 0, 0, 0};
+                    for (int i = 0; i < rx_msg.data_length_code; i++)
+                    {
+                        can_bytes[i] = rx_msg.data[i];
+                        // char val[5];
+                        // sprintf(val, "%d,",rx_msg.data[i]);
+                        // strcat(log_string, val);
+                    }
+                    sprintf(log_string, "%ld,%d,%d,%d,%d,%d,%d,%d,%d", rx_msg.identifier,
+                            can_bytes[0], can_bytes[1], can_bytes[2], can_bytes[3], can_bytes[4],
+                            can_bytes[5], can_bytes[6], can_bytes[7]);
+                    Logger::LogMessage_t log_message;
+                    sprintf(log_message.label, "CAN");
+                    sprintf(log_message.message, "%s", log_string);
+                    Logger::log(log_message);
+                }
                 if (CAN_Rx_IDs.find(rx_msg.identifier) != CAN_Rx_IDs.end())
                 {
                     ESP_LOGI(TAG, "Rx'd ID %" PRIu32, rx_msg.identifier);
@@ -136,7 +159,7 @@ void CAN::rx_task()
 void CAN::tx_CallBack()
 {
     txCallBackCounter = (txCallBackCounter < 1000) ? txCallBackCounter + 1 : 0;
-
+    char log_string[256];
     // I don't believe in 1ms messages in 2025. nothing's that important
 
     // 10ms messages
@@ -147,6 +170,20 @@ void CAN::tx_CallBack()
             tx_message.identifier = identifier;
             tx_message.data_length_code = 8;
             can_setSignal<uint64_t>(tx_message.data, signal->get_raw(), signal->startBit, signal->length, signal->isIntel);
+        }
+        if (logging)
+        {
+            sprintf(log_string, "%ld,", tx_message.identifier);
+            for (int i = 0; i < tx_message.data_length_code; i++)
+            {
+                char val[5];
+                sprintf(val, "%d,", tx_message.data[i]);
+                strcat(log_string, val);
+            }
+            Logger::LogMessage_t log_message;
+            sprintf(log_message.label, "CAN");
+            sprintf(log_message.message, "%s", log_string);
+            Logger::log(log_message);
         }
         if (twai_transmit(&tx_message, pdMS_TO_TICKS(1000)) != ESP_OK)
         {
@@ -164,6 +201,20 @@ void CAN::tx_CallBack()
                 tx_message.data_length_code = 8;
                 can_setSignal<uint64_t>(tx_message.data, signal->get_raw(), signal->startBit, signal->length, signal->isIntel);
             }
+            if (logging)
+            {
+                sprintf(log_string, "%ld,", tx_message.identifier);
+                for (int i = 0; i < tx_message.data_length_code; i++)
+                {
+                    char val[5];
+                    sprintf(val, "%d,", tx_message.data[i]);
+                    strcat(log_string, val);
+                }
+                Logger::LogMessage_t log_message;
+                sprintf(log_message.label, "CAN");
+                sprintf(log_message.message, "%s", log_string);
+                Logger::log(log_message);
+            }
             if (twai_transmit(&tx_message, pdMS_TO_TICKS(1000)) != ESP_OK)
             {
                 ESP_LOGE(TAG, "failed to tx message\n");
@@ -180,6 +231,20 @@ void CAN::tx_CallBack()
                 tx_message.identifier = identifier;
                 tx_message.data_length_code = 8;
                 can_setSignal<uint64_t>(tx_message.data, signal->get_raw(), signal->startBit, signal->length, signal->isIntel);
+            }
+            if (logging)
+            {
+                sprintf(log_string, "%ld,", tx_message.identifier);
+                for (int i = 0; i < tx_message.data_length_code; i++)
+                {
+                    char val[5];
+                    sprintf(val, "%d,", tx_message.data[i]);
+                    strcat(log_string, val);
+                }
+                Logger::LogMessage_t log_message;
+                sprintf(log_message.label, "CAN");
+                sprintf(log_message.message, "%s", log_string);
+                Logger::log(log_message);
             }
             if (twai_transmit(&tx_message, pdMS_TO_TICKS(1000)) != ESP_OK)
             {

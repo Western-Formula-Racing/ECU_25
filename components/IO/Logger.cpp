@@ -2,6 +2,8 @@
 static const char* TAG = "Logger";
 char filename[128];
 FILE* f;
+static QueueHandle_t logQueue = NULL;
+
 void Logger::init()
 {
     esp_err_t ret;
@@ -14,7 +16,7 @@ void Logger::init()
     sdmmc_card_t *card;
     const char mount_point[] = "/sdcard";
 
-    ESP_LOGI(TAG, "Initializing SD card");
+    ESP_LOGW(TAG, "Initializing SD card");
 
     // Create a custom host config
     sdmmc_host_t host = SDMMC_HOST_DEFAULT();
@@ -53,7 +55,7 @@ void Logger::init()
     char time_string[32];     
     if (IO::Get()->rtc_handle->getTime(time) == ESP_OK) {
         
-        strftime(time_string, sizeof(time_string), "%Y-%m-%d-%H:%M:%S", &time);
+        strftime(time_string, sizeof(time_string), "%Y-%m-%d-%H-%M-%S", &time);
         printf("RTC Time: %s\n", time_string);
     } else {
         printf("Failed to read RTC time\n");
@@ -61,27 +63,77 @@ void Logger::init()
 
     // sprintf(filename, "/sdcard/as1---------------f1.csv");
     sprintf(filename, "/sdcard/%s.csv", time_string);
+    // sprintf(filename, "/sdcard/test.csv");
     f = fopen(filename, "w");
     if (f == NULL) {
-        ESP_LOGE(TAG, "Failed to open file for writing");
+        ESP_LOGE(TAG,"Failed to open file for writing");
         return;
     }
-    fprintf(f, "Manual pin mapping works!\n");
     fclose(f);
     ESP_LOGI(TAG, "File written successfully");
+
+
+    logQueue = xQueueCreate(512, sizeof(LogMessage_t));
+    xTaskCreatePinnedToCore(logTask, "logTask", 4096, NULL, configMAX_PRIORITIES - 1, nullptr, 0);
 
 }
 
 void Logger::writeLine(LogMessage_t message)
 {
-    f = fopen(filename, "w");
+    f = fopen(filename, "a");
     if (f == NULL) {
         printf("filename: %s\n", filename);
         ESP_LOGE(TAG, "Failed to open file for writing");
         return;
     }
-    int64_t current_time = esp_timer_get_time()/1000;
-    fprintf(f, "%lld,%s,%s\n", current_time, message.label, message.message);
+    // printf("%lld,%s,%s\n", current_time, message.label, message.message);
+    fprintf(f, "%lld,%s,%s\n", message.timestamp, message.label, message.message);
     fclose(f);
 
+}
+
+void Logger::log(LogMessage_t message)
+{
+    message.timestamp = esp_timer_get_time()/1000;
+    if (logQueue != NULL)
+    {
+        if (xQueueSendToBack(logQueue, &message, 0) != pdTRUE)
+        {
+            ESP_LOGE(TAG, "failed to send message to logQueue");
+        }
+    }
+
+
+}
+
+void Logger::logTask(void *)
+{
+    printf("logging task started!");
+    for(;;)
+    {
+        if (logQueue != NULL)
+        {
+
+            LogMessage_t message;
+            f = fopen(filename, "a");
+            if (f == NULL) {
+                printf("filename: %s\n", filename);
+                ESP_LOGE(TAG, "Failed to open file for writing");
+                return;
+            }
+            while (xQueueReceive(logQueue, &message, 0) == pdTRUE)
+            {
+                if (f == NULL) {
+                    printf("filename: %s\n", filename);
+                    ESP_LOGE(TAG, "Failed to open file for writing");
+                    return;
+                }
+                // printf("%lld,%s,%s\n", message.timestamp, message.label, message.message);
+                fprintf(f, "%lld,%s,%s\n", message.timestamp, message.label, message.message);
+
+            }
+            fclose(f);
+        }
+        vTaskDelay(pdMS_TO_TICKS(10));
+    }
 }

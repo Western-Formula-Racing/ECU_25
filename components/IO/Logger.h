@@ -21,13 +21,15 @@ namespace Logger
 
     typedef struct
     {
+        int64_t timestamp;
         char label[32];
-        // Fixed length of 256 characters
         char message[256];
     } LogMessage_t;
 
     void init();
     void writeLine(LogMessage_t message);
+    void log(LogMessage_t message);
+    void logTask(void *);
     
 
 }

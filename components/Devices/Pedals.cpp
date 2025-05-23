@@ -8,11 +8,11 @@ SemaphoreHandle_t Pedals::mutex = xSemaphoreCreateMutex();
 Pedals::Pedals()
 {
     // Temporary test values
-    apps1_min_voltage = 2.5f;
-    apps2_min_voltage = 2.5f;
-    apps1_max_voltage = 5.0f;
-    apps2_max_voltage = 0.0f;
-    fault_latch =0;
+    apps1_min_voltage = 2.64f;
+    apps2_min_voltage = 2.32f;
+    apps1_max_voltage = 3.44f;
+    apps2_max_voltage = 1.52f;
+    fault_latch = 0;
     ESP_LOGI(TAG, "Pedals Initialized");
 }
 
