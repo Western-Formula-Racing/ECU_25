@@ -36,5 +36,4 @@ void FXL6408UMX::writeLevel(int channel, bool level){
   }
   uint8_t tx[2] = {0x5,outputStatus};
   i2c_master_transmit(i2c_devHandle,tx,sizeof(tx),-1);
-  test();
 }
