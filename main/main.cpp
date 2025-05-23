@@ -55,7 +55,7 @@ extern "C" void app_main(void)
         printf("REAR ECU SELECTED!\n");
         Logger::init();
         can0.logging = true;
-        // xTaskCreatePinnedToCore(RearECU::rearECU_Task, "RearECULoop", 4096, NULL, configMAX_PRIORITIES - 1, nullptr, 1);
+        xTaskCreatePinnedToCore(RearECU::rearECU_Task, "RearECULoop", 4096, NULL, configMAX_PRIORITIES - 1, nullptr, 1);
     }
     
     bool onboard_LED = 0;
