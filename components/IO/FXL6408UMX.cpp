@@ -10,7 +10,7 @@ FXL6408UMX::FXL6408UMX(i2c_master_bus_handle_t busHandle){
   ESP_ERROR_CHECK(i2c_master_bus_add_device(i2c_busHandle, &dev_cfg, &i2c_devHandle));
 
   //configure all pins as outputs
-  uint8_t tx[2] = {0x3,0xF};
+  uint8_t tx[2] = {0x3,0xFF};
   i2c_master_transmit(i2c_devHandle,tx,sizeof(tx),-1);
   //remove high-z state
   uint8_t tx2[2] = {0x7,0x0};
@@ -36,4 +36,5 @@ void FXL6408UMX::writeLevel(int channel, bool level){
   }
   uint8_t tx[2] = {0x5,outputStatus};
   i2c_master_transmit(i2c_devHandle,tx,sizeof(tx),-1);
+  test();
 }
