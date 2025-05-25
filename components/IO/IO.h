@@ -46,6 +46,8 @@ private:
     static TLA2518* adc1_handle;
     static TLA2518* adc2_handle;
     DS3231* rtc_handle;
+    uint64_t right_wheel_tick;
+    uint64_t left_wheel_tick;
 
 };
 #endif
