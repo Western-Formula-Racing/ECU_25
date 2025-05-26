@@ -7,15 +7,10 @@ using namespace RearECU;
 void RearECU::rearECU_Task(void*)
 {
     
-    // remove uneeded CAN Rx messages
-    CAN_Tx_10ms_IDs.erase(M192_COMMAND_MESSAGE);
-    CAN_Tx_100ms_IDs.erase(BMS_CURRENT_LIMIT);
-    CAN_Tx_100ms_IDs.erase(VCU_STATE_INFO);
-    CAN_Tx_100ms_IDs.erase(VCU_FRONT_SENSORS_1);
-    CAN_Tx_100ms_IDs.erase(VCU_FRONT_SENSORS_2);
-    CAN_Tx_100ms_IDs.erase(VCU_FRONT_SENSORS_3);
-    CAN_Tx_100ms_IDs.erase(VCU_FRONT_SENSORS_4);
-    CAN_Tx_1000ms_IDs.erase(M192_COMMAND_MESSAGE);
+    // remove uneeded CAN Tx messages
+    CAN_Tx_10ms_IDs.clear();
+    CAN_Tx_100ms_IDs.clear();
+    CAN_Tx_1000ms_IDs.clear();
 
     //add needed CAN messages
     CAN_Tx_100ms_IDs.insert(VCU_PDM_REAR);

@@ -14,6 +14,8 @@ public:
     CAN(gpio_num_t CAN_TX_Pin, gpio_num_t CAN_RX_Pin, twai_mode_t twai_mode);
     void begin();
     bool logging;
+    int restart_counter;
+    void restart(gpio_num_t CAN_TX_Pin, gpio_num_t CAN_RX_Pin, twai_mode_t twai_mode);
 private:
     twai_handle_t twai_handle;
     twai_general_config_t g_config;
@@ -26,6 +28,7 @@ private:
     static void tx_CallBack_wrapper(TimerHandle_t xTimer); // Wrapper function
     void tx_CallBack(); // Non-static member function
     void rx_task(); // Non-static member function
+    
 };
 
 int give_zero();
