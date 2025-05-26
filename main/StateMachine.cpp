@@ -171,7 +171,8 @@ void StateMachine::StateMachineLoop(void *)
         printf(">gyro_x:%.2f\n", IO::Get()->getGyroX());
         printf(">gyro_y:%.2f\n", IO::Get()->getGyroY());
         printf(">gyro_z:%.2f\n", IO::Get()->getGyroZ());
-        
+        printf(">rightWheel_tick:%lld\n", IO::right_wheel_tick);
+        printf(">leftWheel_tick:%lld\n", IO::left_wheel_tick);
         Throttle_ID2002.set(throttle);
         Brake_Percent_ID2002.set(brake_pressure/BRAKES_MAX);
         // lights
