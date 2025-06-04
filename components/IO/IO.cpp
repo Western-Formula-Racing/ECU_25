@@ -9,22 +9,14 @@ TLA2518* IO::adc1_handle = nullptr;
 TLA2518* IO::adc2_handle = nullptr;
 volatile uint64_t IO::left_wheel_tick = 0;
 volatile uint64_t IO::right_wheel_tick = 0;
-volatile uint64_t IO::left_tick_time = 0;
-volatile uint64_t IO::left_last_tick = 0;
-volatile uint64_t IO::right_tick_time = 0;
-volatile uint64_t IO::right_last_tick = 0;
 
 static void IRAM_ATTR gpio_isr_handler(void* arg)
 {
     uint32_t gpio_num = (uint32_t) arg;
     if(gpio_num == ECU_11_IO2){
-      IO::left_last_tick = IO::left_tick_time;
-      IO::left_tick_time = esp_timer_get_time();
       IO::left_wheel_tick++;
     }
     else if(gpio_num == ECU_12_IO3){
-      IO::right_last_tick = IO::right_tick_time;
-      IO::right_tick_time = esp_timer_get_time();
       IO::right_wheel_tick++;
     }
 }

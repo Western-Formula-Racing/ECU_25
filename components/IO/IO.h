@@ -49,14 +49,8 @@ private:
     static TLA2518* adc1_handle;
     static TLA2518* adc2_handle;
     DS3231* rtc_handle;
-    static volatile uint64_t left_last_tick;
-    static volatile uint64_t right_last_tick;
-    static volatile uint64_t left_tick_time;
-    static volatile uint64_t right_tick_time;
     static volatile uint64_t right_wheel_tick;
     static volatile uint64_t left_wheel_tick;
-    static volatile uint64_t right_wheel_last_tick;
-    static volatile uint64_t left_wheel_last_tick;
 
 };
 #endif

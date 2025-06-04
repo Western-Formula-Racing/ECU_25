@@ -5,6 +5,11 @@ int64_t rtd_start_time;
 float throttle;
 float brake_pressure;
 int rtd_button;
+uint64_t last_right_tick;
+uint64_t last_left_tick;
+uint64_t last_tick_time;
+float right_rpm;
+float left_rpm;
 BMS::STATE pack_status;
 nvs_handle_t nvs_storage_handle;
 static const char *TAG = "State Machine"; // Used for ESP_LOGx commands. See ESP-IDF Documentation
@@ -140,7 +145,7 @@ void StateMachine::StateMachineLoop(void *)
     State state = START;
 
     setupAppsCalibration();
-
+    uint64_t current_time = 0;
     for (;;)
     {
         // anything that runs in all state's should go here
@@ -159,6 +164,17 @@ void StateMachine::StateMachineLoop(void *)
         throttle = Pedals::Get()->getThrottle();
         brake_pressure = Pedals::Get()->getBrakePressure();
         State_ID2002.set(state);
+        // calculate wheel RPM
+        current_time = esp_timer_get_time();
+        // right_rpm = (IO::right_wheel_tick - last_right_tick);
+        // left_rpm = (IO::left_wheel_tick - last_left_tick);
+        // right_rpm = (IO::right_wheel_tick - last_right_tick)/(4*6*(100000000000)*(current_time - last_tick_time));
+        // left_rpm = (IO::left_wheel_tick - last_left_tick)/(4*6*(100000000000)*(current_time - last_tick_time));
+        // printf(">deltaT:%lld\n",(4*6*(100000000000)*(current_time - last_tick_time)));
+        last_left_tick = IO::left_wheel_tick;
+        last_right_tick = IO::right_wheel_tick;
+        last_tick_time = current_time;
+
 
         printf(">packStatus:%d\n", pack_status);
         printf(">state:%d\n", state);
@@ -173,6 +189,10 @@ void StateMachine::StateMachineLoop(void *)
         printf(">gyro_z:%.2f\n", IO::Get()->getGyroZ());
         printf(">rightWheel_tick:%lld\n", IO::right_wheel_tick);
         printf(">leftWheel_tick:%lld\n", IO::left_wheel_tick);
+        printf(">rightWheel_rpm:%.4f\n", right_rpm);
+        printf(">leftWheel_rpm:%.4f\n", left_rpm);
+        Left_RPM_ID2013.set(left_rpm);
+        Left_RPM_ID2013.set(left_rpm);
         Throttle_ID2002.set(throttle);
         Brake_Percent_ID2002.set(brake_pressure/BRAKES_MAX);
         // lights
