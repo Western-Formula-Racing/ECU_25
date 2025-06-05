@@ -18,6 +18,8 @@ void RearECU::rearECU_Task(void*)
     CAN_Tx_100ms_IDs.insert(VCU_REAR_SENSORS_2);
     CAN_Tx_100ms_IDs.insert(VCU_REAR_SENSORS_3);
     CAN_Tx_100ms_IDs.insert(VCU_REAR_SENSORS_4);
+    CAN_Tx_100ms_IDs.insert(VCU_REAR_IMU_1);
+    CAN_Tx_100ms_IDs.insert(VCU_REAR_IMU_2);
     for(;;){
         // poll sensors
         Sensors::Get()->poll_sensors();

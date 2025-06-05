@@ -165,15 +165,15 @@ void StateMachine::StateMachineLoop(void *)
         brake_pressure = Pedals::Get()->getBrakePressure();
         State_ID2002.set(state);
         // calculate wheel RPM
-        current_time = esp_timer_get_time();
+        // current_time = esp_timer_get_time();
         // right_rpm = (IO::right_wheel_tick - last_right_tick);
         // left_rpm = (IO::left_wheel_tick - last_left_tick);
         // right_rpm = (IO::right_wheel_tick - last_right_tick)/(4*6*(100000000000)*(current_time - last_tick_time));
         // left_rpm = (IO::left_wheel_tick - last_left_tick)/(4*6*(100000000000)*(current_time - last_tick_time));
         // printf(">deltaT:%lld\n",(4*6*(100000000000)*(current_time - last_tick_time)));
-        last_left_tick = IO::left_wheel_tick;
-        last_right_tick = IO::right_wheel_tick;
-        last_tick_time = current_time;
+        // last_left_tick = IO::left_wheel_tick;
+        // last_right_tick = IO::right_wheel_tick;
+        // last_tick_time = current_time;
 
 
         printf(">packStatus:%d\n", pack_status);
@@ -191,8 +191,10 @@ void StateMachine::StateMachineLoop(void *)
         printf(">leftWheel_tick:%lld\n", IO::left_wheel_tick);
         printf(">rightWheel_rpm:%.4f\n", right_rpm);
         printf(">leftWheel_rpm:%.4f\n", left_rpm);
-        Left_RPM_ID2013.set(left_rpm);
-        Left_RPM_ID2013.set(left_rpm);
+
+        Front_Wheel_Right_Ticks_ID2028.set(IO::Get()->right_wheel_tick);
+        Front_Wheel_Left_Ticks_ID2027.set(IO::Get()->left_wheel_tick);
+        
         Throttle_ID2002.set(throttle);
         Brake_Percent_ID2002.set(brake_pressure/BRAKES_MAX);
         // lights

@@ -50,6 +50,8 @@
 #define VCU_FRONT_IMU_1 2024
 #define VCU_FRONT_IMU_2 2025
 #define VCU_WHEELSPEED_INFO 2013
+#define VCU_FRONT_WHEEL_LEFT 2027
+#define VCU_FRONT_WHEEL_RIGHT 2028
 
 inline CAN_Signal HSD1_ID2012{true, 0, 8};
 inline CAN_Signal HSD2_ID2012{true, 8, 8};
@@ -274,6 +276,8 @@ inline CAN_Signal Gyro_Y_ID2025{true, 16, 16};
 inline CAN_Signal Gyro_Z_ID2025{true, 32, 16};
 inline CAN_Signal Left_RPM_ID2013{true, 0, 16};
 inline CAN_Signal Right_RPM_ID2013{true, 16, 16};
+inline CAN_Signal Front_Wheel_Left_Ticks_ID2027{true, 0, 64};
+inline CAN_Signal Front_Wheel_Right_Ticks_ID2028{true, 0, 64};
 
 // Define the CAN Map
 inline etl::map CAN_Map
@@ -588,12 +592,18 @@ inline etl::map CAN_Map
     etl::pair{VCU_WHEELSPEED_INFO, etl::vector<CAN_Signal*, 16>{ 
         &Left_RPM_ID2013,
         &Right_RPM_ID2013 
+        } },
+    etl::pair{VCU_FRONT_WHEEL_LEFT, etl::vector<CAN_Signal*, 16>{ 
+        &Front_Wheel_Left_Ticks_ID2027 
+        } },
+    etl::pair{VCU_FRONT_WHEEL_RIGHT, etl::vector<CAN_Signal*, 16>{ 
+        &Front_Wheel_Right_Ticks_ID2028 
         } }
 };
 inline etl::set CAN_Rx_IDs = {2023, 2022, 173, 172, 194, 171, 170, 169, 168, 167, 166, 165, 164, 163, 162, 161, 160, 174, 175, 514, 176, 1712, 1713, 1714, 406451072, 406451073, 406451074, 406451075, 406451076, 177, 1000, 1006, 1007, 1008, 1009, 1010, 1011, 1012, 1013, 1014, 1015, 1016, 1017, 1018, 1019, 1020, 1021, 1022, 1023, 1024, 1025, 1026, 1027, 1028, 1029, 1030, 1031, 1032, 1033, 1034, 1035, 1036, 1037, 1038, 1039, 1040, 1041, 1042, 1043, 1044, 1045, 1046, 1047, 1048, 1049, 1050, 1051, 1052, 1053, 1054, 1055, 1056, 403105268, 419385573, 1001, 1002, 1003, 1004, 1005, 2012};
 
 inline etl::set CAN_Tx_10ms_IDs = {M192_COMMAND_MESSAGE};
-inline etl::set CAN_Tx_100ms_IDs = {VCU_WHEELSPEED_INFO, VCU_FRONT_IMU_1, VCU_FRONT_IMU_2, BMS_CURRENT_LIMIT, VCU_STATE_INFO, VCU_FRONT_SENSORS_1, VCU_FRONT_SENSORS_2, VCU_FRONT_SENSORS_3, VCU_FRONT_SENSORS_4, VCU_PDM_REAR_CMD};
+inline etl::set CAN_Tx_100ms_IDs = {VCU_WHEELSPEED_INFO, VCU_FRONT_IMU_1, VCU_FRONT_IMU_2, BMS_CURRENT_LIMIT, VCU_STATE_INFO, VCU_FRONT_SENSORS_1, VCU_FRONT_SENSORS_2, VCU_FRONT_SENSORS_3, VCU_FRONT_SENSORS_4, VCU_PDM_REAR_CMD, VCU_FRONT_WHEEL_LEFT, VCU_FRONT_WHEEL_RIGHT};
 inline etl::set CAN_Tx_1000ms_IDs = {192};
 ;
 // they don't like to be empty
