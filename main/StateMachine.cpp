@@ -192,8 +192,8 @@ void StateMachine::StateMachineLoop(void *)
         printf(">rightWheel_rpm:%.4f\n", right_rpm);
         printf(">leftWheel_rpm:%.4f\n", left_rpm);
 
-        Front_Wheel_Right_Ticks_ID2028.set(IO::Get()->right_wheel_tick);
-        Front_Wheel_Left_Ticks_ID2027.set(IO::Get()->left_wheel_tick);
+        Front_Left_Ticker_ID2028.set(IO::Get()->right_wheel_tick);
+        Front_Right_Ticker_ID2029.set(IO::Get()->left_wheel_tick);
         
         Throttle_ID2002.set(throttle);
         Brake_Percent_ID2002.set(brake_pressure/BRAKES_MAX);

@@ -55,6 +55,13 @@ void RearECU::rearECU_Task(void*)
         IO::Get()->HSDWrite(ECU_49_HSD7, HSD7_ID2012.get_bool());
         IO::Get()->HSDWrite(ECU_50_HSD8, HSD8_ID2012.get_bool());
 
+        //set IMU Signals
+        Accel_X_ID2026.set(IO::Get()->getAccelX());
+        Accel_Y_ID2026.set(IO::Get()->getAccelY());
+        Accel_Z_ID2026.set(IO::Get()->getAccelZ());
+        Gyro_X_ID2027.set(IO::Get()->getGyroX());
+        Gyro_Y_ID2027.set(IO::Get()->getGyroY());
+        Gyro_Z_ID2027.set(IO::Get()->getGyroZ());
 
         vTaskDelay(pdMS_TO_TICKS(100));
 
