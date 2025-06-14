@@ -210,9 +210,11 @@ void StateMachine::StateMachineLoop(void *)
         printf(">AMS_light:%d\n", !AMSRelay_ID1056.get_bool());
         IO::Get()->HSDWrite(ECU_41_HSD5, !IMDRelay_ID1056.get_bool());
         IO::Get()->HSDWrite(ECU_40_HSD4, !AMSRelay_ID1056.get_bool());
-        IO::Get()->HSDWrite(ECU_37_HSD1, true);
-        IO::Get()->HSDWrite(ECU_38_HSD2, true);
-        IO::Get()->HSDWrite(ECU_39_HSD3, true);
+        if(pack_status == BMS::ACTIVE or pack_status == BMS::PRECHARGE_START or pack_status == BMS::PRECHARGING){
+            IO::Get()->HSDWrite(ECU_38_HSD2, true);
+        }
+        IO::Get()->HSDWrite(ECU_38_HSD2, false);
+    
         state = states[state]();
         vTaskDelay(pdMS_TO_TICKS(10));
     }

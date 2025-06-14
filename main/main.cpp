@@ -22,7 +22,6 @@
 
 static const char* TAG = "Main"; //Used for ESP_LOGx commands. See ESP-IDF Documentation
 CAN can0{GPIO_NUM_16, GPIO_NUM_15, TWAI_MODE_NORMAL};
-
 const char* get_twai_error_state_text(twai_status_info_t* status)
 {
     if (status->state == TWAI_STATE_STOPPED) return "Stopped";
@@ -32,7 +31,7 @@ const char* get_twai_error_state_text(twai_status_info_t* status)
         } else if (status->tx_error_counter > 0 || status->rx_error_counter > 0) {
             return "Error-Active (with some errors)";
         } else {
-            return "Error-Active (no errors)";
+            return "Active (no errors)";
         }
     } else {
         return "Unknown";
@@ -41,7 +40,7 @@ const char* get_twai_error_state_text(twai_status_info_t* status)
 // must extern C since this gets called by a C file for freeRTOS
 extern "C" void app_main(void)
 {
-    vTaskDelay(pdMS_TO_TICKS(200));
+    vTaskDelay(pdMS_TO_TICKS(2000));
     ESP_LOGI(TAG, "Main Has begun");
     can0.begin();
     
@@ -73,7 +72,7 @@ extern "C" void app_main(void)
                    status.tx_error_counter,
                    status.rx_error_counter,
                    status.bus_error_count);
-            if(status.tx_error_counter >= 128 || status.bus_error_count >= 30 ){
+            if(status.state == TWAI_STATE_STOPPED  || status.state == TWAI_STATE_BUS_OFF){
                 printf("attempting bus recovery...\n");
                 if(twai_initiate_recovery()==ESP_OK){
                     printf("recovery started\n");
