@@ -39,16 +39,16 @@ float Pedals::getThrottle()
     apps1_voltage = Sensors::Get()->get_sensor_voltage(Sensors::APPS1);
     apps2_voltage = Sensors::Get()->get_sensor_voltage(Sensors::APPS2);
     printf(">sensor1:%.2f\n>sensor2:%.2f\n", apps1_voltage, apps2_voltage);
-    
+
     apps_sensor1_percent = min(1, max(0, (apps1_voltage - apps1_min_voltage) / (apps1_max_voltage - apps1_min_voltage)));
     apps_sensor2_percent = min(1, max(0, (apps2_voltage - apps2_min_voltage) / (apps2_max_voltage - apps2_min_voltage)));
-    throttle = (apps_sensor1_percent + apps_sensor2_percent)/2;
+    throttle = (apps_sensor1_percent + apps_sensor2_percent) / 2;
     printf(">apps1_min:%.2f\n>apps1_max:%.2f\n", apps1_min_voltage, apps1_max_voltage);
     printf(">apps2_min:%.2f\n>apps2_max:%.2f\n", apps2_min_voltage, apps1_max_voltage);
     printf(">sensor1_percent:%.2f\n>sensor2_percent:%.2f\n", apps_sensor1_percent, apps_sensor2_percent);
     printf(">fault:%d\n", fault_latch);
     // Case 1: sensor open circuit
-    if(apps1_voltage <= 0.01f || apps2_voltage <= 0.01f)
+    if (apps1_voltage <= 0.01f || apps2_voltage <= 0.01f)
     {
         ESP_LOGW(TAG, "open circuit\n");
         fault_latch = true;
@@ -56,55 +56,57 @@ float Pedals::getThrottle()
     }
 
     // Case 2: pedal implausability
-    else if((max(apps_sensor1_percent, apps_sensor2_percent) - min(apps_sensor1_percent, apps_sensor2_percent)) >= APPS_PLAUSABILITY_THRESHOLD)
+    else if ((max(apps_sensor1_percent, apps_sensor2_percent) - min(apps_sensor1_percent, apps_sensor2_percent)) >= APPS_PLAUSABILITY_THRESHOLD)
     {
         ESP_LOGW(TAG, "implausability\n");
         fault_latch = true;
         throttle = 0;
     }
     // Case 3: brakes pressed
-    else if(getBrakePressure() >= BRAKE_THRESHOLD)
+    else if (getBrakePressure() >= BRAKE_PLAUSABILITY_THRESHOLD)
     {
         ESP_LOGW(TAG, "brake pressed\n");
         fault_latch = true;
         throttle = 0;
     }
 
-    //clear faults
-    else if(throttle <= 0.08f)
+    // clear faults
+    else if (throttle <= 0.08f)
     {
         fault_latch = 0;
     }
 
-
-    if(fault_latch){
+    if (fault_latch)
+    {
         throttle = 0;
     }
 
     return throttle;
-
 }
 
 float Pedals::getBrakePressure()
 {
-    return (Sensors::Get()->get_sensor_voltage(Sensors::BPS1) + Sensors::Get()->get_sensor_voltage(Sensors::BPS2))/2;
+    return (Sensors::Get()->get_sensor_voltage(Sensors::BPS1) + Sensors::Get()->get_sensor_voltage(Sensors::BPS2)) / 2;
 }
 
 void Pedals::updateAppsCalibration(float app1_min, float app1_max, float app2_min, float app2_max)
 {
-    if(app1_min != apps1_min_voltage){
+    if (app1_min != apps1_min_voltage)
+    {
         apps1_min_voltage = app1_min;
     }
-    if(app1_max != apps1_max_voltage){
+    if (app1_max != apps1_max_voltage)
+    {
         apps1_max_voltage = app1_max;
     }
-    if(app2_min != apps2_min_voltage){
+    if (app2_min != apps2_min_voltage)
+    {
         apps2_min_voltage = app2_min;
     }
-    if(app2_max != apps1_max_voltage){
+    if (app2_max != apps1_max_voltage)
+    {
         apps2_max_voltage = app2_max;
     }
-    
 }
 
 void Pedals::set_min(float apps1, float apps2)

@@ -12,6 +12,7 @@
 #include "FXL6408UMX.h"
 #include "ICM-20948.h"
 #include "ds3231.h"
+#include "esp_timer.h"
 class IO{
 private:
     //Singleton device class structure
@@ -43,9 +44,13 @@ private:
     float getGyroX();
     float getGyroY();
     float getGyroZ();
+    float getRightWheelSpeed();
+    float getLeftWheelSpeed();
     static TLA2518* adc1_handle;
     static TLA2518* adc2_handle;
     DS3231* rtc_handle;
+    static volatile uint64_t right_wheel_tick;
+    static volatile uint64_t left_wheel_tick;
 
 };
 #endif

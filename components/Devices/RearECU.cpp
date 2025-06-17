@@ -7,15 +7,10 @@ using namespace RearECU;
 void RearECU::rearECU_Task(void*)
 {
     
-    // remove uneeded CAN Rx messages
-    CAN_Tx_10ms_IDs.erase(M192_COMMAND_MESSAGE);
-    CAN_Tx_100ms_IDs.erase(BMS_CURRENT_LIMIT);
-    CAN_Tx_100ms_IDs.erase(VCU_STATE_INFO);
-    CAN_Tx_100ms_IDs.erase(VCU_FRONT_SENSORS_1);
-    CAN_Tx_100ms_IDs.erase(VCU_FRONT_SENSORS_2);
-    CAN_Tx_100ms_IDs.erase(VCU_FRONT_SENSORS_3);
-    CAN_Tx_100ms_IDs.erase(VCU_FRONT_SENSORS_4);
-    CAN_Tx_1000ms_IDs.erase(M192_COMMAND_MESSAGE);
+    // remove uneeded CAN Tx messages
+    CAN_Tx_10ms_IDs.clear();
+    CAN_Tx_100ms_IDs.clear();
+    CAN_Tx_1000ms_IDs.clear();
 
     //add needed CAN messages
     CAN_Tx_100ms_IDs.insert(VCU_PDM_REAR);
@@ -23,6 +18,8 @@ void RearECU::rearECU_Task(void*)
     CAN_Tx_100ms_IDs.insert(VCU_REAR_SENSORS_2);
     CAN_Tx_100ms_IDs.insert(VCU_REAR_SENSORS_3);
     CAN_Tx_100ms_IDs.insert(VCU_REAR_SENSORS_4);
+    CAN_Tx_100ms_IDs.insert(VCU_REAR_IMU_1);
+    CAN_Tx_100ms_IDs.insert(VCU_REAR_IMU_2);
     for(;;){
         // poll sensors
         Sensors::Get()->poll_sensors();
@@ -58,6 +55,13 @@ void RearECU::rearECU_Task(void*)
         IO::Get()->HSDWrite(ECU_49_HSD7, HSD7_ID2012.get_bool());
         IO::Get()->HSDWrite(ECU_50_HSD8, HSD8_ID2012.get_bool());
 
+        //set IMU Signals
+        Accel_X_ID2026.set(IO::Get()->getAccelX());
+        Accel_Y_ID2026.set(IO::Get()->getAccelY());
+        Accel_Z_ID2026.set(IO::Get()->getAccelZ());
+        Gyro_X_ID2027.set(IO::Get()->getGyroX());
+        Gyro_Y_ID2027.set(IO::Get()->getGyroY());
+        Gyro_Z_ID2027.set(IO::Get()->getGyroZ());
 
         vTaskDelay(pdMS_TO_TICKS(100));
 

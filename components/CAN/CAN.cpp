@@ -19,6 +19,8 @@ static twai_message_t tx_message = {
     // Message ID and payload
     .data_length_code = 8,
 };
+TaskHandle_t rxTaskHandle = nullptr;
+
 int give_zero()
 {
     printf("kill me please I can't keep doing this\n");
@@ -28,6 +30,7 @@ int give_zero()
 CAN::CAN(gpio_num_t CAN_TX_Pin, gpio_num_t CAN_RX_Pin, twai_mode_t twai_mode)
 {
     logging = false;
+    restart_counter = 0;
     twai_general_config_t g_config = TWAI_GENERAL_CONFIG_DEFAULT(CAN_TX_Pin, CAN_RX_Pin, twai_mode);
     g_config.rx_queue_len = 1000;
     twai_timing_config_t t_config = TWAI_TIMING_CONFIG_500KBITS();
@@ -56,6 +59,40 @@ CAN::CAN(gpio_num_t CAN_TX_Pin, gpio_num_t CAN_RX_Pin, twai_mode_t twai_mode)
     }
 }
 
+void CAN::restart(gpio_num_t CAN_TX_Pin, gpio_num_t CAN_RX_Pin, twai_mode_t twai_mode){
+    twai_driver_uninstall_v2(twai_handle);
+    twai_general_config_t g_config = TWAI_GENERAL_CONFIG_DEFAULT(CAN_TX_Pin, CAN_RX_Pin, twai_mode);
+    g_config.rx_queue_len = 1000;
+    twai_timing_config_t t_config = TWAI_TIMING_CONFIG_500KBITS();
+    twai_filter_config_t f_config = TWAI_FILTER_CONFIG_ACCEPT_ALL();
+    g_config.controller_id = 0;
+
+    txCallBackCounter = 0;
+
+    if (twai_driver_install_v2(&g_config, &t_config, &f_config, &twai_handle) == ESP_OK)
+    {
+        ESP_LOGI(TAG, "Driver installed\n");
+    }
+    else
+    {
+        ESP_LOGI(TAG, "Failed to install driver\n");
+        return;
+    }
+    if (twai_start_v2(twai_handle) == ESP_OK)
+    {
+        ESP_LOGI(TAG, "Driver started\n");
+    }
+    else
+    {
+        ESP_LOGE(TAG, "Failed to start driver\n");
+        return;
+    }
+    twai_reconfigure_alerts_v2(twai_handle, TWAI_ALERT_RX_QUEUE_FULL, NULL);
+    xSemaphoreGive(rx_sem);
+    xTaskCreatePinnedToCore(CAN::rx_task_wrapper, "CAN_rx", 4096, this, configMAX_PRIORITIES - 20, &rxTaskHandle, 1);
+
+}
+
 void CAN::begin()
 {
     xSemaphoreGive(rx_sem); // you have to give the semaphore on startup lol
@@ -73,7 +110,7 @@ void CAN::begin()
             ESP_LOGE(TAG, "failed to start CAN TxTimer\n");
         }
     }
-    xTaskCreatePinnedToCore(CAN::rx_task_wrapper, "CAN_rx", 4096, this, configMAX_PRIORITIES - 20, nullptr, 1);
+    xTaskCreatePinnedToCore(CAN::rx_task_wrapper, "CAN_rx", 4096, this, configMAX_PRIORITIES - 20, &rxTaskHandle, 1);
 }
 
 void CAN::rx_task_wrapper(void *arg)
@@ -221,6 +258,7 @@ void CAN::tx_CallBack()
             }
         }
     }
+    
     // 1000ms messages
     if (txCallBackCounter % 100 == 0)
     {
@@ -252,4 +290,5 @@ void CAN::tx_CallBack()
             }
         }
     }
+
 }

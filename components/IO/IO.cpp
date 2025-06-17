@@ -1,11 +1,25 @@
 #include "IO.h"
 #include "esp_log.h"
 static const char *TAG = "IO"; // Used for ESP_LOGx commands. See ESP-IDF Documentation
+#define ESP_INTR_FLAG_DEFAULT 0
 
 IO* IO::instancePtr = nullptr;
 SemaphoreHandle_t IO::mutex = xSemaphoreCreateMutex();
 TLA2518* IO::adc1_handle = nullptr;
 TLA2518* IO::adc2_handle = nullptr;
+volatile uint64_t IO::left_wheel_tick = 0;
+volatile uint64_t IO::right_wheel_tick = 0;
+
+static void IRAM_ATTR gpio_isr_handler(void* arg)
+{
+    uint32_t gpio_num = (uint32_t) arg;
+    if(gpio_num == ECU_11_IO2){
+      IO::left_wheel_tick++;
+    }
+    else if(gpio_num == ECU_12_IO3){
+      IO::right_wheel_tick++;
+    }
+}
 
 IO::IO()
 {
@@ -24,9 +38,14 @@ IO::IO()
     io_conf.pin_bit_mask = (1ULL<<ECU_TEST) | (1ULL<<ECU_10_IO1) | (1ULL<<ECU_11_IO2) | (1ULL<<ECU_12_IO3) | (1ULL<<ECU_SELECT);
     io_conf.pull_down_en = GPIO_PULLDOWN_DISABLE;
     io_conf.pull_up_en = GPIO_PULLUP_DISABLE;
+    io_conf.intr_type = GPIO_INTR_NEGEDGE;
     gpio_config(&io_conf);
 
-
+    gpio_install_isr_service(ESP_INTR_FLAG_DEFAULT);
+    //hook isr handler for specific gpio pin
+    gpio_isr_handler_add((gpio_num_t) ECU_11_IO2, gpio_isr_handler, (void*) ECU_11_IO2);
+    //hook isr handler for specific gpio pin
+    gpio_isr_handler_add((gpio_num_t) ECU_12_IO3, gpio_isr_handler, (void*) ECU_12_IO3);
     
     setupSPI();
     setupI2C();
@@ -142,4 +161,13 @@ float IO::getGyroY(){
 
 float IO::getGyroZ(){
   return imu_handle->getGyroZ();
+}
+
+float IO::getLeftWheelSpeed()
+{
+  return 0.0f;
+}
+float IO::getRightWheelSpeed()
+{
+  return 0.0f;
 }

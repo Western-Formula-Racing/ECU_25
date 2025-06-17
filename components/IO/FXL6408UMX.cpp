@@ -15,6 +15,8 @@ FXL6408UMX::FXL6408UMX(i2c_master_bus_handle_t busHandle){
   //remove high-z state
   uint8_t tx2[2] = {0x7,0x0};
   i2c_master_transmit(i2c_devHandle,tx2,sizeof(tx2),-1);
+  // turn them all off
+  outputStatus = 0;
 }
 
 void FXL6408UMX::test(){

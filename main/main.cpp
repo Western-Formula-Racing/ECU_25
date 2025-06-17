@@ -22,7 +22,6 @@
 
 static const char* TAG = "Main"; //Used for ESP_LOGx commands. See ESP-IDF Documentation
 CAN can0{GPIO_NUM_16, GPIO_NUM_15, TWAI_MODE_NORMAL};
-
 const char* get_twai_error_state_text(twai_status_info_t* status)
 {
     if (status->state == TWAI_STATE_STOPPED) return "Stopped";
@@ -32,7 +31,7 @@ const char* get_twai_error_state_text(twai_status_info_t* status)
         } else if (status->tx_error_counter > 0 || status->rx_error_counter > 0) {
             return "Error-Active (with some errors)";
         } else {
-            return "Error-Active (no errors)";
+            return "Active (no errors)";
         }
     } else {
         return "Unknown";
@@ -41,13 +40,14 @@ const char* get_twai_error_state_text(twai_status_info_t* status)
 // must extern C since this gets called by a C file for freeRTOS
 extern "C" void app_main(void)
 {
-    vTaskDelay(pdMS_TO_TICKS(5000));
+    vTaskDelay(pdMS_TO_TICKS(2000));
     ESP_LOGI(TAG, "Main Has begun");
-    can0.begin();
+    can0.begin();// this may cause an issue when the 2 ecus briefly send the same messages at the same time
     
     if(IO::Get()->digitalRead(ECU_SELECT)){
         //Front ECU
         printf("FRONT ECU SELECTED!\n");
+        CAN_Tx_1000ms_IDs.clear();
         xTaskCreatePinnedToCore(StateMachine::StateMachineLoop, "StateMachineLoop", 4096, NULL, configMAX_PRIORITIES - 1, nullptr, 1);
     }
     else{
@@ -66,11 +66,23 @@ extern "C" void app_main(void)
         twai_status_info_t status;
         esp_err_t ret = twai_get_status_info(&status);
         if (ret == ESP_OK) {
+            printf("restart counter: %d\n", can0.restart_counter);
             printf("TWAI state: %s | TX errors: %ld | RX errors: %ld | Bus Errors: %ld\n",
                    get_twai_error_state_text(&status),
                    status.tx_error_counter,
                    status.rx_error_counter,
                    status.bus_error_count);
+            if(status.state == TWAI_STATE_STOPPED  || status.state == TWAI_STATE_BUS_OFF){
+                printf("attempting bus recovery...\n");
+                if(twai_initiate_recovery()==ESP_OK){
+                    printf("recovery started\n");
+                }
+                else{
+                    printf("failed to recover bus, hard resetting");
+                    can0.restart(GPIO_NUM_16, GPIO_NUM_15, TWAI_MODE_NORMAL);
+                    can0.restart_counter++;
+                }
+            }
         } else {
             printf("Failed to get TWAI status: %s\n", esp_err_to_name(ret));
         }

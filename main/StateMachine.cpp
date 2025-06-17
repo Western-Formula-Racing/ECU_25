@@ -5,6 +5,11 @@ int64_t rtd_start_time;
 float throttle;
 float brake_pressure;
 int rtd_button;
+uint64_t last_right_tick;
+uint64_t last_left_tick;
+uint64_t last_tick_time;
+float right_rpm;
+float left_rpm;
 BMS::STATE pack_status;
 nvs_handle_t nvs_storage_handle;
 static const char *TAG = "State Machine"; // Used for ESP_LOGx commands. See ESP-IDF Documentation
@@ -56,7 +61,7 @@ State StateMachine::handle_precharge_ok()
     State nextState = PRECHARGE_OK;
     Inverter::Get()->Disable();
     IO::Get()->HSDWrite(ECU_39_HSD3, false);
-    if (pack_status == BMS::ACTIVE && rtd_button && (brake_pressure >= BRAKE_THRESHOLD))
+    if (pack_status == BMS::ACTIVE && rtd_button && (brake_pressure >= BRAKE_RTD_THRESHOLD))
     {
         rtd_start_time = esp_timer_get_time() / 1000;
         nextState = STARTUP_DELAY;
@@ -108,7 +113,13 @@ State StateMachine::handle_drive()
     else if (pack_status == BMS::ACTIVE)
     {
         nextState = DRIVE;
-        Inverter::Get()->SetTorqueRequest(throttle);
+        if(throttle>=0.05){
+            Inverter::Get()->SetTorqueRequest(throttle-0.05);
+        }
+        else{
+            Inverter::Get()->SetTorqueRequest(0);
+        }
+        
     }
 
     return nextState;
@@ -140,14 +151,14 @@ void StateMachine::StateMachineLoop(void *)
     State state = START;
 
     setupAppsCalibration();
-
+    uint64_t current_time = 0;
     for (;;)
     {
         // anything that runs in all state's should go here
         // Sensors checked in all states:
         Sensors::Get()->poll_sensors();
         checkNewAppsCalibration();
-        
+
         Accel_X_ID2024.set(IO::Get()->getAccelX());
         Accel_Y_ID2024.set(IO::Get()->getAccelY());
         Accel_Z_ID2024.set(IO::Get()->getAccelZ());
@@ -159,6 +170,16 @@ void StateMachine::StateMachineLoop(void *)
         throttle = Pedals::Get()->getThrottle();
         brake_pressure = Pedals::Get()->getBrakePressure();
         State_ID2002.set(state);
+        // calculate wheel RPM
+        // current_time = esp_timer_get_time();
+        // right_rpm = (IO::right_wheel_tick - last_right_tick);
+        // left_rpm = (IO::left_wheel_tick - last_left_tick);
+        // right_rpm = (IO::right_wheel_tick - last_right_tick)/(4*6*(100000000000)*(current_time - last_tick_time));
+        // left_rpm = (IO::left_wheel_tick - last_left_tick)/(4*6*(100000000000)*(current_time - last_tick_time));
+        // printf(">deltaT:%lld\n",(4*6*(100000000000)*(current_time - last_tick_time)));
+        // last_left_tick = IO::left_wheel_tick;
+        // last_right_tick = IO::right_wheel_tick;
+        // last_tick_time = current_time;
 
         printf(">packStatus:%d\n", pack_status);
         printf(">state:%d\n", state);
@@ -171,9 +192,16 @@ void StateMachine::StateMachineLoop(void *)
         printf(">gyro_x:%.2f\n", IO::Get()->getGyroX());
         printf(">gyro_y:%.2f\n", IO::Get()->getGyroY());
         printf(">gyro_z:%.2f\n", IO::Get()->getGyroZ());
-        
+        printf(">rightWheel_tick:%lld\n", IO::right_wheel_tick);
+        printf(">leftWheel_tick:%lld\n", IO::left_wheel_tick);
+        printf(">rightWheel_rpm:%.4f\n", right_rpm);
+        printf(">leftWheel_rpm:%.4f\n", left_rpm);
+
+        Front_Left_Ticker_ID2028.set(IO::Get()->right_wheel_tick);
+        Front_Right_Ticker_ID2029.set(IO::Get()->left_wheel_tick);
+
         Throttle_ID2002.set(throttle);
-        Brake_Percent_ID2002.set(brake_pressure/BRAKES_MAX);
+        Brake_Percent_ID2002.set(brake_pressure / BRAKES_MAX);
         // lights
         IO::Get()->HSDWrite(ECU_48_HSD6, false);
         if (Pedals::Get()->getBrakePressure() >= BRAKE_LIGHT_THRESHOLD)
@@ -188,9 +216,14 @@ void StateMachine::StateMachineLoop(void *)
         printf(">AMS_light:%d\n", !AMSRelay_ID1056.get_bool());
         IO::Get()->HSDWrite(ECU_41_HSD5, !IMDRelay_ID1056.get_bool());
         IO::Get()->HSDWrite(ECU_40_HSD4, !AMSRelay_ID1056.get_bool());
-        IO::Get()->HSDWrite(ECU_37_HSD1, true);
-        IO::Get()->HSDWrite(ECU_38_HSD2, true);
-        IO::Get()->HSDWrite(ECU_39_HSD3, true);
+        if(pack_status == BMS::ACTIVE or pack_status == BMS::PRECHARGE_START or pack_status == BMS::PRECHARGING){
+            IO::Get()->HSDWrite(ECU_38_HSD2, true);
+        }
+        else{
+            IO::Get()->HSDWrite(ECU_38_HSD2, false);
+        }
+        
+    
         state = states[state]();
         vTaskDelay(pdMS_TO_TICKS(10));
     }
@@ -305,7 +338,8 @@ void StateMachine::checkNewAppsCalibration()
         Pedals::Get()->updateAppsCalibration(app1_min, app1_max, app2_min, app2_max);
     }
 
-    if(set_min_ID2023.get_bool()){
+    if (set_min_ID2023.get_bool())
+    {
         app1_min = Pedals::Get()->get_apps1_voltage();
         app2_min = Pedals::Get()->get_apps2_voltage();
         Pedals::Get()->set_min(app1_min, app2_min);
@@ -316,7 +350,8 @@ void StateMachine::checkNewAppsCalibration()
         ESP_LOGW(TAG, "app2_min = %.2f", app1_min);
         printf((err != ESP_OK) ? "Failed!\n" : "Done\n");
     }
-    else if(set_max_ID2023.get_bool()){
+    else if (set_max_ID2023.get_bool())
+    {
         app1_max = Pedals::Get()->get_apps1_voltage();
         app2_max = Pedals::Get()->get_apps2_voltage();
         Pedals::Get()->set_max(app1_max, app2_max);
@@ -326,6 +361,5 @@ void StateMachine::checkNewAppsCalibration()
         err = nvs_set_u16(nvs_storage_handle, "app2_stored_max", static_cast<uint16_t>(app2_max * 100.0f));
         printf("app2_max = %.2f", app2_max);
         printf((err != ESP_OK) ? "Failed!\n" : "Done\n");
-
     }
 }
