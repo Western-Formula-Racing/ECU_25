@@ -113,7 +113,13 @@ State StateMachine::handle_drive()
     else if (pack_status == BMS::ACTIVE)
     {
         nextState = DRIVE;
-        Inverter::Get()->SetTorqueRequest(throttle);
+        if(throttle>=0.05){
+            Inverter::Get()->SetTorqueRequest(throttle-0.05);
+        }
+        else{
+            Inverter::Get()->SetTorqueRequest(0);
+        }
+        
     }
 
     return nextState;
@@ -213,7 +219,10 @@ void StateMachine::StateMachineLoop(void *)
         if(pack_status == BMS::ACTIVE or pack_status == BMS::PRECHARGE_START or pack_status == BMS::PRECHARGING){
             IO::Get()->HSDWrite(ECU_38_HSD2, true);
         }
-        IO::Get()->HSDWrite(ECU_38_HSD2, false);
+        else{
+            IO::Get()->HSDWrite(ECU_38_HSD2, false);
+        }
+        
     
         state = states[state]();
         vTaskDelay(pdMS_TO_TICKS(10));

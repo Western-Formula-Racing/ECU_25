@@ -42,7 +42,7 @@ extern "C" void app_main(void)
 {
     vTaskDelay(pdMS_TO_TICKS(2000));
     ESP_LOGI(TAG, "Main Has begun");
-    can0.begin();
+    can0.begin();// this may cause an issue when the 2 ecus briefly send the same messages at the same time
     
     if(IO::Get()->digitalRead(ECU_SELECT)){
         //Front ECU
