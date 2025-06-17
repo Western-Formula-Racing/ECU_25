@@ -224,7 +224,7 @@ void StateMachine::StateMachineLoop(void *)
             IO::Get()->HSDWrite(ECU_38_HSD2, false);
         }
         
-        if(((esp_timer_get_time() / 1000) - startup_time) >= 3000){
+        if(((esp_timer_get_time() / 1000) - startup_time) >= 10){
             HSD4_ID2012.set(true);
         }
         state = states[state]();
