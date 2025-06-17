@@ -152,6 +152,7 @@ void StateMachine::StateMachineLoop(void *)
 
     setupAppsCalibration();
     uint64_t current_time = 0;
+    int64_t startup_time = esp_timer_get_time() / 1000;
     for (;;)
     {
         // anything that runs in all state's should go here
@@ -223,7 +224,7 @@ void StateMachine::StateMachineLoop(void *)
             IO::Get()->HSDWrite(ECU_38_HSD2, false);
         }
         
-        if(pack_status == BMS::ACTIVE){
+        if(((esp_timer_get_time() / 1000) - startup_time) >= 3000){
             HSD4_ID2012.set(true);
         }
         state = states[state]();
