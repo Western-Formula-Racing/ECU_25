@@ -223,7 +223,9 @@ void StateMachine::StateMachineLoop(void *)
             IO::Get()->HSDWrite(ECU_38_HSD2, false);
         }
         
-    
+        if(pack_status == BMS::ACTIVE){
+            HSD4_ID2012.set(true);
+        }
         state = states[state]();
         vTaskDelay(pdMS_TO_TICKS(10));
     }
