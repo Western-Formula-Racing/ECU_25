@@ -151,8 +151,10 @@ void StateMachine::StateMachineLoop(void *)
     State state = START;
 
     setupAppsCalibration();
-    uint64_t current_time = 0;
     int64_t startup_time = esp_timer_get_time() / 1000;
+    //tssi enable
+    HSD3_ID2012.set(true);
+    HSD4_ID2012.set(true);
     for (;;)
     {
         // anything that runs in all state's should go here
@@ -215,18 +217,29 @@ void StateMachine::StateMachineLoop(void *)
         }
         printf(">IMD_light:%d\n", !IMDRelay_ID1056.get_bool());
         printf(">AMS_light:%d\n", !AMSRelay_ID1056.get_bool());
-        IO::Get()->HSDWrite(ECU_41_HSD5, !IMDRelay_ID1056.get_bool());
-        IO::Get()->HSDWrite(ECU_40_HSD4, !AMSRelay_ID1056.get_bool());
+        
+        
         if(pack_status == BMS::ACTIVE or pack_status == BMS::PRECHARGE_START or pack_status == BMS::PRECHARGING){
             IO::Get()->HSDWrite(ECU_38_HSD2, true);
         }
         else{
             IO::Get()->HSDWrite(ECU_38_HSD2, false);
+            HSD3_ID2012.set(false);
         }
         
-        if(((esp_timer_get_time() / 1000) - startup_time) >= 3000){
-            HSD4_ID2012.set(true);
+        if(((esp_timer_get_time() / 1000) - startup_time) >= 1000){
+            if (!IMDRelay_ID1056.get_bool()){
+                IO::Get()->HSDWrite(ECU_41_HSD5, true);
+                IO::Get()->HSDWrite(ECU_40_HSD4, !AMSRelay_ID1056.get_bool());
+             }
+             if(pack_status == BMS::FAULT ||!IMDRelay_ID1056.get_bool() ){
+                //flash TSSI red >: (
+                HSD3_ID2012.set(false);
+             }
         }
+
+
+        
         state = states[state]();
         vTaskDelay(pdMS_TO_TICKS(10));
     }
