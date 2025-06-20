@@ -61,7 +61,7 @@ State StateMachine::handle_precharge_ok()
     State nextState = PRECHARGE_OK;
     Inverter::Get()->Disable();
     IO::Get()->HSDWrite(ECU_39_HSD3, false);
-    if (pack_status == BMS::ACTIVE && rtd_button && (brake_pressure >= BRAKE_RTD_THRESHOLD))
+    if (MinCellVoltage_ID1057.get_float() >= 2.8f && MaxCellVoltage_ID1057.get_float() <= 4.2f && pack_status == BMS::ACTIVE && rtd_button && (brake_pressure >= BRAKE_RTD_THRESHOLD))
     {
         rtd_start_time = esp_timer_get_time() / 1000;
         nextState = STARTUP_DELAY;
@@ -121,7 +121,9 @@ State StateMachine::handle_drive()
         }
         
     }
-
+    if (MinCellVoltage_ID1057.get_float() <= 2.1f){
+        nextState = START;
+    }
     return nextState;
 }
 State StateMachine::handle_precharge_error()
@@ -155,6 +157,7 @@ void StateMachine::StateMachineLoop(void *)
     //tssi enable
     HSD3_ID2012.set(true);
     HSD4_ID2012.set(true);
+    bool tssi_latch = false;
     for (;;)
     {
         // anything that runs in all state's should go here
@@ -197,8 +200,8 @@ void StateMachine::StateMachineLoop(void *)
         printf(">gyro_z:%.2f\n", IO::Get()->getGyroZ());
         printf(">rightWheel_tick:%lld\n", IO::right_wheel_tick);
         printf(">leftWheel_tick:%lld\n", IO::left_wheel_tick);
-        printf(">rightWheel_rpm:%.4f\n", right_rpm);
-        printf(">leftWheel_rpm:%.4f\n", left_rpm);
+        printf(">minCellVoltage:%.2f\n", MinCellVoltage_ID1057.get_float());
+        printf(">maxCellVoltage:%.2f\n", MaxCellVoltage_ID1057.get_float());
 
         Front_Left_Ticker_ID2028.set(IO::Get()->right_wheel_tick);
         Front_Right_Ticker_ID2029.set(IO::Get()->left_wheel_tick);
@@ -207,6 +210,7 @@ void StateMachine::StateMachineLoop(void *)
         Brake_Percent_ID2002.set(brake_pressure / BRAKES_MAX);
         // lights
         IO::Get()->HSDWrite(ECU_48_HSD6, false);
+        HSD4_ID2012.set(true);
         if (Pedals::Get()->getBrakePressure() >= BRAKE_LIGHT_THRESHOLD)
         {
             HSD5_ID2012.set(true);
@@ -217,6 +221,7 @@ void StateMachine::StateMachineLoop(void *)
         }
         printf(">IMD_light:%d\n", !IMDRelay_ID1056.get_bool());
         printf(">AMS_light:%d\n", !AMSRelay_ID1056.get_bool());
+        printf(">tssi_latch:%d\n", tssi_latch);
         
         
         if(pack_status == BMS::ACTIVE or pack_status == BMS::PRECHARGE_START or pack_status == BMS::PRECHARGING){
@@ -224,18 +229,27 @@ void StateMachine::StateMachineLoop(void *)
         }
         else{
             IO::Get()->HSDWrite(ECU_38_HSD2, false);
-            HSD3_ID2012.set(false);
+            // HSD3_ID2012.set(false);
         }
         
-        if(((esp_timer_get_time() / 1000) - startup_time) >= 1000){
+        if(((esp_timer_get_time() / 1000) - startup_time) >= 3000){
             if (!IMDRelay_ID1056.get_bool()){
                 IO::Get()->HSDWrite(ECU_41_HSD5, true);
-                IO::Get()->HSDWrite(ECU_40_HSD4, !AMSRelay_ID1056.get_bool());
              }
-             if(pack_status == BMS::FAULT ||!IMDRelay_ID1056.get_bool() ){
+             IO::Get()->HSDWrite(ECU_40_HSD4, !AMSRelay_ID1056.get_bool());
+             if(!IMDRelay_ID1056.get_bool()){
                 //flash TSSI red >: (
-                HSD3_ID2012.set(false);
+                tssi_latch = true;
              }
+             if(MaxTemp_ID1057.get_float() > 60){
+                tssi_latch = true;
+             }
+        }
+        if(!tssi_latch){
+            HSD3_ID2012.set(true);
+        }
+        else{
+            HSD3_ID2012.set(false);
         }
 
 
