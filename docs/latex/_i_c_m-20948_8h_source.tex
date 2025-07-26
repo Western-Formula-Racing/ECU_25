@@ -1,0 +1,85 @@
+\doxysection{ICM-\/20948.h}
+\hypertarget{_i_c_m-20948_8h_source}{}\label{_i_c_m-20948_8h_source}\index{ECU\_25/components/IO/ICM-\/20948.h@{ECU\_25/components/IO/ICM-\/20948.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/**************************}}
+\DoxyCodeLine{00002\ \textcolor{comment}{*\ }}
+\DoxyCodeLine{00003\ \textcolor{comment}{*\ Driver\ for\ the\ icm-\/20948\ 9-\/axis\ IMU}}
+\DoxyCodeLine{00004\ \textcolor{comment}{*\ https://invensense.tdk.com/products/motion-\/tracking/9-\/axis/icm-\/20948/\ }}
+\DoxyCodeLine{00005\ \textcolor{comment}{*}}
+\DoxyCodeLine{00006\ \textcolor{comment}{*}}
+\DoxyCodeLine{00007\ \textcolor{comment}{*\ TODO:\ }}
+\DoxyCodeLine{00008\ \textcolor{comment}{*\ figure\ out\ magnetometer\ reading,\ currently\ does\ not\ work}}
+\DoxyCodeLine{00009\ \textcolor{comment}{*}}
+\DoxyCodeLine{00010\ \textcolor{comment}{***************************/}\ }
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ "{}driver/spi\_master.h"{}}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ "{}PinMap.h"{}}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{comment}{//User\ Bank\ 1}}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#define\ ICM\_USER\_CTRL\ \ \ \ \ 0x3}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#define\ ICM\_LP\_CONFIG\ \ \ \ \ 0x5}}
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{\#define\ ICM\_PWR\_MGMT\_1\ \ \ \ 0x6}}
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\#define\ ICM\_PWR\_MGMT\_2\ \ \ \ 0x7}}
+\DoxyCodeLine{00021\ \textcolor{preprocessor}{\#define\ ICM\_ACCEL\_XOUT\_H\ \ 0x2D}}
+\DoxyCodeLine{00022\ \textcolor{preprocessor}{\#define\ ICM\_ACCEL\_XOUT\_L\ \ 0x2E}}
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\#define\ ICM\_ACCEL\_YOUT\_H\ \ 0x2F}}
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#define\ ICM\_ACCEL\_YOUT\_L\ \ 0x30}}
+\DoxyCodeLine{00025\ \textcolor{preprocessor}{\#define\ ICM\_ACCEL\_ZOUT\_H\ \ 0x31}}
+\DoxyCodeLine{00026\ \textcolor{preprocessor}{\#define\ ICM\_ACCEL\_ZOUT\_L\ \ 0x32}}
+\DoxyCodeLine{00027\ \textcolor{preprocessor}{\#define\ ICM\_GYRO\_XOUT\_H\ \ \ 0x33}}
+\DoxyCodeLine{00028\ \textcolor{preprocessor}{\#define\ ICM\_GYRO\_XOUT\_L\ \ \ 0x34}}
+\DoxyCodeLine{00029\ \textcolor{preprocessor}{\#define\ ICM\_GYRO\_YOUT\_H\ \ \ 0x35}}
+\DoxyCodeLine{00030\ \textcolor{preprocessor}{\#define\ ICM\_GYRO\_YOUT\_L\ \ \ 0x36}}
+\DoxyCodeLine{00031\ \textcolor{preprocessor}{\#define\ ICM\_GYRO\_ZOUT\_H\ \ \ 0x37}}
+\DoxyCodeLine{00032\ \textcolor{preprocessor}{\#define\ ICM\_GYRO\_ZOUT\_L\ \ \ 0x38}}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \textcolor{preprocessor}{\#define\ ICM\_EXT\_SLV\_SENS\_DATA\_00\ 0x3B}}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \textcolor{comment}{//User\ bank\ 2}}
+\DoxyCodeLine{00037\ \textcolor{preprocessor}{\#define\ ICM\_ACCEL\_CONFIG\ \ 0x14}}
+\DoxyCodeLine{00038\ \textcolor{preprocessor}{\#define\ ICM\_GYRO\_CONFIG\ \ \ 0x1}}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \textcolor{comment}{//user\ bank\ 3}}
+\DoxyCodeLine{00041\ \textcolor{preprocessor}{\#define\ ICM\_I2C\_MST\_ODR\_CONFIG\ \ 0x0}}
+\DoxyCodeLine{00042\ \textcolor{preprocessor}{\#define\ ICM\_I2C\_MST\_CTRL\ \ \ \ 0x1}}
+\DoxyCodeLine{00043\ \textcolor{preprocessor}{\#define\ ICM\_I2C\_SLV0\_ADDR\ \ \ 0x3}}
+\DoxyCodeLine{00044\ \textcolor{preprocessor}{\#define\ ICM\_I2C\_SLV0\_REG\ \ \ \ 0x4}}
+\DoxyCodeLine{00045\ \textcolor{preprocessor}{\#define\ ICM\_I2C\_SLV0\_CTRL\ \ \ 0x5}}
+\DoxyCodeLine{00046\ \textcolor{preprocessor}{\#define\ ICM\_I2C\_SLV0\_D0\ \ \ \ \ 0x6}}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ \textcolor{comment}{//magnetometer\ registers}}
+\DoxyCodeLine{00049\ \textcolor{preprocessor}{\#define\ MAG\_HXL\ \ \ 0x11}}
+\DoxyCodeLine{00050\ \textcolor{preprocessor}{\#define\ MAG\_CTRL2\ 0x31}}
+\DoxyCodeLine{00051\ \textcolor{preprocessor}{\#define\ MAG\_CTRL3\ 0x32}}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00054\ \textcolor{keyword}{class\ }ICM20948\{}
+\DoxyCodeLine{00055\ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00057\ \ \ spi\_device\_handle\_t\ imuHandle;}
+\DoxyCodeLine{00058\ \ \ spi\_device\_interface\_config\_t\ imuConfig;}
+\DoxyCodeLine{00059\ \ \ }
+\DoxyCodeLine{00060\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00062\ \ \ uint8\_t\ accelScale\ =\ 1;\ \textcolor{comment}{//\ (0,1,2,3)\ =>\ +-\/(2g,4g,8g,16g)}}
+\DoxyCodeLine{00063\ \ \ uint8\_t\ gyroScale\ =\ 0;\ \ \textcolor{comment}{//\ (0,1,2,3)\ =>\ +-\/(250,500,1000,2000)dps}}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00065\ \ \ ICM20948(spi\_host\_device\_t\ spiHost,\ \textcolor{keywordtype}{int}\ cs\_pin);}
+\DoxyCodeLine{00066\ \ \ \textcolor{keywordtype}{void}\ selfTest();}
+\DoxyCodeLine{00067\ \ \ uint8\_t\ readRegister(uint8\_t\ bank,\ uint8\_t\ addr);}
+\DoxyCodeLine{00068\ \ \ \textcolor{keywordtype}{void}\ writeRegister(uint8\_t\ bank,\ uint8\_t\ addr,uint8\_t\ data);}
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00070\ \ \ \textcolor{comment}{//void\ writeMagnetometer(uint8\_t\ addr,\ uint8\_t\ data);}}
+\DoxyCodeLine{00071\ \ \ \textcolor{comment}{//void\ readMagnetometer(uint8\_t\ addr,uint8\_t\ len);}}
+\DoxyCodeLine{00072\ }
+\DoxyCodeLine{00073\ \ \ \textcolor{keywordtype}{double}\ getAccelX();}
+\DoxyCodeLine{00074\ \ \ \textcolor{keywordtype}{double}\ getAccelY();}
+\DoxyCodeLine{00075\ \ \ \textcolor{keywordtype}{double}\ getAccelZ();}
+\DoxyCodeLine{00076\ \ \ \textcolor{keywordtype}{double}\ getGyroX();}
+\DoxyCodeLine{00077\ \ \ \textcolor{keywordtype}{double}\ getGyroY();}
+\DoxyCodeLine{00078\ \ \ \textcolor{keywordtype}{double}\ getGyroZ();}
+\DoxyCodeLine{00079\ \};}
+
+\end{DoxyCode}

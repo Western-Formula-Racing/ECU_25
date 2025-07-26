@@ -1,0 +1,117 @@
+\doxysection{Option.\+h}
+\hypertarget{_option_8h_source}{}\label{_option_8h_source}\index{ECU\_25/components/GUI/Option.h@{ECU\_25/components/GUI/Option.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ \_Option\_}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ \_Option\_}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}Recievable.h"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <cstring>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <stdio.h>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <typeinfo>}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <type\_traits>}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#define\ OPTION\_BUFFER\_SIZE\ 300}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{comment}{//\ While\ there\ is\ a\ template\ here\ only\ int,\ float\ and\ string\ are\ supported}}
+\DoxyCodeLine{00013\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{00014\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_option_a6b19727883a1b8ddf6cbc26375658671}{Option}}\ :\ \textcolor{keyword}{public}\ Recievable<T>}
+\DoxyCodeLine{00015\ \{}
+\DoxyCodeLine{00016\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00017\ \ \ \ \ T\ value;}
+\DoxyCodeLine{00018\ \ \ \ \ T\ default\_value;}
+\DoxyCodeLine{00019\ \ \ \ \ std::vector<T>\ options;}
+\DoxyCodeLine{00020\ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keywordtype}{char}*\ buffer;}
+\DoxyCodeLine{00022\ \ \ \ \ }
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keywordtype}{char}*\ allocate\_buffer()\ \{}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}[]\ buffer;}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ size\ =\ OPTION\_BUFFER\_SIZE\ *\ options.size()\ +\ 30;}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ buffer\ =\ \textcolor{keyword}{new}\ \textcolor{keywordtype}{char}[size];}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ memset(buffer,\ 0,\ size);}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ buffer;}
+\DoxyCodeLine{00029\ \ \ \ \ \}}
+\DoxyCodeLine{00030\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{comment}{//\ Constructor}}
+\DoxyCodeLine{00036\ \ \ \ \ \mbox{\hyperlink{class_option_a6b19727883a1b8ddf6cbc26375658671}{Option}}(\textcolor{keyword}{const}\ std::vector<T>\ options)\ }
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ :\ Recievable<T>(options.at(0)),}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \ \ value(options.at(0)),\ }
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \ \ default\_value(options.at(0)),\ }
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \ \ options(options),}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \ \ buffer(nullptr)\ \{\};}
+\DoxyCodeLine{00042\ \ \ \ \ }
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{comment}{//\ Constructor}}
+\DoxyCodeLine{00044\ \ \ \ \ \mbox{\hyperlink{class_option_a6b19727883a1b8ddf6cbc26375658671}{Option}}(\textcolor{keyword}{const}\ std::vector<T>\ options,\ \textcolor{keywordtype}{int}\ idx)\ }
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ :\ \mbox{\hyperlink{class_recievable}{Recievable}}<T>(options.at(idx)),}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \ \ value(options.at(idx)),\ }
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \ \ default\_value(options.at(idx)),\ }
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \ \ options(options),\ }
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \ \ buffer(nullptr)\ \{\};}
+\DoxyCodeLine{00050\ \ \ \ \ }
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keywordtype}{char}*\ serialize\_to\_json()}
+\DoxyCodeLine{00052\ \ \ \ \ \{}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{char}*\ buffer\ =\ allocate\_buffer();}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ strcat(buffer,\ \textcolor{stringliteral}{"{}\{\(\backslash\)"{}value\(\backslash\)"{}:\ \{\(\backslash\)"{}value\(\backslash\)"{}:"{}});}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ first\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00057\ \ \ \ \ }
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ value\_buffer\_size\ =\ 30;}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{char}\ value\_buffer[value\_buffer\_size];}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ memset(value\_buffer,\ 0,\ value\_buffer\_size);}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}\ (std::is\_same<T,\ int>::value)}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \ \ \ \ snprintf(value\_buffer,\ value\_buffer\_size,\ \textcolor{stringliteral}{"{}\%d,\ \(\backslash\)"{}options\(\backslash\)"{}:\ ["{}},\ value);}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \ \ \ \ strcat(buffer,\ value\_buffer);}
+\DoxyCodeLine{00065\ \ \ \ \ }
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (T\ option\ :\ options)}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!first)\ \{}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ strcat(buffer,\ \textcolor{stringliteral}{"{},"{}});}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ first\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ snprintf(value\_buffer,\ value\_buffer\_size,\ \textcolor{stringliteral}{"{}\%d"{}},\ option);}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ strcat(buffer,\ value\_buffer);}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00075\ \ \ \ \ }
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \ \ \ \ strcat(buffer,\ \textcolor{stringliteral}{"{}]\},\(\backslash\)"{}type\(\backslash\)"{}:\(\backslash\)"{}recievable>option>int\(\backslash\)"{}\}"{}});}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}\ (std::is\_same<T,\ float>::value\ ||\ std::is\_same<T,\ double>::value)}
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \ \ \ \ snprintf(value\_buffer,\ value\_buffer\_size,\ \textcolor{stringliteral}{"{}\%.5f,\ \(\backslash\)"{}options\(\backslash\)"{}:\ ["{}},\ value);}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \ \ \ \ strcat(buffer,\ value\_buffer);}
+\DoxyCodeLine{00081\ \ \ \ \ }
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (T\ option\ :\ options)}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!first)\ \{}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ strcat(buffer,\ \textcolor{stringliteral}{"{},"{}});}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ first\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ snprintf(value\_buffer,\ value\_buffer\_size,\ \textcolor{stringliteral}{"{}\%.5f"{}},\ option);}
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ strcat(buffer,\ value\_buffer);}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00091\ \ \ \ \ }
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \ \ \ \ strcat(buffer,\ \textcolor{stringliteral}{"{}]\},\(\backslash\)"{}type\(\backslash\)"{}:\(\backslash\)"{}recievable>option>float\(\backslash\)"{}\}"{}});}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ }
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \ \ \ \ snprintf(value\_buffer,\ value\_buffer\_size,\ \textcolor{stringliteral}{"{}\(\backslash\)"{}\%s\(\backslash\)"{},"{}},\ value);}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ \ \ \ \ strcat(buffer,\ value\_buffer);}
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \ \ \ \ strcat(buffer,\ \textcolor{stringliteral}{"{}\(\backslash\)"{}options\(\backslash\)"{}:\ ["{}});}
+\DoxyCodeLine{00098\ \ \ \ \ }
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (T\ option\ :\ options)}
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!first)\ \{}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ strcat(buffer,\ \textcolor{stringliteral}{"{},"{}});}
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ first\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ snprintf(value\_buffer,\ OPTION\_BUFFER\_SIZE-\/1,\ \textcolor{stringliteral}{"{}\(\backslash\)"{}\%s\(\backslash\)"{}"{}},\ option);}
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ strcat(buffer,\ value\_buffer);}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00108\ \ \ \ \ }
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ \ \ \ \ strcat(buffer,\ \textcolor{stringliteral}{"{}]\},\(\backslash\)"{}type\(\backslash\)"{}:\(\backslash\)"{}recievable>option>string\(\backslash\)"{}\}"{}});}
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \}\ }
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ buffer;}
+\DoxyCodeLine{00112\ \ \ \ \ \}}
+\DoxyCodeLine{00113\ \};}
+\DoxyCodeLine{00114\ }
+\DoxyCodeLine{00115\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

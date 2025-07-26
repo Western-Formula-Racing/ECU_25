@@ -1,0 +1,76 @@
+\doxysection{can\+\_\+helpers.\+hpp}
+\hypertarget{can__helpers_8hpp_source}{}\label{can__helpers_8hpp_source}\index{ECU\_25/components/CAN/can\_helpers.hpp@{ECU\_25/components/CAN/can\_helpers.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <cstring>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00007\ T\ can\_getSignal(\textcolor{keyword}{const}\ uint8\_t\ (\&buf)[8],\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ startBit,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ length,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ isIntel)\ \{}
+\DoxyCodeLine{00008\ \ \ \ \ \textcolor{keyword}{union\ }\{}
+\DoxyCodeLine{00009\ \ \ \ \ \ \ \ \ uint64\_t\ tempVal;}
+\DoxyCodeLine{00010\ \ \ \ \ \ \ \ \ uint8\_t\ tempBuf[8];\ \textcolor{comment}{//\ This\ is\ used\ because\ memcpy\ into\ tempVal\ generates\ less\ optimal\ code}}
+\DoxyCodeLine{00011\ \ \ \ \ \ \ \ \ T\ retVal;}
+\DoxyCodeLine{00012\ \ \ \ \ \};}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \ \ \ \ \textcolor{keyword}{const}\ uint64\_t\ mask\ =\ length\ <\ 64\ ?\ (1ULL\ <<\ length)\ -\/\ 1ULL\ :\ -\/1ULL;}
+\DoxyCodeLine{00015\ \ \ \ \ \textcolor{keyword}{const}\ uint64\_t\ shift\ =\ isIntel\ ?\ startBit\ :\ (56\ -\/\ startBit\ +\ (2\ *\ (startBit\ \%\ 8)));}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \ \ \ \ std::memcpy(tempBuf,\ buf,\ 8);}
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keywordflow}{if}\ (isIntel)\ \{}
+\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ tempVal\ =\ (tempVal\ >>\ shift)\ \&\ mask;}
+\DoxyCodeLine{00020\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ tempVal\ =\ \_\_builtin\_bswap64(tempVal);}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ tempVal\ =\ (tempVal\ >>\ shift)\ \&\ mask;}
+\DoxyCodeLine{00023\ \ \ \ \ \}}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keywordflow}{return}\ retVal;}
+\DoxyCodeLine{00026\ \}}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00029\ \textcolor{keywordtype}{void}\ can\_setSignal(uint8\_t\ (\&buf)[8],\ \textcolor{keyword}{const}\ T\&\ val,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ startBit,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ length,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ isIntel)\ \{}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keyword}{const}\ uint64\_t\ mask\ =\ length\ <\ 64\ ?\ (1ULL\ <<\ length)\ -\/\ 1ULL\ :\ -\/1ULL;}
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keyword}{const}\ uint64\_t\ shift\ =\ isIntel\ ?\ startBit\ :\ (56\ -\/\ startBit\ +\ (2\ *\ (startBit\ \%\ 8)));}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keyword}{union\ }\{}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ uint64\_t\ valAsBits;}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ T\ tempVal;}
+\DoxyCodeLine{00037\ \ \ \ \ \};}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \ \ \ \ tempVal\ =\ val;}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keyword}{union\ }\{}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ uint64\_t\ data;}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ uint8\_t\ tempBuf[8];}
+\DoxyCodeLine{00044\ \ \ \ \ \};}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ \ \ \ \ std::memcpy(tempBuf,\ buf,\ 8);}
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keywordflow}{if}\ (isIntel)\ \{}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ data\ \&=\ \string~(mask\ <<\ shift);}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ data\ |=\ valAsBits\ <<\ shift;}
+\DoxyCodeLine{00050\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ data\ =\ \_\_builtin\_bswap64(data);}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ data\ \&=\ \string~(mask\ <<\ shift);}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ data\ |=\ valAsBits\ <<\ shift;}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ data\ =\ \_\_builtin\_bswap64(data);}
+\DoxyCodeLine{00055\ \ \ \ \ \}}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00057\ \ \ \ \ std::memcpy(buf,\ tempBuf,\ 8);}
+\DoxyCodeLine{00058\ \}}
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00060\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00061\ \textcolor{keywordtype}{float}\ can\_getSignal(\textcolor{keyword}{const}\ uint8\_t\ (\&buf)[8],\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ startBit,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ length,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ isIntel,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ factor,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ offset)\ \{}
+\DoxyCodeLine{00062\ \ \ \ \ T\ retVal\ =\ can\_getSignal<T>(buf,\ startBit,\ length,\ isIntel);}
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keywordflow}{return}\ (retVal\ *\ factor)\ +\ offset;}
+\DoxyCodeLine{00064\ \}}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00066\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00067\ \textcolor{keywordtype}{void}\ can\_setSignal(uint8\_t\ (\&buf)[8],\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\&\ val,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ startBit,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ length,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ isIntel,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ factor,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ offset)\ \{}
+\DoxyCodeLine{00068\ \ \ \ \ T\ scaledVal\ =\ \textcolor{keyword}{static\_cast<}T\textcolor{keyword}{>}((val\ -\/\ offset)\ /\ factor);}
+\DoxyCodeLine{00069\ \ \ \ \ can\_setSignal<T>(buf,\ scaledVal,\ startBit,\ length,\ isIntel);}
+\DoxyCodeLine{00070\ \}}
+
+\end{DoxyCode}

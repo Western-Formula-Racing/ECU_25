@@ -1,0 +1,9 @@
+<map id="ECU_25/components/Devices/BMS.h" name="ECU_25/components/Devices/BMS.h">
+<area shape="rect" id="Node000001" title="Declares the BMS class, defines variables and methods we need to store and/or use from the BMS such a..." alt="" coords="120,5,318,46"/>
+<area shape="rect" id="Node000002" href="$_b_m_s_8cpp.html" title="Handles logic and communicates with the the BMS." alt="" coords="5,94,204,135"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="183,58,132,96,129,91,179,53"/>
+<area shape="rect" id="Node000003" href="$_state_machine_8hpp_source.html" title=" " alt="" coords="228,102,440,127"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="258,53,320,99,317,103,255,57"/>
+<area shape="rect" id="Node000004" href="$main_8cpp.html" title="Main entry point for the ECU firmware." alt="" coords="254,183,414,208"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="336,143,336,182,331,182,331,143"/>
+</map>

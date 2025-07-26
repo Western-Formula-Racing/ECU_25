@@ -1,0 +1,296 @@
+\doxysection{ICM20948 Class Reference}
+\hypertarget{class_i_c_m20948}{}\label{class_i_c_m20948}\index{ICM20948@{ICM20948}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_i_c_m20948_a6dd3c6482cd46161de1db974e3a31106}{ICM20948}} (spi\+\_\+host\+\_\+device\+\_\+t spi\+Host, int cs\+\_\+pin)
+\item 
+void \mbox{\hyperlink{class_i_c_m20948_a2f3f0c39683d74dddeb362f434c271cc}{self\+Test}} ()
+\item 
+uint8\+\_\+t \mbox{\hyperlink{class_i_c_m20948_adf918607ed0000ad2b47914e2f64d10d}{read\+Register}} (uint8\+\_\+t bank, uint8\+\_\+t addr)
+\item 
+void \mbox{\hyperlink{class_i_c_m20948_a9e981f7b7d3eece58f6dcac3b5a70656}{write\+Register}} (uint8\+\_\+t bank, uint8\+\_\+t addr, uint8\+\_\+t data)
+\item 
+double \mbox{\hyperlink{class_i_c_m20948_a9d43bc323255563a0772ed8dcc43c3c6}{get\+AccelX}} ()
+\item 
+double \mbox{\hyperlink{class_i_c_m20948_af7ed8a08eda54b56c748ae87b888f08a}{get\+AccelY}} ()
+\item 
+double \mbox{\hyperlink{class_i_c_m20948_a678d03c26216260cd874c514e2e8bc7e}{get\+AccelZ}} ()
+\item 
+double \mbox{\hyperlink{class_i_c_m20948_ab724d3faa58ef7c80b6231b8f316106f}{get\+GyroX}} ()
+\item 
+double \mbox{\hyperlink{class_i_c_m20948_a29cce1d3fb6fe11dff21e49d14f5fdfb}{get\+GyroY}} ()
+\item 
+double \mbox{\hyperlink{class_i_c_m20948_a50183b050d54379f6c6417f13d74296c}{get\+GyroZ}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_i_c_m20948_adbcf1a13ced55ea71fe40f88997828ba}\label{class_i_c_m20948_adbcf1a13ced55ea71fe40f88997828ba} 
+uint8\+\_\+t {\bfseries accel\+Scale} = 1
+\item 
+\Hypertarget{class_i_c_m20948_a886bc202ed33be2721a97292b99a69b3}\label{class_i_c_m20948_a886bc202ed33be2721a97292b99a69b3} 
+uint8\+\_\+t {\bfseries gyro\+Scale} = 0
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_i_c_m20948_ad7da52b6b6082cb64e7cd6d9ef41aa17}\label{class_i_c_m20948_ad7da52b6b6082cb64e7cd6d9ef41aa17} 
+spi\+\_\+device\+\_\+handle\+\_\+t {\bfseries imu\+Handle}
+\item 
+\Hypertarget{class_i_c_m20948_ab61f17f987be254daae80969c9e43a15}\label{class_i_c_m20948_ab61f17f987be254daae80969c9e43a15} 
+spi\+\_\+device\+\_\+interface\+\_\+config\+\_\+t {\bfseries imu\+Config}
+\end{DoxyCompactItemize}
+
+
+\label{doc-constructors}
+\Hypertarget{class_i_c_m20948_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_i_c_m20948_a6dd3c6482cd46161de1db974e3a31106}\index{ICM20948@{ICM20948}!ICM20948@{ICM20948}}
+\index{ICM20948@{ICM20948}!ICM20948@{ICM20948}}
+\doxysubsubsection{\texorpdfstring{ICM20948()}{ICM20948()}}
+{\footnotesize\ttfamily \label{class_i_c_m20948_a6dd3c6482cd46161de1db974e3a31106} 
+ICM20948\+::\+ICM20948 (\begin{DoxyParamCaption}\item[{spi\+\_\+host\+\_\+device\+\_\+t}]{spi\+Host}{, }\item[{int}]{cs\+\_\+pin}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00003\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00004\ \ \ imuConfig\ =\ \{}
+\DoxyCodeLine{00005\ \ \ \ \ .command\_bits\ =\ 0,}
+\DoxyCodeLine{00006\ \ \ \ \ .address\_bits\ =\ 0,}
+\DoxyCodeLine{00007\ \ \ \ \ .dummy\_bits\ =\ 0,}
+\DoxyCodeLine{00008\ \ \ \ \ .mode\ =\ 0,}
+\DoxyCodeLine{00009\ \ \ \ \ .clock\_speed\_hz\ =\ 5000000,\ \textcolor{comment}{//5MHz\ by\ default,\ can\ go\ up\ to\ 7}}
+\DoxyCodeLine{00010\ \ \ \ \ .spics\_io\_num\ =\ cs\_pin,}
+\DoxyCodeLine{00011\ \ \ \ \ .queue\_size=1,}
+\DoxyCodeLine{00012\ \ \ \};}
+\DoxyCodeLine{00013\ \ \ }
+\DoxyCodeLine{00014\ \ \ ESP\_ERROR\_CHECK(spi\_bus\_add\_device(spiHost,\&imuConfig,\&imuHandle));}
+\DoxyCodeLine{00015\ \ \ writeRegister(0,\ ICM\_PWR\_MGMT\_1,\ 0x01);\ \textcolor{comment}{//\ Wake\ up,\ auto\ clock}}
+\DoxyCodeLine{00016\ \ \ writeRegister(2,\ ICM\_ACCEL\_CONFIG,accelScale<<1);\ \textcolor{comment}{//configure\ accelerometer\ scale}}
+\DoxyCodeLine{00017\ \ \ \textcolor{comment}{/*\ BAD\ MAGNETOMETER\ CODE}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ \ //magnetometer\ init\ (i2c\ master)}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ \ writeRegister(0,\ ICM\_USER\_CTRL,0X2);\ //reset\ i2c\ master\ module}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ \ vTaskDelay(pdMS\_TO\_TICKS(10));}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ \ writeRegister(0,\ ICM\_USER\_CTRL,0x20);\ //enable\ i2c\ master\ mode\ for\ magnetometer\ readings}}
+\DoxyCodeLine{00022\ \textcolor{comment}{\ \ writeRegister(3,ICM\_I2C\_MST\_CTRL,0x07);\ //set\ i2c\ clock\ frequency\ to\ 400khz}}
+\DoxyCodeLine{00023\ \textcolor{comment}{\ \ vTaskDelay(pdMS\_TO\_TICKS(10));}}
+\DoxyCodeLine{00024\ \textcolor{comment}{\ \ writeRegister(0,ICM\_LP\_CONFIG,0x40);\ //set\ custom\ i2c\ data\ rate}}
+\DoxyCodeLine{00025\ \textcolor{comment}{\ \ writeRegister(3,ICM\_I2C\_MST\_ODR\_CONFIG,0x03);\ //set\ data\ rate\ to\ 136\ Hz}}
+\DoxyCodeLine{00026\ \textcolor{comment}{\ \ vTaskDelay(pdMS\_TO\_TICKS(10));}}
+\DoxyCodeLine{00027\ \textcolor{comment}{\ \ }}
+\DoxyCodeLine{00028\ \textcolor{comment}{\ \ writeMagnetometer(MAG\_CTRL3,0x01);\ //soft\ reset\ magnetometer}}
+\DoxyCodeLine{00029\ \textcolor{comment}{\ \ vTaskDelay(pdMS\_TO\_TICKS(100));}}
+\DoxyCodeLine{00030\ \textcolor{comment}{\ \ writeMagnetometer(MAG\_CTRL2,0x16);\ //continouous\ mode\ 4:\ 100Hz}}
+\DoxyCodeLine{00031\ \textcolor{comment}{\ \ writeRegister(3,\ ICM\_I2C\_SLV0\_ADDR,\ 0x8C);\ //\ Read\ address}}
+\DoxyCodeLine{00032\ \textcolor{comment}{\ \ writeRegister(3,\ ICM\_I2C\_SLV0\_REG,\ 0x10);\ \ //\ Start\ from\ ST1}}
+\DoxyCodeLine{00033\ \textcolor{comment}{\ \ writeRegister(3,\ ICM\_I2C\_SLV0\_CTRL,\ 0x88);\ //\ Enable\ +\ read\ 8\ bytes}}
+\DoxyCodeLine{00034\ \textcolor{comment}{\ \ */}}
+\DoxyCodeLine{00035\ \ \ }
+\DoxyCodeLine{00036\ \}}
+
+\end{DoxyCode}
+
+
+\label{doc-func-members}
+\Hypertarget{class_i_c_m20948_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_i_c_m20948_a9d43bc323255563a0772ed8dcc43c3c6}\index{ICM20948@{ICM20948}!getAccelX@{getAccelX}}
+\index{getAccelX@{getAccelX}!ICM20948@{ICM20948}}
+\doxysubsubsection{\texorpdfstring{getAccelX()}{getAccelX()}}
+{\footnotesize\ttfamily \label{class_i_c_m20948_a9d43bc323255563a0772ed8dcc43c3c6} 
+double ICM20948\+::get\+AccelX (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00110\ \ \ }
+\DoxyCodeLine{00111\ \ \ uint8\_t\ outH\ =\ readRegister(0,ICM\_ACCEL\_XOUT\_H);}
+\DoxyCodeLine{00112\ \ \ uint8\_t\ outL\ =\ readRegister(0,ICM\_ACCEL\_XOUT\_L);}
+\DoxyCodeLine{00113\ }
+\DoxyCodeLine{00114\ \ \ int16\_t\ sum\ =\ outL+(outH<<8);}
+\DoxyCodeLine{00115\ \ \ \textcolor{keywordtype}{double}\ output\ =\ sum/(16384.0/(1<<accelScale));}
+\DoxyCodeLine{00116\ \ \ \textcolor{keywordflow}{return}\ output;}
+\DoxyCodeLine{00117\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_i_c_m20948_af7ed8a08eda54b56c748ae87b888f08a}\index{ICM20948@{ICM20948}!getAccelY@{getAccelY}}
+\index{getAccelY@{getAccelY}!ICM20948@{ICM20948}}
+\doxysubsubsection{\texorpdfstring{getAccelY()}{getAccelY()}}
+{\footnotesize\ttfamily \label{class_i_c_m20948_af7ed8a08eda54b56c748ae87b888f08a} 
+double ICM20948\+::get\+AccelY (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00120\ \ \ }
+\DoxyCodeLine{00121\ \ \ uint8\_t\ outH\ =\ readRegister(0,ICM\_ACCEL\_YOUT\_H);}
+\DoxyCodeLine{00122\ \ \ uint8\_t\ outL\ =\ readRegister(0,ICM\_ACCEL\_YOUT\_L);}
+\DoxyCodeLine{00123\ }
+\DoxyCodeLine{00124\ \ \ int16\_t\ sum\ =\ outL+(outH<<8);}
+\DoxyCodeLine{00125\ \ \ \textcolor{keywordtype}{double}\ output\ =\ sum/(16384.0/(1<<accelScale));}
+\DoxyCodeLine{00126\ \ \ \textcolor{keywordflow}{return}\ output;}
+\DoxyCodeLine{00127\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_i_c_m20948_a678d03c26216260cd874c514e2e8bc7e}\index{ICM20948@{ICM20948}!getAccelZ@{getAccelZ}}
+\index{getAccelZ@{getAccelZ}!ICM20948@{ICM20948}}
+\doxysubsubsection{\texorpdfstring{getAccelZ()}{getAccelZ()}}
+{\footnotesize\ttfamily \label{class_i_c_m20948_a678d03c26216260cd874c514e2e8bc7e} 
+double ICM20948\+::get\+AccelZ (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00130\ \ \ }
+\DoxyCodeLine{00131\ \ \ uint8\_t\ outH\ =\ readRegister(0,ICM\_ACCEL\_ZOUT\_H);}
+\DoxyCodeLine{00132\ \ \ uint8\_t\ outL\ =\ readRegister(0,ICM\_ACCEL\_ZOUT\_L);}
+\DoxyCodeLine{00133\ }
+\DoxyCodeLine{00134\ \ \ int16\_t\ sum\ =\ outL+(outH<<8);}
+\DoxyCodeLine{00135\ \ \ \textcolor{keywordtype}{double}\ output\ =\ sum/(16384.0/(1<<accelScale));}
+\DoxyCodeLine{00136\ \ \ \textcolor{keywordflow}{return}\ output;}
+\DoxyCodeLine{00137\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_i_c_m20948_ab724d3faa58ef7c80b6231b8f316106f}\index{ICM20948@{ICM20948}!getGyroX@{getGyroX}}
+\index{getGyroX@{getGyroX}!ICM20948@{ICM20948}}
+\doxysubsubsection{\texorpdfstring{getGyroX()}{getGyroX()}}
+{\footnotesize\ttfamily \label{class_i_c_m20948_ab724d3faa58ef7c80b6231b8f316106f} 
+double ICM20948\+::get\+GyroX (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00140\ \ \ }
+\DoxyCodeLine{00141\ \ \ uint8\_t\ outH\ =\ readRegister(0,ICM\_GYRO\_XOUT\_H);}
+\DoxyCodeLine{00142\ \ \ uint8\_t\ outL\ =\ readRegister(0,ICM\_GYRO\_XOUT\_L);}
+\DoxyCodeLine{00143\ }
+\DoxyCodeLine{00144\ \ \ int16\_t\ sum\ =\ outL+(outH<<8);}
+\DoxyCodeLine{00145\ \ \ \textcolor{keywordtype}{double}\ output\ =\ sum/(131.0/(1<<gyroScale));}
+\DoxyCodeLine{00146\ \ \ \textcolor{keywordflow}{return}\ output;}
+\DoxyCodeLine{00147\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_i_c_m20948_a29cce1d3fb6fe11dff21e49d14f5fdfb}\index{ICM20948@{ICM20948}!getGyroY@{getGyroY}}
+\index{getGyroY@{getGyroY}!ICM20948@{ICM20948}}
+\doxysubsubsection{\texorpdfstring{getGyroY()}{getGyroY()}}
+{\footnotesize\ttfamily \label{class_i_c_m20948_a29cce1d3fb6fe11dff21e49d14f5fdfb} 
+double ICM20948\+::get\+GyroY (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00149\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00150\ \ \ }
+\DoxyCodeLine{00151\ \ \ uint8\_t\ outH\ =\ readRegister(0,ICM\_GYRO\_YOUT\_H);}
+\DoxyCodeLine{00152\ \ \ uint8\_t\ outL\ =\ readRegister(0,ICM\_GYRO\_YOUT\_L);}
+\DoxyCodeLine{00153\ }
+\DoxyCodeLine{00154\ \ \ int16\_t\ sum\ =\ outL+(outH<<8);}
+\DoxyCodeLine{00155\ \ \ \textcolor{keywordtype}{double}\ output\ =\ sum/(131.0/(1<<gyroScale));}
+\DoxyCodeLine{00156\ \ \ \textcolor{keywordflow}{return}\ output;}
+\DoxyCodeLine{00157\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_i_c_m20948_a50183b050d54379f6c6417f13d74296c}\index{ICM20948@{ICM20948}!getGyroZ@{getGyroZ}}
+\index{getGyroZ@{getGyroZ}!ICM20948@{ICM20948}}
+\doxysubsubsection{\texorpdfstring{getGyroZ()}{getGyroZ()}}
+{\footnotesize\ttfamily \label{class_i_c_m20948_a50183b050d54379f6c6417f13d74296c} 
+double ICM20948\+::get\+GyroZ (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00160\ \ \ }
+\DoxyCodeLine{00161\ \ \ uint8\_t\ outH\ =\ readRegister(0,ICM\_GYRO\_ZOUT\_H);}
+\DoxyCodeLine{00162\ \ \ uint8\_t\ outL\ =\ readRegister(0,ICM\_GYRO\_ZOUT\_L);}
+\DoxyCodeLine{00163\ }
+\DoxyCodeLine{00164\ \ \ int16\_t\ sum\ =\ outL+(outH<<8);}
+\DoxyCodeLine{00165\ \ \ \textcolor{keywordtype}{double}\ output\ =\ sum/(131.0/(1<<gyroScale));}
+\DoxyCodeLine{00166\ \ \ \textcolor{keywordflow}{return}\ output;}
+\DoxyCodeLine{00167\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_i_c_m20948_adf918607ed0000ad2b47914e2f64d10d}\index{ICM20948@{ICM20948}!readRegister@{readRegister}}
+\index{readRegister@{readRegister}!ICM20948@{ICM20948}}
+\doxysubsubsection{\texorpdfstring{readRegister()}{readRegister()}}
+{\footnotesize\ttfamily \label{class_i_c_m20948_adf918607ed0000ad2b47914e2f64d10d} 
+uint8\+\_\+t ICM20948\+::read\+Register (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{bank}{, }\item[{uint8\+\_\+t}]{addr}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00053\ \ \ \textcolor{comment}{//switch\ register\ bank}}
+\DoxyCodeLine{00054\ \ \ bank\ =\ bank<<4;}
+\DoxyCodeLine{00055\ \ \ uint8\_t\ tx\_buffer0[2]\ =\ \{0x7F,bank\};}
+\DoxyCodeLine{00056\ \ \ spi\_transaction\_t\ t0\ =\ \{\};}
+\DoxyCodeLine{00057\ \ \ t0.length\ =\ 8*\textcolor{keyword}{sizeof}(tx\_buffer0);}
+\DoxyCodeLine{00058\ \ \ t0.tx\_buffer\ =\ tx\_buffer0;}
+\DoxyCodeLine{00059\ \ \ spi\_device\_transmit(imuHandle,\&t0);}
+\DoxyCodeLine{00060\ \ \ \textcolor{comment}{//read\ data}}
+\DoxyCodeLine{00061\ \ \ addr\ |=\ 128;}
+\DoxyCodeLine{00062\ \ \ uint8\_t\ tx\_buffer[2]\ =\ \{addr,0\};}
+\DoxyCodeLine{00063\ \ \ uint8\_t\ rx\_buffer[2];}
+\DoxyCodeLine{00064\ \ \ spi\_transaction\_t\ t\ =\ \{\};}
+\DoxyCodeLine{00065\ \ \ t.length\ =\ 8*\textcolor{keyword}{sizeof}(tx\_buffer);}
+\DoxyCodeLine{00066\ \ \ t.tx\_buffer\ =\ tx\_buffer;}
+\DoxyCodeLine{00067\ \ \ t.rxlength\ =\ 8*\textcolor{keyword}{sizeof}(rx\_buffer);}
+\DoxyCodeLine{00068\ \ \ t.rx\_buffer\ =\ rx\_buffer;}
+\DoxyCodeLine{00069\ \ \ spi\_device\_transmit(imuHandle,\&t);}
+\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00071\ \ \ \textcolor{keywordflow}{return}\ rx\_buffer[1];\ \textcolor{comment}{//\ for\ some\ reason\ this\ writes\ the\ data\ in\ the\ second\ byte\ of\ rx\_buffer}}
+\DoxyCodeLine{00072\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_i_c_m20948_a2f3f0c39683d74dddeb362f434c271cc}\index{ICM20948@{ICM20948}!selfTest@{selfTest}}
+\index{selfTest@{selfTest}!ICM20948@{ICM20948}}
+\doxysubsubsection{\texorpdfstring{selfTest()}{selfTest()}}
+{\footnotesize\ttfamily \label{class_i_c_m20948_a2f3f0c39683d74dddeb362f434c271cc} 
+void ICM20948\+::self\+Test (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \ \ uint8\_t\ tx\_buffer[3]\ =\ \{128,0\};}
+\DoxyCodeLine{00041\ \ \ uint8\_t\ rx\_buffer[2]\ =\ \{0,0\};}
+\DoxyCodeLine{00042\ \ \ spi\_transaction\_t\ t\ =\ \{\};}
+\DoxyCodeLine{00043\ \ \ t.length\ =\ 8*\textcolor{keyword}{sizeof}(tx\_buffer);}
+\DoxyCodeLine{00044\ \ \ t.tx\_buffer\ =\ tx\_buffer;}
+\DoxyCodeLine{00045\ \ \ t.rxlength\ =\ 8*\textcolor{keyword}{sizeof}(rx\_buffer);}
+\DoxyCodeLine{00046\ \ \ t.rx\_buffer\ =\ rx\_buffer;}
+\DoxyCodeLine{00047\ \ \ spi\_device\_transmit(imuHandle,\&t);}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ \ \ printf(\textcolor{stringliteral}{"{}Recieved\ Data:\ \%d,\ \%d"{}},rx\_buffer[0],rx\_buffer[1]);}
+\DoxyCodeLine{00050\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_i_c_m20948_a9e981f7b7d3eece58f6dcac3b5a70656}\index{ICM20948@{ICM20948}!writeRegister@{writeRegister}}
+\index{writeRegister@{writeRegister}!ICM20948@{ICM20948}}
+\doxysubsubsection{\texorpdfstring{writeRegister()}{writeRegister()}}
+{\footnotesize\ttfamily \label{class_i_c_m20948_a9e981f7b7d3eece58f6dcac3b5a70656} 
+void ICM20948\+::write\+Register (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{bank}{, }\item[{uint8\+\_\+t}]{addr}{, }\item[{uint8\+\_\+t}]{data}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00074\ \ \ \textcolor{comment}{//switch\ register\ bank}}
+\DoxyCodeLine{00075\ \ \ bank\ =\ bank<<4;}
+\DoxyCodeLine{00076\ \ \ uint8\_t\ tx\_buffer0[2]\ =\ \{0x7F,bank\};}
+\DoxyCodeLine{00077\ \ \ spi\_transaction\_t\ t0\ =\ \{\};}
+\DoxyCodeLine{00078\ \ \ t0.length\ =\ 8*\textcolor{keyword}{sizeof}(tx\_buffer0);}
+\DoxyCodeLine{00079\ \ \ t0.tx\_buffer\ =\ tx\_buffer0;}
+\DoxyCodeLine{00080\ \ \ spi\_device\_transmit(imuHandle,\&t0);}
+\DoxyCodeLine{00081\ \ \ \textcolor{comment}{//write\ data}}
+\DoxyCodeLine{00082\ \ \ uint8\_t\ tx\_buffer[2]\ =\ \{addr,data\};}
+\DoxyCodeLine{00083\ \ \ spi\_transaction\_t\ t\ =\ \{\};}
+\DoxyCodeLine{00084\ \ \ t.length\ =\ 8*\textcolor{keyword}{sizeof}(tx\_buffer);}
+\DoxyCodeLine{00085\ \ \ t.tx\_buffer\ =\ tx\_buffer;}
+\DoxyCodeLine{00086\ \ \ spi\_device\_transmit(imuHandle,\&t);}
+\DoxyCodeLine{00087\ \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+ECU\+\_\+25/components/\+IO/ICM-\/20948.\+h\item 
+ECU\+\_\+25/components/\+IO/ICM-\/20948.\+cpp\end{DoxyCompactItemize}

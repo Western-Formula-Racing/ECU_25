@@ -1,0 +1,19 @@
+<map id="ECU_25/components/CAN/CAN_Config.hpp" name="ECU_25/components/CAN/CAN_Config.hpp">
+<area shape="rect" id="Node000001" title="Defines the configuration of all components on the CAN network." alt="" coords="259,5,438,46"/>
+<area shape="rect" id="Node000002" href="$_c_a_n___signal_8hpp.html" title="Defines the individual CAN signals for the messages." alt="" coords="116,94,235,120"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="307,49,217,90,215,85,304,44"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="259,94,334,120"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="338,48,316,82,311,79,334,45"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="358,94,444,120"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="364,45,387,79,382,82,359,48"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="468,94,536,120"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="388,44,467,84,464,89,386,49"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="5,168,66,193"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="153,123,74,163,72,158,151,118"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="90,168,168,193"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="170,121,147,156,143,153,166,118"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="192,168,252,193"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="185,118,208,153,204,156,181,121"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="277,168,365,193"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="201,118,284,158,281,163,199,123"/>
+</map>

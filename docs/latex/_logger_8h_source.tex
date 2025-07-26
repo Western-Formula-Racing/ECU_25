@@ -1,0 +1,42 @@
+\doxysection{Logger.\+h}
+\hypertarget{_logger_8h_source}{}\label{_logger_8h_source}\index{ECU\_25/components/IO/Logger.h@{ECU\_25/components/IO/Logger.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ \_\_LOGGER\_\_}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ \_\_LOGGER\_\_}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <time.h>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}esp\_vfs\_fat.h"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}sdmmc\_cmd.h"{}}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}driver/sdmmc\_host.h"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}esp\_log.h"{}}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}IO.h"{}}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}esp\_timer.h"{}}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{keyword}{namespace\ }Logger}
+\DoxyCodeLine{00014\ \{}
+\DoxyCodeLine{00015\ \ \ \ \ \textcolor{keyword}{enum}\ LogLevel}
+\DoxyCodeLine{00016\ \ \ \ \ \{}
+\DoxyCodeLine{00017\ \ \ \ \ \ \ \ \ LOG\_INFO,}
+\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ LOG\_WARNING,}
+\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ LOG\_ERROR}
+\DoxyCodeLine{00020\ \ \ \ \ \};}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct}}
+\DoxyCodeLine{00023\ \ \ \ \ \{}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ int64\_t\ timestamp;}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{char}\ label[32];}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{char}\ message[256];}
+\DoxyCodeLine{00027\ \ \ \ \ \}\ \mbox{\hyperlink{struct_logger_1_1_log_message__t}{LogMessage\_t}};}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keywordtype}{void}\ init();}
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keywordtype}{void}\ writeLine(\mbox{\hyperlink{struct_logger_1_1_log_message__t}{LogMessage\_t}}\ message);}
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keywordtype}{void}\ log(\mbox{\hyperlink{struct_logger_1_1_log_message__t}{LogMessage\_t}}\ message);}
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keywordtype}{void}\ logTask(\textcolor{keywordtype}{void}\ *);}
+\DoxyCodeLine{00033\ \ \ \ \ }
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00035\ \}}
+\DoxyCodeLine{00036\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

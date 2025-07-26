@@ -1,0 +1,52 @@
+\doxysection{State\+Machine.\+hpp}
+\hypertarget{_state_machine_8hpp_source}{}\label{_state_machine_8hpp_source}\index{ECU\_25/main/StateMachine.hpp@{ECU\_25/main/StateMachine.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ \_\_STATE\_MACHINE\_\_}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ \_\_STATE\_MACHINE\_\_}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}freertos/FreeRTOS.h"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}freertos/task.h"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}etl/array.h"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_c_a_n___config_8hpp}{CAN\_Config.hpp}}"{}}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}IO.h"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}Pedals.h"{}}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}Sensors.h"{}}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}Inverter.h"{}}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_b_m_s_8h}{BMS.h}}"{}}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ "{}nvs\_flash.h"{}}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ "{}nvs.h"{}}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#define\ RTD\_TIME\ 2000}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#define\ BRAKE\_LIGHT\_THRESHOLD\ 0.7f}}
+\DoxyCodeLine{00017\ \textcolor{keyword}{namespace\ }StateMachine\{}
+\DoxyCodeLine{00018\ \textcolor{keyword}{enum}\ State}
+\DoxyCodeLine{00019\ \{}
+\DoxyCodeLine{00020\ \ \ \ \ START,}
+\DoxyCodeLine{00021\ \ \ \ \ PRECHARGE\_ENABLE,}
+\DoxyCodeLine{00022\ \ \ \ \ PRECHARGE\_OK,}
+\DoxyCodeLine{00023\ \ \ \ \ STARTUP\_DELAY,}
+\DoxyCodeLine{00024\ \ \ \ \ DRIVE,}
+\DoxyCodeLine{00025\ \ \ \ \ PRECHARGE\_ERROR,}
+\DoxyCodeLine{00026\ \ \ \ \ DEVICE\_FAULT,}
+\DoxyCodeLine{00027\ \};}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \textcolor{comment}{//\ Creating\ a\ type\ for\ state\ function\ pointers}}
+\DoxyCodeLine{00031\ \textcolor{keyword}{typedef}\ State\ (*state\_function\_t)();}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \textcolor{keywordtype}{void}\ StateMachineLoop(\textcolor{keywordtype}{void}\ *);}
+\DoxyCodeLine{00035\ State\ handle\_start();}
+\DoxyCodeLine{00036\ State\ handle\_precharge\_enable();}
+\DoxyCodeLine{00037\ State\ handle\_precharge\_ok();}
+\DoxyCodeLine{00038\ State\ handle\_startup\_delay();}
+\DoxyCodeLine{00039\ State\ handle\_drive();}
+\DoxyCodeLine{00040\ State\ handle\_precharge\_error();}
+\DoxyCodeLine{00041\ State\ handle\_device\_fault();}
+\DoxyCodeLine{00042\ \textcolor{keywordtype}{void}\ setupAppsCalibration();}
+\DoxyCodeLine{00043\ \textcolor{keywordtype}{void}\ checkNewAppsCalibration();}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00045\ \}}
+\DoxyCodeLine{00046\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

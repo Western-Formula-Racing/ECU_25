@@ -1,0 +1,51 @@
+\doxysection{BMS.\+h}
+\hypertarget{_b_m_s_8h_source}{}\label{_b_m_s_8h_source}\index{ECU\_25/components/Devices/BMS.h@{ECU\_25/components/Devices/BMS.h}}
+\mbox{\hyperlink{_b_m_s_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#ifndef\ \_BMS\_}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#define\ \_BMS\_}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ <stdio.h>}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}freertos/FreeRTOS.h"{}}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ "{}freertos/task.h"{}}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ "{}freertos/semphr.h"{}}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_c_a_n___config_8hpp}{CAN\_Config.hpp}}"{}}}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00024\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_b_m_s_a763b5a616fd2231bf94edb4cc056a2c2}{BMS}}}
+\DoxyCodeLine{00025\ \{}
+\DoxyCodeLine{00026\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{comment}{//\ Singleton\ device\ class\ structure}}
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{class_b_m_s_a763b5a616fd2231bf94edb4cc056a2c2}{BMS}}\ *instancePtr;}
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keyword}{static}\ SemaphoreHandle\_t\ mutex;}
+\DoxyCodeLine{00030\ \ \ \ \ \mbox{\hyperlink{class_b_m_s_a763b5a616fd2231bf94edb4cc056a2c2}{BMS}}();}
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keywordtype}{int}\ max\_discharge\_current;}
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keywordtype}{int}\ max\_charge\_current;}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{comment}{//\ Deleting\ the\ copy\ constructor\ and\ copy\ reference\ constructor\ to\ prevent\ copies}}
+\DoxyCodeLine{00036\ \ \ \ \ \mbox{\hyperlink{class_b_m_s_a763b5a616fd2231bf94edb4cc056a2c2}{BMS}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_b_m_s_a763b5a616fd2231bf94edb4cc056a2c2}{BMS}}\ \&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00037\ \ \ \ \ \mbox{\hyperlink{class_b_m_s_a763b5a616fd2231bf94edb4cc056a2c2}{BMS}}\ \&operator=(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_b_m_s_a763b5a616fd2231bf94edb4cc056a2c2}{BMS}}\ \&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00038\ \ \ \ \ \mbox{\hyperlink{class_b_m_s_a763b5a616fd2231bf94edb4cc056a2c2}{BMS}}(\mbox{\hyperlink{class_b_m_s_a763b5a616fd2231bf94edb4cc056a2c2}{BMS}}\ \&\&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00039\ \ \ \ \ \mbox{\hyperlink{class_b_m_s_a763b5a616fd2231bf94edb4cc056a2c2}{BMS}}\ \&operator=(\mbox{\hyperlink{class_b_m_s_a763b5a616fd2231bf94edb4cc056a2c2}{BMS}}\ \&\&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{class_b_m_s_a763b5a616fd2231bf94edb4cc056a2c2}{BMS}}\ *\mbox{\hyperlink{class_b_m_s_a57cb5f0cf33e2b96dd5de2b2f1dd39f0}{Get}}();}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keyword}{enum}\ STATE}
+\DoxyCodeLine{00044\ \ \ \ \ \{}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ IDLE,}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ PRECHARGE\_START,}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ PRECHARGING,}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ ACTIVE,}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ CHARGING,}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ CHARGE\_COMPLETE,}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ FAULT}
+\DoxyCodeLine{00052\ \ \ \ \ \};}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00054\ \ \ \ \ \textcolor{keywordtype}{int}\ getPackVoltage();}
+\DoxyCodeLine{00055\ \ \ \ \ STATE\ \mbox{\hyperlink{class_b_m_s_a84f766abd02a980d7cf1ab82dfc561c8}{getPackState}}();}
+\DoxyCodeLine{00056\ \};}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00058\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

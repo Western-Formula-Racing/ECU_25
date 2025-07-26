@@ -1,0 +1,217 @@
+\doxysection{BMS Class Reference}
+\hypertarget{class_b_m_s}{}\label{class_b_m_s}\index{BMS@{BMS}}
+
+
+Stores all the data we collect from the \doxylink{class_b_m_s}{BMS}, and defines the functions we will use to share some of that data.  
+
+
+
+
+{\ttfamily \#include $<$BMS.\+h$>$}
+
+
+
+Collaboration diagram for BMS\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=191pt]{class_b_m_s__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum {\bfseries STATE} \{ \newline
+{\bfseries IDLE}
+, {\bfseries PRECHARGE\+\_\+\+START}
+, {\bfseries PRECHARGING}
+, {\bfseries ACTIVE}
+, \newline
+{\bfseries CHARGING}
+, {\bfseries CHARGE\+\_\+\+COMPLETE}
+, {\bfseries FAULT}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_b_m_s_ac009cd8473ad0af9d869da220778f8b5}\label{class_b_m_s_ac009cd8473ad0af9d869da220778f8b5} 
+{\bfseries BMS} (const \mbox{\hyperlink{class_b_m_s}{BMS}} \&)=delete
+\item 
+\Hypertarget{class_b_m_s_afb44432d3844e037fcefe023267f42be}\label{class_b_m_s_afb44432d3844e037fcefe023267f42be} 
+\mbox{\hyperlink{class_b_m_s}{BMS}} \& {\bfseries operator=} (const \mbox{\hyperlink{class_b_m_s}{BMS}} \&)=delete
+\item 
+\Hypertarget{class_b_m_s_a4807e7c433a3b33143a3402e7d48bd02}\label{class_b_m_s_a4807e7c433a3b33143a3402e7d48bd02} 
+{\bfseries BMS} (\mbox{\hyperlink{class_b_m_s}{BMS}} \&\&)=delete
+\item 
+\Hypertarget{class_b_m_s_ab0e68992a78b4e85c4bb0e519e3e5f3a}\label{class_b_m_s_ab0e68992a78b4e85c4bb0e519e3e5f3a} 
+\mbox{\hyperlink{class_b_m_s}{BMS}} \& {\bfseries operator=} (\mbox{\hyperlink{class_b_m_s}{BMS}} \&\&)=delete
+\item 
+\Hypertarget{class_b_m_s_a850640123ca183185385e16a23724b27}\label{class_b_m_s_a850640123ca183185385e16a23724b27} 
+int {\bfseries get\+Pack\+Voltage} ()
+\item 
+STATE \mbox{\hyperlink{class_b_m_s_a84f766abd02a980d7cf1ab82dfc561c8}{get\+Pack\+State}} ()
+\begin{DoxyCompactList}\small\item\em Lets us know what state the pack is in, the various states were defined earlier in enum STATE. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{class_b_m_s}{BMS}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_b_m_s_a57cb5f0cf33e2b96dd5de2b2f1dd39f0}{Get}} ()
+\begin{DoxyCompactList}\small\item\em This method ensures only one instance of \doxylink{class_b_m_s}{BMS} exists by checking and creating it if needed. It uses mutex to prevent race conditions during instantiation. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_b_m_s_a763b5a616fd2231bf94edb4cc056a2c2}{BMS}} ()
+\begin{DoxyCompactList}\small\item\em Construct a new \doxylink{class_b_m_s_a763b5a616fd2231bf94edb4cc056a2c2}{BMS\+::\+BMS} object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_b_m_s_ab0946fec1491d512db2f713224ecda09}\label{class_b_m_s_ab0946fec1491d512db2f713224ecda09} 
+int {\bfseries max\+\_\+discharge\+\_\+current}
+\item 
+\Hypertarget{class_b_m_s_a5529952183f6db1d1d8462483c93f865}\label{class_b_m_s_a5529952183f6db1d1d8462483c93f865} 
+int {\bfseries max\+\_\+charge\+\_\+current}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_b_m_s_a058e0abe5fb2779b9182ed40deb6da2f}\label{class_b_m_s_a058e0abe5fb2779b9182ed40deb6da2f} 
+static \mbox{\hyperlink{class_b_m_s}{BMS}} \texorpdfstring{$\ast$}{*} {\bfseries instance\+Ptr} = nullptr
+\item 
+\Hypertarget{class_b_m_s_aa5407f8c0a72f798fc7d60f99819508b}\label{class_b_m_s_aa5407f8c0a72f798fc7d60f99819508b} 
+static Semaphore\+Handle\+\_\+t {\bfseries mutex} = x\+Semaphore\+Create\+Mutex()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Stores all the data we collect from the \doxylink{class_b_m_s}{BMS}, and defines the functions we will use to share some of that data. 
+
+\label{doc-enum-members}
+\Hypertarget{class_b_m_s_doc-enum-members}
+\doxysubsection{Member Enumeration Documentation}
+\Hypertarget{class_b_m_s_a49388930651786358b13954605dc0162}\index{BMS@{BMS}!STATE@{STATE}}
+\index{STATE@{STATE}!BMS@{BMS}}
+\doxysubsubsection{\texorpdfstring{STATE}{STATE}}
+{\footnotesize\ttfamily \label{class_b_m_s_a49388930651786358b13954605dc0162} 
+enum BMS\+::\+STATE}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00044\ \ \ \ \ \{}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ IDLE,}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ PRECHARGE\_START,}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ PRECHARGING,}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ ACTIVE,}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ CHARGING,}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ CHARGE\_COMPLETE,}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ FAULT}
+\DoxyCodeLine{00052\ \ \ \ \ \};}
+
+\end{DoxyCode}
+
+
+\label{doc-constructors}
+\Hypertarget{class_b_m_s_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_b_m_s_a763b5a616fd2231bf94edb4cc056a2c2}\index{BMS@{BMS}!BMS@{BMS}}
+\index{BMS@{BMS}!BMS@{BMS}}
+\doxysubsubsection{\texorpdfstring{BMS()}{BMS()}}
+{\footnotesize\ttfamily \label{class_b_m_s_a763b5a616fd2231bf94edb4cc056a2c2} 
+BMS\+::\+BMS (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Construct a new \doxylink{class_b_m_s_a763b5a616fd2231bf94edb4cc056a2c2}{BMS\+::\+BMS} object. 
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00024\ \{}
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{comment}{//get\ these\ from\ storage\ later}}
+\DoxyCodeLine{00026\ \ \ \ \ max\_discharge\_current\ =\ 5;}
+\DoxyCodeLine{00027\ \ \ \ \ max\_charge\_current\ =\ 0;\ }
+\DoxyCodeLine{00028\ \ \ \ \ }
+\DoxyCodeLine{00029\ \ \ \ \ BMS\_Max\_Discharge\_Current\_ID514.\mbox{\hyperlink{class_c_a_n___signal_a66e8fcbfe25986dc94794d191c13d875}{set}}(max\_discharge\_current);}
+\DoxyCodeLine{00030\ \ \ \ \ BMS\_Max\_Charge\_Current\_ID514.\mbox{\hyperlink{class_c_a_n___signal_a66e8fcbfe25986dc94794d191c13d875}{set}}(max\_charge\_current);}
+\DoxyCodeLine{00031\ \ \ \ \ ESP\_LOGI(TAG,\ \textcolor{stringliteral}{"{}BMS\ Initialized"{}});}
+\DoxyCodeLine{00032\ \}}
+
+\end{DoxyCode}
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=241pt]{class_b_m_s_a763b5a616fd2231bf94edb4cc056a2c2_icgraph}
+\end{center}
+\end{figure}
+
+
+\label{doc-func-members}
+\Hypertarget{class_b_m_s_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_b_m_s_a57cb5f0cf33e2b96dd5de2b2f1dd39f0}\index{BMS@{BMS}!Get@{Get}}
+\index{Get@{Get}!BMS@{BMS}}
+\doxysubsubsection{\texorpdfstring{Get()}{Get()}}
+{\footnotesize\ttfamily \label{class_b_m_s_a57cb5f0cf33e2b96dd5de2b2f1dd39f0} 
+\mbox{\hyperlink{class_b_m_s}{BMS}} \texorpdfstring{$\ast$}{*} BMS\+::\+Get (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+This method ensures only one instance of \doxylink{class_b_m_s}{BMS} exists by checking and creating it if needed. It uses mutex to prevent race conditions during instantiation. 
+
+\begin{DoxyReturn}{Returns}
+BMS\texorpdfstring{$\ast$}{*} Pointer to the \doxylink{class_b_m_s}{BMS} instance. 
+\end{DoxyReturn}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00042\ \{}
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{comment}{//If\ the\ doesnt\ have\ a\ BMS\ instance\ and\ the\ lock\ as\ created}}
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keywordflow}{if}\ (instancePtr\ ==\ \textcolor{keyword}{nullptr}\ \&\&\ BMS::mutex)}
+\DoxyCodeLine{00045\ \ \ \ \ \{}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \textcolor{comment}{//Try\ to\ take\ the\ mutex\ }}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (xSemaphoreTake(BMS::mutex,\ (TickType\_t)10)\ ==\ pdTRUE)}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//Create\ a\ BMS\ instance\ and\ release\ mutex}}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \ \ \ \ instancePtr\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{class_b_m_s_a763b5a616fd2231bf94edb4cc056a2c2}{BMS}}();}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \ \ \ \ xSemaphoreGive(BMS::mutex);}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \ \ \ \ ESP\_LOGW(TAG,\ \textcolor{stringliteral}{"{}Mutex\ couldn't\ be\ obtained"{}});}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00057\ \ \ \ \ \}}
+\DoxyCodeLine{00058\ \ \ \ \ \textcolor{keywordflow}{return}\ instancePtr;}
+\DoxyCodeLine{00059\ \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=241pt]{class_b_m_s_a57cb5f0cf33e2b96dd5de2b2f1dd39f0_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{class_b_m_s_a84f766abd02a980d7cf1ab82dfc561c8}\index{BMS@{BMS}!getPackState@{getPackState}}
+\index{getPackState@{getPackState}!BMS@{BMS}}
+\doxysubsubsection{\texorpdfstring{getPackState()}{getPackState()}}
+{\footnotesize\ttfamily \label{class_b_m_s_a84f766abd02a980d7cf1ab82dfc561c8} 
+BMS\+::\+STATE BMS\+::get\+Pack\+State (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Lets us know what state the pack is in, the various states were defined earlier in enum STATE. 
+
+\begin{DoxyReturn}{Returns}
+BMS\+::\+STATE 
+\end{DoxyReturn}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00067\ \{}
+\DoxyCodeLine{00068\ \ \ \ \ \textcolor{keywordflow}{return}\ (STATE)PackStatus\_ID1056.\mbox{\hyperlink{class_c_a_n___signal_a880b7c9723bd1e8c693b9595a78840cd}{get\_int}}();}
+\DoxyCodeLine{00069\ \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+ECU\+\_\+25/components/\+Devices/\mbox{\hyperlink{_b_m_s_8h}{BMS.\+h}}\item 
+ECU\+\_\+25/components/\+Devices/\mbox{\hyperlink{_b_m_s_8cpp}{BMS.\+cpp}}\end{DoxyCompactItemize}

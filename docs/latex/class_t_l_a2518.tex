@@ -1,0 +1,122 @@
+\doxysection{TLA2518 Class Reference}
+\hypertarget{class_t_l_a2518}{}\label{class_t_l_a2518}\index{TLA2518@{TLA2518}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_t_l_a2518_af5428a69c5e73c25b19d3608022ac346}{TLA2518}} (spi\+\_\+host\+\_\+device\+\_\+t spi\+Host, int cs\+\_\+pin)
+\item 
+int \mbox{\hyperlink{class_t_l_a2518_adbb0fcc02789d8f8657aa17f4d60285d}{read\+Channel}} (uint8\+\_\+t channel)
+\item 
+float \mbox{\hyperlink{class_t_l_a2518_ae680a92ff6744322e837da52ff1040aa}{read\+Voltage}} (uint8\+\_\+t channel)
+\item 
+void \mbox{\hyperlink{class_t_l_a2518_a8b7ae262675fa14f1e30d0069dffcbb8}{write\+Register}} (uint8\+\_\+t address, uint8\+\_\+t value)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_t_l_a2518_a65d3388eba368c9240b08c56efde2466}\label{class_t_l_a2518_a65d3388eba368c9240b08c56efde2466} 
+spi\+\_\+device\+\_\+handle\+\_\+t {\bfseries adc\+Handle}
+\item 
+\Hypertarget{class_t_l_a2518_a7cc3b6a09ed2b62ddde8a1cf65387345}\label{class_t_l_a2518_a7cc3b6a09ed2b62ddde8a1cf65387345} 
+spi\+\_\+device\+\_\+interface\+\_\+config\+\_\+t {\bfseries adc\+Cfg}
+\end{DoxyCompactItemize}
+
+
+\label{doc-constructors}
+\Hypertarget{class_t_l_a2518_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_t_l_a2518_af5428a69c5e73c25b19d3608022ac346}\index{TLA2518@{TLA2518}!TLA2518@{TLA2518}}
+\index{TLA2518@{TLA2518}!TLA2518@{TLA2518}}
+\doxysubsubsection{\texorpdfstring{TLA2518()}{TLA2518()}}
+{\footnotesize\ttfamily \label{class_t_l_a2518_af5428a69c5e73c25b19d3608022ac346} 
+TLA2518\+::\+TLA2518 (\begin{DoxyParamCaption}\item[{spi\+\_\+host\+\_\+device\+\_\+t}]{spi\+Host}{, }\item[{int}]{cs\+\_\+pin}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00003\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \ \ adcCfg\ =\ \{}
+\DoxyCodeLine{00006\ \ \ \ \ .command\_bits\ =\ 0,}
+\DoxyCodeLine{00007\ \ \ \ \ .address\_bits\ =\ 0,}
+\DoxyCodeLine{00008\ \ \ \ \ .dummy\_bits\ =\ 0,}
+\DoxyCodeLine{00009\ \ \ \ \ .mode\ =\ 0,}
+\DoxyCodeLine{00010\ \ \ \ \ .clock\_speed\_hz\ =\ 10000000,\ \textcolor{comment}{//10MHz\ by\ default,\ can\ go\ up\ to\ 50}}
+\DoxyCodeLine{00011\ \ \ \ \ .spics\_io\_num\ =\ cs\_pin,}
+\DoxyCodeLine{00012\ \ \ \ \ .queue\_size=1,}
+\DoxyCodeLine{00013\ \ \ \};}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \ \ ESP\_ERROR\_CHECK(spi\_bus\_add\_device(spiHost,\&adcCfg,\&adcHandle));}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \ \ \textcolor{comment}{//force\ all\ channels\ to\ be\ analog\ inputs}}
+\DoxyCodeLine{00018\ \ \ writeRegister(0x1,4);}
+\DoxyCodeLine{00019\ \}}
+
+\end{DoxyCode}
+
+
+\label{doc-func-members}
+\Hypertarget{class_t_l_a2518_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_t_l_a2518_adbb0fcc02789d8f8657aa17f4d60285d}\index{TLA2518@{TLA2518}!readChannel@{readChannel}}
+\index{readChannel@{readChannel}!TLA2518@{TLA2518}}
+\doxysubsubsection{\texorpdfstring{readChannel()}{readChannel()}}
+{\footnotesize\ttfamily \label{class_t_l_a2518_adbb0fcc02789d8f8657aa17f4d60285d} 
+int TLA2518\+::read\+Channel (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{channel}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00031\ \ \ \textcolor{keyword}{volatile}\ uint8\_t\ tx\_buffer[3]\ =\ \{TLA\_CMD\_WRITE,TLA\_CHANNEL\_SEL,channel\};}
+\DoxyCodeLine{00032\ \ \ \textcolor{keyword}{volatile}\ uint8\_t\ rx\_buffer[2]\ =\ \{0,0\};}
+\DoxyCodeLine{00033\ \ \ spi\_transaction\_t\ t\ =\ \{\};}
+\DoxyCodeLine{00034\ \ \ t.length\ =\ 8*\textcolor{keyword}{sizeof}(tx\_buffer);}
+\DoxyCodeLine{00035\ \ \ t.tx\_buffer\ =\ (\textcolor{keyword}{const}\ \textcolor{keywordtype}{void}*)tx\_buffer;}
+\DoxyCodeLine{00036\ \ \ t.rxlength\ =\ 8*\textcolor{keyword}{sizeof}(rx\_buffer);}
+\DoxyCodeLine{00037\ \ \ t.rx\_buffer\ =\ (\textcolor{keywordtype}{void}*)rx\_buffer;\ \ }
+\DoxyCodeLine{00038\ \ \ spi\_device\_transmit(adcHandle,\&t);\ \ }
+\DoxyCodeLine{00039\ \ \ spi\_device\_transmit(adcHandle,\&t);}
+\DoxyCodeLine{00040\ \ \ spi\_device\_transmit(adcHandle,\&t);}
+\DoxyCodeLine{00041\ \ \ \textcolor{keywordtype}{int}\ val\ =\ ((int)rx\_buffer[0]<<4\ |\ (int)rx\_buffer[1]>>4);}
+\DoxyCodeLine{00042\ \ \ \textcolor{keywordflow}{return}\ val;}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ \};}
+
+\end{DoxyCode}
+\Hypertarget{class_t_l_a2518_ae680a92ff6744322e837da52ff1040aa}\index{TLA2518@{TLA2518}!readVoltage@{readVoltage}}
+\index{readVoltage@{readVoltage}!TLA2518@{TLA2518}}
+\doxysubsubsection{\texorpdfstring{readVoltage()}{readVoltage()}}
+{\footnotesize\ttfamily \label{class_t_l_a2518_ae680a92ff6744322e837da52ff1040aa} 
+float TLA2518\+::read\+Voltage (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{channel}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00047\ \ \ \textcolor{keywordtype}{float}\ value\ =\ readChannel(channel)*ADC\_VOLTAGE\_SCALE\_FACTOR;\ }
+\DoxyCodeLine{00048\ \ \ \textcolor{keywordflow}{return}\ value;}
+\DoxyCodeLine{00049\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_t_l_a2518_a8b7ae262675fa14f1e30d0069dffcbb8}\index{TLA2518@{TLA2518}!writeRegister@{writeRegister}}
+\index{writeRegister@{writeRegister}!TLA2518@{TLA2518}}
+\doxysubsubsection{\texorpdfstring{writeRegister()}{writeRegister()}}
+{\footnotesize\ttfamily \label{class_t_l_a2518_a8b7ae262675fa14f1e30d0069dffcbb8} 
+void TLA2518\+::write\+Register (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{address}{, }\item[{uint8\+\_\+t}]{value}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \ \ uint8\_t\ tx\_buffer[3]\ =\ \{TLA\_CMD\_WRITE,address,value\};}
+\DoxyCodeLine{00024\ \ \ spi\_transaction\_t\ t\ =\ \{\};}
+\DoxyCodeLine{00025\ \ \ t.length\ =\ 8*\textcolor{keyword}{sizeof}(tx\_buffer);}
+\DoxyCodeLine{00026\ \ \ t.tx\_buffer\ =\ (\textcolor{keyword}{const}\ \textcolor{keywordtype}{void}*)tx\_buffer;}
+\DoxyCodeLine{00027\ \ \ spi\_device\_transmit(adcHandle,\&t);}
+\DoxyCodeLine{00028\ \};}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+ECU\+\_\+25/components/\+IO/TLA2518.\+h\item 
+ECU\+\_\+25/components/\+IO/TLA2518.\+cpp\end{DoxyCompactItemize}

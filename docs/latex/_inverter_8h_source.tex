@@ -1,0 +1,38 @@
+\doxysection{Inverter.\+h}
+\hypertarget{_inverter_8h_source}{}\label{_inverter_8h_source}\index{ECU\_25/components/Devices/Inverter.h@{ECU\_25/components/Devices/Inverter.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ \_INVERTER\_}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ \_INVERTER\_}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <stdio.h>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}freertos/FreeRTOS.h"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}freertos/task.h"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}freertos/semphr.h"{}}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_c_a_n___config_8hpp}{CAN\_Config.hpp}}"{}}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ \textcolor{keyword}{class\ }Inverter\{}
+\DoxyCodeLine{00011\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00012\ \ \ \ \ \textcolor{comment}{//Singleton\ device\ class\ structure}}
+\DoxyCodeLine{00013\ \ \ \ \ \textcolor{keyword}{static}\ Inverter*\ instancePtr;}
+\DoxyCodeLine{00014\ \ \ \ \ \textcolor{keyword}{static}\ SemaphoreHandle\_t\ mutex;}
+\DoxyCodeLine{00015\ \ \ \ \ Inverter();}
+\DoxyCodeLine{00016\ \ \ \ \ \textcolor{keywordtype}{float}\ torqueLimit;}
+\DoxyCodeLine{00017\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{comment}{//Deleting\ the\ copy\ constructor\ and\ copy\ reference\ constructor\ to\ prevent\ copies}}
+\DoxyCodeLine{00019\ \ \ \ \ Inverter(\textcolor{keyword}{const}\ Inverter\ \&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00020\ \ \ \ \ Inverter\ \&operator=(\textcolor{keyword}{const}\ Inverter\ \&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00021\ \ \ \ \ Inverter(Inverter\ \&\&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00022\ \ \ \ \ Inverter\ \&operator=(Inverter\ \&\&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keyword}{static}\ Inverter*\ Get();}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keywordtype}{void}\ Disable();}
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keywordtype}{void}\ Enable();}
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keywordtype}{void}\ SetTorqueRequest(\textcolor{keywordtype}{float}\ throttle);}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \};}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

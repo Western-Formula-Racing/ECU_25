@@ -1,0 +1,1206 @@
+\doxysection{GUI Class Reference}
+\hypertarget{class_g_u_i}{}\label{class_g_u_i}\index{GUI@{GUI}}
+
+
+Collaboration diagram for GUI\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=188pt]{class_g_u_i__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_g_u_i_1_1_c_string_equal}{CString\+Equal}}
+\item 
+struct \mbox{\hyperlink{struct_g_u_i_1_1_c_string_hash}{CString\+Hash}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_g_u_i_aed1faa979b304d7873139b8d360d17d1}{register\+\_\+int\+\_\+sendable}} (char \texorpdfstring{$\ast$}{*}key, int(\texorpdfstring{$\ast$}{*})())
+\item 
+void \mbox{\hyperlink{class_g_u_i_a499f8639747c951235962e437a821190}{register\+\_\+float\+\_\+sendable}} (char \texorpdfstring{$\ast$}{*}key, float(\texorpdfstring{$\ast$}{*})())
+\item 
+void \mbox{\hyperlink{class_g_u_i_a723f6d9b3f859a0c99d4c602f9259765}{register\+\_\+string\+\_\+sendable}} (char \texorpdfstring{$\ast$}{*}key, char \texorpdfstring{$\ast$}{*}(\texorpdfstring{$\ast$}{*})())
+\item 
+void \mbox{\hyperlink{class_g_u_i_a6f2e8d59a7a0c9a1626198c805d2be96}{register\+\_\+bool\+\_\+sendable}} (char \texorpdfstring{$\ast$}{*}key, bool(\texorpdfstring{$\ast$}{*})())
+\item 
+void \mbox{\hyperlink{class_g_u_i_a0cb8be1b0a1a4b049d1f800f653266bb}{register\+\_\+int\+\_\+recievable}} (char \texorpdfstring{$\ast$}{*}key, \mbox{\hyperlink{class_recievable}{Recievable}}$<$ int $>$ \texorpdfstring{$\ast$}{*}int\+\_\+recievable)
+\item 
+void \mbox{\hyperlink{class_g_u_i_a2079e2384ec61311815fc006267605c4}{register\+\_\+float\+\_\+recievable}} (char \texorpdfstring{$\ast$}{*}key, \mbox{\hyperlink{class_recievable}{Recievable}}$<$ float $>$ \texorpdfstring{$\ast$}{*}float\+\_\+recievable)
+\item 
+void \mbox{\hyperlink{class_g_u_i_ac9b3118bdbbe07b1c32af0eb07851dff}{register\+\_\+string\+\_\+recievable}} (char \texorpdfstring{$\ast$}{*}key, \mbox{\hyperlink{class_recievable}{Recievable}}$<$ char \texorpdfstring{$\ast$}{*} $>$ \texorpdfstring{$\ast$}{*}string\+\_\+recievable)
+\item 
+void \mbox{\hyperlink{class_g_u_i_a2e610967424f7ee9db81e8d1a9101593}{register\+\_\+button\+\_\+recievable}} (char \texorpdfstring{$\ast$}{*}key, \mbox{\hyperlink{class_button_recievable}{Button\+Recievable}} \texorpdfstring{$\ast$}{*}button\+\_\+recievable)
+\item 
+\mbox{\hyperlink{class_recievable}{Recievable}}$<$ int $>$ \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_g_u_i_a42ba1d38259e50fa72ddc271e05c5281}{get\+\_\+int\+\_\+recievable}} (char \texorpdfstring{$\ast$}{*}key)
+\item 
+\mbox{\hyperlink{class_recievable}{Recievable}}$<$ float $>$ \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_g_u_i_aa629403561db04716dbe282d436b745c}{get\+\_\+float\+\_\+recievable}} (char \texorpdfstring{$\ast$}{*}key)
+\item 
+\mbox{\hyperlink{class_recievable}{Recievable}}$<$ char \texorpdfstring{$\ast$}{*} $>$ \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_g_u_i_a93a952a0677e8622c28d20b08b73ebae}{get\+\_\+string\+\_\+recievable}} (char \texorpdfstring{$\ast$}{*}key)
+\item 
+void \mbox{\hyperlink{class_g_u_i_a4652ae7b3876f0c9ba098c477503783e}{update\+\_\+int\+\_\+sendable}} (char \texorpdfstring{$\ast$}{*}key, int(\texorpdfstring{$\ast$}{*}callable)())
+\item 
+void \mbox{\hyperlink{class_g_u_i_ab6d362c5fb6ece8ca4a8322dfc2039c4}{update\+\_\+float\+\_\+sendable}} (char \texorpdfstring{$\ast$}{*}key, float(\texorpdfstring{$\ast$}{*}callable)())
+\item 
+void \mbox{\hyperlink{class_g_u_i_a301ea9958abb742f207dda552fa0ef86}{update\+\_\+string\+\_\+sendable}} (char \texorpdfstring{$\ast$}{*}key, char \texorpdfstring{$\ast$}{*}(\texorpdfstring{$\ast$}{*}callable)())
+\item 
+void \mbox{\hyperlink{class_g_u_i_a3c3c6be8e1160e13ce480640336d5ed8}{update\+\_\+bool\+\_\+sendable}} (char \texorpdfstring{$\ast$}{*}key, bool(\texorpdfstring{$\ast$}{*}callable)())
+\item 
+void \mbox{\hyperlink{class_g_u_i_afc8fdd38418b36f27c3c3f2e23553755}{remove\+\_\+sendable}} (char \texorpdfstring{$\ast$}{*}key)
+\item 
+\Hypertarget{class_g_u_i_a0b8d80c1dc4e62859e0f0b80d6175205}\label{class_g_u_i_a0b8d80c1dc4e62859e0f0b80d6175205} 
+{\bfseries GUI} (const \mbox{\hyperlink{class_g_u_i}{GUI}} \&)=delete
+\item 
+\Hypertarget{class_g_u_i_a47024380c0ade5d230264ea8accb8a94}\label{class_g_u_i_a47024380c0ade5d230264ea8accb8a94} 
+\mbox{\hyperlink{class_g_u_i}{GUI}} \& {\bfseries operator=} (const \mbox{\hyperlink{class_g_u_i}{GUI}} \&)=delete
+\item 
+\Hypertarget{class_g_u_i_a9bbaf9f1720fecb1f260f10473fe1323}\label{class_g_u_i_a9bbaf9f1720fecb1f260f10473fe1323} 
+{\bfseries GUI} (\mbox{\hyperlink{class_g_u_i}{GUI}} \&\&)=delete
+\item 
+\Hypertarget{class_g_u_i_a1d5bf54e5c36e1035f2da8ebf2928ed5}\label{class_g_u_i_a1d5bf54e5c36e1035f2da8ebf2928ed5} 
+\mbox{\hyperlink{class_g_u_i}{GUI}} \& {\bfseries operator=} (\mbox{\hyperlink{class_g_u_i}{GUI}} \&\&)=delete
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static bool \mbox{\hyperlink{class_g_u_i_aa4c7874d099f4b3dc5c99f03608761e5}{is\+\_\+sendable\+\_\+registered}} (char \texorpdfstring{$\ast$}{*}key)
+\item 
+static bool \mbox{\hyperlink{class_g_u_i_aec90e00a4d3b9076338b1a3684c198b0}{is\+\_\+recievable\+\_\+registered}} (char \texorpdfstring{$\ast$}{*}key)
+\item 
+static \mbox{\hyperlink{class_g_u_i}{GUI}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_g_u_i_ae32bfd7db130ede47a1a46d72b4a88e6}{Get}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{class_g_u_i_a0f85c63cce4550866a7ecbee1216631e}{start\+\_\+soft\+\_\+ap}} (void)
+\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{class_g_u_i_a3ec491bb3c82a1831c3b2370cf0c7a28}{stop\+\_\+soft\+\_\+ap}} (void)
+\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{class_g_u_i_ac42ca7ee996ca00831e25e521394296e}{start\+\_\+webserver}} (void)
+\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{class_g_u_i_ab180c6d6795d5ca1c4e10c0be5350846}{stop\+\_\+webserver}} (void)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static esp\+\_\+err\+\_\+t \mbox{\hyperlink{class_g_u_i_afaa2cd55aeb7ff8aa3c9e53f60542d4f}{handle\+\_\+root}} (httpd\+\_\+req\+\_\+t \texorpdfstring{$\ast$}{*}req)
+\item 
+static esp\+\_\+err\+\_\+t \mbox{\hyperlink{class_g_u_i_a2f5dc0fe329d1232a352925d3b253067}{handle\+\_\+js}} (httpd\+\_\+req\+\_\+t \texorpdfstring{$\ast$}{*}req)
+\item 
+static esp\+\_\+err\+\_\+t \mbox{\hyperlink{class_g_u_i_aee80473101eb49a41e0735ba17ca4468}{handle\+\_\+update}} (httpd\+\_\+req\+\_\+t \texorpdfstring{$\ast$}{*}req)
+\item 
+static esp\+\_\+err\+\_\+t \mbox{\hyperlink{class_g_u_i_a26f1c4cd83de0f735c81a32061b6e0c5}{handle\+\_\+recievable}} (httpd\+\_\+req\+\_\+t \texorpdfstring{$\ast$}{*}req)
+\item 
+static esp\+\_\+err\+\_\+t \mbox{\hyperlink{class_g_u_i_a29c8cc0f19b210da7439791c5d92400e}{handle\+\_\+fetch\+\_\+recievables}} (httpd\+\_\+req\+\_\+t \texorpdfstring{$\ast$}{*}req)
+\item 
+static esp\+\_\+err\+\_\+t \mbox{\hyperlink{class_g_u_i_a1e7b9f9cbcc78567a2c0f9b7c7dc5287}{handle\+\_\+button\+\_\+command}} (httpd\+\_\+req\+\_\+t \texorpdfstring{$\ast$}{*}req)
+\item 
+static char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_g_u_i_ae89098481089b08252eea7c4b83cfd03}{serialize\+\_\+sndb\+\_\+to\+\_\+json}} (void)
+\item 
+static char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_g_u_i_a0674ae9b4b742c5000e9810668552ff7}{serialize\+\_\+rcvb\+\_\+to\+\_\+json}} (void)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_g_u_i_ac106cbe21cba1ae41b83bb83d632e951}\label{class_g_u_i_ac106cbe21cba1ae41b83bb83d632e951} 
+httpd\+\_\+handle\+\_\+t {\bfseries server} = NULL
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_g_u_i_a170cb58c0a13fbfba2a18092ce53608b}\label{class_g_u_i_a170cb58c0a13fbfba2a18092ce53608b} 
+static \mbox{\hyperlink{class_g_u_i}{GUI}} \texorpdfstring{$\ast$}{*} {\bfseries instance\+Ptr} = nullptr
+\item 
+\Hypertarget{class_g_u_i_ae802df3cca744dae905829e545089467}\label{class_g_u_i_ae802df3cca744dae905829e545089467} 
+static Semaphore\+Handle\+\_\+t {\bfseries mutex} = x\+Semaphore\+Create\+Mutex()
+\item 
+static std\+::unordered\+\_\+map$<$ char \texorpdfstring{$\ast$}{*}, int(\texorpdfstring{$\ast$}{*})(), \mbox{\hyperlink{struct_g_u_i_1_1_c_string_hash}{CString\+Hash}}, \mbox{\hyperlink{struct_g_u_i_1_1_c_string_equal}{CString\+Equal}} $>$ \mbox{\hyperlink{class_g_u_i_a76d6cbacb37161d01f08910782876d31}{int\+\_\+callables}} = \{\}
+\item 
+static std\+::unordered\+\_\+map$<$ char \texorpdfstring{$\ast$}{*}, float(\texorpdfstring{$\ast$}{*})(), \mbox{\hyperlink{struct_g_u_i_1_1_c_string_hash}{CString\+Hash}}, \mbox{\hyperlink{struct_g_u_i_1_1_c_string_equal}{CString\+Equal}} $>$ \mbox{\hyperlink{class_g_u_i_a2728be782195c35207f34037fbd9a795}{float\+\_\+callables}} = \{\}
+\item 
+static std\+::unordered\+\_\+map$<$ char \texorpdfstring{$\ast$}{*}, char \texorpdfstring{$\ast$}{*}(\texorpdfstring{$\ast$}{*})(), \mbox{\hyperlink{struct_g_u_i_1_1_c_string_hash}{CString\+Hash}}, \mbox{\hyperlink{struct_g_u_i_1_1_c_string_equal}{CString\+Equal}} $>$ \mbox{\hyperlink{class_g_u_i_a8151955abde9f5a1250f292c53b8c590}{string\+\_\+callables}} = \{\}
+\item 
+static std\+::unordered\+\_\+map$<$ char \texorpdfstring{$\ast$}{*}, bool(\texorpdfstring{$\ast$}{*})(), \mbox{\hyperlink{struct_g_u_i_1_1_c_string_hash}{CString\+Hash}}, \mbox{\hyperlink{struct_g_u_i_1_1_c_string_equal}{CString\+Equal}} $>$ \mbox{\hyperlink{class_g_u_i_a34e67a919b2361720fdb9f8ebeb61799}{bool\+\_\+callables}} = \{\}
+\item 
+static std\+::unordered\+\_\+map$<$ char \texorpdfstring{$\ast$}{*}, \mbox{\hyperlink{class_recievable}{Recievable}}$<$ int $>$ \texorpdfstring{$\ast$}{*}, \mbox{\hyperlink{struct_g_u_i_1_1_c_string_hash}{CString\+Hash}}, \mbox{\hyperlink{struct_g_u_i_1_1_c_string_equal}{CString\+Equal}} $>$ \mbox{\hyperlink{class_g_u_i_abed1af708f4759086249b839b28e089f}{int\+\_\+recievables}} = \{\}
+\item 
+static std\+::unordered\+\_\+map$<$ char \texorpdfstring{$\ast$}{*}, \mbox{\hyperlink{class_recievable}{Recievable}}$<$ float $>$ \texorpdfstring{$\ast$}{*}, \mbox{\hyperlink{struct_g_u_i_1_1_c_string_hash}{CString\+Hash}}, \mbox{\hyperlink{struct_g_u_i_1_1_c_string_equal}{CString\+Equal}} $>$ \mbox{\hyperlink{class_g_u_i_a2bc4878b54c52acbab9060f2321ec373}{float\+\_\+recievables}} = \{\}
+\item 
+static std\+::unordered\+\_\+map$<$ char \texorpdfstring{$\ast$}{*}, \mbox{\hyperlink{class_recievable}{Recievable}}$<$ char \texorpdfstring{$\ast$}{*} $>$ \texorpdfstring{$\ast$}{*}, \mbox{\hyperlink{struct_g_u_i_1_1_c_string_hash}{CString\+Hash}}, \mbox{\hyperlink{struct_g_u_i_1_1_c_string_equal}{CString\+Equal}} $>$ \mbox{\hyperlink{class_g_u_i_a6f6eb037aca743a17701ea281daf983e}{string\+\_\+recievables}} = \{\}
+\item 
+static std\+::unordered\+\_\+map$<$ char \texorpdfstring{$\ast$}{*}, \mbox{\hyperlink{class_button_recievable}{Button\+Recievable}} \texorpdfstring{$\ast$}{*}, \mbox{\hyperlink{struct_g_u_i_1_1_c_string_hash}{CString\+Hash}}, \mbox{\hyperlink{struct_g_u_i_1_1_c_string_equal}{CString\+Equal}} $>$ \mbox{\hyperlink{class_g_u_i_ac12cacbf68ba1a13ef32fd65e6022fb3}{button\+\_\+recievables}} = \{\}
+\end{DoxyCompactItemize}
+
+
+\label{doc-constructors}
+\Hypertarget{class_g_u_i_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_g_u_i_a8cbb3140b7d3c9d8e942d6ce6b60a0e8}\index{GUI@{GUI}!GUI@{GUI}}
+\index{GUI@{GUI}!GUI@{GUI}}
+\doxysubsubsection{\texorpdfstring{GUI()}{GUI()}}
+{\footnotesize\ttfamily \label{class_g_u_i_a8cbb3140b7d3c9d8e942d6ce6b60a0e8} 
+GUI\+::\+GUI (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00017\ \{}
+\DoxyCodeLine{00018\ \ \ \ \ esp\_vfs\_spiffs\_conf\_t\ conf\ =\ \{}
+\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ .base\_path\ =\ \textcolor{stringliteral}{"{}/spiffs"{}},}
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ .partition\_label\ =\ NULL,}
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ .max\_files\ =\ 2,}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ .format\_if\_mount\_failed\ =\ \textcolor{keyword}{true}}
+\DoxyCodeLine{00023\ \ \ \ \ \};}
+\DoxyCodeLine{00024\ \ \ \ \ esp\_vfs\_spiffs\_register(\&conf);}
+\DoxyCodeLine{00025\ \ \ \ \ ESP\_ERROR\_CHECK(start\_soft\_ap());}
+\DoxyCodeLine{00026\ \ \ \ \ ESP\_ERROR\_CHECK(start\_webserver());}
+\DoxyCodeLine{00027\ \ \ \ \ ESP\_LOGI(TAG,\ \textcolor{stringliteral}{"{}GUI\ Initialized"{}});}
+\DoxyCodeLine{00028\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_g_u_i_ac9cae2328dcb5d83bdfaeca49a2eb695}\index{GUI@{GUI}!````~GUI@{\texorpdfstring{$\sim$}{\string~}GUI}}
+\index{````~GUI@{\texorpdfstring{$\sim$}{\string~}GUI}!GUI@{GUI}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}GUI()}{\string~GUI()}}
+{\footnotesize\ttfamily \label{class_g_u_i_ac9cae2328dcb5d83bdfaeca49a2eb695} 
+GUI\+::\texorpdfstring{$\sim$}{\string~}\+GUI (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00747\ \{}
+\DoxyCodeLine{00748\ \ \ \ \ stop\_soft\_ap();}
+\DoxyCodeLine{00749\ \ \ \ \ stop\_webserver();}
+\DoxyCodeLine{00750\ \ \ \ \ ESP\_LOGI(TAG,\ \textcolor{stringliteral}{"{}GUI\ Deinitialized"{}});}
+\DoxyCodeLine{00751\ \}}
+
+\end{DoxyCode}
+
+
+\label{doc-func-members}
+\Hypertarget{class_g_u_i_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_g_u_i_ae32bfd7db130ede47a1a46d72b4a88e6}\index{GUI@{GUI}!Get@{Get}}
+\index{Get@{Get}!GUI@{GUI}}
+\doxysubsubsection{\texorpdfstring{Get()}{Get()}}
+{\footnotesize\ttfamily \label{class_g_u_i_ae32bfd7db130ede47a1a46d72b4a88e6} 
+\mbox{\hyperlink{class_g_u_i}{GUI}} \texorpdfstring{$\ast$}{*} GUI\+::\+Get (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00730\ \{}
+\DoxyCodeLine{00731\ \ \ \ \ \textcolor{keywordflow}{if}\ (instancePtr\ ==\ \textcolor{keyword}{nullptr}\ \&\&\ GUI::mutex)}
+\DoxyCodeLine{00732\ \ \ \ \ \{}
+\DoxyCodeLine{00733\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (xSemaphoreTake(GUI::mutex,\ (TickType\_t)10)\ ==\ pdTRUE)}
+\DoxyCodeLine{00734\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00735\ \ \ \ \ \ \ \ \ \ \ \ \ instancePtr\ =\ \textcolor{keyword}{new}\ GUI();}
+\DoxyCodeLine{00736\ \ \ \ \ \ \ \ \ \ \ \ \ xSemaphoreGive(GUI::mutex);}
+\DoxyCodeLine{00737\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00738\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00739\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00740\ \ \ \ \ \ \ \ \ \ \ \ \ ESP\_LOGW(TAG,\ \textcolor{stringliteral}{"{}Mutex\ couldn't\ be\ obtained"{}});}
+\DoxyCodeLine{00741\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00742\ \ \ \ \ \}}
+\DoxyCodeLine{00743\ \ \ \ \ \textcolor{keywordflow}{return}\ instancePtr;}
+\DoxyCodeLine{00744\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_g_u_i_aa629403561db04716dbe282d436b745c}\index{GUI@{GUI}!get\_float\_recievable@{get\_float\_recievable}}
+\index{get\_float\_recievable@{get\_float\_recievable}!GUI@{GUI}}
+\doxysubsubsection{\texorpdfstring{get\_float\_recievable()}{get\_float\_recievable()}}
+{\footnotesize\ttfamily \label{class_g_u_i_aa629403561db04716dbe282d436b745c} 
+\mbox{\hyperlink{class_recievable}{Recievable}}$<$ float $>$ \texorpdfstring{$\ast$}{*} GUI\+::get\+\_\+float\+\_\+recievable (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{key}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00409\ \{}
+\DoxyCodeLine{00410\ \ \ \ \ \textcolor{keywordflow}{if}\ (float\_recievables.find(key)\ !=\ float\_recievables.end())}
+\DoxyCodeLine{00411\ \ \ \ \ \{}
+\DoxyCodeLine{00412\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ float\_recievables.at(key);}
+\DoxyCodeLine{00413\ \ \ \ \ \}\ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00414\ \ \ \ \ \{}
+\DoxyCodeLine{00415\ \ \ \ \ \ \ \ \ ESP\_LOGW(TAG,\ \textcolor{stringliteral}{"{}Float\ recievable\ \(\backslash\)"{}\%s\(\backslash\)"{}\ is\ not\ registered"{}},\ key);}
+\DoxyCodeLine{00416\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00417\ \ \ \ \ \}}
+\DoxyCodeLine{00418\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_g_u_i_a42ba1d38259e50fa72ddc271e05c5281}\index{GUI@{GUI}!get\_int\_recievable@{get\_int\_recievable}}
+\index{get\_int\_recievable@{get\_int\_recievable}!GUI@{GUI}}
+\doxysubsubsection{\texorpdfstring{get\_int\_recievable()}{get\_int\_recievable()}}
+{\footnotesize\ttfamily \label{class_g_u_i_a42ba1d38259e50fa72ddc271e05c5281} 
+\mbox{\hyperlink{class_recievable}{Recievable}}$<$ int $>$ \texorpdfstring{$\ast$}{*} GUI\+::get\+\_\+int\+\_\+recievable (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{key}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00397\ \{\ \ \ \ }
+\DoxyCodeLine{00398\ \ \ \ \ \textcolor{keywordflow}{if}\ (int\_recievables.find(key)\ !=\ int\_recievables.end())}
+\DoxyCodeLine{00399\ \ \ \ \ \{}
+\DoxyCodeLine{00400\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ int\_recievables.at(key);}
+\DoxyCodeLine{00401\ \ \ \ \ \}\ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00402\ \ \ \ \ \{}
+\DoxyCodeLine{00403\ \ \ \ \ \ \ \ \ ESP\_LOGW(TAG,\ \textcolor{stringliteral}{"{}Int\ recievable\ \(\backslash\)"{}\%s\(\backslash\)"{}\ is\ not\ registered"{}},\ key);}
+\DoxyCodeLine{00404\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00405\ \ \ \ \ \}}
+\DoxyCodeLine{00406\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_g_u_i_a93a952a0677e8622c28d20b08b73ebae}\index{GUI@{GUI}!get\_string\_recievable@{get\_string\_recievable}}
+\index{get\_string\_recievable@{get\_string\_recievable}!GUI@{GUI}}
+\doxysubsubsection{\texorpdfstring{get\_string\_recievable()}{get\_string\_recievable()}}
+{\footnotesize\ttfamily \label{class_g_u_i_a93a952a0677e8622c28d20b08b73ebae} 
+\mbox{\hyperlink{class_recievable}{Recievable}}$<$ char \texorpdfstring{$\ast$}{*} $>$ \texorpdfstring{$\ast$}{*} GUI\+::get\+\_\+string\+\_\+recievable (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{key}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00421\ \{}
+\DoxyCodeLine{00422\ \ \ \ \ \textcolor{keywordflow}{if}\ (string\_recievables.find(key)\ !=\ string\_recievables.end())}
+\DoxyCodeLine{00423\ \ \ \ \ \{}
+\DoxyCodeLine{00424\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ string\_recievables.at(key);}
+\DoxyCodeLine{00425\ \ \ \ \ \}\ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00426\ \ \ \ \ \{}
+\DoxyCodeLine{00427\ \ \ \ \ \ \ \ \ ESP\_LOGW(TAG,\ \textcolor{stringliteral}{"{}String\ recievable\ \(\backslash\)"{}\%s\(\backslash\)"{}\ is\ not\ registered"{}},\ key);}
+\DoxyCodeLine{00428\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00429\ \ \ \ \ \}}
+\DoxyCodeLine{00430\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_g_u_i_a1e7b9f9cbcc78567a2c0f9b7c7dc5287}\index{GUI@{GUI}!handle\_button\_command@{handle\_button\_command}}
+\index{handle\_button\_command@{handle\_button\_command}!GUI@{GUI}}
+\doxysubsubsection{\texorpdfstring{handle\_button\_command()}{handle\_button\_command()}}
+{\footnotesize\ttfamily \label{class_g_u_i_a1e7b9f9cbcc78567a2c0f9b7c7dc5287} 
+esp\+\_\+err\+\_\+t GUI\+::handle\+\_\+button\+\_\+command (\begin{DoxyParamCaption}\item[{httpd\+\_\+req\+\_\+t \texorpdfstring{$\ast$}{*}}]{req}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00163\ \ \ \ \ \textcolor{keywordtype}{char}\ req\_content[BUTTON\_BUFFER\_SIZE];}
+\DoxyCodeLine{00164\ \ \ \ \ memset(req\_content,\ \textcolor{charliteral}{'\(\backslash\)0'},\ BUTTON\_BUFFER\_SIZE);}
+\DoxyCodeLine{00165\ \ \ \ \ httpd\_req\_recv(req,\ req\_content,\ BUTTON\_BUFFER\_SIZE);\ \ \ \ }
+\DoxyCodeLine{00166\ }
+\DoxyCodeLine{00167\ \ \ \ \ \textcolor{comment}{//\ Get\ recievable}}
+\DoxyCodeLine{00168\ \ \ \ \ \textcolor{keywordflow}{if}\ (is\_recievable\_registered(req\_content))}
+\DoxyCodeLine{00169\ \ \ \ \ \{}
+\DoxyCodeLine{00170\ \ \ \ \ \ \ \ \ ButtonRecievable*\ button\_recievable\ =\ button\_recievables.at(req\_content);}
+\DoxyCodeLine{00171\ \ \ \ \ \ \ \ \ button\_recievable-\/>call();}
+\DoxyCodeLine{00172\ \ \ \ \ \}}
+\DoxyCodeLine{00173\ }
+\DoxyCodeLine{00174\ \ \ \ \ httpd\_resp\_set\_type(req,\ \textcolor{stringliteral}{"{}application/text"{}});}
+\DoxyCodeLine{00175\ \ \ \ \ httpd\_resp\_send(req,\ \textcolor{stringliteral}{"{}Successful"{}},\ 11);}
+\DoxyCodeLine{00176\ }
+\DoxyCodeLine{00177\ \ \ \ \ \textcolor{keywordflow}{return}\ ESP\_OK;}
+\DoxyCodeLine{00178\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_g_u_i_a29c8cc0f19b210da7439791c5d92400e}\index{GUI@{GUI}!handle\_fetch\_recievables@{handle\_fetch\_recievables}}
+\index{handle\_fetch\_recievables@{handle\_fetch\_recievables}!GUI@{GUI}}
+\doxysubsubsection{\texorpdfstring{handle\_fetch\_recievables()}{handle\_fetch\_recievables()}}
+{\footnotesize\ttfamily \label{class_g_u_i_a29c8cc0f19b210da7439791c5d92400e} 
+esp\+\_\+err\+\_\+t GUI\+::handle\+\_\+fetch\+\_\+recievables (\begin{DoxyParamCaption}\item[{httpd\+\_\+req\+\_\+t \texorpdfstring{$\ast$}{*}}]{req}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00152\ \{}
+\DoxyCodeLine{00153\ \ \ \ \ \textcolor{keywordtype}{char}*\ resp\_str\ =\ serialize\_rcvb\_to\_json();}
+\DoxyCodeLine{00154\ }
+\DoxyCodeLine{00155\ \ \ \ \ \textcolor{comment}{//\ Send\ response}}
+\DoxyCodeLine{00156\ \ \ \ \ httpd\_resp\_set\_type(req,\ HTTPD\_TYPE\_JSON);}
+\DoxyCodeLine{00157\ \ \ \ \ httpd\_resp\_send(req,\ resp\_str,\ strlen(resp\_str));}
+\DoxyCodeLine{00158\ }
+\DoxyCodeLine{00159\ \ \ \ \ \textcolor{keywordflow}{return}\ ESP\_OK;}
+\DoxyCodeLine{00160\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_g_u_i_a2f5dc0fe329d1232a352925d3b253067}\index{GUI@{GUI}!handle\_js@{handle\_js}}
+\index{handle\_js@{handle\_js}!GUI@{GUI}}
+\doxysubsubsection{\texorpdfstring{handle\_js()}{handle\_js()}}
+{\footnotesize\ttfamily \label{class_g_u_i_a2f5dc0fe329d1232a352925d3b253067} 
+esp\+\_\+err\+\_\+t GUI\+::handle\+\_\+js (\begin{DoxyParamCaption}\item[{httpd\+\_\+req\+\_\+t \texorpdfstring{$\ast$}{*}}]{req}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00050\ \{}
+\DoxyCodeLine{00051\ \ \ \ \ FILE*\ f\_js\ =\ fopen(\textcolor{stringliteral}{"{}/spiffs/static.js"{}},\ \textcolor{stringliteral}{"{}r"{}});}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keywordflow}{if}\ (f\_js\ ==\ NULL)}
+\DoxyCodeLine{00054\ \ \ \ \ \{}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ ESP\_LOGE(TAG,\ \textcolor{stringliteral}{"{}Could\ not\ find\ js\ file\ in\ SPIFFS"{}});}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ESP\_FAIL;}
+\DoxyCodeLine{00057\ \ \ \ \ \}}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00059\ \ \ \ \ \textcolor{keywordtype}{char}*\ buffer\ =\ \textcolor{keyword}{new}\ \textcolor{keywordtype}{char}[JS\_SIZE];}
+\DoxyCodeLine{00060\ \ \ \ \ memset(buffer,\ 0,\ JS\_SIZE);}
+\DoxyCodeLine{00061\ \ \ \ \ fread(buffer,\ 1,\ JS\_SIZE,\ f\_js);}
+\DoxyCodeLine{00062\ \ \ \ \ httpd\_resp\_set\_type(req,\ \textcolor{stringliteral}{"{}application/text"{}});}
+\DoxyCodeLine{00063\ \ \ \ \ httpd\_resp\_send(req,\ buffer,\ JS\_SIZE);}
+\DoxyCodeLine{00064\ \ \ \ \ fclose(f\_js);}
+\DoxyCodeLine{00065\ \ \ \ \ }
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keywordflow}{return}\ ESP\_OK;}
+\DoxyCodeLine{00067\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_g_u_i_a26f1c4cd83de0f735c81a32061b6e0c5}\index{GUI@{GUI}!handle\_recievable@{handle\_recievable}}
+\index{handle\_recievable@{handle\_recievable}!GUI@{GUI}}
+\doxysubsubsection{\texorpdfstring{handle\_recievable()}{handle\_recievable()}}
+{\footnotesize\ttfamily \label{class_g_u_i_a26f1c4cd83de0f735c81a32061b6e0c5} 
+esp\+\_\+err\+\_\+t GUI\+::handle\+\_\+recievable (\begin{DoxyParamCaption}\item[{httpd\+\_\+req\+\_\+t \texorpdfstring{$\ast$}{*}}]{req}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00080\ \{}
+\DoxyCodeLine{00081\ \ \ \ \ \textcolor{keywordtype}{char}*\ req\_content\ =\ \textcolor{keyword}{new}\ \textcolor{keywordtype}{char}[RECV\_BUFFER\_SIZE];}
+\DoxyCodeLine{00082\ \ \ \ \ httpd\_req\_recv(req,\ req\_content,\ RECV\_BUFFER\_SIZE);}
+\DoxyCodeLine{00083\ }
+\DoxyCodeLine{00084\ \ \ \ \ \textcolor{comment}{//\ Parse\ content}}
+\DoxyCodeLine{00085\ \ \ \ \ \textcolor{keywordtype}{char}*\ buffer\ =\ \textcolor{keyword}{new}\ \textcolor{keywordtype}{char}[ENTRY\_BUFFER\_SIZE];}
+\DoxyCodeLine{00086\ \ \ \ \ memset(buffer,\ \textcolor{charliteral}{'\(\backslash\)0'},\ ENTRY\_BUFFER\_SIZE);}
+\DoxyCodeLine{00087\ }
+\DoxyCodeLine{00088\ \ \ \ \ \textcolor{keywordtype}{int}\ i\ =\ 0;}
+\DoxyCodeLine{00089\ \ \ \ \ \textcolor{keywordtype}{int}\ entry\ =\ 0;}
+\DoxyCodeLine{00090\ }
+\DoxyCodeLine{00091\ \ \ \ \ \textcolor{keywordtype}{char}*\ key\ =\ \textcolor{keyword}{new}\ \textcolor{keywordtype}{char}[ENTRY\_BUFFER\_SIZE];}
+\DoxyCodeLine{00092\ \ \ \ \ \textcolor{keywordtype}{char}*\ s\_value\ =\ \textcolor{keyword}{new}\ \textcolor{keywordtype}{char}[ENTRY\_BUFFER\_SIZE];}
+\DoxyCodeLine{00093\ \ \ \ \ \textcolor{keywordtype}{char}*\ type\ =\ \textcolor{keyword}{new}\ \textcolor{keywordtype}{char}[ENTRY\_BUFFER\_SIZE];}
+\DoxyCodeLine{00094\ }
+\DoxyCodeLine{00095\ \ \ \ \ \textcolor{keywordflow}{while}\ (req\_content[i]\ !=\ \textcolor{charliteral}{'\(\backslash\)0'}\ \&\&\ entry\ <\ 3)}
+\DoxyCodeLine{00096\ \ \ \ \ \{}
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (req\_content[i]\ ==\ \textcolor{charliteral}{'\(\backslash\)n'})\ }
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (entry\ ==\ 0)}
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ snprintf(key,\ ENTRY\_BUFFER\_SIZE-\/1,\ \textcolor{stringliteral}{"{}\%s"{}},\ buffer);}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (entry\ ==\ 1)}
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ snprintf(s\_value,\ ENTRY\_BUFFER\_SIZE-\/1,\ \textcolor{stringliteral}{"{}\%s"{}},\ buffer);}
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (entry\ ==\ 2)}
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ snprintf(type,\ ENTRY\_BUFFER\_SIZE-\/1,\ \textcolor{stringliteral}{"{}\%s"{}},\ buffer);}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \ \ \ \ strcpy(buffer,\ \textcolor{stringliteral}{"{}"{}});}
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ \ \ \ \ entry++;}
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ }
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ len\ =\ strlen(buffer);}
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ \ \ \ \ buffer[len]\ =\ req\_content[i];}
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \ \ \ \ buffer[len\ +\ 1]\ =\ \textcolor{charliteral}{'\(\backslash\)0'};}
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00118\ }
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ i++;}
+\DoxyCodeLine{00120\ \ \ \ \ \}}
+\DoxyCodeLine{00121\ }
+\DoxyCodeLine{00122\ \ \ \ \ \textcolor{keyword}{delete}[]\ buffer;}
+\DoxyCodeLine{00123\ }
+\DoxyCodeLine{00124\ \ \ \ \ \textcolor{comment}{//\ Edit\ recievable\ value}}
+\DoxyCodeLine{00125\ \ \ \ \ \textcolor{keywordflow}{if}\ (is\_recievable\_registered(key))\ \{}
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (strcmp(type,\ \textcolor{stringliteral}{"{}recievable>int"{}})\ ==\ 0\ ||\ strcmp(type,\ \textcolor{stringliteral}{"{}recievable>option>int"{}})\ ==\ 0)}
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ value\ =\ atoi(s\_value);}
+\DoxyCodeLine{00129\ }
+\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ \ \ \ \ Recievable<int>*\ rcbl\ =\ int\_recievables.at(key);}
+\DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ \ \ \ \ rcbl-\/>set\_value(value);}
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (strcmp(type,\ \textcolor{stringliteral}{"{}recievable>float"{}})\ ==\ 0\ ||\ strcmp(type,\ \textcolor{stringliteral}{"{}recievable>option>float"{}})\ ==\ 0)}
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ value\ =\ atof(s\_value);}
+\DoxyCodeLine{00135\ }
+\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ \ \ \ \ Recievable<float>*\ rcbl\ =\ float\_recievables.at(key);}
+\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ \ \ \ \ rcbl-\/>set\_value(value);}
+\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (strcmp(type,\ \textcolor{stringliteral}{"{}recievable>string"{}})\ ==\ 0\ ||\ strcmp(type,\ \textcolor{stringliteral}{"{}recievable>option>string"{}})\ ==\ 0)}
+\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ \ \ \ \ Recievable<char*>*\ rcbl\ =\ string\_recievables.at(key);}
+\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ \ \ \ \ rcbl-\/>set\_value(s\_value);}
+\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00143\ \ \ \ \ \}}
+\DoxyCodeLine{00144\ }
+\DoxyCodeLine{00145\ \ \ \ \ httpd\_resp\_set\_type(req,\ \textcolor{stringliteral}{"{}application/text"{}});}
+\DoxyCodeLine{00146\ \ \ \ \ httpd\_resp\_send(req,\ \textcolor{stringliteral}{"{}Successful"{}},\ 11);}
+\DoxyCodeLine{00147\ }
+\DoxyCodeLine{00148\ \ \ \ \ \textcolor{keywordflow}{return}\ ESP\_OK;}
+\DoxyCodeLine{00149\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_g_u_i_afaa2cd55aeb7ff8aa3c9e53f60542d4f}\index{GUI@{GUI}!handle\_root@{handle\_root}}
+\index{handle\_root@{handle\_root}!GUI@{GUI}}
+\doxysubsubsection{\texorpdfstring{handle\_root()}{handle\_root()}}
+{\footnotesize\ttfamily \label{class_g_u_i_afaa2cd55aeb7ff8aa3c9e53f60542d4f} 
+esp\+\_\+err\+\_\+t GUI\+::handle\+\_\+root (\begin{DoxyParamCaption}\item[{httpd\+\_\+req\+\_\+t \texorpdfstring{$\ast$}{*}}]{req}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00031\ \{}
+\DoxyCodeLine{00032\ \ \ \ \ FILE*\ f\_html\ =\ fopen(\textcolor{stringliteral}{"{}/spiffs/static.html"{}},\ \textcolor{stringliteral}{"{}r"{}});}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keywordflow}{if}\ (f\_html\ ==\ NULL)}
+\DoxyCodeLine{00035\ \ \ \ \ \{}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ ESP\_LOGE(TAG,\ \textcolor{stringliteral}{"{}Could\ not\ find\ html\ file\ in\ SPIFFS"{}});}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ESP\_FAIL;}
+\DoxyCodeLine{00038\ \ \ \ \ \}}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keywordtype}{char}*\ buffer\ =\ \textcolor{keyword}{new}\ \textcolor{keywordtype}{char}[HTML\_SIZE];}
+\DoxyCodeLine{00041\ \ \ \ \ memset(buffer,\ 0,\ HTML\_SIZE);}
+\DoxyCodeLine{00042\ \ \ \ \ fread(buffer,\ 1,\ HTML\_SIZE,\ f\_html);}
+\DoxyCodeLine{00043\ \ \ \ \ httpd\_resp\_set\_type(req,\ \textcolor{stringliteral}{"{}text/html"{}});}
+\DoxyCodeLine{00044\ \ \ \ \ httpd\_resp\_send(req,\ buffer,\ HTML\_SIZE);}
+\DoxyCodeLine{00045\ \ \ \ \ fclose(f\_html);}
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keywordflow}{return}\ ESP\_OK;}
+\DoxyCodeLine{00047\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_g_u_i_aee80473101eb49a41e0735ba17ca4468}\index{GUI@{GUI}!handle\_update@{handle\_update}}
+\index{handle\_update@{handle\_update}!GUI@{GUI}}
+\doxysubsubsection{\texorpdfstring{handle\_update()}{handle\_update()}}
+{\footnotesize\ttfamily \label{class_g_u_i_aee80473101eb49a41e0735ba17ca4468} 
+esp\+\_\+err\+\_\+t GUI\+::handle\+\_\+update (\begin{DoxyParamCaption}\item[{httpd\+\_\+req\+\_\+t \texorpdfstring{$\ast$}{*}}]{req}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00070\ \{}
+\DoxyCodeLine{00071\ \ \ \ \ \textcolor{keywordtype}{char}*\ resp\_str\ =\ serialize\_sndb\_to\_json();}
+\DoxyCodeLine{00072\ \ \ \ \ httpd\_resp\_set\_type(req,\ HTTPD\_TYPE\_JSON);}
+\DoxyCodeLine{00073\ \ \ \ \ httpd\_resp\_send(req,\ resp\_str,\ strlen(resp\_str));}
+\DoxyCodeLine{00074\ }
+\DoxyCodeLine{00075\ \ \ \ \ \textcolor{keyword}{delete}[]\ resp\_str;}
+\DoxyCodeLine{00076\ \ \ \ \ \textcolor{keywordflow}{return}\ ESP\_OK;}
+\DoxyCodeLine{00077\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_g_u_i_aec90e00a4d3b9076338b1a3684c198b0}\index{GUI@{GUI}!is\_recievable\_registered@{is\_recievable\_registered}}
+\index{is\_recievable\_registered@{is\_recievable\_registered}!GUI@{GUI}}
+\doxysubsubsection{\texorpdfstring{is\_recievable\_registered()}{is\_recievable\_registered()}}
+{\footnotesize\ttfamily \label{class_g_u_i_aec90e00a4d3b9076338b1a3684c198b0} 
+bool GUI\+::is\+\_\+recievable\+\_\+registered (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{key}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00518\ \{}
+\DoxyCodeLine{00519\ \ \ \ \ \textcolor{keywordflow}{if}\ (int\_recievables.find(key)\ !=\ int\_recievables.end()\ ||\ \(\backslash\)}
+\DoxyCodeLine{00520\ \ \ \ \ \ \ \ \ float\_recievables.find(key)\ !=\ float\_recievables.end()\ ||\ \(\backslash\)}
+\DoxyCodeLine{00521\ \ \ \ \ \ \ \ \ string\_recievables.find(key)\ !=\ string\_recievables.end()\ ||\ \(\backslash\)}
+\DoxyCodeLine{00522\ \ \ \ \ \ \ \ \ button\_recievables.find(key)\ !=\ button\_recievables.end())}
+\DoxyCodeLine{00523\ \ \ \ \ \{}
+\DoxyCodeLine{00524\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00525\ \ \ \ \ \}\ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00526\ \ \ \ \ \{}
+\DoxyCodeLine{00527\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00528\ \ \ \ \ \}}
+\DoxyCodeLine{00529\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_g_u_i_aa4c7874d099f4b3dc5c99f03608761e5}\index{GUI@{GUI}!is\_sendable\_registered@{is\_sendable\_registered}}
+\index{is\_sendable\_registered@{is\_sendable\_registered}!GUI@{GUI}}
+\doxysubsubsection{\texorpdfstring{is\_sendable\_registered()}{is\_sendable\_registered()}}
+{\footnotesize\ttfamily \label{class_g_u_i_aa4c7874d099f4b3dc5c99f03608761e5} 
+bool GUI\+::is\+\_\+sendable\+\_\+registered (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{key}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00504\ \{}
+\DoxyCodeLine{00505\ \ \ \ \ \textcolor{keywordflow}{if}\ (int\_callables.find(key)\ !=\ int\_callables.end()\ ||\ \(\backslash\)}
+\DoxyCodeLine{00506\ \ \ \ \ \ \ \ \ float\_callables.find(key)\ !=\ float\_callables.end()\ ||\ \(\backslash\)}
+\DoxyCodeLine{00507\ \ \ \ \ \ \ \ \ string\_callables.find(key)\ !=\ string\_callables.end()\ ||\ \(\backslash\)}
+\DoxyCodeLine{00508\ \ \ \ \ \ \ \ \ bool\_callables.find(key)\ !=\ bool\_callables.end())}
+\DoxyCodeLine{00509\ \ \ \ \ \{}
+\DoxyCodeLine{00510\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00511\ \ \ \ \ \}\ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00512\ \ \ \ \ \{}
+\DoxyCodeLine{00513\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00514\ \ \ \ \ \}}
+\DoxyCodeLine{00515\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_g_u_i_a6f2e8d59a7a0c9a1626198c805d2be96}\index{GUI@{GUI}!register\_bool\_sendable@{register\_bool\_sendable}}
+\index{register\_bool\_sendable@{register\_bool\_sendable}!GUI@{GUI}}
+\doxysubsubsection{\texorpdfstring{register\_bool\_sendable()}{register\_bool\_sendable()}}
+{\footnotesize\ttfamily \label{class_g_u_i_a6f2e8d59a7a0c9a1626198c805d2be96} 
+void GUI\+::register\+\_\+bool\+\_\+sendable (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{key}{, }\item[{bool(\texorpdfstring{$\ast$}{*}}]{callable~}{)()}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00342\ \{}
+\DoxyCodeLine{00343\ \ \ \ \ \textcolor{keywordflow}{if}\ (!is\_sendable\_registered(key))}
+\DoxyCodeLine{00344\ \ \ \ \ \{}
+\DoxyCodeLine{00345\ \ \ \ \ \ \ \ \ bool\_callables.insert(std::pair<\textcolor{keywordtype}{char}*,\ \textcolor{keywordtype}{bool}(*)()>\{key,\ callable\});}
+\DoxyCodeLine{00346\ \ \ \ \ \}\ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00347\ \ \ \ \ \{}
+\DoxyCodeLine{00348\ \ \ \ \ \ \ \ \ ESP\_LOGW(TAG,\ \textcolor{stringliteral}{"{}Bool\ sendable\ \(\backslash\)"{}\%s\(\backslash\)"{}\ is\ already\ registered."{}},\ key);}
+\DoxyCodeLine{00349\ \ \ \ \ \}}
+\DoxyCodeLine{00350\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_g_u_i_a2e610967424f7ee9db81e8d1a9101593}\index{GUI@{GUI}!register\_button\_recievable@{register\_button\_recievable}}
+\index{register\_button\_recievable@{register\_button\_recievable}!GUI@{GUI}}
+\doxysubsubsection{\texorpdfstring{register\_button\_recievable()}{register\_button\_recievable()}}
+{\footnotesize\ttfamily \label{class_g_u_i_a2e610967424f7ee9db81e8d1a9101593} 
+void GUI\+::register\+\_\+button\+\_\+recievable (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{key}{, }\item[{\mbox{\hyperlink{class_button_recievable}{Button\+Recievable}} \texorpdfstring{$\ast$}{*}}]{button\+\_\+recievable}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00386\ \{}
+\DoxyCodeLine{00387\ \ \ \ \ \textcolor{keywordflow}{if}\ (!is\_recievable\_registered(key))}
+\DoxyCodeLine{00388\ \ \ \ \ \{}
+\DoxyCodeLine{00389\ \ \ \ \ \ \ \ \ button\_recievables.insert(std::pair<char*,\ ButtonRecievable*>\{key,\ button\_recievable\});}
+\DoxyCodeLine{00390\ \ \ \ \ \}\ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00391\ \ \ \ \ \{}
+\DoxyCodeLine{00392\ \ \ \ \ \ \ \ \ ESP\_LOGW(TAG,\ \textcolor{stringliteral}{"{}Button\ recievable\ \(\backslash\)"{}\%s\(\backslash\)"{}\ is\ already\ registered"{}},\ key);}
+\DoxyCodeLine{00393\ \ \ \ \ \}}
+\DoxyCodeLine{00394\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_g_u_i_a2079e2384ec61311815fc006267605c4}\index{GUI@{GUI}!register\_float\_recievable@{register\_float\_recievable}}
+\index{register\_float\_recievable@{register\_float\_recievable}!GUI@{GUI}}
+\doxysubsubsection{\texorpdfstring{register\_float\_recievable()}{register\_float\_recievable()}}
+{\footnotesize\ttfamily \label{class_g_u_i_a2079e2384ec61311815fc006267605c4} 
+void GUI\+::register\+\_\+float\+\_\+recievable (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{key}{, }\item[{\mbox{\hyperlink{class_recievable}{Recievable}}$<$ float $>$ \texorpdfstring{$\ast$}{*}}]{float\+\_\+recievable}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00364\ \{}
+\DoxyCodeLine{00365\ \ \ \ \ \textcolor{keywordflow}{if}\ (!is\_recievable\_registered(key))}
+\DoxyCodeLine{00366\ \ \ \ \ \{}
+\DoxyCodeLine{00367\ \ \ \ \ \ \ \ \ float\_recievables.insert(std::pair<\textcolor{keywordtype}{char}*,\ Recievable<float>*>\{key,\ float\_recievable\});}
+\DoxyCodeLine{00368\ \ \ \ \ \}\ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00369\ \ \ \ \ \{}
+\DoxyCodeLine{00370\ \ \ \ \ \ \ \ \ ESP\_LOGW(TAG,\ \textcolor{stringliteral}{"{}Float\ recievable\ \(\backslash\)"{}\%s\(\backslash\)"{}\ is\ already\ registered"{}},\ key);}
+\DoxyCodeLine{00371\ \ \ \ \ \}}
+\DoxyCodeLine{00372\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_g_u_i_a499f8639747c951235962e437a821190}\index{GUI@{GUI}!register\_float\_sendable@{register\_float\_sendable}}
+\index{register\_float\_sendable@{register\_float\_sendable}!GUI@{GUI}}
+\doxysubsubsection{\texorpdfstring{register\_float\_sendable()}{register\_float\_sendable()}}
+{\footnotesize\ttfamily \label{class_g_u_i_a499f8639747c951235962e437a821190} 
+void GUI\+::register\+\_\+float\+\_\+sendable (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{key}{, }\item[{float(\texorpdfstring{$\ast$}{*}}]{callable~}{)()}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00320\ \{}
+\DoxyCodeLine{00321\ \ \ \ \ \textcolor{keywordflow}{if}\ (!is\_sendable\_registered(key))\ }
+\DoxyCodeLine{00322\ \ \ \ \ \{}
+\DoxyCodeLine{00323\ \ \ \ \ \ \ \ \ float\_callables.insert(std::pair<\textcolor{keywordtype}{char}*,\ \textcolor{keywordtype}{float}(*)()>\{key,\ callable\});}
+\DoxyCodeLine{00324\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ }
+\DoxyCodeLine{00325\ \ \ \ \ \{}
+\DoxyCodeLine{00326\ \ \ \ \ \ \ \ \ ESP\_LOGW(TAG,\ \textcolor{stringliteral}{"{}Float\ sendable\ \(\backslash\)"{}\%s\(\backslash\)"{}\ is\ already\ registered."{}},\ key);}
+\DoxyCodeLine{00327\ \ \ \ \ \}}
+\DoxyCodeLine{00328\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_g_u_i_a0cb8be1b0a1a4b049d1f800f653266bb}\index{GUI@{GUI}!register\_int\_recievable@{register\_int\_recievable}}
+\index{register\_int\_recievable@{register\_int\_recievable}!GUI@{GUI}}
+\doxysubsubsection{\texorpdfstring{register\_int\_recievable()}{register\_int\_recievable()}}
+{\footnotesize\ttfamily \label{class_g_u_i_a0cb8be1b0a1a4b049d1f800f653266bb} 
+void GUI\+::register\+\_\+int\+\_\+recievable (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{key}{, }\item[{\mbox{\hyperlink{class_recievable}{Recievable}}$<$ int $>$ \texorpdfstring{$\ast$}{*}}]{int\+\_\+recievable}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00353\ \{}
+\DoxyCodeLine{00354\ \ \ \ \ \textcolor{keywordflow}{if}\ (!is\_recievable\_registered(key))}
+\DoxyCodeLine{00355\ \ \ \ \ \{}
+\DoxyCodeLine{00356\ \ \ \ \ \ \ \ \ int\_recievables.insert(std::pair<\textcolor{keywordtype}{char}*,\ Recievable<int>*>\{key,\ int\_recievable\});}
+\DoxyCodeLine{00357\ \ \ \ \ \}\ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00358\ \ \ \ \ \{}
+\DoxyCodeLine{00359\ \ \ \ \ \ \ \ \ ESP\_LOGW(TAG,\ \textcolor{stringliteral}{"{}Int\ recievable\ \(\backslash\)"{}\%s\(\backslash\)"{}\ is\ already\ registered"{}},\ key);}
+\DoxyCodeLine{00360\ \ \ \ \ \}}
+\DoxyCodeLine{00361\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_g_u_i_aed1faa979b304d7873139b8d360d17d1}\index{GUI@{GUI}!register\_int\_sendable@{register\_int\_sendable}}
+\index{register\_int\_sendable@{register\_int\_sendable}!GUI@{GUI}}
+\doxysubsubsection{\texorpdfstring{register\_int\_sendable()}{register\_int\_sendable()}}
+{\footnotesize\ttfamily \label{class_g_u_i_aed1faa979b304d7873139b8d360d17d1} 
+void GUI\+::register\+\_\+int\+\_\+sendable (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{key}{, }\item[{int(\texorpdfstring{$\ast$}{*}}]{callable~}{)()}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00309\ \{}
+\DoxyCodeLine{00310\ \ \ \ \ \textcolor{keywordflow}{if}\ (!is\_sendable\_registered(key))\ }
+\DoxyCodeLine{00311\ \ \ \ \ \{}
+\DoxyCodeLine{00312\ \ \ \ \ \ \ \ \ int\_callables.insert(std::pair<\textcolor{keywordtype}{char}*,\ \textcolor{keywordtype}{int}(*)()>\{key,\ callable\});}
+\DoxyCodeLine{00313\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ }
+\DoxyCodeLine{00314\ \ \ \ \ \{}
+\DoxyCodeLine{00315\ \ \ \ \ \ \ \ \ ESP\_LOGW(TAG,\ \textcolor{stringliteral}{"{}Int\ sendable\ \(\backslash\)"{}\%s\(\backslash\)"{}\ is\ already\ registered."{}},\ key);}
+\DoxyCodeLine{00316\ \ \ \ \ \}}
+\DoxyCodeLine{00317\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_g_u_i_ac9b3118bdbbe07b1c32af0eb07851dff}\index{GUI@{GUI}!register\_string\_recievable@{register\_string\_recievable}}
+\index{register\_string\_recievable@{register\_string\_recievable}!GUI@{GUI}}
+\doxysubsubsection{\texorpdfstring{register\_string\_recievable()}{register\_string\_recievable()}}
+{\footnotesize\ttfamily \label{class_g_u_i_ac9b3118bdbbe07b1c32af0eb07851dff} 
+void GUI\+::register\+\_\+string\+\_\+recievable (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{key}{, }\item[{\mbox{\hyperlink{class_recievable}{Recievable}}$<$ char \texorpdfstring{$\ast$}{*} $>$ \texorpdfstring{$\ast$}{*}}]{string\+\_\+recievable}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00375\ \{}
+\DoxyCodeLine{00376\ \ \ \ \ \textcolor{keywordflow}{if}\ (!is\_recievable\_registered(key))}
+\DoxyCodeLine{00377\ \ \ \ \ \{}
+\DoxyCodeLine{00378\ \ \ \ \ \ \ \ \ string\_recievables.insert(std::pair<\textcolor{keywordtype}{char}*,\ Recievable<char*>*>\{key,\ string\_recievable\});}
+\DoxyCodeLine{00379\ \ \ \ \ \}\ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00380\ \ \ \ \ \{}
+\DoxyCodeLine{00381\ \ \ \ \ \ \ \ \ ESP\_LOGW(TAG,\ \textcolor{stringliteral}{"{}String\ recievable\ \(\backslash\)"{}\%s\(\backslash\)"{}\ is\ already\ registered"{}},\ key);}
+\DoxyCodeLine{00382\ \ \ \ \ \}}
+\DoxyCodeLine{00383\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_g_u_i_a723f6d9b3f859a0c99d4c602f9259765}\index{GUI@{GUI}!register\_string\_sendable@{register\_string\_sendable}}
+\index{register\_string\_sendable@{register\_string\_sendable}!GUI@{GUI}}
+\doxysubsubsection{\texorpdfstring{register\_string\_sendable()}{register\_string\_sendable()}}
+{\footnotesize\ttfamily \label{class_g_u_i_a723f6d9b3f859a0c99d4c602f9259765} 
+void GUI\+::register\+\_\+string\+\_\+sendable (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{key}{, }\item[{char \texorpdfstring{$\ast$}{*}}]{}{\texorpdfstring{$\ast$}{*})(}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00331\ \{}
+\DoxyCodeLine{00332\ \ \ \ \ \textcolor{keywordflow}{if}\ (!is\_sendable\_registered(key))\ }
+\DoxyCodeLine{00333\ \ \ \ \ \{}
+\DoxyCodeLine{00334\ \ \ \ \ \ \ \ \ string\_callables.insert(std::pair<\textcolor{keywordtype}{char}*,\ \textcolor{keywordtype}{char}*(*)()>\{key,\ callable\});}
+\DoxyCodeLine{00335\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ }
+\DoxyCodeLine{00336\ \ \ \ \ \{}
+\DoxyCodeLine{00337\ \ \ \ \ \ \ \ \ ESP\_LOGW(TAG,\ \textcolor{stringliteral}{"{}String\ sendable\ \(\backslash\)"{}\%s\(\backslash\)"{}\ is\ already\ registered."{}},\ key);}
+\DoxyCodeLine{00338\ \ \ \ \ \}}
+\DoxyCodeLine{00339\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_g_u_i_afc8fdd38418b36f27c3c3f2e23553755}\index{GUI@{GUI}!remove\_sendable@{remove\_sendable}}
+\index{remove\_sendable@{remove\_sendable}!GUI@{GUI}}
+\doxysubsubsection{\texorpdfstring{remove\_sendable()}{remove\_sendable()}}
+{\footnotesize\ttfamily \label{class_g_u_i_afc8fdd38418b36f27c3c3f2e23553755} 
+void GUI\+::remove\+\_\+sendable (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{key}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00481\ \{}
+\DoxyCodeLine{00482\ \ \ \ \ \textcolor{keywordflow}{if}\ (int\_callables.find(key)\ !=\ int\_callables.end())}
+\DoxyCodeLine{00483\ \ \ \ \ \{}
+\DoxyCodeLine{00484\ \ \ \ \ \ \ \ \ int\_callables.erase(key);}
+\DoxyCodeLine{00485\ \ \ \ \ \}\ }
+\DoxyCodeLine{00486\ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (float\_callables.find(key)\ !=\ float\_callables.end())}
+\DoxyCodeLine{00487\ \ \ \ \ \{}
+\DoxyCodeLine{00488\ \ \ \ \ \ \ \ \ float\_callables.erase(key);}
+\DoxyCodeLine{00489\ \ \ \ \ \}}
+\DoxyCodeLine{00490\ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (string\_callables.find(key)\ !=\ string\_callables.end())}
+\DoxyCodeLine{00491\ \ \ \ \ \{}
+\DoxyCodeLine{00492\ \ \ \ \ \ \ \ \ string\_callables.erase(key);}
+\DoxyCodeLine{00493\ \ \ \ \ \}\ }
+\DoxyCodeLine{00494\ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (bool\_callables.find(key)\ !=\ bool\_callables.end())}
+\DoxyCodeLine{00495\ \ \ \ \ \{}
+\DoxyCodeLine{00496\ \ \ \ \ \ \ \ \ bool\_callables.erase(key);}
+\DoxyCodeLine{00497\ \ \ \ \ \}\ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00498\ \ \ \ \ \{}
+\DoxyCodeLine{00499\ \ \ \ \ \ \ \ \ ESP\_LOGW(TAG,\ \textcolor{stringliteral}{"{}Sendable\ \(\backslash\)"{}\%s\(\backslash\)"{}\ is\ not\ registered."{}},\ key);}
+\DoxyCodeLine{00500\ \ \ \ \ \}}
+\DoxyCodeLine{00501\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_g_u_i_a0674ae9b4b742c5000e9810668552ff7}\index{GUI@{GUI}!serialize\_rcvb\_to\_json@{serialize\_rcvb\_to\_json}}
+\index{serialize\_rcvb\_to\_json@{serialize\_rcvb\_to\_json}!GUI@{GUI}}
+\doxysubsubsection{\texorpdfstring{serialize\_rcvb\_to\_json()}{serialize\_rcvb\_to\_json()}}
+{\footnotesize\ttfamily \label{class_g_u_i_a0674ae9b4b742c5000e9810668552ff7} 
+char \texorpdfstring{$\ast$}{*} GUI\+::serialize\+\_\+rcvb\+\_\+to\+\_\+json (\begin{DoxyParamCaption}\item[{void}]{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00636\ \{}
+\DoxyCodeLine{00637\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ buffer\_size\ =\ (RECV\_BUFFER\_SIZE\ *\ int\_recievables.size())\ \(\backslash\)}
+\DoxyCodeLine{00638\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ +\ (RECV\_BUFFER\_SIZE\ *\ float\_recievables.size())\ \(\backslash\)}
+\DoxyCodeLine{00639\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ +\ (RECV\_BUFFER\_SIZE\ *\ string\_recievables.size())\ \(\backslash\)}
+\DoxyCodeLine{00640\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ +\ (RECV\_BUFFER\_SIZE\ *\ button\_recievables.size())\ +\ 75;\ \textcolor{comment}{//\ To\ compensate\ for\ characters\ outide\ buffer}}
+\DoxyCodeLine{00641\ }
+\DoxyCodeLine{00642\ \ \ \ \ \textcolor{keywordtype}{bool}\ first\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00643\ \ \ \ \ \textcolor{keywordtype}{char}*\ buffer\ =\ \textcolor{keyword}{new}\ \textcolor{keywordtype}{char}[buffer\_size];}
+\DoxyCodeLine{00644\ \ \ \ \ memset(buffer,\ \textcolor{charliteral}{'\(\backslash\)0'},\ buffer\_size);}
+\DoxyCodeLine{00645\ \ \ \ \ strcat(buffer,\ \textcolor{stringliteral}{"{}\{"{}});}
+\DoxyCodeLine{00646\ }
+\DoxyCodeLine{00647\ \ \ \ \ \textcolor{keywordflow}{if}\ (buffer\_size\ ==\ 0)}
+\DoxyCodeLine{00648\ \ \ \ \ \{}
+\DoxyCodeLine{00649\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ buffer;}
+\DoxyCodeLine{00650\ \ \ \ \ \}}
+\DoxyCodeLine{00651\ }
+\DoxyCodeLine{00652\ \ \ \ \ \textcolor{keywordflow}{for}\ (std::pair<\textcolor{keywordtype}{char}*,\ Recievable<int>*>\ recievable\ :\ int\_recievables)}
+\DoxyCodeLine{00653\ \ \ \ \ \{}
+\DoxyCodeLine{00654\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{char}\ int\_buffer[RECV\_BUFFER\_SIZE];}
+\DoxyCodeLine{00655\ \ \ \ \ \ \ \ \ memset(int\_buffer,\ \textcolor{charliteral}{'\(\backslash\)0'},\ RECV\_BUFFER\_SIZE);}
+\DoxyCodeLine{00656\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{char}*\ key\ =\ recievable.first;}
+\DoxyCodeLine{00657\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!first)}
+\DoxyCodeLine{00658\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00659\ \ \ \ \ \ \ \ \ \ \ \ \ strcat(buffer,\ \textcolor{stringliteral}{"{},"{}});}
+\DoxyCodeLine{00660\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00661\ }
+\DoxyCodeLine{00662\ \ \ \ \ \ \ \ \ first\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00663\ }
+\DoxyCodeLine{00664\ \ \ \ \ \ \ \ \ snprintf(int\_buffer,\ RECV\_BUFFER\_SIZE-\/1,\ \textcolor{stringliteral}{"{}\(\backslash\)"{}\%s\(\backslash\)"{}:\%s"{}},\ key,\ recievable.second-\/>serialize\_to\_json());}
+\DoxyCodeLine{00665\ \ \ \ \ \ \ \ \ strcat(buffer,\ int\_buffer);}
+\DoxyCodeLine{00666\ \ \ \ \ \}}
+\DoxyCodeLine{00667\ }
+\DoxyCodeLine{00668\ \ \ \ \ \textcolor{keywordflow}{for}\ (std::pair<\textcolor{keywordtype}{char}*,\ Recievable<float>*>\ recievable\ :\ float\_recievables)}
+\DoxyCodeLine{00669\ \ \ \ \ \{}
+\DoxyCodeLine{00670\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{char}\ float\_buffer[RECV\_BUFFER\_SIZE];}
+\DoxyCodeLine{00671\ \ \ \ \ \ \ \ \ memset(float\_buffer,\ \textcolor{charliteral}{'\(\backslash\)0'},\ RECV\_BUFFER\_SIZE);}
+\DoxyCodeLine{00672\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{char}*\ key\ =\ recievable.first;}
+\DoxyCodeLine{00673\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!first)}
+\DoxyCodeLine{00674\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00675\ \ \ \ \ \ \ \ \ \ \ \ \ strcat(buffer,\ \textcolor{stringliteral}{"{},"{}});}
+\DoxyCodeLine{00676\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00677\ }
+\DoxyCodeLine{00678\ \ \ \ \ \ \ \ \ first\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00679\ }
+\DoxyCodeLine{00680\ \ \ \ \ \ \ \ \ snprintf(float\_buffer,\ RECV\_BUFFER\_SIZE-\/1,\ \textcolor{stringliteral}{"{}\(\backslash\)"{}\%s\(\backslash\)"{}:\%s"{}},\ key,\ recievable.second-\/>serialize\_to\_json());}
+\DoxyCodeLine{00681\ \ \ \ \ \ \ \ \ strcat(buffer,\ float\_buffer);}
+\DoxyCodeLine{00682\ \ \ \ \ \}}
+\DoxyCodeLine{00683\ }
+\DoxyCodeLine{00684\ \ \ \ \ \textcolor{keywordflow}{for}\ (std::pair<\textcolor{keywordtype}{char}*,\ Recievable<char*>*>\ recievable\ :\ string\_recievables)}
+\DoxyCodeLine{00685\ \ \ \ \ \{}
+\DoxyCodeLine{00686\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{char}\ string\_buffer[RECV\_BUFFER\_SIZE];}
+\DoxyCodeLine{00687\ \ \ \ \ \ \ \ \ memset(string\_buffer,\ \textcolor{charliteral}{'\(\backslash\)0'},\ RECV\_BUFFER\_SIZE);}
+\DoxyCodeLine{00688\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{char}*\ key\ =\ recievable.first;}
+\DoxyCodeLine{00689\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!first)}
+\DoxyCodeLine{00690\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00691\ \ \ \ \ \ \ \ \ \ \ \ \ strcat(buffer,\ \textcolor{stringliteral}{"{},"{}});}
+\DoxyCodeLine{00692\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00693\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00694\ }
+\DoxyCodeLine{00695\ \ \ \ \ \ \ \ \ first\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00696\ }
+\DoxyCodeLine{00697\ \ \ \ \ \ \ \ \ snprintf(string\_buffer,\ RECV\_BUFFER\_SIZE-\/1,\ \textcolor{stringliteral}{"{}\(\backslash\)"{}\%s\(\backslash\)"{}:\%s"{}},\ key,\ recievable.second-\/>serialize\_to\_json());}
+\DoxyCodeLine{00698\ \ \ \ \ \ \ \ \ strcat(buffer,\ string\_buffer);}
+\DoxyCodeLine{00699\ \ \ \ \ \}}
+\DoxyCodeLine{00700\ \ \ \ \ }
+\DoxyCodeLine{00701\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ button\_buffer\_size\ =\ RECV\_BUFFER\_SIZE\ *\ button\_recievables.size()\ +\ 30;}
+\DoxyCodeLine{00702\ \ \ \ \ \textcolor{keywordflow}{for}\ (std::pair<char*,\ ButtonRecievable*>\ recievable\ :\ button\_recievables)\ \{}
+\DoxyCodeLine{00703\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{char}\ button\_buffer[button\_buffer\_size];}
+\DoxyCodeLine{00704\ \ \ \ \ \ \ \ \ memset(button\_buffer,\ \textcolor{charliteral}{'\(\backslash\)0'},\ button\_buffer\_size);}
+\DoxyCodeLine{00705\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{char}*\ key\ =\ recievable.first;}
+\DoxyCodeLine{00706\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!first)}
+\DoxyCodeLine{00707\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00708\ \ \ \ \ \ \ \ \ \ \ \ \ strcat(buffer,\ \textcolor{stringliteral}{"{},"{}});}
+\DoxyCodeLine{00709\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00710\ }
+\DoxyCodeLine{00711\ \ \ \ \ \ \ \ \ first\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00712\ }
+\DoxyCodeLine{00713\ \ \ \ \ \ \ \ \ snprintf(button\_buffer,\ button\_buffer\_size-\/1,\ \textcolor{stringliteral}{"{}\(\backslash\)"{}\%s\(\backslash\)"{}:\{\(\backslash\)"{}type\(\backslash\)"{}:\(\backslash\)"{}recievable>button\(\backslash\)"{}\}"{}},\ key);}
+\DoxyCodeLine{00714\ \ \ \ \ \ \ \ \ strcat(buffer,\ button\_buffer);}
+\DoxyCodeLine{00715\ \ \ \ \ \}}
+\DoxyCodeLine{00716\ }
+\DoxyCodeLine{00717\ \ \ \ \ strcat(buffer,\ \textcolor{stringliteral}{"{}\}"{}});}
+\DoxyCodeLine{00718\ \ \ \ \ }
+\DoxyCodeLine{00719\ \ \ \ \ \textcolor{keywordflow}{if}\ (strlen(buffer)\ >\ buffer\_size)}
+\DoxyCodeLine{00720\ \ \ \ \ \{}
+\DoxyCodeLine{00721\ \ \ \ \ \ \ \ \ ESP\_LOGE(TAG,\ \textcolor{stringliteral}{"{}Buffer\ size\ exceeded.\ Buffer\ size:\ \%d"{}},\ buffer\_size);}
+\DoxyCodeLine{00722\ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}[]\ buffer;}
+\DoxyCodeLine{00723\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00724\ \ \ \ \ \}}
+\DoxyCodeLine{00725\ \ \ \ \ }
+\DoxyCodeLine{00726\ \ \ \ \ \textcolor{keywordflow}{return}\ buffer;}
+\DoxyCodeLine{00727\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_g_u_i_ae89098481089b08252eea7c4b83cfd03}\index{GUI@{GUI}!serialize\_sndb\_to\_json@{serialize\_sndb\_to\_json}}
+\index{serialize\_sndb\_to\_json@{serialize\_sndb\_to\_json}!GUI@{GUI}}
+\doxysubsubsection{\texorpdfstring{serialize\_sndb\_to\_json()}{serialize\_sndb\_to\_json()}}
+{\footnotesize\ttfamily \label{class_g_u_i_ae89098481089b08252eea7c4b83cfd03} 
+char \texorpdfstring{$\ast$}{*} GUI\+::serialize\+\_\+sndb\+\_\+to\+\_\+json (\begin{DoxyParamCaption}\item[{void}]{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00532\ \{}
+\DoxyCodeLine{00533\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ buffer\_size\ =\ int\_callables.size()\ *\ ENTRY\_BUFFER\_SIZE\ \(\backslash\)}
+\DoxyCodeLine{00534\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ +\ float\_callables.size()\ *\ ENTRY\_BUFFER\_SIZE\ \(\backslash\)}
+\DoxyCodeLine{00535\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ +\ string\_callables.size()\ *\ ENTRY\_BUFFER\_SIZE\ \(\backslash\)}
+\DoxyCodeLine{00536\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ +\ bool\_callables.size()\ *\ ENTRY\_BUFFER\_SIZE\ +\ 100;}
+\DoxyCodeLine{00537\ }
+\DoxyCodeLine{00538\ }
+\DoxyCodeLine{00539\ \ \ \ \ \textcolor{keywordtype}{bool}\ first\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00540\ }
+\DoxyCodeLine{00541\ \ \ \ \ \textcolor{keywordflow}{if}\ (buffer\_size\ ==\ 100)}
+\DoxyCodeLine{00542\ \ \ \ \ \{}
+\DoxyCodeLine{00543\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}\{\}"{}};}
+\DoxyCodeLine{00544\ \ \ \ \ \}}
+\DoxyCodeLine{00545\ }
+\DoxyCodeLine{00546\ \ \ \ \ \textcolor{comment}{//\ Buffer\ to\ store\ serialized\ data}}
+\DoxyCodeLine{00547\ \ \ \ \ \textcolor{keywordtype}{char}*\ buffer\ =\ \textcolor{keyword}{new}\ \textcolor{keywordtype}{char}[buffer\_size];}
+\DoxyCodeLine{00548\ \ \ \ \ memset(buffer,\ \textcolor{charliteral}{'\(\backslash\)0'},\ buffer\_size);}
+\DoxyCodeLine{00549\ \ \ \ \ }
+\DoxyCodeLine{00550\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ pos\ =\ 0;}
+\DoxyCodeLine{00551\ }
+\DoxyCodeLine{00552\ \ \ \ \ pos\ +=\ sniprintf(buffer\ +\ pos,\ buffer\_size\ -\/\ pos,\ \textcolor{stringliteral}{"{}\{"{}});}
+\DoxyCodeLine{00553\ }
+\DoxyCodeLine{00554\ \ \ \ \ \textcolor{keywordflow}{for}\ (std::pair<\textcolor{keywordtype}{char}*,\textcolor{keywordtype}{int}(*)()>\ int\_entry:\ int\_callables)}
+\DoxyCodeLine{00555\ \ \ \ \ \{}
+\DoxyCodeLine{00556\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{char}*\ key\ =\ int\_entry.first;}
+\DoxyCodeLine{00557\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ value\ =\ int\_entry.second();}
+\DoxyCodeLine{00558\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!first)}
+\DoxyCodeLine{00559\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00560\ \ \ \ \ \ \ \ \ \ \ \ \ pos\ +=\ sniprintf(buffer\ +\ pos,\ buffer\_size\ -\/\ pos,\ \textcolor{stringliteral}{"{},"{}});}
+\DoxyCodeLine{00561\ \ \ \ \ \ \ \ \ \}\ }
+\DoxyCodeLine{00562\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00563\ \ \ \ \ \ \ \ \ first\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00564\ }
+\DoxyCodeLine{00565\ \ \ \ \ \ \ \ \ pos\ +=\ snprintf(buffer\ +\ pos,\ buffer\_size\ -\/\ pos,\ \textcolor{stringliteral}{"{}\(\backslash\)"{}\%s\(\backslash\)"{}:\{\(\backslash\)"{}value\(\backslash\)"{}:\(\backslash\)"{}\%d\(\backslash\)"{},\ \(\backslash\)"{}type\(\backslash\)"{}:\(\backslash\)"{}sendable>int\(\backslash\)"{}\}"{}},\ key,\ value);}
+\DoxyCodeLine{00566\ \ \ \ \ \}}
+\DoxyCodeLine{00567\ \ \ \ \ }
+\DoxyCodeLine{00568\ \ \ \ \ \textcolor{keywordflow}{for}\ (std::pair<\textcolor{keywordtype}{char}*,\ \textcolor{keywordtype}{float}(*)()>\ float\_entry:\ float\_callables)}
+\DoxyCodeLine{00569\ \ \ \ \ \{}
+\DoxyCodeLine{00570\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{char}*\ key\ =\ float\_entry.first;}
+\DoxyCodeLine{00571\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ value\ =\ float\_entry.second();}
+\DoxyCodeLine{00572\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!first)}
+\DoxyCodeLine{00573\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00574\ \ \ \ \ \ \ \ \ \ \ \ \ pos\ +=\ sniprintf(buffer\ +\ pos,\ buffer\_size\ -\/\ pos,\ \textcolor{stringliteral}{"{},"{}});}
+\DoxyCodeLine{00575\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00576\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00577\ \ \ \ \ \ \ \ \ first\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00578\ \ \ \ \ }
+\DoxyCodeLine{00579\ \ \ \ \ \ \ \ \ pos\ +=\ snprintf(buffer\ +\ pos,\ buffer\_size\ -\/\ pos,\ \textcolor{stringliteral}{"{}\(\backslash\)"{}\%s\(\backslash\)"{}:\{\(\backslash\)"{}value\(\backslash\)"{}:\(\backslash\)"{}\%.5f\(\backslash\)"{},\ \(\backslash\)"{}type\(\backslash\)"{}:\(\backslash\)"{}sendable>float\(\backslash\)"{}\}"{}},\ key,\ value);}
+\DoxyCodeLine{00580\ \ \ \ \ \}}
+\DoxyCodeLine{00581\ \ \ \ \ }
+\DoxyCodeLine{00582\ \ \ \ \ \textcolor{keywordflow}{for}\ (std::pair<\textcolor{keywordtype}{char}*,\ \textcolor{keywordtype}{char}*(*)()>\ string\_entry:\ string\_callables)}
+\DoxyCodeLine{00583\ \ \ \ \ \{}
+\DoxyCodeLine{00584\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{char}*\ key\ =\ string\_entry.first;}
+\DoxyCodeLine{00585\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{char}*\ value\ =\ string\_entry.second();}
+\DoxyCodeLine{00586\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00587\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!first)}
+\DoxyCodeLine{00588\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00589\ \ \ \ \ \ \ \ \ \ \ \ \ pos\ +=\ sniprintf(buffer\ +\ pos,\ buffer\_size\ -\/\ pos,\ \textcolor{stringliteral}{"{},"{}});}
+\DoxyCodeLine{00590\ \ \ \ \ \ \ \ \ \}\ }
+\DoxyCodeLine{00591\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00592\ \ \ \ \ \ \ \ \ first\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00593\ }
+\DoxyCodeLine{00594\ \ \ \ \ \ \ \ \ pos\ +=\ snprintf(buffer\ +\ pos,\ buffer\_size\ -\/\ pos,\ \textcolor{stringliteral}{"{}\(\backslash\)"{}\%s\(\backslash\)"{}:\{\(\backslash\)"{}value\(\backslash\)"{}:\(\backslash\)"{}\%s\(\backslash\)"{},\ \(\backslash\)"{}type\(\backslash\)"{}:\(\backslash\)"{}sendable>string\(\backslash\)"{}\}"{}},\ key,\ value);}
+\DoxyCodeLine{00595\ \ \ \ \ \}}
+\DoxyCodeLine{00596\ \ \ \ \ }
+\DoxyCodeLine{00597\ \ \ \ \ }
+\DoxyCodeLine{00598\ \ \ \ \ \textcolor{keywordflow}{for}\ (std::pair<\textcolor{keywordtype}{char}*,\ \textcolor{keywordtype}{bool}(*)()>\ bool\_entry:\ bool\_callables)}
+\DoxyCodeLine{00599\ \ \ \ \ \{}
+\DoxyCodeLine{00600\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{char}*\ key\ =\ bool\_entry.first;}
+\DoxyCodeLine{00601\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ value\ =\ bool\_entry.second();}
+\DoxyCodeLine{00602\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{char}*\ str\_value;}
+\DoxyCodeLine{00603\ }
+\DoxyCodeLine{00604\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (value)\ }
+\DoxyCodeLine{00605\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00606\ \ \ \ \ \ \ \ \ \ \ \ \ str\_value\ =\ \textcolor{stringliteral}{"{}True"{}};\ \ \ \ }
+\DoxyCodeLine{00607\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00608\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00609\ \ \ \ \ \ \ \ \ \ \ \ \ str\_value\ =\ \textcolor{stringliteral}{"{}False"{}};}
+\DoxyCodeLine{00610\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00611\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00612\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00613\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!first)}
+\DoxyCodeLine{00614\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00615\ \ \ \ \ \ \ \ \ \ \ \ \ pos\ +=\ sniprintf(buffer\ +\ pos,\ buffer\_size\ -\/\ pos,\ \textcolor{stringliteral}{"{},"{}});}
+\DoxyCodeLine{00616\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00617\ }
+\DoxyCodeLine{00618\ \ \ \ \ \ \ \ \ first\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00619\ }
+\DoxyCodeLine{00620\ \ \ \ \ \ \ \ \ pos\ +=\ snprintf(buffer\ +\ pos,\ buffer\_size\ -\/\ pos,\ \textcolor{stringliteral}{"{}\(\backslash\)"{}\%s\(\backslash\)"{}:\{\(\backslash\)"{}value\(\backslash\)"{}:\(\backslash\)"{}\%s\(\backslash\)"{},\ \(\backslash\)"{}type\(\backslash\)"{}:\(\backslash\)"{}sendable>bool\(\backslash\)"{}\}"{}},\ key,\ str\_value);}
+\DoxyCodeLine{00621\ \ \ \ \ \}}
+\DoxyCodeLine{00622\ }
+\DoxyCodeLine{00623\ \ \ \ \ pos\ +=\ sniprintf(buffer\ +\ pos,\ buffer\_size\ -\/\ pos,\ \textcolor{stringliteral}{"{}\}"{}});}
+\DoxyCodeLine{00624\ }
+\DoxyCodeLine{00625\ \ \ \ \ \textcolor{keywordflow}{if}\ (strlen(buffer)\ >\ buffer\_size)}
+\DoxyCodeLine{00626\ \ \ \ \ \{}
+\DoxyCodeLine{00627\ \ \ \ \ \ \ \ \ ESP\_LOGE(TAG,\ \textcolor{stringliteral}{"{}Buffer\ size\ exceeded.\ Buffer\ size:\ \%d"{}},\ buffer\_size);}
+\DoxyCodeLine{00628\ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}[]\ buffer;}
+\DoxyCodeLine{00629\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00630\ \ \ \ \ \}}
+\DoxyCodeLine{00631\ }
+\DoxyCodeLine{00632\ \ \ \ \ \textcolor{keywordflow}{return}\ buffer;}
+\DoxyCodeLine{00633\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_g_u_i_a0f85c63cce4550866a7ecbee1216631e}\index{GUI@{GUI}!start\_soft\_ap@{start\_soft\_ap}}
+\index{start\_soft\_ap@{start\_soft\_ap}!GUI@{GUI}}
+\doxysubsubsection{\texorpdfstring{start\_soft\_ap()}{start\_soft\_ap()}}
+{\footnotesize\ttfamily \label{class_g_u_i_a0f85c63cce4550866a7ecbee1216631e} 
+esp\+\_\+err\+\_\+t GUI\+::start\+\_\+soft\+\_\+ap (\begin{DoxyParamCaption}\item[{void}]{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00181\ \{}
+\DoxyCodeLine{00182\ \ \ \ \ ESP\_LOGI(TAG,\ \textcolor{stringliteral}{"{}NVS\ Flash\ Init"{}});}
+\DoxyCodeLine{00183\ \ \ \ \ ESP\_ERROR\_CHECK(nvs\_flash\_init());}
+\DoxyCodeLine{00184\ }
+\DoxyCodeLine{00185\ \ \ \ \ ESP\_LOGI(TAG,\ \textcolor{stringliteral}{"{}TCP/IP\ Init"{}});}
+\DoxyCodeLine{00186\ \ \ \ \ ESP\_ERROR\_CHECK(esp\_netif\_init());}
+\DoxyCodeLine{00187\ }
+\DoxyCodeLine{00188\ \ \ \ \ ESP\_LOGI(TAG,\ \textcolor{stringliteral}{"{}Eventloop\ create"{}});}
+\DoxyCodeLine{00189\ \ \ \ \ ESP\_ERROR\_CHECK(esp\_event\_loop\_create\_default());}
+\DoxyCodeLine{00190\ }
+\DoxyCodeLine{00191\ \ \ \ \ esp\_netif\_create\_default\_wifi\_ap();}
+\DoxyCodeLine{00192\ }
+\DoxyCodeLine{00193\ \ \ \ \ wifi\_init\_config\_t\ cfg\ =\ WIFI\_INIT\_CONFIG\_DEFAULT();}
+\DoxyCodeLine{00194\ \ \ \ \ ESP\_ERROR\_CHECK(esp\_wifi\_init(\&cfg));}
+\DoxyCodeLine{00195\ }
+\DoxyCodeLine{00196\ \ \ \ \ wifi\_config\_t\ wifi\_config\ =\ \{}
+\DoxyCodeLine{00197\ \ \ \ \ \ \ \ \ .ap\ =\ \{}
+\DoxyCodeLine{00198\ \ \ \ \ \ \ \ \ \ \ \ \ .ssid\ =\ WIFI\_SSID,}
+\DoxyCodeLine{00199\ \ \ \ \ \ \ \ \ \ \ \ \ .password\ =\ WIFI\_PASS,}
+\DoxyCodeLine{00200\ \ \ \ \ \ \ \ \ \ \ \ \ .ssid\_len\ =\ strlen(WIFI\_SSID),}
+\DoxyCodeLine{00201\ \ \ \ \ \ \ \ \ \ \ \ \ .authmode\ =\ WIFI\_AUTH\_WPA\_WPA2\_PSK,}
+\DoxyCodeLine{00202\ \ \ \ \ \ \ \ \ \ \ \ \ .max\_connection\ =\ 1,}
+\DoxyCodeLine{00203\ \ \ \ \ \ \ \ \ \ \ \ \ .beacon\_interval\ =\ 100,\ \textcolor{comment}{//\ ms}}
+\DoxyCodeLine{00204\ \ \ \ \ \ \ \ \ \},}
+\DoxyCodeLine{00205\ \ \ \ \ \};}
+\DoxyCodeLine{00206\ }
+\DoxyCodeLine{00207\ \ \ \ \ ESP\_ERROR\_CHECK(esp\_wifi\_set\_mode(WIFI\_MODE\_AP));}
+\DoxyCodeLine{00208\ \ \ \ \ ESP\_ERROR\_CHECK(esp\_wifi\_set\_ps(WIFI\_PS\_NONE));\ \textcolor{comment}{//\ Disable\ power\ save\ mode}}
+\DoxyCodeLine{00209\ \ \ \ \ ESP\_ERROR\_CHECK(esp\_wifi\_set\_config(WIFI\_IF\_AP,\ \&wifi\_config));}
+\DoxyCodeLine{00210\ \ \ \ \ ESP\_ERROR\_CHECK(esp\_wifi\_start());}
+\DoxyCodeLine{00211\ }
+\DoxyCodeLine{00212\ \ \ \ \ ESP\_LOGI(TAG,\ \textcolor{stringliteral}{"{}launch\_soft\_ap\ finished.\ SSID:\ '\%s'\ password:\ '\%s'"{}},\ WIFI\_SSID,\ WIFI\_PASS);}
+\DoxyCodeLine{00213\ }
+\DoxyCodeLine{00214\ \ \ \ \ \textcolor{keywordflow}{return}\ ESP\_OK;}
+\DoxyCodeLine{00215\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_g_u_i_ac42ca7ee996ca00831e25e521394296e}\index{GUI@{GUI}!start\_webserver@{start\_webserver}}
+\index{start\_webserver@{start\_webserver}!GUI@{GUI}}
+\doxysubsubsection{\texorpdfstring{start\_webserver()}{start\_webserver()}}
+{\footnotesize\ttfamily \label{class_g_u_i_ac42ca7ee996ca00831e25e521394296e} 
+esp\+\_\+err\+\_\+t GUI\+::start\+\_\+webserver (\begin{DoxyParamCaption}\item[{void}]{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00225\ \{}
+\DoxyCodeLine{00226\ \ \ \ \ \textcolor{keywordflow}{if}\ (server\ !=\ NULL)}
+\DoxyCodeLine{00227\ \ \ \ \ \{}
+\DoxyCodeLine{00228\ \ \ \ \ \ \ \ \ ESP\_LOGI(TAG,\ \textcolor{stringliteral}{"{}Webserver\ already\ running"{}});}
+\DoxyCodeLine{00229\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ESP\_OK;}
+\DoxyCodeLine{00230\ \ \ \ \ \}}
+\DoxyCodeLine{00231\ }
+\DoxyCodeLine{00232\ \ \ \ \ httpd\_config\_t\ config\ =\ HTTPD\_DEFAULT\_CONFIG();}
+\DoxyCodeLine{00233\ \ \ \ \ config.lru\_purge\_enable\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00234\ \ \ \ \ config.server\_port\ =\ SERVER\_PORT;}
+\DoxyCodeLine{00235\ \ \ \ \ config.task\_priority\ =\ 20;}
+\DoxyCodeLine{00236\ \ \ \ \ config.stack\_size\ =\ 8192;}
+\DoxyCodeLine{00237\ }
+\DoxyCodeLine{00238\ \ \ \ \ ESP\_LOGI(TAG,\ \textcolor{stringliteral}{"{}Starting\ server\ on\ port:\ '\%d'"{}},\ config.server\_port);}
+\DoxyCodeLine{00239\ \ \ \ \ \textcolor{keywordflow}{if}\ (httpd\_start(\&server,\ \&config)\ ==\ ESP\_OK)}
+\DoxyCodeLine{00240\ \ \ \ \ \{}
+\DoxyCodeLine{00241\ \ \ \ \ \ \ \ \ httpd\_uri\_t\ root\_uri\ =\ \{}
+\DoxyCodeLine{00242\ \ \ \ \ \ \ \ \ \ \ \ \ .uri\ =\ \textcolor{stringliteral}{"{}/"{}},}
+\DoxyCodeLine{00243\ \ \ \ \ \ \ \ \ \ \ \ \ .method\ =\ HTTP\_GET,}
+\DoxyCodeLine{00244\ \ \ \ \ \ \ \ \ \ \ \ \ .handler\ =\ GUI::handle\_root,}
+\DoxyCodeLine{00245\ \ \ \ \ \ \ \ \ \ \ \ \ .user\_ctx\ =\ NULL\};}
+\DoxyCodeLine{00246\ }
+\DoxyCodeLine{00247\ \ \ \ \ \ \ \ \ httpd\_uri\_t\ js\_uri\ =\ \{}
+\DoxyCodeLine{00248\ \ \ \ \ \ \ \ \ \ \ \ \ .uri\ =\ \textcolor{stringliteral}{"{}/static.js"{}},}
+\DoxyCodeLine{00249\ \ \ \ \ \ \ \ \ \ \ \ \ .method\ =\ HTTP\_GET,}
+\DoxyCodeLine{00250\ \ \ \ \ \ \ \ \ \ \ \ \ .handler\ =\ GUI::handle\_js,}
+\DoxyCodeLine{00251\ \ \ \ \ \ \ \ \ \ \ \ \ .user\_ctx\ =\ NULL\};}
+\DoxyCodeLine{00252\ }
+\DoxyCodeLine{00253\ \ \ \ \ \ \ \ \ httpd\_uri\_t\ update\_uri\ =\ \{}
+\DoxyCodeLine{00254\ \ \ \ \ \ \ \ \ \ \ \ \ .uri\ =\ \textcolor{stringliteral}{"{}/update"{}},}
+\DoxyCodeLine{00255\ \ \ \ \ \ \ \ \ \ \ \ \ .method\ =\ HTTP\_GET,}
+\DoxyCodeLine{00256\ \ \ \ \ \ \ \ \ \ \ \ \ .handler\ =\ GUI::handle\_update,}
+\DoxyCodeLine{00257\ \ \ \ \ \ \ \ \ \ \ \ \ .user\_ctx\ =\ NULL\};}
+\DoxyCodeLine{00258\ }
+\DoxyCodeLine{00259\ \ \ \ \ \ \ \ \ httpd\_uri\_t\ recievable\_uri\ =\ \{}
+\DoxyCodeLine{00260\ \ \ \ \ \ \ \ \ \ \ \ \ .uri\ =\ \textcolor{stringliteral}{"{}/recievable"{}},}
+\DoxyCodeLine{00261\ \ \ \ \ \ \ \ \ \ \ \ \ .method\ =\ HTTP\_PUT,}
+\DoxyCodeLine{00262\ \ \ \ \ \ \ \ \ \ \ \ \ .handler\ =\ GUI::handle\_recievable,}
+\DoxyCodeLine{00263\ \ \ \ \ \ \ \ \ \ \ \ \ .user\_ctx\ =\ NULL\};}
+\DoxyCodeLine{00264\ }
+\DoxyCodeLine{00265\ \ \ \ \ \ \ \ \ httpd\_uri\_t\ fetch\_revievables\_uri\ =\ \{}
+\DoxyCodeLine{00266\ \ \ \ \ \ \ \ \ \ \ \ \ .uri\ =\ \textcolor{stringliteral}{"{}/fetch\_recievables"{}},}
+\DoxyCodeLine{00267\ \ \ \ \ \ \ \ \ \ \ \ \ .method\ =\ HTTP\_GET,}
+\DoxyCodeLine{00268\ \ \ \ \ \ \ \ \ \ \ \ \ .handler\ =\ GUI::handle\_fetch\_recievables,}
+\DoxyCodeLine{00269\ \ \ \ \ \ \ \ \ \ \ \ \ .user\_ctx\ =\ NULL\};}
+\DoxyCodeLine{00270\ }
+\DoxyCodeLine{00271\ \ \ \ \ \ \ \ \ httpd\_uri\_t\ button\_uri\ \{}
+\DoxyCodeLine{00272\ \ \ \ \ \ \ \ \ \ \ \ \ .uri\ =\ \textcolor{stringliteral}{"{}/button"{}},}
+\DoxyCodeLine{00273\ \ \ \ \ \ \ \ \ \ \ \ \ .method\ =\ HTTP\_PUT,}
+\DoxyCodeLine{00274\ \ \ \ \ \ \ \ \ \ \ \ \ .handler\ =\ GUI::handle\_button\_command,}
+\DoxyCodeLine{00275\ \ \ \ \ \ \ \ \ \ \ \ \ .user\_ctx\ =\ NULL\};}
+\DoxyCodeLine{00276\ }
+\DoxyCodeLine{00277\ \ \ \ \ \ \ \ \ httpd\_register\_uri\_handler(server,\ \&root\_uri);}
+\DoxyCodeLine{00278\ \ \ \ \ \ \ \ \ httpd\_register\_uri\_handler(server,\ \&js\_uri);}
+\DoxyCodeLine{00279\ \ \ \ \ \ \ \ \ httpd\_register\_uri\_handler(server,\ \&update\_uri);}
+\DoxyCodeLine{00280\ \ \ \ \ \ \ \ \ httpd\_register\_uri\_handler(server,\ \&recievable\_uri);}
+\DoxyCodeLine{00281\ \ \ \ \ \ \ \ \ httpd\_register\_uri\_handler(server,\ \&fetch\_revievables\_uri);}
+\DoxyCodeLine{00282\ \ \ \ \ \ \ \ \ httpd\_register\_uri\_handler(server,\ \&button\_uri);}
+\DoxyCodeLine{00283\ }
+\DoxyCodeLine{00284\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ESP\_OK;}
+\DoxyCodeLine{00285\ \ \ \ \ \}}
+\DoxyCodeLine{00286\ }
+\DoxyCodeLine{00287\ \ \ \ \ \textcolor{keywordflow}{return}\ ESP\_FAIL;}
+\DoxyCodeLine{00288\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_g_u_i_a3ec491bb3c82a1831c3b2370cf0c7a28}\index{GUI@{GUI}!stop\_soft\_ap@{stop\_soft\_ap}}
+\index{stop\_soft\_ap@{stop\_soft\_ap}!GUI@{GUI}}
+\doxysubsubsection{\texorpdfstring{stop\_soft\_ap()}{stop\_soft\_ap()}}
+{\footnotesize\ttfamily \label{class_g_u_i_a3ec491bb3c82a1831c3b2370cf0c7a28} 
+esp\+\_\+err\+\_\+t GUI\+::stop\+\_\+soft\+\_\+ap (\begin{DoxyParamCaption}\item[{void}]{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00218\ \{}
+\DoxyCodeLine{00219\ \ \ \ \ ESP\_ERROR\_CHECK(esp\_wifi\_stop());}
+\DoxyCodeLine{00220\ \ \ \ \ ESP\_ERROR\_CHECK(esp\_wifi\_deinit());}
+\DoxyCodeLine{00221\ \ \ \ \ \textcolor{keywordflow}{return}\ ESP\_OK;}
+\DoxyCodeLine{00222\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_g_u_i_ab180c6d6795d5ca1c4e10c0be5350846}\index{GUI@{GUI}!stop\_webserver@{stop\_webserver}}
+\index{stop\_webserver@{stop\_webserver}!GUI@{GUI}}
+\doxysubsubsection{\texorpdfstring{stop\_webserver()}{stop\_webserver()}}
+{\footnotesize\ttfamily \label{class_g_u_i_ab180c6d6795d5ca1c4e10c0be5350846} 
+esp\+\_\+err\+\_\+t GUI\+::stop\+\_\+webserver (\begin{DoxyParamCaption}\item[{void}]{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00291\ \{}
+\DoxyCodeLine{00292\ \ \ \ \ \textcolor{keywordflow}{if}\ (server)}
+\DoxyCodeLine{00293\ \ \ \ \ \{}
+\DoxyCodeLine{00294\ \ \ \ \ \ \ \ \ esp\_err\_t\ result\ =\ httpd\_stop(server);}
+\DoxyCodeLine{00295\ }
+\DoxyCodeLine{00296\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (result\ ==\ ESP\_OK)}
+\DoxyCodeLine{00297\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00298\ \ \ \ \ \ \ \ \ \ \ \ \ server\ =\ NULL;}
+\DoxyCodeLine{00299\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ESP\_OK;}
+\DoxyCodeLine{00300\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00301\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00302\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ESP\_FAIL;}
+\DoxyCodeLine{00303\ \ \ \ \ \}}
+\DoxyCodeLine{00304\ }
+\DoxyCodeLine{00305\ \ \ \ \ \textcolor{keywordflow}{return}\ ESP\_OK;}
+\DoxyCodeLine{00306\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_g_u_i_a3c3c6be8e1160e13ce480640336d5ed8}\index{GUI@{GUI}!update\_bool\_sendable@{update\_bool\_sendable}}
+\index{update\_bool\_sendable@{update\_bool\_sendable}!GUI@{GUI}}
+\doxysubsubsection{\texorpdfstring{update\_bool\_sendable()}{update\_bool\_sendable()}}
+{\footnotesize\ttfamily \label{class_g_u_i_a3c3c6be8e1160e13ce480640336d5ed8} 
+void GUI\+::update\+\_\+bool\+\_\+sendable (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{key}{, }\item[{bool(\texorpdfstring{$\ast$}{*}}]{callable~}{)()}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00469\ \{}
+\DoxyCodeLine{00470\ \ \ \ \ \textcolor{keywordflow}{if}\ (bool\_callables.find(key)\ !=\ bool\_callables.end())}
+\DoxyCodeLine{00471\ \ \ \ \ \{}
+\DoxyCodeLine{00472\ \ \ \ \ \ \ \ \ remove\_sendable(key);}
+\DoxyCodeLine{00473\ \ \ \ \ \ \ \ \ register\_bool\_sendable(key,\ callable);}
+\DoxyCodeLine{00474\ \ \ \ \ \}\ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00475\ \ \ \ \ \{}
+\DoxyCodeLine{00476\ \ \ \ \ \ \ \ \ ESP\_LOGW(TAG,\ \textcolor{stringliteral}{"{}Bool\ sendable\ \(\backslash\)"{}\%s\(\backslash\)"{}\ is\ not\ registered."{}},\ key);}
+\DoxyCodeLine{00477\ \ \ \ \ \}}
+\DoxyCodeLine{00478\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_g_u_i_ab6d362c5fb6ece8ca4a8322dfc2039c4}\index{GUI@{GUI}!update\_float\_sendable@{update\_float\_sendable}}
+\index{update\_float\_sendable@{update\_float\_sendable}!GUI@{GUI}}
+\doxysubsubsection{\texorpdfstring{update\_float\_sendable()}{update\_float\_sendable()}}
+{\footnotesize\ttfamily \label{class_g_u_i_ab6d362c5fb6ece8ca4a8322dfc2039c4} 
+void GUI\+::update\+\_\+float\+\_\+sendable (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{key}{, }\item[{float(\texorpdfstring{$\ast$}{*}}]{callable~}{)()}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00445\ \{}
+\DoxyCodeLine{00446\ \ \ \ \ \textcolor{keywordflow}{if}\ (float\_callables.find(key)\ !=\ float\_callables.end())}
+\DoxyCodeLine{00447\ \ \ \ \ \{}
+\DoxyCodeLine{00448\ \ \ \ \ \ \ \ \ remove\_sendable(key);}
+\DoxyCodeLine{00449\ \ \ \ \ \ \ \ \ register\_float\_sendable(key,\ callable);}
+\DoxyCodeLine{00450\ \ \ \ \ \}\ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00451\ \ \ \ \ \{}
+\DoxyCodeLine{00452\ \ \ \ \ \ \ \ \ ESP\_LOGW(TAG,\ \textcolor{stringliteral}{"{}Float\ sendable\ \%s\ is\ not\ registered"{}},\ key);}
+\DoxyCodeLine{00453\ \ \ \ \ \}}
+\DoxyCodeLine{00454\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_g_u_i_a4652ae7b3876f0c9ba098c477503783e}\index{GUI@{GUI}!update\_int\_sendable@{update\_int\_sendable}}
+\index{update\_int\_sendable@{update\_int\_sendable}!GUI@{GUI}}
+\doxysubsubsection{\texorpdfstring{update\_int\_sendable()}{update\_int\_sendable()}}
+{\footnotesize\ttfamily \label{class_g_u_i_a4652ae7b3876f0c9ba098c477503783e} 
+void GUI\+::update\+\_\+int\+\_\+sendable (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{key}{, }\item[{int(\texorpdfstring{$\ast$}{*}}]{callable~}{)()}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00433\ \{}
+\DoxyCodeLine{00434\ \ \ \ \ \textcolor{keywordflow}{if}\ (int\_callables.find(key)\ !=\ int\_callables.end())}
+\DoxyCodeLine{00435\ \ \ \ \ \{}
+\DoxyCodeLine{00436\ \ \ \ \ \ \ \ \ remove\_sendable(key);}
+\DoxyCodeLine{00437\ \ \ \ \ \ \ \ \ register\_int\_sendable(key,\ callable);}
+\DoxyCodeLine{00438\ \ \ \ \ \}\ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00439\ \ \ \ \ \{}
+\DoxyCodeLine{00440\ \ \ \ \ \ \ \ \ ESP\_LOGW(TAG,\ \textcolor{stringliteral}{"{}Int\ sendable\ \%s\ is\ not\ registered"{}},\ key);}
+\DoxyCodeLine{00441\ \ \ \ \ \}}
+\DoxyCodeLine{00442\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_g_u_i_a301ea9958abb742f207dda552fa0ef86}\index{GUI@{GUI}!update\_string\_sendable@{update\_string\_sendable}}
+\index{update\_string\_sendable@{update\_string\_sendable}!GUI@{GUI}}
+\doxysubsubsection{\texorpdfstring{update\_string\_sendable()}{update\_string\_sendable()}}
+{\footnotesize\ttfamily \label{class_g_u_i_a301ea9958abb742f207dda552fa0ef86} 
+void GUI\+::update\+\_\+string\+\_\+sendable (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{key}{, }\item[{char \texorpdfstring{$\ast$}{*}(\texorpdfstring{$\ast$}{*}}]{callable~}{)()}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00457\ \{}
+\DoxyCodeLine{00458\ \ \ \ \ \textcolor{keywordflow}{if}\ (string\_callables.find(key)\ !=\ string\_callables.end())}
+\DoxyCodeLine{00459\ \ \ \ \ \{}
+\DoxyCodeLine{00460\ \ \ \ \ \ \ \ \ remove\_sendable(key);}
+\DoxyCodeLine{00461\ \ \ \ \ \ \ \ \ register\_string\_sendable(key,\ callable);}
+\DoxyCodeLine{00462\ \ \ \ \ \}\ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00463\ \ \ \ \ \{}
+\DoxyCodeLine{00464\ \ \ \ \ \ \ \ \ ESP\_LOGW(TAG,\ \textcolor{stringliteral}{"{}String\ sendable\ \%s\ is\ not\ registered"{}},\ key);}
+\DoxyCodeLine{00465\ \ \ \ \ \}}
+\DoxyCodeLine{00466\ \}}
+
+\end{DoxyCode}
+
+
+\label{doc-variable-members}
+\Hypertarget{class_g_u_i_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_g_u_i_a34e67a919b2361720fdb9f8ebeb61799}\index{GUI@{GUI}!bool\_callables@{bool\_callables}}
+\index{bool\_callables@{bool\_callables}!GUI@{GUI}}
+\doxysubsubsection{\texorpdfstring{bool\_callables}{bool\_callables}}
+{\footnotesize\ttfamily \label{class_g_u_i_a34e67a919b2361720fdb9f8ebeb61799} 
+std\+::unordered\+\_\+map$<$ char \texorpdfstring{$\ast$}{*}, bool(\texorpdfstring{$\ast$}{*})(), \mbox{\hyperlink{struct_g_u_i_1_1_c_string_hash}{GUI\+::\+CString\+Hash}}, \mbox{\hyperlink{struct_g_u_i_1_1_c_string_equal}{GUI\+::\+CString\+Equal}} $>$ GUI\+::bool\+\_\+callables = \{\}\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+\Hypertarget{class_g_u_i_ac12cacbf68ba1a13ef32fd65e6022fb3}\index{GUI@{GUI}!button\_recievables@{button\_recievables}}
+\index{button\_recievables@{button\_recievables}!GUI@{GUI}}
+\doxysubsubsection{\texorpdfstring{button\_recievables}{button\_recievables}}
+{\footnotesize\ttfamily \label{class_g_u_i_ac12cacbf68ba1a13ef32fd65e6022fb3} 
+std\+::unordered\+\_\+map$<$ char \texorpdfstring{$\ast$}{*}, \mbox{\hyperlink{class_button_recievable}{Button\+Recievable}} \texorpdfstring{$\ast$}{*}, \mbox{\hyperlink{struct_g_u_i_1_1_c_string_hash}{GUI\+::\+CString\+Hash}}, \mbox{\hyperlink{struct_g_u_i_1_1_c_string_equal}{GUI\+::\+CString\+Equal}} $>$ GUI\+::button\+\_\+recievables = \{\}\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+\Hypertarget{class_g_u_i_a2728be782195c35207f34037fbd9a795}\index{GUI@{GUI}!float\_callables@{float\_callables}}
+\index{float\_callables@{float\_callables}!GUI@{GUI}}
+\doxysubsubsection{\texorpdfstring{float\_callables}{float\_callables}}
+{\footnotesize\ttfamily \label{class_g_u_i_a2728be782195c35207f34037fbd9a795} 
+std\+::unordered\+\_\+map$<$ char \texorpdfstring{$\ast$}{*}, float(\texorpdfstring{$\ast$}{*})(), \mbox{\hyperlink{struct_g_u_i_1_1_c_string_hash}{GUI\+::\+CString\+Hash}}, \mbox{\hyperlink{struct_g_u_i_1_1_c_string_equal}{GUI\+::\+CString\+Equal}} $>$ GUI\+::float\+\_\+callables = \{\}\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+\Hypertarget{class_g_u_i_a2bc4878b54c52acbab9060f2321ec373}\index{GUI@{GUI}!float\_recievables@{float\_recievables}}
+\index{float\_recievables@{float\_recievables}!GUI@{GUI}}
+\doxysubsubsection{\texorpdfstring{float\_recievables}{float\_recievables}}
+{\footnotesize\ttfamily \label{class_g_u_i_a2bc4878b54c52acbab9060f2321ec373} 
+std\+::unordered\+\_\+map$<$ char \texorpdfstring{$\ast$}{*}, \mbox{\hyperlink{class_recievable}{Recievable}}$<$ float $>$ \texorpdfstring{$\ast$}{*}, \mbox{\hyperlink{struct_g_u_i_1_1_c_string_hash}{GUI\+::\+CString\+Hash}}, \mbox{\hyperlink{struct_g_u_i_1_1_c_string_equal}{GUI\+::\+CString\+Equal}} $>$ GUI\+::float\+\_\+recievables = \{\}\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+\Hypertarget{class_g_u_i_a76d6cbacb37161d01f08910782876d31}\index{GUI@{GUI}!int\_callables@{int\_callables}}
+\index{int\_callables@{int\_callables}!GUI@{GUI}}
+\doxysubsubsection{\texorpdfstring{int\_callables}{int\_callables}}
+{\footnotesize\ttfamily \label{class_g_u_i_a76d6cbacb37161d01f08910782876d31} 
+std\+::unordered\+\_\+map$<$ char \texorpdfstring{$\ast$}{*}, int(\texorpdfstring{$\ast$}{*})(), \mbox{\hyperlink{struct_g_u_i_1_1_c_string_hash}{GUI\+::\+CString\+Hash}}, \mbox{\hyperlink{struct_g_u_i_1_1_c_string_equal}{GUI\+::\+CString\+Equal}} $>$ GUI\+::int\+\_\+callables = \{\}\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+\Hypertarget{class_g_u_i_abed1af708f4759086249b839b28e089f}\index{GUI@{GUI}!int\_recievables@{int\_recievables}}
+\index{int\_recievables@{int\_recievables}!GUI@{GUI}}
+\doxysubsubsection{\texorpdfstring{int\_recievables}{int\_recievables}}
+{\footnotesize\ttfamily \label{class_g_u_i_abed1af708f4759086249b839b28e089f} 
+std\+::unordered\+\_\+map$<$ char \texorpdfstring{$\ast$}{*}, \mbox{\hyperlink{class_recievable}{Recievable}}$<$ int $>$ \texorpdfstring{$\ast$}{*}, \mbox{\hyperlink{struct_g_u_i_1_1_c_string_hash}{GUI\+::\+CString\+Hash}}, \mbox{\hyperlink{struct_g_u_i_1_1_c_string_equal}{GUI\+::\+CString\+Equal}} $>$ GUI\+::int\+\_\+recievables = \{\}\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+\Hypertarget{class_g_u_i_a8151955abde9f5a1250f292c53b8c590}\index{GUI@{GUI}!string\_callables@{string\_callables}}
+\index{string\_callables@{string\_callables}!GUI@{GUI}}
+\doxysubsubsection{\texorpdfstring{string\_callables}{string\_callables}}
+{\footnotesize\ttfamily \label{class_g_u_i_a8151955abde9f5a1250f292c53b8c590} 
+std\+::unordered\+\_\+map$<$ char \texorpdfstring{$\ast$}{*}, char \texorpdfstring{$\ast$}{*}(\texorpdfstring{$\ast$}{*})(), \mbox{\hyperlink{struct_g_u_i_1_1_c_string_hash}{GUI\+::\+CString\+Hash}}, \mbox{\hyperlink{struct_g_u_i_1_1_c_string_equal}{GUI\+::\+CString\+Equal}} $>$ GUI\+::string\+\_\+callables = \{\}\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+\Hypertarget{class_g_u_i_a6f6eb037aca743a17701ea281daf983e}\index{GUI@{GUI}!string\_recievables@{string\_recievables}}
+\index{string\_recievables@{string\_recievables}!GUI@{GUI}}
+\doxysubsubsection{\texorpdfstring{string\_recievables}{string\_recievables}}
+{\footnotesize\ttfamily \label{class_g_u_i_a6f6eb037aca743a17701ea281daf983e} 
+std\+::unordered\+\_\+map$<$ char \texorpdfstring{$\ast$}{*}, \mbox{\hyperlink{class_recievable}{Recievable}}$<$ char \texorpdfstring{$\ast$}{*} $>$ \texorpdfstring{$\ast$}{*}, \mbox{\hyperlink{struct_g_u_i_1_1_c_string_hash}{GUI\+::\+CString\+Hash}}, \mbox{\hyperlink{struct_g_u_i_1_1_c_string_equal}{GUI\+::\+CString\+Equal}} $>$ GUI\+::string\+\_\+recievables = \{\}\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+ECU\+\_\+25/components/\+GUI/GUI.\+h\item 
+ECU\+\_\+25/components/\+GUI/GUI.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,104 @@
+\doxysection{Float\+Recievable Class Reference}
+\hypertarget{class_float_recievable}{}\label{class_float_recievable}\index{FloatRecievable@{FloatRecievable}}
+
+
+Inheritance diagram for Float\+Recievable\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=182pt]{class_float_recievable__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Float\+Recievable\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=182pt]{class_float_recievable__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_float_recievable_a1167499255412135443971a4ad65dafc}{Float\+Recievable}} (float default\+\_\+value)
+\item 
+char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_float_recievable_a19efe7a0955424da3a0096bf57d8fd2a}{serialize\+\_\+to\+\_\+json}} (void)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_recievable}{Recievable$<$ float $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_recievable_a495fdd3b3ff03f29335ea6856e2292bd}{Recievable}} (float init\+\_\+value)
+\item 
+void \mbox{\hyperlink{class_recievable_a753bda1f913a91f4246a276f74b4790b}{set\+\_\+value}} (float val)
+\item 
+float \mbox{\hyperlink{class_recievable_a8ea3528bd9c1c522618ed23c03ce8a6b}{get\+\_\+value}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_float_recievable_a7e012473a50d19aefb5ccf7853691589}\label{class_float_recievable_a7e012473a50d19aefb5ccf7853691589} 
+float {\bfseries default\+\_\+value}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Member Functions inherited from \mbox{\hyperlink{class_recievable}{Recievable$<$ float $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_recievable_a734a3dea2746b3dd30a6338de31cc220}{allocate\+\_\+buffer}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{class_recievable}{Recievable$<$ float $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+float {\bfseries value}
+\item 
+char \texorpdfstring{$\ast$}{*} {\bfseries buffer}
+\end{DoxyCompactItemize}
+
+
+\label{doc-constructors}
+\Hypertarget{class_float_recievable_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_float_recievable_a1167499255412135443971a4ad65dafc}\index{FloatRecievable@{FloatRecievable}!FloatRecievable@{FloatRecievable}}
+\index{FloatRecievable@{FloatRecievable}!FloatRecievable@{FloatRecievable}}
+\doxysubsubsection{\texorpdfstring{FloatRecievable()}{FloatRecievable()}}
+{\footnotesize\ttfamily \label{class_float_recievable_a1167499255412135443971a4ad65dafc} 
+Float\+Recievable\+::\+Float\+Recievable (\begin{DoxyParamCaption}\item[{float}]{default\+\_\+value}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00003\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ :Recievable<float>(default\_value)}
+\DoxyCodeLine{00004\ \{}
+\DoxyCodeLine{00005\ \ \ \ \ this-\/>default\_value\ =\ default\_value;}
+\DoxyCodeLine{00006\ \}}
+
+\end{DoxyCode}
+
+
+\label{doc-func-members}
+\Hypertarget{class_float_recievable_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_float_recievable_a19efe7a0955424da3a0096bf57d8fd2a}\index{FloatRecievable@{FloatRecievable}!serialize\_to\_json@{serialize\_to\_json}}
+\index{serialize\_to\_json@{serialize\_to\_json}!FloatRecievable@{FloatRecievable}}
+\doxysubsubsection{\texorpdfstring{serialize\_to\_json()}{serialize\_to\_json()}}
+{\footnotesize\ttfamily \label{class_float_recievable_a19efe7a0955424da3a0096bf57d8fd2a} 
+char \texorpdfstring{$\ast$}{*} Float\+Recievable\+::serialize\+\_\+to\+\_\+json (\begin{DoxyParamCaption}\item[{void}]{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_recievable}{Recievable$<$ float $>$}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00009\ \{}
+\DoxyCodeLine{00010\ \ \ \ \ \textcolor{keywordtype}{char}*\ buffer\ =\ allocate\_buffer();}
+\DoxyCodeLine{00011\ \ \ \ \ snprintf(buffer,\ RECV\_BUFFER\_SIZE-\/1,\ \textcolor{stringliteral}{"{}\{\(\backslash\)"{}value\(\backslash\)"{}:\%.5f,\ \(\backslash\)"{}type\(\backslash\)"{}:\(\backslash\)"{}recievable>float\(\backslash\)"{}\}"{}},\ value);}
+\DoxyCodeLine{00012\ \ \ \ \ \textcolor{keywordflow}{return}\ buffer;}
+\DoxyCodeLine{00013\ \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+ECU\+\_\+25/components/\+GUI/Float\+Recievable.\+h\item 
+ECU\+\_\+25/components/\+GUI/Float\+Recievable.\+cpp\end{DoxyCompactItemize}

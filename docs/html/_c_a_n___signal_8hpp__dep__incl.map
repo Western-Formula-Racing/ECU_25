@@ -1,0 +1,35 @@
+<map id="ECU_25/components/CAN/CAN_Signal.hpp" name="ECU_25/components/CAN/CAN_Signal.hpp">
+<area shape="rect" id="Node000001" title="Defines the individual CAN signals for the messages." alt="" coords="509,5,689,46"/>
+<area shape="rect" id="Node000002" href="$generated__config_8h_source.html" title=" " alt="" coords="416,94,584,135"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="567,58,524,96,521,92,564,54"/>
+<area shape="rect" id="Node000003" href="$_c_a_n___config_8hpp.html" title="Defines the configuration of all components on the CAN network." alt="" coords="608,94,787,135"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="634,54,677,92,674,96,631,58"/>
+<area shape="rect" id="Node000004" href="$_c_a_n_8cpp.html" title="Initalizes the CAN communication starting the receive/transmit loops, and talks to other devices on t..." alt="" coords="5,183,185,223"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="593,138,397,162,203,185,186,188,185,183,203,180,396,157,592,132"/>
+<area shape="rect" id="Node000005" href="$_b_m_s_8h.html" title="Declares the BMS class, defines variables and methods we need to store and/or use from the BMS such a..." alt="" coords="530,183,729,223"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="675,149,647,184,643,181,671,145"/>
+<area shape="rect" id="Node000007" href="$_state_machine_8hpp_source.html" title=" " alt="" coords="660,360,872,386"/>
+<area shape="poly" id="edge20_Node000003_Node000007" title=" " alt="" coords="724,146,743,182,757,232,764,283,768,359,763,360,759,284,752,233,738,184,720,149"/>
+<area shape="rect" id="Node000008" href="$main_8cpp.html" title="Main entry point for the ECU firmware." alt="" coords="830,434,990,459"/>
+<area shape="poly" id="edge21_Node000003_Node000008" title=" " alt="" coords="594,139,494,163,390,194,343,212,302,231,270,252,249,273,242,292,243,301,249,310,265,326,288,340,347,366,421,387,506,404,681,427,829,439,829,444,680,432,505,409,420,392,345,371,285,345,262,330,245,314,238,303,236,292,245,270,266,248,299,227,340,207,388,189,493,158,592,134"/>
+<area shape="rect" id="Node000009" href="$_inverter_8h_source.html" title=" " alt="" coords="258,271,457,312"/>
+<area shape="poly" id="edge8_Node000003_Node000009" title=" " alt="" coords="622,143,571,162,520,185,445,230,384,273,381,269,442,226,518,180,569,157,620,138"/>
+<area shape="rect" id="Node000010" href="$_pedals_8h_source.html" title=" " alt="" coords="802,271,1001,312"/>
+<area shape="poly" id="edge10_Node000003_Node000010" title=" " alt="" coords="738,142,786,181,883,269,880,273,783,185,735,147"/>
+<area shape="rect" id="Node000011" href="$_rear_e_c_u_8h_source.html" title=" " alt="" coords="1125,271,1324,312"/>
+<area shape="poly" id="edge13_Node000003_Node000011" title=" " alt="" coords="803,119,898,127,998,140,1087,157,1123,168,1150,180,1174,200,1193,224,1219,269,1214,272,1189,227,1170,204,1147,185,1121,173,1086,162,997,145,897,133,803,124"/>
+<area shape="rect" id="Node000012" href="$_sensors_8h_source.html" title=" " alt="" coords="938,183,1137,223"/>
+<area shape="poly" id="edge15_Node000003_Node000012" title=" " alt="" coords="791,136,961,180,960,185,789,142"/>
+<area shape="rect" id="Node000006" href="$_b_m_s_8cpp.html" title="Handles logic and communicates with the the BMS." alt="" coords="530,271,729,312"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="632,239,632,271,627,271,627,239"/>
+<area shape="poly" id="edge6_Node000005_Node000007" title=" " alt="" coords="563,233,539,250,521,273,514,292,516,301,521,310,542,325,576,338,662,357,661,362,574,343,539,330,517,314,511,303,509,292,517,270,536,247,560,229"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="805,390,886,431,884,435,802,395"/>
+<area shape="poly" id="edge9_Node000009_Node000007" title=" " alt="" coords="473,312,703,357,702,362,472,318"/>
+<area shape="poly" id="edge11_Node000010_Node000007" title=" " alt="" coords="856,323,788,362,785,357,853,318"/>
+<area shape="poly" id="edge12_Node000010_Node000008" title=" " alt="" coords="906,327,912,433,906,433,901,327"/>
+<area shape="poly" id="edge14_Node000011_Node000008" title=" " alt="" coords="1196,324,1156,357,1108,388,1039,417,971,436,970,430,1037,412,1106,383,1153,353,1192,320"/>
+<area shape="poly" id="edge18_Node000012_Node000007" title=" " alt="" coords="1041,239,1035,278,1027,297,1014,314,989,330,951,343,859,362,858,357,949,338,986,325,1011,310,1022,295,1029,276,1036,239"/>
+<area shape="poly" id="edge19_Node000012_Node000008" title=" " alt="" coords="1049,238,1051,275,1044,313,1021,353,990,388,958,416,930,435,927,431,954,412,986,384,1016,350,1039,311,1046,275,1043,239"/>
+<area shape="poly" id="edge16_Node000012_Node000010" title=" " alt="" coords="996,234,934,273,931,269,993,230"/>
+<area shape="poly" id="edge17_Node000012_Node000011" title=" " alt="" coords="1095,228,1183,268,1181,273,1093,233"/>
+</map>

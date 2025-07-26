@@ -1,0 +1,149 @@
+\doxysection{Inverter Class Reference}
+\hypertarget{class_inverter}{}\label{class_inverter}\index{Inverter@{Inverter}}
+
+
+Collaboration diagram for Inverter\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=203pt]{class_inverter__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_inverter_a3dbea61a7dad0f661e9c9a414f94d7c0}\label{class_inverter_a3dbea61a7dad0f661e9c9a414f94d7c0} 
+{\bfseries Inverter} (const \mbox{\hyperlink{class_inverter}{Inverter}} \&)=delete
+\item 
+\Hypertarget{class_inverter_a2742d362460e11460d5540e6898dd829}\label{class_inverter_a2742d362460e11460d5540e6898dd829} 
+\mbox{\hyperlink{class_inverter}{Inverter}} \& {\bfseries operator=} (const \mbox{\hyperlink{class_inverter}{Inverter}} \&)=delete
+\item 
+\Hypertarget{class_inverter_a959a19a76558750f88d19160c7578fc4}\label{class_inverter_a959a19a76558750f88d19160c7578fc4} 
+{\bfseries Inverter} (\mbox{\hyperlink{class_inverter}{Inverter}} \&\&)=delete
+\item 
+\Hypertarget{class_inverter_a037d71a7953f0138bbe83e5c4d01de93}\label{class_inverter_a037d71a7953f0138bbe83e5c4d01de93} 
+\mbox{\hyperlink{class_inverter}{Inverter}} \& {\bfseries operator=} (\mbox{\hyperlink{class_inverter}{Inverter}} \&\&)=delete
+\item 
+void \mbox{\hyperlink{class_inverter_ac293ab2b92acee7c218df62f45483438}{Disable}} ()
+\item 
+void \mbox{\hyperlink{class_inverter_a43925d912877dbe0e253aa6c5e9f80d9}{Enable}} ()
+\item 
+void \mbox{\hyperlink{class_inverter_a2533eeeda6da27eaaef1e1299f9ad635}{Set\+Torque\+Request}} (float throttle)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{class_inverter}{Inverter}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_inverter_a533e1057d78faf7ab5753bbefa3fc940}{Get}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_inverter_a6ee5fbd04a1c4c6941f9eea9712b68a1}\label{class_inverter_a6ee5fbd04a1c4c6941f9eea9712b68a1} 
+float {\bfseries torque\+Limit}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_inverter_a28d327a5ba7d98f961ef51aabe666037}\label{class_inverter_a28d327a5ba7d98f961ef51aabe666037} 
+static \mbox{\hyperlink{class_inverter}{Inverter}} \texorpdfstring{$\ast$}{*} {\bfseries instance\+Ptr} = nullptr
+\item 
+\Hypertarget{class_inverter_a914ee53d03226159dbd31fd318f686d1}\label{class_inverter_a914ee53d03226159dbd31fd318f686d1} 
+static Semaphore\+Handle\+\_\+t {\bfseries mutex} = x\+Semaphore\+Create\+Mutex()
+\end{DoxyCompactItemize}
+
+
+\label{doc-constructors}
+\Hypertarget{class_inverter_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_inverter_a9da2af602590d26ec5966a82181129a9}\index{Inverter@{Inverter}!Inverter@{Inverter}}
+\index{Inverter@{Inverter}!Inverter@{Inverter}}
+\doxysubsubsection{\texorpdfstring{Inverter()}{Inverter()}}
+{\footnotesize\ttfamily \label{class_inverter_a9da2af602590d26ec5966a82181129a9} 
+Inverter\+::\+Inverter (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00009\ \{}
+\DoxyCodeLine{00010\ \ \ \ \ torqueLimit\ =\ 230;\ \textcolor{comment}{//\ get\ this\ from\ memory\ later}}
+\DoxyCodeLine{00011\ \ \ \ \ ESP\_LOGI(TAG,\ \textcolor{stringliteral}{"{}Inverter\ Initialized"{}});}
+\DoxyCodeLine{00012\ \}}
+
+\end{DoxyCode}
+
+
+\label{doc-func-members}
+\Hypertarget{class_inverter_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_inverter_ac293ab2b92acee7c218df62f45483438}\index{Inverter@{Inverter}!Disable@{Disable}}
+\index{Disable@{Disable}!Inverter@{Inverter}}
+\doxysubsubsection{\texorpdfstring{Disable()}{Disable()}}
+{\footnotesize\ttfamily \label{class_inverter_ac293ab2b92acee7c218df62f45483438} 
+void Inverter\+::\+Disable (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00032\ \{}
+\DoxyCodeLine{00033\ \ \ \ \ VCU\_INV\_Torque\_Command\_ID192.\mbox{\hyperlink{class_c_a_n___signal_a66e8fcbfe25986dc94794d191c13d875}{set}}(0);}
+\DoxyCodeLine{00034\ \ \ \ \ VCU\_INV\_Inverter\_Enable\_ID192.\mbox{\hyperlink{class_c_a_n___signal_a66e8fcbfe25986dc94794d191c13d875}{set}}(\textcolor{keyword}{false});}
+\DoxyCodeLine{00035\ \ \ \ \ VCU\_INV\_Torque\_Limit\_Command\_ID192.\mbox{\hyperlink{class_c_a_n___signal_a66e8fcbfe25986dc94794d191c13d875}{set}}(0);}
+\DoxyCodeLine{00036\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_inverter_a43925d912877dbe0e253aa6c5e9f80d9}\index{Inverter@{Inverter}!Enable@{Enable}}
+\index{Enable@{Enable}!Inverter@{Inverter}}
+\doxysubsubsection{\texorpdfstring{Enable()}{Enable()}}
+{\footnotesize\ttfamily \label{class_inverter_a43925d912877dbe0e253aa6c5e9f80d9} 
+void Inverter\+::\+Enable (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00039\ \{}
+\DoxyCodeLine{00040\ \ \ \ \ VCU\_INV\_Inverter\_Enable\_ID192.\mbox{\hyperlink{class_c_a_n___signal_a66e8fcbfe25986dc94794d191c13d875}{set}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{00041\ \ \ \ \ VCU\_INV\_Torque\_Limit\_Command\_ID192.\mbox{\hyperlink{class_c_a_n___signal_a66e8fcbfe25986dc94794d191c13d875}{set}}(torqueLimit);}
+\DoxyCodeLine{00042\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_inverter_a533e1057d78faf7ab5753bbefa3fc940}\index{Inverter@{Inverter}!Get@{Get}}
+\index{Get@{Get}!Inverter@{Inverter}}
+\doxysubsubsection{\texorpdfstring{Get()}{Get()}}
+{\footnotesize\ttfamily \label{class_inverter_a533e1057d78faf7ab5753bbefa3fc940} 
+\mbox{\hyperlink{class_inverter}{Inverter}} \texorpdfstring{$\ast$}{*} Inverter\+::\+Get (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00015\ \{}
+\DoxyCodeLine{00016\ \ \ \ \ \textcolor{keywordflow}{if}\ (instancePtr\ ==\ \textcolor{keyword}{nullptr}\ \&\&\ Inverter::mutex)}
+\DoxyCodeLine{00017\ \ \ \ \ \{}
+\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (xSemaphoreTake(Inverter::mutex,\ (TickType\_t)10)\ ==\ pdTRUE)}
+\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ \ \ \ \ instancePtr\ =\ \textcolor{keyword}{new}\ Inverter();}
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ \ \ \ \ xSemaphoreGive(Inverter::mutex);}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \ \ \ \ ESP\_LOGW(TAG,\ \textcolor{stringliteral}{"{}Mutex\ couldn't\ be\ obtained"{}});}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00027\ \ \ \ \ \}}
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keywordflow}{return}\ instancePtr;}
+\DoxyCodeLine{00029\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_inverter_a2533eeeda6da27eaaef1e1299f9ad635}\index{Inverter@{Inverter}!SetTorqueRequest@{SetTorqueRequest}}
+\index{SetTorqueRequest@{SetTorqueRequest}!Inverter@{Inverter}}
+\doxysubsubsection{\texorpdfstring{SetTorqueRequest()}{SetTorqueRequest()}}
+{\footnotesize\ttfamily \label{class_inverter_a2533eeeda6da27eaaef1e1299f9ad635} 
+void Inverter\+::\+Set\+Torque\+Request (\begin{DoxyParamCaption}\item[{float}]{throttle}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00045\ \{}
+\DoxyCodeLine{00046\ \ \ \ \ VCU\_INV\_Torque\_Command\_ID192.\mbox{\hyperlink{class_c_a_n___signal_a66e8fcbfe25986dc94794d191c13d875}{set}}(throttle*torqueLimit);}
+\DoxyCodeLine{00047\ \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+ECU\+\_\+25/components/\+Devices/Inverter.\+h\item 
+ECU\+\_\+25/components/\+Devices/Inverter.\+cpp\end{DoxyCompactItemize}

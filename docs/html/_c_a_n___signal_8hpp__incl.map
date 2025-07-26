@@ -1,0 +1,11 @@
+<map id="ECU_25/components/CAN/CAN_Signal.hpp" name="ECU_25/components/CAN/CAN_Signal.hpp">
+<area shape="rect" id="Node000001" title="Defines the individual CAN signals for the messages." alt="" coords="86,5,265,46"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,94,66,120"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="142,49,71,88,69,84,139,44"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="90,94,168,120"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="166,48,146,82,142,79,162,45"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="192,94,252,120"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="189,45,209,79,205,82,185,48"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="277,94,365,120"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="213,44,287,84,284,89,211,49"/>
+</map>

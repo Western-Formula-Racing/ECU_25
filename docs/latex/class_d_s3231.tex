@@ -1,0 +1,209 @@
+\doxysection{DS3231 Class Reference}
+\hypertarget{class_d_s3231}{}\label{class_d_s3231}\index{DS3231@{DS3231}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_d_s3231_a695f324011e43de8664d0374f13a328c}{DS3231}} (i2c\+\_\+master\+\_\+bus\+\_\+handle\+\_\+t bus\+Handle, uint8\+\_\+t address=0x68, uint32\+\_\+t clk\+\_\+speed=50000)
+\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{class_d_s3231_ab0ec98af69a9630b9e2669d887eea1a7}{set\+Time}} (const struct tm \&time)
+\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{class_d_s3231_ad8a21581b52f26de92f9eef8284c2fdf}{get\+Time}} (struct tm \&time)
+\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{class_d_s3231_abb73c929d93256bd0af802c31fbdef18}{get\+Raw\+Temp}} (int16\+\_\+t \&temp)
+\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{class_d_s3231_ae528648008add926032f5ff717a7665a}{get\+Temp\+Integer}} (int8\+\_\+t \&temp)
+\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{class_d_s3231_ab9c30201d7ee889eec75875ad3e592fc}{get\+Temp\+Float}} (float \&temp)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+uint8\+\_\+t \mbox{\hyperlink{class_d_s3231_a8290dfb4ecf94ffc4dbdf81224f7af14}{bcd2dec}} (uint8\+\_\+t val) const
+\item 
+uint8\+\_\+t \mbox{\hyperlink{class_d_s3231_aa020d6b9a460bc94cb5fd740e12fa3c9}{dec2bcd}} (uint8\+\_\+t val) const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_d_s3231_a732574bea3955cf93676fbab6971eb11}\label{class_d_s3231_a732574bea3955cf93676fbab6971eb11} 
+i2c\+\_\+master\+\_\+bus\+\_\+handle\+\_\+t {\bfseries i2c\+\_\+bus\+Handle}
+\item 
+\Hypertarget{class_d_s3231_ab59489e290ee31ed9e27e282e6f980eb}\label{class_d_s3231_ab59489e290ee31ed9e27e282e6f980eb} 
+i2c\+\_\+master\+\_\+dev\+\_\+handle\+\_\+t {\bfseries i2c\+\_\+dev\+Handle}
+\item 
+\Hypertarget{class_d_s3231_ae7ada1ae7603509fd5c36b79b1b6afe3}\label{class_d_s3231_ae7ada1ae7603509fd5c36b79b1b6afe3} 
+uint8\+\_\+t {\bfseries dev\+\_\+addr}
+\item 
+\Hypertarget{class_d_s3231_a4e4ffbf841375073ab6286d6691381dc}\label{class_d_s3231_a4e4ffbf841375073ab6286d6691381dc} 
+uint32\+\_\+t {\bfseries clk\+\_\+speed}
+\end{DoxyCompactItemize}
+
+
+\label{doc-constructors}
+\Hypertarget{class_d_s3231_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_d_s3231_a695f324011e43de8664d0374f13a328c}\index{DS3231@{DS3231}!DS3231@{DS3231}}
+\index{DS3231@{DS3231}!DS3231@{DS3231}}
+\doxysubsubsection{\texorpdfstring{DS3231()}{DS3231()}}
+{\footnotesize\ttfamily \label{class_d_s3231_a695f324011e43de8664d0374f13a328c} 
+DS3231\+::\+DS3231 (\begin{DoxyParamCaption}\item[{i2c\+\_\+master\+\_\+bus\+\_\+handle\+\_\+t}]{bus\+Handle}{, }\item[{uint8\+\_\+t}]{address}{ = {\ttfamily 0x68}, }\item[{uint32\+\_\+t}]{clk\+\_\+speed}{ = {\ttfamily 50000}}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00009\ \ \ \ \ :\ i2c\_busHandle(busHandle),\ dev\_addr(address),\ clk\_speed(clk\_speed)}
+\DoxyCodeLine{00010\ \{}
+\DoxyCodeLine{00011\ \ \ \ \ i2c\_device\_config\_t\ dev\_cfg\ =\ \{}
+\DoxyCodeLine{00012\ \ \ \ \ \ \ \ \ .dev\_addr\_length\ =\ I2C\_ADDR\_BIT\_LEN\_7,}
+\DoxyCodeLine{00013\ \ \ \ \ \ \ \ \ .device\_address\ =\ dev\_addr,}
+\DoxyCodeLine{00014\ \ \ \ \ \ \ \ \ .scl\_speed\_hz\ =\ clk\_speed,}
+\DoxyCodeLine{00015\ \ \ \ \ \};}
+\DoxyCodeLine{00016\ \ \ \ \ ESP\_ERROR\_CHECK(i2c\_master\_bus\_add\_device(i2c\_busHandle,\ \&dev\_cfg,\ \&i2c\_devHandle));}
+\DoxyCodeLine{00017\ \}}
+
+\end{DoxyCode}
+
+
+\label{doc-func-members}
+\Hypertarget{class_d_s3231_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_d_s3231_a8290dfb4ecf94ffc4dbdf81224f7af14}\index{DS3231@{DS3231}!bcd2dec@{bcd2dec}}
+\index{bcd2dec@{bcd2dec}!DS3231@{DS3231}}
+\doxysubsubsection{\texorpdfstring{bcd2dec()}{bcd2dec()}}
+{\footnotesize\ttfamily \label{class_d_s3231_a8290dfb4ecf94ffc4dbdf81224f7af14} 
+uint8\+\_\+t DS3231\+::bcd2dec (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{val}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [private]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keywordflow}{return}\ (val\ >>\ 4)\ *\ 10\ +\ (val\ \&\ 0x0f);}
+\DoxyCodeLine{00021\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_d_s3231_aa020d6b9a460bc94cb5fd740e12fa3c9}\index{DS3231@{DS3231}!dec2bcd@{dec2bcd}}
+\index{dec2bcd@{dec2bcd}!DS3231@{DS3231}}
+\doxysubsubsection{\texorpdfstring{dec2bcd()}{dec2bcd()}}
+{\footnotesize\ttfamily \label{class_d_s3231_aa020d6b9a460bc94cb5fd740e12fa3c9} 
+uint8\+\_\+t DS3231\+::dec2bcd (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{val}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [private]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keywordflow}{return}\ ((val\ /\ 10)\ <<\ 4)\ +\ (val\ \%\ 10);}
+\DoxyCodeLine{00025\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_d_s3231_abb73c929d93256bd0af802c31fbdef18}\index{DS3231@{DS3231}!getRawTemp@{getRawTemp}}
+\index{getRawTemp@{getRawTemp}!DS3231@{DS3231}}
+\doxysubsubsection{\texorpdfstring{getRawTemp()}{getRawTemp()}}
+{\footnotesize\ttfamily \label{class_d_s3231_abb73c929d93256bd0af802c31fbdef18} 
+esp\+\_\+err\+\_\+t DS3231\+::get\+Raw\+Temp (\begin{DoxyParamCaption}\item[{int16\+\_\+t \&}]{temp}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00067\ \ \ \ \ uint8\_t\ reg\ =\ DS3231\_ADDR\_TEMP;}
+\DoxyCodeLine{00068\ \ \ \ \ uint8\_t\ data[2];}
+\DoxyCodeLine{00069\ \ \ \ \ esp\_err\_t\ res\ =\ i2c\_master\_transmit\_receive(i2c\_devHandle,\ \&reg,\ 1,\ data,\ 2,\ I2CDEV\_TIMEOUT\ /\ portTICK\_PERIOD\_MS);}
+\DoxyCodeLine{00070\ \ \ \ \ \textcolor{keywordflow}{if}\ (res\ ==\ ESP\_OK)}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ temp\ =\ (int16\_t)(int8\_t)data[0]\ <<\ 2\ |\ data[1]\ >>\ 6;}
+\DoxyCodeLine{00072\ \ \ \ \ \textcolor{keywordflow}{return}\ res;}
+\DoxyCodeLine{00073\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_d_s3231_ab9c30201d7ee889eec75875ad3e592fc}\index{DS3231@{DS3231}!getTempFloat@{getTempFloat}}
+\index{getTempFloat@{getTempFloat}!DS3231@{DS3231}}
+\doxysubsubsection{\texorpdfstring{getTempFloat()}{getTempFloat()}}
+{\footnotesize\ttfamily \label{class_d_s3231_ab9c30201d7ee889eec75875ad3e592fc} 
+esp\+\_\+err\+\_\+t DS3231\+::get\+Temp\+Float (\begin{DoxyParamCaption}\item[{float \&}]{temp}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00084\ \ \ \ \ int16\_t\ t\_int;}
+\DoxyCodeLine{00085\ \ \ \ \ esp\_err\_t\ res\ =\ getRawTemp(t\_int);}
+\DoxyCodeLine{00086\ \ \ \ \ \textcolor{keywordflow}{if}\ (res\ ==\ ESP\_OK)}
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ temp\ =\ t\_int\ *\ 0.25f;}
+\DoxyCodeLine{00088\ \ \ \ \ \textcolor{keywordflow}{return}\ res;}
+\DoxyCodeLine{00089\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_d_s3231_ae528648008add926032f5ff717a7665a}\index{DS3231@{DS3231}!getTempInteger@{getTempInteger}}
+\index{getTempInteger@{getTempInteger}!DS3231@{DS3231}}
+\doxysubsubsection{\texorpdfstring{getTempInteger()}{getTempInteger()}}
+{\footnotesize\ttfamily \label{class_d_s3231_ae528648008add926032f5ff717a7665a} 
+esp\+\_\+err\+\_\+t DS3231\+::get\+Temp\+Integer (\begin{DoxyParamCaption}\item[{int8\+\_\+t \&}]{temp}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00076\ \ \ \ \ int16\_t\ t\_int;}
+\DoxyCodeLine{00077\ \ \ \ \ esp\_err\_t\ res\ =\ getRawTemp(t\_int);}
+\DoxyCodeLine{00078\ \ \ \ \ \textcolor{keywordflow}{if}\ (res\ ==\ ESP\_OK)}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ temp\ =\ t\_int\ >>\ 2;}
+\DoxyCodeLine{00080\ \ \ \ \ \textcolor{keywordflow}{return}\ res;}
+\DoxyCodeLine{00081\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_d_s3231_ad8a21581b52f26de92f9eef8284c2fdf}\index{DS3231@{DS3231}!getTime@{getTime}}
+\index{getTime@{getTime}!DS3231@{DS3231}}
+\doxysubsubsection{\texorpdfstring{getTime()}{getTime()}}
+{\footnotesize\ttfamily \label{class_d_s3231_ad8a21581b52f26de92f9eef8284c2fdf} 
+esp\+\_\+err\+\_\+t DS3231\+::get\+Time (\begin{DoxyParamCaption}\item[{struct tm \&}]{time}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00044\ \ \ \ \ uint8\_t\ reg\ =\ DS3231\_ADDR\_TIME;}
+\DoxyCodeLine{00045\ \ \ \ \ uint8\_t\ data[7];}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ \ \ \ \ esp\_err\_t\ res\ =\ i2c\_master\_transmit\_receive(i2c\_devHandle,\ \&reg,\ 1,\ data,\ 7,\ I2CDEV\_TIMEOUT\ /\ portTICK\_PERIOD\_MS);}
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keywordflow}{if}\ (res\ !=\ ESP\_OK)\ \textcolor{keywordflow}{return}\ res;}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00050\ \ \ \ \ time.tm\_sec\ =\ bcd2dec(data[0]);}
+\DoxyCodeLine{00051\ \ \ \ \ time.tm\_min\ =\ bcd2dec(data[1]);}
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keywordflow}{if}\ (data[2]\ \&\ DS3231\_12HOUR\_FLAG)\ \{}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ time.tm\_hour\ =\ bcd2dec(data[2]\ \&\ DS3231\_12HOUR\_MASK)\ -\/\ 1;}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (data[2]\ \&\ DS3231\_PM\_FLAG)\ time.tm\_hour\ +=\ 12;}
+\DoxyCodeLine{00055\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ time.tm\_hour\ =\ bcd2dec(data[2]);}
+\DoxyCodeLine{00057\ \ \ \ \ \}}
+\DoxyCodeLine{00058\ \ \ \ \ time.tm\_wday\ =\ bcd2dec(data[3])\ -\/\ 1;}
+\DoxyCodeLine{00059\ \ \ \ \ time.tm\_mday\ =\ bcd2dec(data[4]);}
+\DoxyCodeLine{00060\ \ \ \ \ time.tm\_mon\ \ =\ bcd2dec(data[5]\ \&\ DS3231\_MONTH\_MASK)\ -\/\ 1;}
+\DoxyCodeLine{00061\ \ \ \ \ time.tm\_year\ =\ bcd2dec(data[6])\ +\ 100;}
+\DoxyCodeLine{00062\ \ \ \ \ time.tm\_isdst\ =\ 0;}
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keywordflow}{return}\ ESP\_OK;}
+\DoxyCodeLine{00064\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_d_s3231_ab0ec98af69a9630b9e2669d887eea1a7}\index{DS3231@{DS3231}!setTime@{setTime}}
+\index{setTime@{setTime}!DS3231@{DS3231}}
+\doxysubsubsection{\texorpdfstring{setTime()}{setTime()}}
+{\footnotesize\ttfamily \label{class_d_s3231_ab0ec98af69a9630b9e2669d887eea1a7} 
+esp\+\_\+err\+\_\+t DS3231\+::set\+Time (\begin{DoxyParamCaption}\item[{const struct tm \&}]{time}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00028\ \ \ \ \ uint8\_t\ data[7];}
+\DoxyCodeLine{00029\ \ \ \ \ data[0]\ =\ dec2bcd(time.tm\_sec);}
+\DoxyCodeLine{00030\ \ \ \ \ data[1]\ =\ dec2bcd(time.tm\_min);}
+\DoxyCodeLine{00031\ \ \ \ \ data[2]\ =\ dec2bcd(time.tm\_hour);}
+\DoxyCodeLine{00032\ \ \ \ \ data[3]\ =\ dec2bcd(time.tm\_wday\ +\ 1);}
+\DoxyCodeLine{00033\ \ \ \ \ data[4]\ =\ dec2bcd(time.tm\_mday);}
+\DoxyCodeLine{00034\ \ \ \ \ data[5]\ =\ dec2bcd(time.tm\_mon\ +\ 1);}
+\DoxyCodeLine{00035\ \ \ \ \ data[6]\ =\ dec2bcd(time.tm\_year\ -\/\ 2000);}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keywordflow}{return}\ i2c\_master\_transmit(i2c\_devHandle,\ }
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (\textcolor{keyword}{const}\ uint8\_t[])\{DS3231\_ADDR\_TIME\},\ 1,\ }
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ I2CDEV\_TIMEOUT\ /\ portTICK\_PERIOD\_MS)\ ==\ ESP\_OK\ \&\&}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \ \ \ i2c\_master\_transmit(i2c\_devHandle,\ data,\ 7,\ I2CDEV\_TIMEOUT\ /\ portTICK\_PERIOD\_MS);}
+\DoxyCodeLine{00041\ \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+ECU\+\_\+25/components/\+IO/ds3231.\+h\item 
+ECU\+\_\+25/components/\+IO/ds3231.\+cpp\end{DoxyCompactItemize}

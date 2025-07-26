@@ -1,0 +1,53 @@
+\doxysection{Recievable.\+h}
+\hypertarget{_recievable_8h_source}{}\label{_recievable_8h_source}\index{ECU\_25/components/GUI/Recievable.h@{ECU\_25/components/GUI/Recievable.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ \_RECIEVABLE\_}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ \_RECIEVABLE\_}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <cstring>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <stdio.h>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#define\ RECV\_BUFFER\_SIZE\ 200}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{00008\ \textcolor{keyword}{class\ }Recievable}
+\DoxyCodeLine{00009\ \{}
+\DoxyCodeLine{00010\ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00011\ \ \ \ \ T\ value;}
+\DoxyCodeLine{00012\ \ \ \ \ \textcolor{keywordtype}{char}*\ buffer\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00013\ \ \ \ \ \textcolor{keywordtype}{char}*\ allocate\_buffer()\ \{}
+\DoxyCodeLine{00014\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (buffer)\ \{}
+\DoxyCodeLine{00015\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}[]\ buffer;}
+\DoxyCodeLine{00016\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00017\ \ \ \ \ \ \ \ \ buffer\ =\ \textcolor{keyword}{new}\ \textcolor{keywordtype}{char}[RECV\_BUFFER\_SIZE];}
+\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ memset(buffer,\ 0,\ RECV\_BUFFER\_SIZE);}
+\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ buffer;}
+\DoxyCodeLine{00020\ \ \ \ \ \}}
+\DoxyCodeLine{00021\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{comment}{//\ Constructor}}
+\DoxyCodeLine{00023\ \ \ \ \ Recievable(T\ init\_value)\ :\ value(init\_value),\ buffer(\textcolor{keyword}{nullptr})\ \{\}}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{comment}{//\ Destructor}}
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keyword}{virtual}\ \string~Recievable()\ \{}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (buffer\ !=\ \textcolor{keyword}{nullptr})\ \{}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}[]\ buffer;}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \ \ \ \ buffer\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00031\ \ \ \ \ \}}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{comment}{//\ Sets\ value\ of\ recievable}}
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ set\_value(T\ val)\ \{}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ value\ =\ val;}
+\DoxyCodeLine{00036\ \ \ \ \ \}}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{comment}{//\ Gets\ value\ in\ recievable\ }}
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keyword}{inline}\ T\ get\_value()\ \{}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ value;}
+\DoxyCodeLine{00041\ \ \ \ \ \}}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{comment}{//\ Serializes\ data\ to\ string}}
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{char}*\ serialize\_to\_json()\ =\ 0;}
+\DoxyCodeLine{00045\ \};}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

@@ -1,0 +1,5 @@
+<map id="CAN_Signal::get_float" name="CAN_Signal::get_float">
+<area shape="rect" id="Node000001" title="Returns the scaled signal value as a float." alt="" coords="5,5,157,31"/>
+<area shape="rect" id="Node000002" href="$class_c_a_n___signal.html#a92bd913f786c453eadfec208b19909ed" title="Returns the raw, unscaled value for the signal." alt="" coords="205,5,352,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="157,16,189,16,189,21,157,21"/>
+</map>

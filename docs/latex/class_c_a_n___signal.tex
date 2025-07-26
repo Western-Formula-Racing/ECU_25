@@ -1,0 +1,393 @@
+\doxysection{CAN\+\_\+\+Signal Class Reference}
+\hypertarget{class_c_a_n___signal}{}\label{class_c_a_n___signal}\index{CAN\_Signal@{CAN\_Signal}}
+
+
+Represents a single \doxylink{class_c_a_n}{CAN} signal, including its position, length, scaling, and value.  
+
+
+
+
+{\ttfamily \#include $<$CAN\+\_\+\+Signal.\+hpp$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_c_a_n___signal_a9e8f641e2affb4285a63accb593c0325}{CAN\+\_\+\+Signal}} (bool is\+Intel, uint8\+\_\+t start\+Bit, uint8\+\_\+t length, float scale=1.\+0f, float offset=0.\+0f, int32\+\_\+t default\+\_\+value=0)
+\item 
+uint64\+\_\+t \mbox{\hyperlink{class_c_a_n___signal_a92bd913f786c453eadfec208b19909ed}{get\+\_\+raw}} ()
+\begin{DoxyCompactList}\small\item\em Returns the raw, unscaled value for the signal. \end{DoxyCompactList}\item 
+uint64\+\_\+t \mbox{\hyperlink{class_c_a_n___signal_af0e256d1e4db34f59a49dcaedf86989c}{get\+\_\+uint64}} ()
+\begin{DoxyCompactList}\small\item\em Returns the scaled value of the signal as a unsigned, 64bit int. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_c_a_n___signal_a880b7c9723bd1e8c693b9595a78840cd}{get\+\_\+int}} ()
+\begin{DoxyCompactList}\small\item\em Get the length of the singal value. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_c_a_n___signal_a87f56ae8d19a32731406b969f66e63f5}{get\+\_\+bool}} ()
+\item 
+float \mbox{\hyperlink{class_c_a_n___signal_a8ef357d28481db29dfc4cc82954da8f3}{get\+\_\+float}} ()
+\begin{DoxyCompactList}\small\item\em Returns the scaled signal value as a float. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_c_a_n___signal_a66e8fcbfe25986dc94794d191c13d875}{set}} (uint64\+\_\+t value)
+\begin{DoxyCompactList}\small\item\em Sets the signal value using an unsigned integer, applying inverse scaling and offset. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_c_a_n___signal_acbd6c615fb8091db2ffcde44849fd627}{set}} (int value)
+\begin{DoxyCompactList}\small\item\em Sets the signal value using a signed integer, applying inverse scaling and offset. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_c_a_n___signal_a9214cd24d7bea69ab0eaeb2a41fbb86d}{set}} (bool value)
+\begin{DoxyCompactList}\small\item\em Sets the signal value using a boolean (true = 1, false = 0). \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_c_a_n___signal_adf037126caf3d8de5fa20b637550cc79}{set}} (float value)
+\begin{DoxyCompactList}\small\item\em Sets the signal value using a float, applying scaling and offset. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_c_a_n___signal_a2322bd1550d5e97e819ff51af7590dc3}{set\+\_\+raw}} (uint64\+\_\+t raw\+\_\+value)
+\begin{DoxyCompactList}\small\item\em Directly sets the raw, unscaled value. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_c_a_n___signal_a8716a4b8ccdce6d2429fdc4ffd02b83e}\label{class_c_a_n___signal_a8716a4b8ccdce6d2429fdc4ffd02b83e} 
+bool {\bfseries is\+Intel}
+\item 
+\Hypertarget{class_c_a_n___signal_a22c1a9ff3d29b25319c000d182a12e45}\label{class_c_a_n___signal_a22c1a9ff3d29b25319c000d182a12e45} 
+uint8\+\_\+t {\bfseries start\+Bit}
+\item 
+\Hypertarget{class_c_a_n___signal_a82d2a2bd8a71b10a46fab11741eb2a92}\label{class_c_a_n___signal_a82d2a2bd8a71b10a46fab11741eb2a92} 
+uint8\+\_\+t {\bfseries length}
+\item 
+\Hypertarget{class_c_a_n___signal_ab7df70694dd50ad69dc89ac498d7e959}\label{class_c_a_n___signal_ab7df70694dd50ad69dc89ac498d7e959} 
+float {\bfseries scale}
+\item 
+\Hypertarget{class_c_a_n___signal_afa90747f80c16325215dfc783abf3cd6}\label{class_c_a_n___signal_afa90747f80c16325215dfc783abf3cd6} 
+float {\bfseries offset}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_c_a_n___signal_ac5e71f90f19e96b9d8b580b38ebe0c1b}\label{class_c_a_n___signal_ac5e71f90f19e96b9d8b580b38ebe0c1b} 
+uint64\+\_\+t {\bfseries raw\+\_\+value}
+\item 
+\Hypertarget{class_c_a_n___signal_a1d2417f5b6dd6795a594819e307bc125}\label{class_c_a_n___signal_a1d2417f5b6dd6795a594819e307bc125} 
+uint64\+\_\+t {\bfseries last\+\_\+recieved}
+\item 
+\Hypertarget{class_c_a_n___signal_a15b72d7ca194c5e88c86219907e9f8ca}\label{class_c_a_n___signal_a15b72d7ca194c5e88c86219907e9f8ca} 
+uint64\+\_\+t {\bfseries default\+\_\+value}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Represents a single \doxylink{class_c_a_n}{CAN} signal, including its position, length, scaling, and value. 
+
+This class provides methods to encode and decode individual signal values from \doxylink{class_c_a_n}{CAN} messages. It supports automatic scaling, endian handling, and timeout logic for stale signals. 
+
+\label{doc-constructors}
+\Hypertarget{class_c_a_n___signal_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_c_a_n___signal_a9e8f641e2affb4285a63accb593c0325}\index{CAN\_Signal@{CAN\_Signal}!CAN\_Signal@{CAN\_Signal}}
+\index{CAN\_Signal@{CAN\_Signal}!CAN\_Signal@{CAN\_Signal}}
+\doxysubsubsection{\texorpdfstring{CAN\_Signal()}{CAN\_Signal()}}
+{\footnotesize\ttfamily \label{class_c_a_n___signal_a9e8f641e2affb4285a63accb593c0325} 
+CAN\+\_\+\+Signal\+::\+CAN\+\_\+\+Signal (\begin{DoxyParamCaption}\item[{bool}]{is\+Intel}{, }\item[{uint8\+\_\+t}]{start\+Bit}{, }\item[{uint8\+\_\+t}]{length}{, }\item[{float}]{scale}{ = {\ttfamily 1.0f}, }\item[{float}]{offset}{ = {\ttfamily 0.0f}, }\item[{int32\+\_\+t}]{default\+\_\+value}{ = {\ttfamily 0}}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00005\ :\ isIntel(isIntel),\ startBit(startBit),\ length(length),\ scale(scale),\ offset(offset),\ default\_value(default\_value)}
+\DoxyCodeLine{00006\ \{}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \}}
+
+\end{DoxyCode}
+
+
+\label{doc-func-members}
+\Hypertarget{class_c_a_n___signal_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_c_a_n___signal_a87f56ae8d19a32731406b969f66e63f5}\index{CAN\_Signal@{CAN\_Signal}!get\_bool@{get\_bool}}
+\index{get\_bool@{get\_bool}!CAN\_Signal@{CAN\_Signal}}
+\doxysubsubsection{\texorpdfstring{get\_bool()}{get\_bool()}}
+{\footnotesize\ttfamily \label{class_c_a_n___signal_a87f56ae8d19a32731406b969f66e63f5} 
+bool CAN\+\_\+\+Signal\+::get\+\_\+bool (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\begin{DoxyReturn}{Returns}
+true 
+
+false 
+\end{DoxyReturn}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00070\ \{}
+\DoxyCodeLine{00071\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{bool}\textcolor{keyword}{>}((\mbox{\hyperlink{class_c_a_n___signal_a92bd913f786c453eadfec208b19909ed}{get\_raw}}()\ *\ scale)\ +\ offset);}
+\DoxyCodeLine{00072\ \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=339pt]{class_c_a_n___signal_a87f56ae8d19a32731406b969f66e63f5_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{class_c_a_n___signal_a8ef357d28481db29dfc4cc82954da8f3}\index{CAN\_Signal@{CAN\_Signal}!get\_float@{get\_float}}
+\index{get\_float@{get\_float}!CAN\_Signal@{CAN\_Signal}}
+\doxysubsubsection{\texorpdfstring{get\_float()}{get\_float()}}
+{\footnotesize\ttfamily \label{class_c_a_n___signal_a8ef357d28481db29dfc4cc82954da8f3} 
+float CAN\+\_\+\+Signal\+::get\+\_\+float (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Returns the scaled signal value as a float. 
+
+The raw value is cast based on signal length\+:
+\begin{DoxyItemize}
+\item ≤ 8 bits\+: cast as int8\+\_\+t
+\item ≤ 16 bits\+: cast as int16\+\_\+t
+\item \texorpdfstring{$>$}{>} 16 bits\+: cast as int32\+\_\+t
+\end{DoxyItemize}
+
+\begin{DoxyReturn}{Returns}
+float The scaled value as a float. 
+\end{DoxyReturn}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00086\ \{}
+\DoxyCodeLine{00087\ \ \ \ \ \textcolor{keywordflow}{if}(length\ <=\ 8)\{}
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{float}\textcolor{keyword}{>}(((int8\_t)\mbox{\hyperlink{class_c_a_n___signal_a92bd913f786c453eadfec208b19909ed}{get\_raw}}()\ *\ scale)\ +\ offset);}
+\DoxyCodeLine{00089\ \ \ \ \ \}}
+\DoxyCodeLine{00090\ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}(length\ <=\ 16)\{}
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{float}\textcolor{keyword}{>}(((int16\_t)\mbox{\hyperlink{class_c_a_n___signal_a92bd913f786c453eadfec208b19909ed}{get\_raw}}()\ *\ scale)\ +\ offset);}
+\DoxyCodeLine{00092\ \ \ \ \ \}}
+\DoxyCodeLine{00093\ \ \ \ \ \textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{float}\textcolor{keyword}{>}(((int32\_t)\mbox{\hyperlink{class_c_a_n___signal_a92bd913f786c453eadfec208b19909ed}{get\_raw}}()\ *\ scale)\ +\ offset);}
+\DoxyCodeLine{00095\ \ \ \ \ \}}
+\DoxyCodeLine{00096\ \ \ \ \ }
+\DoxyCodeLine{00097\ \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=340pt]{class_c_a_n___signal_a8ef357d28481db29dfc4cc82954da8f3_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{class_c_a_n___signal_a880b7c9723bd1e8c693b9595a78840cd}\index{CAN\_Signal@{CAN\_Signal}!get\_int@{get\_int}}
+\index{get\_int@{get\_int}!CAN\_Signal@{CAN\_Signal}}
+\doxysubsubsection{\texorpdfstring{get\_int()}{get\_int()}}
+{\footnotesize\ttfamily \label{class_c_a_n___signal_a880b7c9723bd1e8c693b9595a78840cd} 
+int CAN\+\_\+\+Signal\+::get\+\_\+int (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Get the length of the singal value. 
+
+The raw value is cast based on the signal\textquotesingle{}s bit length\+:
+\begin{DoxyItemize}
+\item ≤ 8 bits\+: cast as int8\+\_\+t
+\item ≤ 16 bits\+: cast as int16\+\_\+t
+\item \texorpdfstring{$>$}{>} 16 bits\+: cast as int32\+\_\+t \begin{DoxyReturn}{Returns}
+int 
+\end{DoxyReturn}
+
+\end{DoxyItemize}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00050\ \{}
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keywordflow}{if}(length\ <=\ 8)\{}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (((int8\_t)\mbox{\hyperlink{class_c_a_n___signal_a92bd913f786c453eadfec208b19909ed}{get\_raw}}()\ *\ scale)\ +\ offset);}
+\DoxyCodeLine{00053\ \ \ \ \ \}}
+\DoxyCodeLine{00054\ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}(length\ <=\ 16)\{}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (((int16\_t)\mbox{\hyperlink{class_c_a_n___signal_a92bd913f786c453eadfec208b19909ed}{get\_raw}}()\ *\ scale)\ +\ offset);}
+\DoxyCodeLine{00056\ \ \ \ \ \}}
+\DoxyCodeLine{00057\ \ \ \ \ \textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (((int32\_t)\mbox{\hyperlink{class_c_a_n___signal_a92bd913f786c453eadfec208b19909ed}{get\_raw}}()\ *\ scale)\ +\ offset);}
+\DoxyCodeLine{00059\ \ \ \ \ \}}
+\DoxyCodeLine{00060\ \ \ \ \ }
+\DoxyCodeLine{00061\ \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=332pt]{class_c_a_n___signal_a880b7c9723bd1e8c693b9595a78840cd_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{class_c_a_n___signal_a92bd913f786c453eadfec208b19909ed}\index{CAN\_Signal@{CAN\_Signal}!get\_raw@{get\_raw}}
+\index{get\_raw@{get\_raw}!CAN\_Signal@{CAN\_Signal}}
+\doxysubsubsection{\texorpdfstring{get\_raw()}{get\_raw()}}
+{\footnotesize\ttfamily \label{class_c_a_n___signal_a92bd913f786c453eadfec208b19909ed} 
+uint64\+\_\+t CAN\+\_\+\+Signal\+::get\+\_\+raw (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Returns the raw, unscaled value for the signal. 
+
+\begin{DoxyReturn}{Returns}
+uint64\+\_\+t 
+\end{DoxyReturn}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00016\ \{}
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{comment}{//Get\ the\ current\ time\ on\ the\ esp}}
+\DoxyCodeLine{00018\ \ \ \ \ int64\_t\ current\_time\ =\ esp\_timer\_get\_time()/1000;}
+\DoxyCodeLine{00019\ \ \ \ \ }
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{comment}{//If\ the\ last\ time\ the\ message\ was\ recieved\ from\ the\ signal\ }}
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{comment}{//is\ beyond\ the\ timeout\ window\ -\/>\ return\ the\ default\ value\ instead.\ }}
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keywordflow}{if}((current\_time\ -\/\ last\_recieved)\ >=\ TIMEOUT)\{}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ default\_value;}
+\DoxyCodeLine{00024\ \ \ \ \ \}}
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keywordflow}{return}\ raw\_value;}
+\DoxyCodeLine{00026\ \}}
+
+\end{DoxyCode}
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=348pt]{class_c_a_n___signal_a92bd913f786c453eadfec208b19909ed_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{class_c_a_n___signal_af0e256d1e4db34f59a49dcaedf86989c}\index{CAN\_Signal@{CAN\_Signal}!get\_uint64@{get\_uint64}}
+\index{get\_uint64@{get\_uint64}!CAN\_Signal@{CAN\_Signal}}
+\doxysubsubsection{\texorpdfstring{get\_uint64()}{get\_uint64()}}
+{\footnotesize\ttfamily \label{class_c_a_n___signal_af0e256d1e4db34f59a49dcaedf86989c} 
+uint64\+\_\+t CAN\+\_\+\+Signal\+::get\+\_\+uint64 (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Returns the scaled value of the signal as a unsigned, 64bit int. 
+
+\begin{DoxyReturn}{Returns}
+uint64\+\_\+t 
+\end{DoxyReturn}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00034\ \{}
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{static\_cast<}uint64\_t\textcolor{keyword}{>}((\mbox{\hyperlink{class_c_a_n___signal_a92bd913f786c453eadfec208b19909ed}{get\_raw}}()\ *\ scale)\ +\ offset);}
+\DoxyCodeLine{00036\ \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=348pt]{class_c_a_n___signal_af0e256d1e4db34f59a49dcaedf86989c_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{class_c_a_n___signal_a9214cd24d7bea69ab0eaeb2a41fbb86d}\index{CAN\_Signal@{CAN\_Signal}!set@{set}}
+\index{set@{set}!CAN\_Signal@{CAN\_Signal}}
+\doxysubsubsection{\texorpdfstring{set()}{set()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily \label{class_c_a_n___signal_a9214cd24d7bea69ab0eaeb2a41fbb86d} 
+void CAN\+\_\+\+Signal\+::set (\begin{DoxyParamCaption}\item[{bool}]{value}{}\end{DoxyParamCaption})}
+
+
+
+Sets the signal value using a boolean (true = 1, false = 0). 
+
+
+\begin{DoxyParams}{Parameters}
+{\em value} & Boolean value to store. \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00123\ \{}
+\DoxyCodeLine{00124\ \ \ \ \ last\_recieved\ =\ esp\_timer\_get\_time()/1000;}
+\DoxyCodeLine{00125\ \ \ \ \ raw\_value\ =\ \textcolor{keyword}{static\_cast<}uint64\_t\textcolor{keyword}{>}(value);}
+\DoxyCodeLine{00126\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_c_a_n___signal_adf037126caf3d8de5fa20b637550cc79}\index{CAN\_Signal@{CAN\_Signal}!set@{set}}
+\index{set@{set}!CAN\_Signal@{CAN\_Signal}}
+\doxysubsubsection{\texorpdfstring{set()}{set()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily \label{class_c_a_n___signal_adf037126caf3d8de5fa20b637550cc79} 
+void CAN\+\_\+\+Signal\+::set (\begin{DoxyParamCaption}\item[{float}]{value}{}\end{DoxyParamCaption})}
+
+
+
+Sets the signal value using a float, applying scaling and offset. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em value} & Scaled value to store. \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00128\ \{}
+\DoxyCodeLine{00129\ \ \ \ \ last\_recieved\ =\ esp\_timer\_get\_time()/1000;}
+\DoxyCodeLine{00130\ \ \ \ \ raw\_value\ =\ \textcolor{keyword}{static\_cast<}uint64\_t\textcolor{keyword}{>}((value\ -\/\ offset)\ /\ scale);\ \ \ }
+\DoxyCodeLine{00131\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_c_a_n___signal_acbd6c615fb8091db2ffcde44849fd627}\index{CAN\_Signal@{CAN\_Signal}!set@{set}}
+\index{set@{set}!CAN\_Signal@{CAN\_Signal}}
+\doxysubsubsection{\texorpdfstring{set()}{set()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily \label{class_c_a_n___signal_acbd6c615fb8091db2ffcde44849fd627} 
+void CAN\+\_\+\+Signal\+::set (\begin{DoxyParamCaption}\item[{int}]{value}{}\end{DoxyParamCaption})}
+
+
+
+Sets the signal value using a signed integer, applying inverse scaling and offset. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em value} & Scaled value to store. \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00118\ \{}
+\DoxyCodeLine{00119\ \ \ \ \ last\_recieved\ =\ esp\_timer\_get\_time()/1000;}
+\DoxyCodeLine{00120\ \ \ \ \ raw\_value\ =\ \textcolor{keyword}{static\_cast<}uint64\_t\textcolor{keyword}{>}((value\ -\/\ offset)\ /\ scale);}
+\DoxyCodeLine{00121\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_c_a_n___signal_a66e8fcbfe25986dc94794d191c13d875}\index{CAN\_Signal@{CAN\_Signal}!set@{set}}
+\index{set@{set}!CAN\_Signal@{CAN\_Signal}}
+\doxysubsubsection{\texorpdfstring{set()}{set()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily \label{class_c_a_n___signal_a66e8fcbfe25986dc94794d191c13d875} 
+void CAN\+\_\+\+Signal\+::set (\begin{DoxyParamCaption}\item[{uint64\+\_\+t}]{value}{}\end{DoxyParamCaption})}
+
+
+
+Sets the signal value using an unsigned integer, applying inverse scaling and offset. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em value} & Scaled value to store. \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00113\ \{}
+\DoxyCodeLine{00114\ \ \ \ \ last\_recieved\ =\ esp\_timer\_get\_time()/1000;}
+\DoxyCodeLine{00115\ \ \ \ \ raw\_value\ =\ \textcolor{keyword}{static\_cast<}uint64\_t\textcolor{keyword}{>}((value\ -\/\ offset)\ /\ scale);}
+\DoxyCodeLine{00116\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_c_a_n___signal_a2322bd1550d5e97e819ff51af7590dc3}\index{CAN\_Signal@{CAN\_Signal}!set\_raw@{set\_raw}}
+\index{set\_raw@{set\_raw}!CAN\_Signal@{CAN\_Signal}}
+\doxysubsubsection{\texorpdfstring{set\_raw()}{set\_raw()}}
+{\footnotesize\ttfamily \label{class_c_a_n___signal_a2322bd1550d5e97e819ff51af7590dc3} 
+void CAN\+\_\+\+Signal\+::set\+\_\+raw (\begin{DoxyParamCaption}\item[{uint64\+\_\+t}]{value}{}\end{DoxyParamCaption})}
+
+
+
+Directly sets the raw, unscaled value. 
+
+Updates the raw unscaled value and updates the time that the message was recived.
+
+Used when decoding \doxylink{class_c_a_n}{CAN} messages. Does not apply any scaling or offset.
+
+
+\begin{DoxyParams}{Parameters}
+{\em raw\+\_\+value} & Raw bitfield value.\\
+\hline
+{\em value} & \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00106\ \{}
+\DoxyCodeLine{00107\ \ \ \ \ last\_recieved\ =\ esp\_timer\_get\_time()/1000;}
+\DoxyCodeLine{00108\ \ \ \ \ raw\_value\ =\ value;}
+\DoxyCodeLine{00109\ \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+ECU\+\_\+25/components/\+CAN/\mbox{\hyperlink{_c_a_n___signal_8hpp}{CAN\+\_\+\+Signal.\+hpp}}\item 
+ECU\+\_\+25/components/\+CAN/CAN\+\_\+\+Signal.\+cpp\end{DoxyCompactItemize}

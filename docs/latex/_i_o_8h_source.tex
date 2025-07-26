@@ -1,0 +1,62 @@
+\doxysection{IO.\+h}
+\hypertarget{_i_o_8h_source}{}\label{_i_o_8h_source}\index{ECU\_25/components/IO/IO.h@{ECU\_25/components/IO/IO.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ \_IO\_}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ \_IO\_}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <stdio.h>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}freertos/FreeRTOS.h"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}freertos/task.h"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}freertos/semphr.h"{}}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}driver/spi\_master.h"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}driver/i2c\_master.h"{}}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}PinMap.h"{}}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}TLA2518.h"{}}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ "{}driver/gpio.h"{}}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ "{}FXL6408UMX.h"{}}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ "{}ICM-\/20948.h"{}}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ "{}ds3231.h"{}}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}esp\_timer.h"{}}}
+\DoxyCodeLine{00016\ \textcolor{keyword}{class\ }IO\{}
+\DoxyCodeLine{00017\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{comment}{//Singleton\ device\ class\ structure}}
+\DoxyCodeLine{00019\ \ \ \ \ IO();}
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keyword}{static}\ IO*\ instancePtr;}
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keyword}{static}\ SemaphoreHandle\_t\ mutex;}
+\DoxyCodeLine{00022\ \ \ \ \ }
+\DoxyCodeLine{00023\ \ \ \ \ i2c\_master\_bus\_handle\_t\ i2c\_handle;}
+\DoxyCodeLine{00024\ \ \ \ \ \mbox{\hyperlink{class_f_x_l6408_u_m_x}{FXL6408UMX}}*\ hsd\_handle;}
+\DoxyCodeLine{00025\ \ \ \ \ \mbox{\hyperlink{class_i_c_m20948}{ICM20948}}*\ imu\_handle;}
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00027\ \ \ \ \ }
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{comment}{//Deleting\ the\ copy\ constructor\ and\ copy\ reference\ constructor\ to\ prevent\ copies}}
+\DoxyCodeLine{00029\ \ \ \ \ IO(\textcolor{keyword}{const}\ IO\ \&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00030\ \ \ \ \ IO\ \&operator=(\textcolor{keyword}{const}\ IO\ \&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00031\ \ \ \ \ IO(IO\ \&\&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00032\ \ \ \ \ IO\ \&operator=(IO\ \&\&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keyword}{static}\ IO*\ Get();}
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keywordtype}{void}\ setupSPI();}
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keywordtype}{int}\ analogRead(ECU\_ANALOG\_PIN\ pin);}
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keywordtype}{float}\ analogReadVoltage(ECU\_ANALOG\_PIN\ pin);}
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keywordtype}{int}\ digitalRead(ECU\_IO\_PIN\ pin);}
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keywordtype}{void}\ digitalWrite(ECU\_IO\_PIN\ pin);\ \ \ }
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keywordtype}{void}\ setupI2C();}
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keywordtype}{void}\ HSDWrite(ECU\_HSD\_PIN\ channel,\ \textcolor{keywordtype}{bool}\ level);}
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keywordtype}{float}\ getAccelX();}
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keywordtype}{float}\ getAccelY();}
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keywordtype}{float}\ getAccelZ();}
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keywordtype}{float}\ getGyroX();}
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keywordtype}{float}\ getGyroY();}
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keywordtype}{float}\ getGyroZ();}
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keywordtype}{float}\ getRightWheelSpeed();}
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keywordtype}{float}\ getLeftWheelSpeed();}
+\DoxyCodeLine{00049\ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{class_t_l_a2518}{TLA2518}}*\ adc1\_handle;}
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{class_t_l_a2518}{TLA2518}}*\ adc2\_handle;}
+\DoxyCodeLine{00051\ \ \ \ \ \mbox{\hyperlink{class_d_s3231}{DS3231}}*\ rtc\_handle;}
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{volatile}\ uint64\_t\ right\_wheel\_tick;}
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{volatile}\ uint64\_t\ left\_wheel\_tick;}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00055\ \};}
+\DoxyCodeLine{00056\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

@@ -1,0 +1,5 @@
+<map id="IntRecievable" name="IntRecievable">
+<area shape="rect" id="Node000001" title=" " alt="" coords="17,79,118,105"/>
+<area shape="rect" id="Node000002" href="$class_recievable.html" title=" " alt="" coords="5,5,130,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="70,46,70,79,65,79,65,46"/>
+</map>

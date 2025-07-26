@@ -1,3 +1,8 @@
+/**
+ * @file CAN.cpp
+ * @brief  Initalizes the CAN communication starting the receive/transmit loops, and talks to other devices on the network. 
+ * 
+ */
 #include "CAN.h"
 #include <stdio.h>
 #include "esp_log.h"
@@ -9,6 +14,12 @@
 static const char *TAG = "CAN"; // Used for ESP_LOGx commands. See ESP-IDF Documentation
 static SemaphoreHandle_t rx_sem = xSemaphoreCreateBinary();
 static TimerHandle_t timerHandle;
+
+
+/**
+ * @brief Settings in the TWAI that we can set to help us read/send the can messages.
+ * 
+ */
 static twai_message_t tx_message = {
     // Message type and format settings
     .extd = 0,         // Standard vs extended format
@@ -21,24 +32,38 @@ static twai_message_t tx_message = {
 };
 TaskHandle_t rxTaskHandle = nullptr;
 
+
 int give_zero()
 {
     printf("kill me please I can't keep doing this\n");
     return 0;
 }
 
+/**
+ * @brief Construct a new CAN::CAN object
+ * 
+ * @param CAN_TX_Pin    TX pin on the ECU
+ * @param CAN_RX_Pin    RX pin on the ECU
+ * @param twai_mode     Can set various TWAI modes. See TWAI documentation
+ */
 CAN::CAN(gpio_num_t CAN_TX_Pin, gpio_num_t CAN_RX_Pin, twai_mode_t twai_mode)
 {
+    //Set to defaults
     logging = false;
     restart_counter = 0;
+    
+    //Configure the setting for CAN, such as pins, baudrate, message queue length,etc....
     twai_general_config_t g_config = TWAI_GENERAL_CONFIG_DEFAULT(CAN_TX_Pin, CAN_RX_Pin, twai_mode);
     g_config.rx_queue_len = 1000;
     twai_timing_config_t t_config = TWAI_TIMING_CONFIG_500KBITS();
     twai_filter_config_t f_config = TWAI_FILTER_CONFIG_ACCEPT_ALL();
+
+    //Defines which CAN contoller on the ESP to use.
     g_config.controller_id = 0;
 
     txCallBackCounter = 0;
 
+    //Check if we have the drivers installed and if they are running/run them.
     if (twai_driver_install_v2(&g_config, &t_config, &f_config, &twai_handle) == ESP_OK)
     {
         ESP_LOGI(TAG, "Driver installed\n");
@@ -193,21 +218,44 @@ void CAN::rx_task()
     }
 }
 
+/**
+ *  @brief Periodically transmits CAN messages at 10ms, 100ms, and 1000ms intervals.
+ *
+ * @details Triggered every 10ms by a timer, this function both builds and transmits CAN messages.
+ * It iterates over preset ids and signals with the help of the various other CAN classes, each message
+ * is then populated using the latest data from CAN_Map and sent over the network. If logging is enabled
+ * then this function also logs the messages. 
+ * 
+ * \image html docs/img/TX_Callback.png "Building and Transmission Diagram"
+ */
 void CAN::tx_CallBack()
 {
     txCallBackCounter = (txCallBackCounter < 1000) ? txCallBackCounter + 1 : 0;
     char log_string[256];
     // I don't believe in 1ms messages in 2025. nothing's that important
 
+
     // 10ms messages
+    // For all the messages in CAN_Tx_10ms_IDs that is defined in CAN_Config, the same thing happens for all other times. 
     for (const auto &identifier : CAN_Tx_10ms_IDs)
     {
+        //Then for all the signals in that messages map we will construct a CAN message.
         for (const auto &signal : CAN_Map[identifier])
         {
+            //Set up the message for creation 
             tx_message.identifier = identifier;
             tx_message.data_length_code = 8;
-            can_setSignal<uint64_t>(tx_message.data, signal->get_raw(), signal->startBit, signal->length, signal->isIntel);
+
+            // Convert the signal’s raw value to bitfield data
+            can_setSignal<uint64_t>(
+                tx_message.data,         // Target CAN message's data field (8 bytes)
+                signal->get_raw(),       // The raw data value of the signal 
+                signal->startBit,        // The offset for which the signal starts at
+                signal->length,          // How many bits this signal occupies
+                signal->isIntel          // True = little-endian, False = big-endian
+            );
         }
+        //If we are logging data, then write to the SD card. 
         if (logging)
         {
             sprintf(log_string, "%ld,", tx_message.identifier);

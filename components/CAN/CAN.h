@@ -8,13 +8,24 @@
 #include "esp_log.h"
 #include <variant>
 
+/**
+ * @brief Manages CAN bus communication using the ESP32 TWAI driver.
+ *
+ * @details This class handles CAN initialization, reception, and periodic transmission
+ * of CAN messages. It supports configurable TX/RX pins and mode, signal-level
+ * mapping, and optional logging of messages for diagnostics or telemetry.
+ */
 class CAN
 {
 public:
     CAN(gpio_num_t CAN_TX_Pin, gpio_num_t CAN_RX_Pin, twai_mode_t twai_mode);
     void begin();
-    bool logging;
-    int restart_counter;
+
+    /** @brief Whether or not we will be logging can data to an SD card.*/
+    bool logging;     
+    /** @brief Keeps track of the number of times the CAN network as been restarted.*/
+    int restart_counter;       
+
     void restart(gpio_num_t CAN_TX_Pin, gpio_num_t CAN_RX_Pin, twai_mode_t twai_mode);
 private:
     twai_handle_t twai_handle;
@@ -22,6 +33,8 @@ private:
     twai_timing_config_t t_config;
     twai_filter_config_t f_config;
     uint32_t twai_alerts;
+
+    /** @brief We use this counter with a modulo to calculate when a CAN message should be sent again based off an interval.*/
     uint16_t txCallBackCounter; 
 
     static void rx_task_wrapper(void *arg); // Wrapper function

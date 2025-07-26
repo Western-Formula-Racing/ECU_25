@@ -1,0 +1,128 @@
+\doxysection{Recievable\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>} Class Template Reference}
+\hypertarget{class_recievable}{}\label{class_recievable}\index{Recievable$<$ T $>$@{Recievable$<$ T $>$}}
+
+
+Inheritance diagram for Recievable\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>}\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=169pt]{class_recievable__inherit__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_recievable_a495fdd3b3ff03f29335ea6856e2292bd}{Recievable}} (T init\+\_\+value)
+\item 
+void \mbox{\hyperlink{class_recievable_a753bda1f913a91f4246a276f74b4790b}{set\+\_\+value}} (T val)
+\item 
+T \mbox{\hyperlink{class_recievable_a8ea3528bd9c1c522618ed23c03ce8a6b}{get\+\_\+value}} ()
+\item 
+\Hypertarget{class_recievable_a73d7aef25fc88687395603625534a61b}\label{class_recievable_a73d7aef25fc88687395603625534a61b} 
+virtual char \texorpdfstring{$\ast$}{*} {\bfseries serialize\+\_\+to\+\_\+json} ()=0
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_recievable_a734a3dea2746b3dd30a6338de31cc220}{allocate\+\_\+buffer}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_recievable_a83155977ba10fa8fe9cb843c98a8ed16}\label{class_recievable_a83155977ba10fa8fe9cb843c98a8ed16} 
+T {\bfseries value}
+\item 
+\Hypertarget{class_recievable_a96c83530c74c39d5a92e3d3b81149777}\label{class_recievable_a96c83530c74c39d5a92e3d3b81149777} 
+char \texorpdfstring{$\ast$}{*} {\bfseries buffer} = nullptr
+\end{DoxyCompactItemize}
+
+
+\label{doc-constructors}
+\Hypertarget{class_recievable_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_recievable_a495fdd3b3ff03f29335ea6856e2292bd}\index{Recievable$<$ T $>$@{Recievable$<$ T $>$}!Recievable@{Recievable}}
+\index{Recievable@{Recievable}!Recievable$<$ T $>$@{Recievable$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{Recievable()}{Recievable()}}
+{\footnotesize\ttfamily \label{class_recievable_a495fdd3b3ff03f29335ea6856e2292bd} 
+template$<$class T$>$ \\
+\mbox{\hyperlink{class_recievable}{Recievable}}$<$ T $>$\mbox{\hyperlink{class_recievable}{\+::\+Recievable}} (\begin{DoxyParamCaption}\item[{T}]{init\+\_\+value}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00023\ :\ value(\mbox{\hyperlink{class_recievable}{init\_value}}),\ buffer(\textcolor{keyword}{nullptr})\ \{\}}
+
+\end{DoxyCode}
+\Hypertarget{class_recievable_a6e7ad46df9cc6f019374d2afa3cdf5c0}\index{Recievable$<$ T $>$@{Recievable$<$ T $>$}!````~Recievable@{\texorpdfstring{$\sim$}{\string~}Recievable}}
+\index{````~Recievable@{\texorpdfstring{$\sim$}{\string~}Recievable}!Recievable$<$ T $>$@{Recievable$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}Recievable()}{\string~Recievable()}}
+{\footnotesize\ttfamily \label{class_recievable_a6e7ad46df9cc6f019374d2afa3cdf5c0} 
+template$<$class T$>$ \\
+virtual \mbox{\hyperlink{class_recievable}{Recievable}}$<$ T $>$\+::\texorpdfstring{$\sim$}{\string~}\mbox{\hyperlink{class_recievable}{Recievable}} (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (buffer\ !=\ \textcolor{keyword}{nullptr})\ \{}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}[]\ buffer;}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \ \ \ \ buffer\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00031\ \ \ \ \ \}}
+
+\end{DoxyCode}
+
+
+\label{doc-func-members}
+\Hypertarget{class_recievable_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_recievable_a734a3dea2746b3dd30a6338de31cc220}\index{Recievable$<$ T $>$@{Recievable$<$ T $>$}!allocate\_buffer@{allocate\_buffer}}
+\index{allocate\_buffer@{allocate\_buffer}!Recievable$<$ T $>$@{Recievable$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{allocate\_buffer()}{allocate\_buffer()}}
+{\footnotesize\ttfamily \label{class_recievable_a734a3dea2746b3dd30a6338de31cc220} 
+template$<$class T$>$ \\
+char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_recievable}{Recievable}}$<$ T $>$\+::allocate\+\_\+buffer (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00013\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00014\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (buffer)\ \{}
+\DoxyCodeLine{00015\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}[]\ buffer;}
+\DoxyCodeLine{00016\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00017\ \ \ \ \ \ \ \ \ buffer\ =\ \textcolor{keyword}{new}\ \textcolor{keywordtype}{char}[\mbox{\hyperlink{class_recievable}{RECV\_BUFFER\_SIZE}}];}
+\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_recievable}{memset}}(buffer,\ 0,\ \mbox{\hyperlink{class_recievable}{RECV\_BUFFER\_SIZE}});}
+\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ buffer;}
+\DoxyCodeLine{00020\ \ \ \ \ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_recievable_a8ea3528bd9c1c522618ed23c03ce8a6b}\index{Recievable$<$ T $>$@{Recievable$<$ T $>$}!get\_value@{get\_value}}
+\index{get\_value@{get\_value}!Recievable$<$ T $>$@{Recievable$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{get\_value()}{get\_value()}}
+{\footnotesize\ttfamily \label{class_recievable_a8ea3528bd9c1c522618ed23c03ce8a6b} 
+template$<$class T$>$ \\
+T \mbox{\hyperlink{class_recievable}{Recievable}}$<$ T $>$\+::get\+\_\+value (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ value;}
+\DoxyCodeLine{00041\ \ \ \ \ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_recievable_a753bda1f913a91f4246a276f74b4790b}\index{Recievable$<$ T $>$@{Recievable$<$ T $>$}!set\_value@{set\_value}}
+\index{set\_value@{set\_value}!Recievable$<$ T $>$@{Recievable$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{set\_value()}{set\_value()}}
+{\footnotesize\ttfamily \label{class_recievable_a753bda1f913a91f4246a276f74b4790b} 
+template$<$class T$>$ \\
+void \mbox{\hyperlink{class_recievable}{Recievable}}$<$ T $>$\+::set\+\_\+value (\begin{DoxyParamCaption}\item[{T}]{val}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ value\ =\ \mbox{\hyperlink{class_recievable}{val}};}
+\DoxyCodeLine{00036\ \ \ \ \ \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+ECU\+\_\+25/components/\+GUI/Recievable.\+h\end{DoxyCompactItemize}

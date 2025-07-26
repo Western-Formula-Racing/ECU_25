@@ -1,3 +1,8 @@
+/**
+ * @file   CAN_Config.hpp
+ * @brief  Defines the configuration of all components on the CAN network.
+ * 
+ */
 #ifndef __CAN_CONFIG__
 #define __CAN_CONFIG__
 #include "CAN_Signal.hpp"
@@ -292,7 +297,20 @@ inline CAN_Signal MaxTemp_ID1057{true, 16, 16, 0.1f};
 inline CAN_Signal MinCellVoltage_ID1057{true, 32, 16, 0.001f};
 inline CAN_Signal MaxCellVoltage_ID1057{true, 48, 16, 0.001f};
 
-// Define the CAN Map
+/**
+ * @brief Define the CAN hashmap for all the signals over the CAN bus network
+ * 
+ * @details 
+ * Within the map we will store the Message ID's, and their make up. 
+ * 
+ * For Example;
+ * etl::pair{VCU_PDM_REAR_CMD, etl::vector<CAN_Signal*, 16>
+ * 
+ * Stores the Key = VCU_PDM_REAR_CMD = 2012 and the Value is a Vector with pointers to the CAN_Signal objects
+ * Value  = { &HSD1_ID2012, &HSD2_ID2012,.....} the 16 is the number of CAN signals that can be stored in each message, this has 
+ * nothing to do with the length of each signal. Each signal defines its bit layout within the message (e.g., HSD1_ID2012{true, 0, 8}) so that the message can be correctly packed or unpacked.
+ * 
+ */
 inline etl::map CAN_Map
 { 
     etl::pair{VCU_PDM_REAR_CMD, etl::vector<CAN_Signal*, 16>{ 

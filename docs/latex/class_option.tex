@@ -1,0 +1,219 @@
+\doxysection{Option\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>} Class Template Reference}
+\hypertarget{class_option}{}\label{class_option}\index{Option$<$ T $>$@{Option$<$ T $>$}}
+
+
+Inheritance diagram for Option\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>}\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=169pt]{class_option__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Option\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>}\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=169pt]{class_option__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_option_a6b19727883a1b8ddf6cbc26375658671}{Option}} (const std\+::vector$<$ T $>$ options)
+\item 
+\mbox{\hyperlink{class_option_a5846b15dc8ee1e897f251c27b09cb1f5}{Option}} (const std\+::vector$<$ T $>$ options, int idx)
+\item 
+char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_option_aa8c6d213bfb59953fe4ddb485da38467}{serialize\+\_\+to\+\_\+json}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_recievable}{Recievable$<$ T $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_recievable_a495fdd3b3ff03f29335ea6856e2292bd}{Recievable}} (T init\+\_\+value)
+\item 
+void \mbox{\hyperlink{class_recievable_a753bda1f913a91f4246a276f74b4790b}{set\+\_\+value}} (T val)
+\item 
+T \mbox{\hyperlink{class_recievable_a8ea3528bd9c1c522618ed23c03ce8a6b}{get\+\_\+value}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_option_a24fd1c58fee3685a92174b4da24f2725}{allocate\+\_\+buffer}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions inherited from \mbox{\hyperlink{class_recievable}{Recievable$<$ T $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_recievable_a734a3dea2746b3dd30a6338de31cc220}{allocate\+\_\+buffer}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_option_a199ed220f7104db25b334d8934b020bc}\label{class_option_a199ed220f7104db25b334d8934b020bc} 
+char \texorpdfstring{$\ast$}{*} {\bfseries buffer}
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{class_recievable}{Recievable$<$ T $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+T {\bfseries value}
+\item 
+char \texorpdfstring{$\ast$}{*} {\bfseries buffer} = nullptr
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_option_a067413be0c747358947c539a4179d489}\label{class_option_a067413be0c747358947c539a4179d489} 
+T {\bfseries value}
+\item 
+\Hypertarget{class_option_a456c1bdb987a6e74c97585e730eacdab}\label{class_option_a456c1bdb987a6e74c97585e730eacdab} 
+T {\bfseries default\+\_\+value}
+\item 
+\Hypertarget{class_option_a72f38d9b0239232fef517fd299daa950}\label{class_option_a72f38d9b0239232fef517fd299daa950} 
+std\+::vector$<$ T $>$ {\bfseries options}
+\end{DoxyCompactItemize}
+
+
+\label{doc-constructors}
+\Hypertarget{class_option_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_option_a6b19727883a1b8ddf6cbc26375658671}\index{Option$<$ T $>$@{Option$<$ T $>$}!Option@{Option}}
+\index{Option@{Option}!Option$<$ T $>$@{Option$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{Option()}{Option()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_option_a6b19727883a1b8ddf6cbc26375658671} 
+template$<$class T$>$ \\
+\mbox{\hyperlink{class_option}{Option}}$<$ T $>$\mbox{\hyperlink{class_option}{\+::\+Option}} (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ T $>$}]{options}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Constructor for the \doxylink{class_option}{Option} class. 
+\begin{DoxyParams}{Parameters}
+{\em options} & A vector of possible values for the option. The first element is used as the default value. \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ :\ Recievable<T>(options.at(0)),}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \ \ value(options.at(0)),\ }
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \ \ default\_value(options.at(0)),\ }
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \ \ options(options),}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \ \ buffer(\textcolor{keyword}{nullptr})\ \{\};}
+
+\end{DoxyCode}
+\Hypertarget{class_option_a5846b15dc8ee1e897f251c27b09cb1f5}\index{Option$<$ T $>$@{Option$<$ T $>$}!Option@{Option}}
+\index{Option@{Option}!Option$<$ T $>$@{Option$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{Option()}{Option()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_option_a5846b15dc8ee1e897f251c27b09cb1f5} 
+template$<$class T$>$ \\
+\mbox{\hyperlink{class_option}{Option}}$<$ T $>$\mbox{\hyperlink{class_option}{\+::\+Option}} (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ T $>$}]{options}{, }\item[{int}]{idx}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ :\ Recievable<T>(options.at(\mbox{\hyperlink{class_option}{idx}})),}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \ \ value(options.at(\mbox{\hyperlink{class_option}{idx}})),\ }
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \ \ default\_value(options.at(\mbox{\hyperlink{class_option}{idx}})),\ }
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \ \ options(options),\ }
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \ \ buffer(\textcolor{keyword}{nullptr})\ \{\};}
+
+\end{DoxyCode}
+
+
+\label{doc-func-members}
+\Hypertarget{class_option_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_option_a24fd1c58fee3685a92174b4da24f2725}\index{Option$<$ T $>$@{Option$<$ T $>$}!allocate\_buffer@{allocate\_buffer}}
+\index{allocate\_buffer@{allocate\_buffer}!Option$<$ T $>$@{Option$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{allocate\_buffer()}{allocate\_buffer()}}
+{\footnotesize\ttfamily \label{class_option_a24fd1c58fee3685a92174b4da24f2725} 
+template$<$class T$>$ \\
+char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_option}{Option}}$<$ T $>$\+::allocate\+\_\+buffer (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}[]\ buffer;}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_option}{size}}\ =\ \mbox{\hyperlink{class_option}{OPTION\_BUFFER\_SIZE}}\ *\ options.size()\ +\ 30;}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ buffer\ =\ \textcolor{keyword}{new}\ \textcolor{keywordtype}{char}[\mbox{\hyperlink{class_option}{size}}];}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_option}{memset}}(buffer,\ 0,\ \mbox{\hyperlink{class_option}{size}});}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ buffer;}
+\DoxyCodeLine{00029\ \ \ \ \ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_option_aa8c6d213bfb59953fe4ddb485da38467}\index{Option$<$ T $>$@{Option$<$ T $>$}!serialize\_to\_json@{serialize\_to\_json}}
+\index{serialize\_to\_json@{serialize\_to\_json}!Option$<$ T $>$@{Option$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{serialize\_to\_json()}{serialize\_to\_json()}}
+{\footnotesize\ttfamily \label{class_option_aa8c6d213bfb59953fe4ddb485da38467} 
+template$<$class T$>$ \\
+char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_option}{Option}}$<$ T $>$\+::serialize\+\_\+to\+\_\+json (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_recievable}{Recievable$<$ T $>$}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00052\ \ \ \ \ \{}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{char}*\ buffer\ =\ allocate\_buffer();}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_option}{strcat}}(buffer,\ \textcolor{stringliteral}{"{}\{\(\backslash\)"{}value\(\backslash\)"{}:\ \{\(\backslash\)"{}value\(\backslash\)"{}:"{}});}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_option}{first}}\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00057\ \ \ \ \ }
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_option}{value\_buffer\_size}}\ =\ 30;}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{char}\ \mbox{\hyperlink{class_option}{value\_buffer}}[\mbox{\hyperlink{class_option}{value\_buffer\_size}}];}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_option}{memset}}(\mbox{\hyperlink{class_option}{value\_buffer}},\ 0,\ \mbox{\hyperlink{class_option}{value\_buffer\_size}});}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}\ (\mbox{\hyperlink{class_option}{std::is\_same<T,\ int>::value}})}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_option}{snprintf}}(\mbox{\hyperlink{class_option}{value\_buffer}},\ \mbox{\hyperlink{class_option}{value\_buffer\_size}},\ \textcolor{stringliteral}{"{}\%d,\ \(\backslash\)"{}options\(\backslash\)"{}:\ ["{}},\ value);}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_option}{strcat}}(buffer,\ \mbox{\hyperlink{class_option}{value\_buffer}});}
+\DoxyCodeLine{00065\ \ \ \ \ }
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\mbox{\hyperlink{class_option}{T}}\ \mbox{\hyperlink{class_option}{option}}\ :\ options)}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!\mbox{\hyperlink{class_option}{first}})\ \{}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_option}{strcat}}(buffer,\ \textcolor{stringliteral}{"{},"{}});}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_option}{first}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_option}{snprintf}}(\mbox{\hyperlink{class_option}{value\_buffer}},\ \mbox{\hyperlink{class_option}{value\_buffer\_size}},\ \textcolor{stringliteral}{"{}\%d"{}},\ \mbox{\hyperlink{class_option}{option}});}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_option}{strcat}}(buffer,\ \mbox{\hyperlink{class_option}{value\_buffer}});}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00075\ \ \ \ \ }
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_option}{strcat}}(buffer,\ \textcolor{stringliteral}{"{}]\},\(\backslash\)"{}type\(\backslash\)"{}:\(\backslash\)"{}recievable>option>int\(\backslash\)"{}\}"{}});}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}\ (\mbox{\hyperlink{class_option}{std::is\_same<T,\ float>::value}}\ ||\ \mbox{\hyperlink{class_option}{std::is\_same<T,\ double>::value}})}
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_option}{snprintf}}(\mbox{\hyperlink{class_option}{value\_buffer}},\ \mbox{\hyperlink{class_option}{value\_buffer\_size}},\ \textcolor{stringliteral}{"{}\%.5f,\ \(\backslash\)"{}options\(\backslash\)"{}:\ ["{}},\ value);}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_option}{strcat}}(buffer,\ \mbox{\hyperlink{class_option}{value\_buffer}});}
+\DoxyCodeLine{00081\ \ \ \ \ }
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\mbox{\hyperlink{class_option}{T}}\ \mbox{\hyperlink{class_option}{option}}\ :\ options)}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!\mbox{\hyperlink{class_option}{first}})\ \{}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_option}{strcat}}(buffer,\ \textcolor{stringliteral}{"{},"{}});}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_option}{first}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_option}{snprintf}}(\mbox{\hyperlink{class_option}{value\_buffer}},\ \mbox{\hyperlink{class_option}{value\_buffer\_size}},\ \textcolor{stringliteral}{"{}\%.5f"{}},\ \mbox{\hyperlink{class_option}{option}});}
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_option}{strcat}}(buffer,\ \mbox{\hyperlink{class_option}{value\_buffer}});}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00091\ \ \ \ \ }
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_option}{strcat}}(buffer,\ \textcolor{stringliteral}{"{}]\},\(\backslash\)"{}type\(\backslash\)"{}:\(\backslash\)"{}recievable>option>float\(\backslash\)"{}\}"{}});}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ }
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_option}{snprintf}}(\mbox{\hyperlink{class_option}{value\_buffer}},\ \mbox{\hyperlink{class_option}{value\_buffer\_size}},\ \textcolor{stringliteral}{"{}\(\backslash\)"{}\%s\(\backslash\)"{},"{}},\ value);}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_option}{strcat}}(buffer,\ \mbox{\hyperlink{class_option}{value\_buffer}});}
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_option}{strcat}}(buffer,\ \textcolor{stringliteral}{"{}\(\backslash\)"{}options\(\backslash\)"{}:\ ["{}});}
+\DoxyCodeLine{00098\ \ \ \ \ }
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\mbox{\hyperlink{class_option}{T}}\ \mbox{\hyperlink{class_option}{option}}\ :\ options)}
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!\mbox{\hyperlink{class_option}{first}})\ \{}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_option}{strcat}}(buffer,\ \textcolor{stringliteral}{"{},"{}});}
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_option}{first}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_option}{snprintf}}(\mbox{\hyperlink{class_option}{value\_buffer}},\ \mbox{\hyperlink{class_option}{OPTION\_BUFFER\_SIZE}}-\/1,\ \textcolor{stringliteral}{"{}\(\backslash\)"{}\%s\(\backslash\)"{}"{}},\ \mbox{\hyperlink{class_option}{option}});}
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_option}{strcat}}(buffer,\ \mbox{\hyperlink{class_option}{value\_buffer}});}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00108\ \ \ \ \ }
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_option}{strcat}}(buffer,\ \textcolor{stringliteral}{"{}]\},\(\backslash\)"{}type\(\backslash\)"{}:\(\backslash\)"{}recievable>option>string\(\backslash\)"{}\}"{}});}
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \}\ }
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ buffer;}
+\DoxyCodeLine{00112\ \ \ \ \ \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+ECU\+\_\+25/components/\+GUI/Option.\+h\end{DoxyCompactItemize}

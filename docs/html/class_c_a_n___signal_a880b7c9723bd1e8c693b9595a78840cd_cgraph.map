@@ -1,0 +1,5 @@
+<map id="CAN_Signal::get_int" name="CAN_Signal::get_int">
+<area shape="rect" id="Node000001" title="Get the length of the singal value." alt="" coords="5,5,146,31"/>
+<area shape="rect" id="Node000002" href="$class_c_a_n___signal.html#a92bd913f786c453eadfec208b19909ed" title="Returns the raw, unscaled value for the signal." alt="" coords="194,5,341,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="146,16,178,16,178,21,146,21"/>
+</map>

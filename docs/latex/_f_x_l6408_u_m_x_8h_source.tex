@@ -1,0 +1,24 @@
+\doxysection{FXL6408\+UMX.\+h}
+\hypertarget{_f_x_l6408_u_m_x_8h_source}{}\label{_f_x_l6408_u_m_x_8h_source}\index{ECU\_25/components/IO/FXL6408UMX.h@{ECU\_25/components/IO/FXL6408UMX.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/**************************}}
+\DoxyCodeLine{00002\ \textcolor{comment}{*\ }}
+\DoxyCodeLine{00003\ \textcolor{comment}{*\ Driver\ for\ the\ FXL6408UMX\ 8-\/channel\ GPIO\ Expander}}
+\DoxyCodeLine{00004\ \textcolor{comment}{*\ https://www.onsemi.com/pdf/datasheet/fxl6408-\/d.pdf}}
+\DoxyCodeLine{00005\ \textcolor{comment}{*}}
+\DoxyCodeLine{00006\ \textcolor{comment}{***************************/}\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}driver/i2c\_master.h"{}}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{keyword}{class\ }FXL6408UMX\{}
+\DoxyCodeLine{00010\ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00011\ \ \ i2c\_master\_bus\_handle\_t\ i2c\_busHandle;}
+\DoxyCodeLine{00012\ \ \ i2c\_master\_dev\_handle\_t\ i2c\_devHandle;}
+\DoxyCodeLine{00013\ \ \ uint8\_t\ outputStatus\ =\ 0;}
+\DoxyCodeLine{00014\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00015\ \ \ FXL6408UMX(i2c\_master\_bus\_handle\_t\ busHandle);}
+\DoxyCodeLine{00016\ \ \ \textcolor{keywordtype}{void}\ test();}
+\DoxyCodeLine{00017\ \ \ \textcolor{keywordtype}{void}\ writeLevel(\textcolor{keywordtype}{int}\ channel,\ \textcolor{keywordtype}{bool}\ level);}
+\DoxyCodeLine{00018\ \};}
+
+\end{DoxyCode}

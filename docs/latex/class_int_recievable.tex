@@ -1,0 +1,105 @@
+\doxysection{Int\+Recievable Class Reference}
+\hypertarget{class_int_recievable}{}\label{class_int_recievable}\index{IntRecievable@{IntRecievable}}
+
+
+Inheritance diagram for Int\+Recievable\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=173pt]{class_int_recievable__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Int\+Recievable\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=173pt]{class_int_recievable__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_int_recievable_aea080b6f6c8fe39dd08a110743fb2be5}{Int\+Recievable}} (int default\+\_\+value)
+\item 
+char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_int_recievable_a16ab733db686f8f8d7d39c09bbedc9ac}{serialize\+\_\+to\+\_\+json}} (void)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_recievable}{Recievable$<$ int $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_recievable_a495fdd3b3ff03f29335ea6856e2292bd}{Recievable}} (int init\+\_\+value)
+\item 
+void \mbox{\hyperlink{class_recievable_a753bda1f913a91f4246a276f74b4790b}{set\+\_\+value}} (int val)
+\item 
+int \mbox{\hyperlink{class_recievable_a8ea3528bd9c1c522618ed23c03ce8a6b}{get\+\_\+value}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_int_recievable_a13c74d5ec9262b1a436ca3eb9313e5bd}\label{class_int_recievable_a13c74d5ec9262b1a436ca3eb9313e5bd} 
+int {\bfseries default\+\_\+value}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Member Functions inherited from \mbox{\hyperlink{class_recievable}{Recievable$<$ int $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_recievable_a734a3dea2746b3dd30a6338de31cc220}{allocate\+\_\+buffer}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{class_recievable}{Recievable$<$ int $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+int {\bfseries value}
+\item 
+char \texorpdfstring{$\ast$}{*} {\bfseries buffer}
+\end{DoxyCompactItemize}
+
+
+\label{doc-constructors}
+\Hypertarget{class_int_recievable_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_int_recievable_aea080b6f6c8fe39dd08a110743fb2be5}\index{IntRecievable@{IntRecievable}!IntRecievable@{IntRecievable}}
+\index{IntRecievable@{IntRecievable}!IntRecievable@{IntRecievable}}
+\doxysubsubsection{\texorpdfstring{IntRecievable()}{IntRecievable()}}
+{\footnotesize\ttfamily \label{class_int_recievable_aea080b6f6c8fe39dd08a110743fb2be5} 
+Int\+Recievable\+::\+Int\+Recievable (\begin{DoxyParamCaption}\item[{int}]{default\+\_\+value}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00003\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ :Recievable<int>(default\_value)}
+\DoxyCodeLine{00004\ \{}
+\DoxyCodeLine{00005\ \ \ \ \ this-\/>default\_value\ =\ default\_value;}
+\DoxyCodeLine{00006\ \ \ \ \ value\ =\ default\_value;}
+\DoxyCodeLine{00007\ \}}
+
+\end{DoxyCode}
+
+
+\label{doc-func-members}
+\Hypertarget{class_int_recievable_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_int_recievable_a16ab733db686f8f8d7d39c09bbedc9ac}\index{IntRecievable@{IntRecievable}!serialize\_to\_json@{serialize\_to\_json}}
+\index{serialize\_to\_json@{serialize\_to\_json}!IntRecievable@{IntRecievable}}
+\doxysubsubsection{\texorpdfstring{serialize\_to\_json()}{serialize\_to\_json()}}
+{\footnotesize\ttfamily \label{class_int_recievable_a16ab733db686f8f8d7d39c09bbedc9ac} 
+char \texorpdfstring{$\ast$}{*} Int\+Recievable\+::serialize\+\_\+to\+\_\+json (\begin{DoxyParamCaption}\item[{void}]{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_recievable}{Recievable$<$ int $>$}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00010\ \{}
+\DoxyCodeLine{00011\ \ \ \ \ \textcolor{keywordtype}{char}*\ buffer\ =\ allocate\_buffer();}
+\DoxyCodeLine{00012\ \ \ \ \ snprintf(buffer,\ RECV\_BUFFER\_SIZE-\/1,\ \textcolor{stringliteral}{"{}\{\(\backslash\)"{}value\(\backslash\)"{}:\%d,\ \(\backslash\)"{}type\(\backslash\)"{}:\(\backslash\)"{}recievable>int\(\backslash\)"{}\}"{}},\ value);}
+\DoxyCodeLine{00013\ \ \ \ \ \textcolor{keywordflow}{return}\ buffer;}
+\DoxyCodeLine{00014\ \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+ECU\+\_\+25/components/\+GUI/Int\+Recievable.\+h\item 
+ECU\+\_\+25/components/\+GUI/Int\+Recievable.\+cpp\end{DoxyCompactItemize}

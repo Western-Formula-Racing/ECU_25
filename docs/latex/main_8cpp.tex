@@ -1,0 +1,173 @@
+\doxysection{ECU\+\_\+25/main/main.cpp File Reference}
+\hypertarget{main_8cpp}{}\label{main_8cpp}\index{ECU\_25/main/main.cpp@{ECU\_25/main/main.cpp}}
+
+
+Main entry point for the ECU firmware.  
+
+
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include "{}freertos/\+Free\+RTOS.\+h"{}}\newline
+{\ttfamily \#include "{}freertos/task.\+h"{}}\newline
+{\ttfamily \#include "{}driver/gpio.\+h"{}}\newline
+{\ttfamily \#include "{}esp\+\_\+log.\+h"{}}\newline
+{\ttfamily \#include "{}CAN.\+h"{}}\newline
+{\ttfamily \#include "{}Sensors.\+h"{}}\newline
+{\ttfamily \#include "{}IO.\+h"{}}\newline
+{\ttfamily \#include "{}Devices.\+h"{}}\newline
+{\ttfamily \#include "{}GUI.\+h"{}}\newline
+{\ttfamily \#include "{}driver/twai.\+h"{}}\newline
+{\ttfamily \#include "{}CAN\+\_\+\+Config.\+hpp"{}}\newline
+{\ttfamily \#include "{}State\+Machine.\+hpp"{}}\newline
+{\ttfamily \#include "{}Pedals.\+h"{}}\newline
+{\ttfamily \#include "{}Rear\+ECU.\+h"{}}\newline
+{\ttfamily \#include "{}ds3231.\+h"{}}\newline
+{\ttfamily \#include "{}Logger.\+h"{}}\newline
+Include dependency graph for main.\+cpp\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{main_8cpp__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{main_8cpp_ae1a38527e908beeb0fd600336e2f8bfb}\label{main_8cpp_ae1a38527e908beeb0fd600336e2f8bfb} 
+\#define {\bfseries MAIN\+\_\+\+DELAY}~600
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{main_8cpp_a5967984a35d4d5b3a31fd5091a011ca6}{get\+\_\+twai\+\_\+error\+\_\+state\+\_\+text}} (twai\+\_\+status\+\_\+info\+\_\+t \texorpdfstring{$\ast$}{*}status)
+\item 
+void \mbox{\hyperlink{main_8cpp_a630544a7f0a2cc40d8a7fefab7e2fe70}{app\+\_\+main}} (void)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_c_a_n}{CAN}} \mbox{\hyperlink{main_8cpp_a52bce30e0bee2fff94201419117c232c}{can0}} \{GPIO\+\_\+\+NUM\+\_\+16, GPIO\+\_\+\+NUM\+\_\+15, TWAI\+\_\+\+MODE\+\_\+\+NORMAL\}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Main entry point for the ECU firmware. 
+
+\begin{DoxyAuthor}{Author}
+Yamaan Bakir
+\end{DoxyAuthor}
+This file contains the Free\+RTOS app\+\_\+main() function which initializes the \doxylink{class_c_a_n}{CAN} interface, selects either the front or rear ECU mode based on a GPIO pin, and continuously monitors the \doxylink{class_c_a_n}{CAN} bus state for errors. It sets up the required tasks (State\+Machine or Rear\+ECU) accordingly and handles TWAI bus recovery and logging. \begin{DoxyVersion}{Version}
+0.\+1 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+2025-\/07-\/08
+\end{DoxyDate}
+\begin{DoxyCopyright}{Copyright}
+Copyright (c) 2025 
+\end{DoxyCopyright}
+
+
+\label{doc-func-members}
+\Hypertarget{main_8cpp_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{main_8cpp_a630544a7f0a2cc40d8a7fefab7e2fe70}\index{main.cpp@{main.cpp}!app\_main@{app\_main}}
+\index{app\_main@{app\_main}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{app\_main()}{app\_main()}}
+{\footnotesize\ttfamily \label{main_8cpp_a630544a7f0a2cc40d8a7fefab7e2fe70} 
+void app\+\_\+main (\begin{DoxyParamCaption}\item[{void}]{}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00060\ \{}
+\DoxyCodeLine{00061\ \ \ \ \ vTaskDelay(pdMS\_TO\_TICKS(2000));}
+\DoxyCodeLine{00062\ \ \ \ \ ESP\_LOGI(TAG,\ \textcolor{stringliteral}{"{}Main\ Has\ begun"{}});}
+\DoxyCodeLine{00063\ \ \ \ \ can0.begin();\textcolor{comment}{//\ this\ may\ cause\ an\ issue\ when\ the\ 2\ ecus\ briefly\ send\ the\ same\ messages\ at\ the\ same\ time}}
+\DoxyCodeLine{00064\ \ \ \ \ }
+\DoxyCodeLine{00065\ \ \ \ \ \textcolor{keywordflow}{if}(IO::Get()-\/>digitalRead(ECU\_SELECT))\{}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \textcolor{comment}{//Front\ ECU}}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ printf(\textcolor{stringliteral}{"{}FRONT\ ECU\ SELECTED!\(\backslash\)n"{}});}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ CAN\_Tx\_1000ms\_IDs.clear();}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ xTaskCreatePinnedToCore(StateMachine::StateMachineLoop,\ \textcolor{stringliteral}{"{}StateMachineLoop"{}},\ 4096,\ NULL,\ configMAX\_PRIORITIES\ -\/\ 1,\ \textcolor{keyword}{nullptr},\ 1);}
+\DoxyCodeLine{00070\ \ \ \ \ \}}
+\DoxyCodeLine{00071\ \ \ \ \ \textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \textcolor{comment}{//Rear\ ECU}}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ printf(\textcolor{stringliteral}{"{}REAR\ ECU\ SELECTED!\(\backslash\)n"{}});}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ Logger::init();}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ can0.logging\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ xTaskCreatePinnedToCore(RearECU::rearECU\_Task,\ \textcolor{stringliteral}{"{}RearECULoop"{}},\ 4096,\ NULL,\ configMAX\_PRIORITIES\ -\/\ 1,\ \textcolor{keyword}{nullptr},\ 1);}
+\DoxyCodeLine{00077\ \ \ \ \ \}}
+\DoxyCodeLine{00078\ \ \ \ \ }
+\DoxyCodeLine{00079\ \ \ \ \ \textcolor{keywordtype}{bool}\ onboard\_LED\ =\ 0;}
+\DoxyCodeLine{00080\ \ \ \ \ \textcolor{keywordflow}{while}(\textcolor{keyword}{true})\{}
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ onboard\_LED\ =\ !onboard\_LED;}
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ gpio\_set\_level(GPIO\_NUM\_48,\ onboard\_LED);\ \ \textcolor{comment}{//\ heart\ beat\ LED\ \ }}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ twai\_status\_info\_t\ status;}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ esp\_err\_t\ ret\ =\ twai\_get\_status\_info(\&status);}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (ret\ ==\ ESP\_OK)\ \{}
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \ \ \ \ printf(\textcolor{stringliteral}{"{}restart\ counter:\ \%d\(\backslash\)n"{}},\ can0.restart\_counter);}
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \ \ \ \ printf(\textcolor{stringliteral}{"{}TWAI\ state:\ \%s\ |\ TX\ errors:\ \%ld\ |\ RX\ errors:\ \%ld\ |\ Bus\ Errors:\ \%ld\(\backslash\)n"{}},}
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ get\_twai\_error\_state\_text(\&status),}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ status.tx\_error\_counter,}
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ status.rx\_error\_counter,}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ status.bus\_error\_count);}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(status.state\ ==\ TWAI\_STATE\_STOPPED\ \ ||\ status.state\ ==\ TWAI\_STATE\_BUS\_OFF)\{}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ printf(\textcolor{stringliteral}{"{}attempting\ bus\ recovery...\(\backslash\)n"{}});}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(twai\_initiate\_recovery()==ESP\_OK)\{}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ printf(\textcolor{stringliteral}{"{}recovery\ started\(\backslash\)n"{}});}
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ printf(\textcolor{stringliteral}{"{}failed\ to\ recover\ bus,\ hard\ resetting"{}});}
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ can0.restart(GPIO\_NUM\_16,\ GPIO\_NUM\_15,\ TWAI\_MODE\_NORMAL);}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ can0.restart\_counter++;}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \ \ \ \ printf(\textcolor{stringliteral}{"{}Failed\ to\ get\ TWAI\ status:\ \%s\(\backslash\)n"{}},\ esp\_err\_to\_name(ret));}
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00107\ }
+\DoxyCodeLine{00108\ }
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ vTaskDelay(pdMS\_TO\_TICKS(MAIN\_DELAY));}
+\DoxyCodeLine{00110\ \ \ \ \ \}}
+\DoxyCodeLine{00111\ \}}
+
+\end{DoxyCode}
+\Hypertarget{main_8cpp_a5967984a35d4d5b3a31fd5091a011ca6}\index{main.cpp@{main.cpp}!get\_twai\_error\_state\_text@{get\_twai\_error\_state\_text}}
+\index{get\_twai\_error\_state\_text@{get\_twai\_error\_state\_text}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{get\_twai\_error\_state\_text()}{get\_twai\_error\_state\_text()}}
+{\footnotesize\ttfamily \label{main_8cpp_a5967984a35d4d5b3a31fd5091a011ca6} 
+const char \texorpdfstring{$\ast$}{*} get\+\_\+twai\+\_\+error\+\_\+state\+\_\+text (\begin{DoxyParamCaption}\item[{twai\+\_\+status\+\_\+info\+\_\+t \texorpdfstring{$\ast$}{*}}]{status}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00044\ \{}
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keywordflow}{if}\ (status-\/>state\ ==\ TWAI\_STATE\_STOPPED)\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}Stopped"{}};}
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (status-\/>state\ ==\ TWAI\_STATE\_RUNNING)\ \{}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (status-\/>tx\_error\_counter\ >=\ 128\ ||\ status-\/>rx\_error\_counter\ >=\ 128)\ \{}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}Bus-\/Off\ or\ Error-\/Passive"{}};}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (status-\/>tx\_error\_counter\ >\ 0\ ||\ status-\/>rx\_error\_counter\ >\ 0)\ \{}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}Error-\/Active\ (with\ some\ errors)"{}};}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}Active\ (no\ errors)"{}};}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00054\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}Unknown"{}};}
+\DoxyCodeLine{00056\ \ \ \ \ \}}
+\DoxyCodeLine{00057\ \}}
+
+\end{DoxyCode}
+
+
+\label{doc-var-members}
+\Hypertarget{main_8cpp_doc-var-members}
+\doxysubsection{Variable Documentation}
+\Hypertarget{main_8cpp_a52bce30e0bee2fff94201419117c232c}\index{main.cpp@{main.cpp}!can0@{can0}}
+\index{can0@{can0}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{can0}{can0}}
+{\footnotesize\ttfamily \label{main_8cpp_a52bce30e0bee2fff94201419117c232c} 
+\mbox{\hyperlink{class_c_a_n}{CAN}} can0 \{GPIO\+\_\+\+NUM\+\_\+16, GPIO\+\_\+\+NUM\+\_\+15, TWAI\+\_\+\+MODE\+\_\+\+NORMAL\}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00039\ \{GPIO\_NUM\_16,\ GPIO\_NUM\_15,\ TWAI\_MODE\_NORMAL\};}
+
+\end{DoxyCode}

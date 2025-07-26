@@ -1,0 +1,106 @@
+\doxysection{FXL6408\+UMX Class Reference}
+\hypertarget{class_f_x_l6408_u_m_x}{}\label{class_f_x_l6408_u_m_x}\index{FXL6408UMX@{FXL6408UMX}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_f_x_l6408_u_m_x_ab1c442ba2f50686662ca7c6d61912398}{FXL6408\+UMX}} (i2c\+\_\+master\+\_\+bus\+\_\+handle\+\_\+t bus\+Handle)
+\item 
+void \mbox{\hyperlink{class_f_x_l6408_u_m_x_af269d045a7a2b526aaa0d9fe7ca72f52}{test}} ()
+\item 
+void \mbox{\hyperlink{class_f_x_l6408_u_m_x_a310e5b6e80a55e66954357baa9a0c51f}{write\+Level}} (int channel, bool level)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_f_x_l6408_u_m_x_a0a4aa6979a87797c973f2bf8c2e1dc77}\label{class_f_x_l6408_u_m_x_a0a4aa6979a87797c973f2bf8c2e1dc77} 
+i2c\+\_\+master\+\_\+bus\+\_\+handle\+\_\+t {\bfseries i2c\+\_\+bus\+Handle}
+\item 
+\Hypertarget{class_f_x_l6408_u_m_x_aa5b6d32d109faeaf8d00b19f47ba5738}\label{class_f_x_l6408_u_m_x_aa5b6d32d109faeaf8d00b19f47ba5738} 
+i2c\+\_\+master\+\_\+dev\+\_\+handle\+\_\+t {\bfseries i2c\+\_\+dev\+Handle}
+\item 
+\Hypertarget{class_f_x_l6408_u_m_x_a2a8a5cbcc973f1857d6bab4880298990}\label{class_f_x_l6408_u_m_x_a2a8a5cbcc973f1857d6bab4880298990} 
+uint8\+\_\+t {\bfseries output\+Status} = 0
+\end{DoxyCompactItemize}
+
+
+\label{doc-constructors}
+\Hypertarget{class_f_x_l6408_u_m_x_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_f_x_l6408_u_m_x_ab1c442ba2f50686662ca7c6d61912398}\index{FXL6408UMX@{FXL6408UMX}!FXL6408UMX@{FXL6408UMX}}
+\index{FXL6408UMX@{FXL6408UMX}!FXL6408UMX@{FXL6408UMX}}
+\doxysubsubsection{\texorpdfstring{FXL6408UMX()}{FXL6408UMX()}}
+{\footnotesize\ttfamily \label{class_f_x_l6408_u_m_x_ab1c442ba2f50686662ca7c6d61912398} 
+FXL6408\+UMX\+::\+FXL6408\+UMX (\begin{DoxyParamCaption}\item[{i2c\+\_\+master\+\_\+bus\+\_\+handle\+\_\+t}]{bus\+Handle}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00003\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00004\ \ \ i2c\_busHandle\ =\ busHandle;}
+\DoxyCodeLine{00005\ \ \ i2c\_device\_config\_t\ dev\_cfg\ =\ \{}
+\DoxyCodeLine{00006\ \ \ \ \ .dev\_addr\_length\ =\ I2C\_ADDR\_BIT\_LEN\_7,}
+\DoxyCodeLine{00007\ \ \ \ \ .device\_address\ =\ 0b1000011,}
+\DoxyCodeLine{00008\ \ \ \ \ .scl\_speed\_hz\ =\ 50000,}
+\DoxyCodeLine{00009\ \ \ \};}
+\DoxyCodeLine{00010\ \ \ ESP\_ERROR\_CHECK(i2c\_master\_bus\_add\_device(i2c\_busHandle,\ \&dev\_cfg,\ \&i2c\_devHandle));}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \ \ \textcolor{comment}{//configure\ all\ pins\ as\ outputs}}
+\DoxyCodeLine{00013\ \ \ uint8\_t\ tx[2]\ =\ \{0x3,0xFF\};}
+\DoxyCodeLine{00014\ \ \ i2c\_master\_transmit(i2c\_devHandle,tx,\textcolor{keyword}{sizeof}(tx),-\/1);}
+\DoxyCodeLine{00015\ \ \ \textcolor{comment}{//remove\ high-\/z\ state}}
+\DoxyCodeLine{00016\ \ \ uint8\_t\ tx2[2]\ =\ \{0x7,0x0\};}
+\DoxyCodeLine{00017\ \ \ i2c\_master\_transmit(i2c\_devHandle,tx2,\textcolor{keyword}{sizeof}(tx2),-\/1);}
+\DoxyCodeLine{00018\ \ \ \textcolor{comment}{//\ turn\ them\ all\ off}}
+\DoxyCodeLine{00019\ \ \ outputStatus\ =\ 0;}
+\DoxyCodeLine{00020\ \}}
+
+\end{DoxyCode}
+
+
+\label{doc-func-members}
+\Hypertarget{class_f_x_l6408_u_m_x_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_f_x_l6408_u_m_x_af269d045a7a2b526aaa0d9fe7ca72f52}\index{FXL6408UMX@{FXL6408UMX}!test@{test}}
+\index{test@{test}!FXL6408UMX@{FXL6408UMX}}
+\doxysubsubsection{\texorpdfstring{test()}{test()}}
+{\footnotesize\ttfamily \label{class_f_x_l6408_u_m_x_af269d045a7a2b526aaa0d9fe7ca72f52} 
+void FXL6408\+UMX\+::test (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00023\ \ \ uint8\_t\ tx\ =\ 0x03;}
+\DoxyCodeLine{00024\ \ \ uint8\_t\ rx;}
+\DoxyCodeLine{00025\ \ \ i2c\_master\_transmit\_receive(i2c\_devHandle,\&tx,\textcolor{keyword}{sizeof}(tx),\&rx,\textcolor{keyword}{sizeof}(rx),-\/1);}
+\DoxyCodeLine{00026\ \ \ printf(\textcolor{stringliteral}{"{}Pin\ config:\ \%d\(\backslash\)n"{}},rx);}
+\DoxyCodeLine{00027\ \ \ tx\ =\ 0x05;}
+\DoxyCodeLine{00028\ \ \ i2c\_master\_transmit\_receive(i2c\_devHandle,\&tx,\textcolor{keyword}{sizeof}(tx),\&rx,\textcolor{keyword}{sizeof}(rx),-\/1);}
+\DoxyCodeLine{00029\ \ \ printf(\textcolor{stringliteral}{"{}Output\ Status:\ \%d\(\backslash\)n"{}},rx);}
+\DoxyCodeLine{00030\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_f_x_l6408_u_m_x_a310e5b6e80a55e66954357baa9a0c51f}\index{FXL6408UMX@{FXL6408UMX}!writeLevel@{writeLevel}}
+\index{writeLevel@{writeLevel}!FXL6408UMX@{FXL6408UMX}}
+\doxysubsubsection{\texorpdfstring{writeLevel()}{writeLevel()}}
+{\footnotesize\ttfamily \label{class_f_x_l6408_u_m_x_a310e5b6e80a55e66954357baa9a0c51f} 
+void FXL6408\+UMX\+::write\+Level (\begin{DoxyParamCaption}\item[{int}]{channel}{, }\item[{bool}]{level}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00033\ \ \ \textcolor{keywordflow}{if}(level==0)\{}
+\DoxyCodeLine{00034\ \ \ \ \ outputStatus\ =\ outputStatus\ \&\ \string~(1<<channel);}
+\DoxyCodeLine{00035\ \ \ \}}
+\DoxyCodeLine{00036\ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}(level==1)\{}
+\DoxyCodeLine{00037\ \ \ \ \ outputStatus\ =\ outputStatus\ |\ (1<<channel);}
+\DoxyCodeLine{00038\ \ \ \}}
+\DoxyCodeLine{00039\ \ \ uint8\_t\ tx[2]\ =\ \{0x5,outputStatus\};}
+\DoxyCodeLine{00040\ \ \ i2c\_master\_transmit(i2c\_devHandle,tx,\textcolor{keyword}{sizeof}(tx),-\/1);}
+\DoxyCodeLine{00041\ \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+ECU\+\_\+25/components/\+IO/FXL6408\+UMX.\+h\item 
+ECU\+\_\+25/components/\+IO/FXL6408\+UMX.\+cpp\end{DoxyCompactItemize}

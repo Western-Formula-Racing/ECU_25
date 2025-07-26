@@ -1,0 +1,59 @@
+\doxysection{Pin\+Map.\+h}
+\hypertarget{_pin_map_8h_source}{}\label{_pin_map_8h_source}\index{ECU\_25/components/IO/PinMap.h@{ECU\_25/components/IO/PinMap.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ \_PINMAP\_}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ \_PINMAP\_}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#define\ MOSI\_PIN\ \ \ \ \ \ 38\ \ }\textcolor{comment}{//MOSI\ pin}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#define\ MISO\_PIN\ \ \ \ \ \ 39\ \ }\textcolor{comment}{//MISO\ pin}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#define\ SPI\_CLK\_PIN\ \ \ 40\ \ }\textcolor{comment}{//SPI\ Clock\ pin}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#define\ ADC\_1\_CS\ \ \ \ \ \ 41\ \ }\textcolor{comment}{//ADC1\ Chip\ Select\ pin}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#define\ ADC\_2\_CS\ \ \ \ \ \ 42\ \ }\textcolor{comment}{//ADC2\ Chip\ Select\ pin}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#define\ I2C\_SCL\_PIN\ \ \ 7}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#define\ I2C\_SDA\_PIN\ \ \ 17}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#define\ IMU\_CS\ \ \ \ \ \ \ \ 8}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{comment}{//\ ECU\ PINS\ are\ all\ prefixed\ with\ ECU\_\#\_\ }}
+\DoxyCodeLine{00014\ \textcolor{comment}{//\ The\ format\ is\ ECU\_\#\_<connector\ pin\ numer>\_<function><number>}}
+\DoxyCodeLine{00015\ \textcolor{comment}{//\ Functions\ are\ A\ =\ Analog\ input,\ IO\ =\ 5v\ IO,\ and\ HSD\ =\ 24v\ high\ side\ drivers}}
+\DoxyCodeLine{00016\ \textcolor{comment}{//\ Ex:\ ECU\_1\_A1\ =\ connector\ pin\ 1\ which\ is\ Analog\ pin\ 1}}
+\DoxyCodeLine{00017\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\{}
+\DoxyCodeLine{00018\ \ \ \ \ ECU\_1\_A1,}
+\DoxyCodeLine{00019\ \ \ \ \ ECU\_2\_A2,}
+\DoxyCodeLine{00020\ \ \ \ \ ECU\_3\_A3,}
+\DoxyCodeLine{00021\ \ \ \ \ ECU\_4\_A4,}
+\DoxyCodeLine{00022\ \ \ \ \ ECU\_5\_A5,}
+\DoxyCodeLine{00023\ \ \ \ \ ECU\_6\_A6,}
+\DoxyCodeLine{00024\ \ \ \ \ ECU\_7\_A7,}
+\DoxyCodeLine{00025\ \ \ \ \ ECU\_8\_A8\ ,}
+\DoxyCodeLine{00026\ \ \ \ \ ECU\_9\_A9\ ,}
+\DoxyCodeLine{00027\ \ \ \ \ ECU\_13\_A10,}
+\DoxyCodeLine{00028\ \ \ \ \ ECU\_14\_A11,}
+\DoxyCodeLine{00029\ \ \ \ \ ECU\_15\_A12,}
+\DoxyCodeLine{00030\ \ \ \ \ ECU\_16\_A13,}
+\DoxyCodeLine{00031\ \ \ \ \ ECU\_17\_A14,}
+\DoxyCodeLine{00032\ \}ECU\_ANALOG\_PIN;}
+\DoxyCodeLine{00033\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\{}
+\DoxyCodeLine{00034\ \ \ \ \ ECU\_TEST\ =\ 47,}
+\DoxyCodeLine{00035\ \ \ \ \ ECU\_SELECT\ =\ 46,}
+\DoxyCodeLine{00036\ \ \ \ \ ECU\_10\_IO1\ =\ 4,}
+\DoxyCodeLine{00037\ \ \ \ \ ECU\_11\_IO2\ =\ 5,}
+\DoxyCodeLine{00038\ \ \ \ \ ECU\_12\_IO3\ =\ 6,}
+\DoxyCodeLine{00039\ \}ECU\_IO\_PIN;}
+\DoxyCodeLine{00040\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\{}
+\DoxyCodeLine{00041\ \ \ \ \ ECU\_37\_HSD1\ =\ 7,}
+\DoxyCodeLine{00042\ \ \ \ \ ECU\_38\_HSD2\ =\ 6,}
+\DoxyCodeLine{00043\ \ \ \ \ ECU\_39\_HSD3\ =\ 5,}
+\DoxyCodeLine{00044\ \ \ \ \ ECU\_40\_HSD4\ =\ 4,}
+\DoxyCodeLine{00045\ \ \ \ \ ECU\_41\_HSD5\ =\ 0,}
+\DoxyCodeLine{00046\ \ \ \ \ ECU\_48\_HSD6\ =\ 3,}
+\DoxyCodeLine{00047\ \ \ \ \ ECU\_49\_HSD7\ =\ 2,}
+\DoxyCodeLine{00048\ \ \ \ \ ECU\_50\_HSD8\ =\ 1,}
+\DoxyCodeLine{00049\ \ \ }
+\DoxyCodeLine{00050\ \ \ }
+\DoxyCodeLine{00051\ \}ECU\_HSD\_PIN;}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00053\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

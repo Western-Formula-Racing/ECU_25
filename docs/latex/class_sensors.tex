@@ -1,0 +1,195 @@
+\doxysection{Sensors Class Reference}
+\hypertarget{class_sensors}{}\label{class_sensors}\index{Sensors@{Sensors}}
+
+
+Collaboration diagram for Sensors\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=206pt]{class_sensors__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum {\bfseries SENSOR\+\_\+\+INDEX} \{ {\bfseries APPS1} = ECU\+\_\+9\+\_\+\+A9
+, {\bfseries APPS2} = ECU\+\_\+17\+\_\+\+A14
+, {\bfseries BPS1} = ECU\+\_\+3\+\_\+\+A3
+, {\bfseries BPS2} = ECU\+\_\+4\+\_\+\+A4
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_sensors_acfacdcdba5349e851dbed847c7a80d8d}\label{class_sensors_acfacdcdba5349e851dbed847c7a80d8d} 
+{\bfseries Sensors} (const \mbox{\hyperlink{class_sensors}{Sensors}} \&)=delete
+\item 
+\Hypertarget{class_sensors_a5fa6744a0b2703e8a3efa2a6ed6b5d7c}\label{class_sensors_a5fa6744a0b2703e8a3efa2a6ed6b5d7c} 
+\mbox{\hyperlink{class_sensors}{Sensors}} \& {\bfseries operator=} (const \mbox{\hyperlink{class_sensors}{Sensors}} \&)=delete
+\item 
+\Hypertarget{class_sensors_abc5e0810cbc74a8715ea91dbbd3abcc8}\label{class_sensors_abc5e0810cbc74a8715ea91dbbd3abcc8} 
+{\bfseries Sensors} (\mbox{\hyperlink{class_sensors}{Sensors}} \&\&)=delete
+\item 
+\Hypertarget{class_sensors_a23895862d67d1ca4f784b78a25f4e6df}\label{class_sensors_a23895862d67d1ca4f784b78a25f4e6df} 
+\mbox{\hyperlink{class_sensors}{Sensors}} \& {\bfseries operator=} (\mbox{\hyperlink{class_sensors}{Sensors}} \&\&)=delete
+\item 
+void \mbox{\hyperlink{class_sensors_a80cb9d00a46e8e86dd444bc241baca68}{poll\+\_\+sensors}} ()
+\item 
+etl\+::array$<$ float, 14 $>$ \mbox{\hyperlink{class_sensors_a2dcb55f38696b2f8fed1bf830fd2214f}{get\+\_\+sensor\+\_\+voltages}} ()
+\item 
+float \mbox{\hyperlink{class_sensors_af4b76162c433c2bb84aae2d4e443f2dd}{get\+\_\+sensor\+\_\+voltage}} (SENSOR\+\_\+\+INDEX index)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{class_sensors}{Sensors}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_sensors_a92edce85431d37fd7f287ac0d8f428bb}{Get}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_sensors_af66e282d4f243f37e070d2806c7dffed}\label{class_sensors_af66e282d4f243f37e070d2806c7dffed} 
+etl\+::array$<$ float, 14 $>$ {\bfseries sensor\+\_\+voltages}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_sensors_aec337dd64ecde4c16d163db993daf12c}\label{class_sensors_aec337dd64ecde4c16d163db993daf12c} 
+static \mbox{\hyperlink{class_sensors}{Sensors}} \texorpdfstring{$\ast$}{*} {\bfseries instance\+Ptr} = nullptr
+\item 
+\Hypertarget{class_sensors_a25293d53bef8beb704b03d6434205516}\label{class_sensors_a25293d53bef8beb704b03d6434205516} 
+static Semaphore\+Handle\+\_\+t {\bfseries mutex} = x\+Semaphore\+Create\+Mutex()
+\end{DoxyCompactItemize}
+
+
+\label{doc-enum-members}
+\Hypertarget{class_sensors_doc-enum-members}
+\doxysubsection{Member Enumeration Documentation}
+\Hypertarget{class_sensors_ac0a1a76f90df58f5b9718b699ebf6f1a}\index{Sensors@{Sensors}!SENSOR\_INDEX@{SENSOR\_INDEX}}
+\index{SENSOR\_INDEX@{SENSOR\_INDEX}!Sensors@{Sensors}}
+\doxysubsubsection{\texorpdfstring{SENSOR\_INDEX}{SENSOR\_INDEX}}
+{\footnotesize\ttfamily \label{class_sensors_ac0a1a76f90df58f5b9718b699ebf6f1a} 
+enum Sensors\+::\+SENSOR\+\_\+\+INDEX}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ APPS1\ =\ ECU\_9\_A9,}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ APPS2\ =\ ECU\_17\_A14,}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ BPS1\ =\ ECU\_3\_A3,}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ BPS2\ =\ ECU\_4\_A4,}
+\DoxyCodeLine{00025\ \ \ \ \ \}SENSOR\_INDEX;}
+
+\end{DoxyCode}
+
+
+\label{doc-constructors}
+\Hypertarget{class_sensors_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_sensors_a68ef7a2ec8dd0ffd9b35b70b50c0ab09}\index{Sensors@{Sensors}!Sensors@{Sensors}}
+\index{Sensors@{Sensors}!Sensors@{Sensors}}
+\doxysubsubsection{\texorpdfstring{Sensors()}{Sensors()}}
+{\footnotesize\ttfamily \label{class_sensors_a68ef7a2ec8dd0ffd9b35b70b50c0ab09} 
+Sensors\+::\+Sensors (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00009\ \{}
+\DoxyCodeLine{00010\ \ \ \ \ ESP\_LOGI(TAG,\ \textcolor{stringliteral}{"{}Sensors\ Initialized"{}});}
+\DoxyCodeLine{00011\ \}}
+
+\end{DoxyCode}
+
+
+\label{doc-func-members}
+\Hypertarget{class_sensors_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_sensors_a92edce85431d37fd7f287ac0d8f428bb}\index{Sensors@{Sensors}!Get@{Get}}
+\index{Get@{Get}!Sensors@{Sensors}}
+\doxysubsubsection{\texorpdfstring{Get()}{Get()}}
+{\footnotesize\ttfamily \label{class_sensors_a92edce85431d37fd7f287ac0d8f428bb} 
+\mbox{\hyperlink{class_sensors}{Sensors}} \texorpdfstring{$\ast$}{*} Sensors\+::\+Get (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00014\ \{}
+\DoxyCodeLine{00015\ \ \ \ \ \textcolor{keywordflow}{if}\ (instancePtr\ ==\ \textcolor{keyword}{nullptr}\ \&\&\ Sensors::mutex)}
+\DoxyCodeLine{00016\ \ \ \ \ \{}
+\DoxyCodeLine{00017\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (xSemaphoreTake(Sensors::mutex,\ (TickType\_t)10)\ ==\ pdTRUE)}
+\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ \ \ \ \ instancePtr\ =\ \textcolor{keyword}{new}\ Sensors();}
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ \ \ \ \ xSemaphoreGive(Sensors::mutex);}
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ \ \ \ \ ESP\_LOGW(TAG,\ \textcolor{stringliteral}{"{}Mutex\ couldn't\ be\ obtained"{}});}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00026\ \ \ \ \ \}}
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keywordflow}{return}\ instancePtr;}
+\DoxyCodeLine{00028\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_sensors_af4b76162c433c2bb84aae2d4e443f2dd}\index{Sensors@{Sensors}!get\_sensor\_voltage@{get\_sensor\_voltage}}
+\index{get\_sensor\_voltage@{get\_sensor\_voltage}!Sensors@{Sensors}}
+\doxysubsubsection{\texorpdfstring{get\_sensor\_voltage()}{get\_sensor\_voltage()}}
+{\footnotesize\ttfamily \label{class_sensors_af4b76162c433c2bb84aae2d4e443f2dd} 
+float Sensors\+::get\+\_\+sensor\+\_\+voltage (\begin{DoxyParamCaption}\item[{SENSOR\+\_\+\+INDEX}]{index}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00057\ \{}
+\DoxyCodeLine{00058\ \ \ \ \ \textcolor{keywordflow}{if}(index\ <\ sensor\_voltages.max\_size())\{}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ sensor\_voltages[index];}
+\DoxyCodeLine{00060\ \ \ \ \ \}}
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{keywordflow}{return}\ -\/1;}
+\DoxyCodeLine{00062\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_sensors_a2dcb55f38696b2f8fed1bf830fd2214f}\index{Sensors@{Sensors}!get\_sensor\_voltages@{get\_sensor\_voltages}}
+\index{get\_sensor\_voltages@{get\_sensor\_voltages}!Sensors@{Sensors}}
+\doxysubsubsection{\texorpdfstring{get\_sensor\_voltages()}{get\_sensor\_voltages()}}
+{\footnotesize\ttfamily \label{class_sensors_a2dcb55f38696b2f8fed1bf830fd2214f} 
+etl\+::array$<$ float, 14 $>$ Sensors\+::get\+\_\+sensor\+\_\+voltages (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keywordflow}{return}\ sensor\_voltages;}
+\DoxyCodeLine{00054\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_sensors_a80cb9d00a46e8e86dd444bc241baca68}\index{Sensors@{Sensors}!poll\_sensors@{poll\_sensors}}
+\index{poll\_sensors@{poll\_sensors}!Sensors@{Sensors}}
+\doxysubsubsection{\texorpdfstring{poll\_sensors()}{poll\_sensors()}}
+{\footnotesize\ttfamily \label{class_sensors_a80cb9d00a46e8e86dd444bc241baca68} 
+void Sensors\+::poll\+\_\+sensors (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00031\ \{}
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <=\ 13;\ i++)\{}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ sensor\_voltages[i]\ =\ IO::Get()-\/>analogReadVoltage(\textcolor{keyword}{static\_cast<}ECU\_ANALOG\_PIN\textcolor{keyword}{>}(i));}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ printf(\textcolor{stringliteral}{"{}>ADC\%d\_voltage:\%.2f\(\backslash\)n"{}},\ i+1,\ sensor\_voltages[i]);}
+\DoxyCodeLine{00035\ \ \ \ \ \}}
+\DoxyCodeLine{00036\ \ \ \ \ A1\_ID2014.\mbox{\hyperlink{class_c_a_n___signal_a66e8fcbfe25986dc94794d191c13d875}{set}}(Sensors::Get()-\/>get\_sensor\_voltage(\textcolor{keyword}{static\_cast<}Sensors::SENSOR\_INDEX\textcolor{keyword}{>}(0)));}
+\DoxyCodeLine{00037\ \ \ \ \ A2\_ID2014.\mbox{\hyperlink{class_c_a_n___signal_a66e8fcbfe25986dc94794d191c13d875}{set}}(Sensors::Get()-\/>get\_sensor\_voltage(\textcolor{keyword}{static\_cast<}Sensors::SENSOR\_INDEX\textcolor{keyword}{>}(1)));}
+\DoxyCodeLine{00038\ \ \ \ \ A3\_ID2014.\mbox{\hyperlink{class_c_a_n___signal_a66e8fcbfe25986dc94794d191c13d875}{set}}(Sensors::Get()-\/>get\_sensor\_voltage(\textcolor{keyword}{static\_cast<}Sensors::SENSOR\_INDEX\textcolor{keyword}{>}(2)));}
+\DoxyCodeLine{00039\ \ \ \ \ A4\_ID2014.\mbox{\hyperlink{class_c_a_n___signal_a66e8fcbfe25986dc94794d191c13d875}{set}}(Sensors::Get()-\/>get\_sensor\_voltage(\textcolor{keyword}{static\_cast<}Sensors::SENSOR\_INDEX\textcolor{keyword}{>}(3)));}
+\DoxyCodeLine{00040\ \ \ \ \ A5\_ID2015.\mbox{\hyperlink{class_c_a_n___signal_a66e8fcbfe25986dc94794d191c13d875}{set}}(Sensors::Get()-\/>get\_sensor\_voltage(\textcolor{keyword}{static\_cast<}Sensors::SENSOR\_INDEX\textcolor{keyword}{>}(4)));}
+\DoxyCodeLine{00041\ \ \ \ \ A6\_ID2015.\mbox{\hyperlink{class_c_a_n___signal_a66e8fcbfe25986dc94794d191c13d875}{set}}(Sensors::Get()-\/>get\_sensor\_voltage(\textcolor{keyword}{static\_cast<}Sensors::SENSOR\_INDEX\textcolor{keyword}{>}(5)));}
+\DoxyCodeLine{00042\ \ \ \ \ A7\_ID2015.\mbox{\hyperlink{class_c_a_n___signal_a66e8fcbfe25986dc94794d191c13d875}{set}}(Sensors::Get()-\/>get\_sensor\_voltage(\textcolor{keyword}{static\_cast<}Sensors::SENSOR\_INDEX\textcolor{keyword}{>}(6)));}
+\DoxyCodeLine{00043\ \ \ \ \ A8\_ID2015.\mbox{\hyperlink{class_c_a_n___signal_a66e8fcbfe25986dc94794d191c13d875}{set}}(Sensors::Get()-\/>get\_sensor\_voltage(\textcolor{keyword}{static\_cast<}Sensors::SENSOR\_INDEX\textcolor{keyword}{>}(7)));}
+\DoxyCodeLine{00044\ \ \ \ \ A9\_ID2016.\mbox{\hyperlink{class_c_a_n___signal_a66e8fcbfe25986dc94794d191c13d875}{set}}(Sensors::Get()-\/>get\_sensor\_voltage(\textcolor{keyword}{static\_cast<}Sensors::SENSOR\_INDEX\textcolor{keyword}{>}(8)));}
+\DoxyCodeLine{00045\ \ \ \ \ A10\_ID2016.\mbox{\hyperlink{class_c_a_n___signal_a66e8fcbfe25986dc94794d191c13d875}{set}}(Sensors::Get()-\/>get\_sensor\_voltage(\textcolor{keyword}{static\_cast<}Sensors::SENSOR\_INDEX\textcolor{keyword}{>}(9)));}
+\DoxyCodeLine{00046\ \ \ \ \ A11\_ID2016.\mbox{\hyperlink{class_c_a_n___signal_a66e8fcbfe25986dc94794d191c13d875}{set}}(Sensors::Get()-\/>get\_sensor\_voltage(\textcolor{keyword}{static\_cast<}Sensors::SENSOR\_INDEX\textcolor{keyword}{>}(10)));}
+\DoxyCodeLine{00047\ \ \ \ \ A12\_ID2016.\mbox{\hyperlink{class_c_a_n___signal_a66e8fcbfe25986dc94794d191c13d875}{set}}(Sensors::Get()-\/>get\_sensor\_voltage(\textcolor{keyword}{static\_cast<}Sensors::SENSOR\_INDEX\textcolor{keyword}{>}(11)));}
+\DoxyCodeLine{00048\ \ \ \ \ A13\_ID2017.\mbox{\hyperlink{class_c_a_n___signal_a66e8fcbfe25986dc94794d191c13d875}{set}}(Sensors::Get()-\/>get\_sensor\_voltage(\textcolor{keyword}{static\_cast<}Sensors::SENSOR\_INDEX\textcolor{keyword}{>}(12)));}
+\DoxyCodeLine{00049\ \ \ \ \ A14\_ID2017.\mbox{\hyperlink{class_c_a_n___signal_a66e8fcbfe25986dc94794d191c13d875}{set}}(Sensors::Get()-\/>get\_sensor\_voltage(\textcolor{keyword}{static\_cast<}Sensors::SENSOR\_INDEX\textcolor{keyword}{>}(13)));}
+\DoxyCodeLine{00050\ \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+ECU\+\_\+25/components/\+Sensors/Sensors.\+h\item 
+ECU\+\_\+25/components/\+Sensors/Sensors.\+cpp\end{DoxyCompactItemize}

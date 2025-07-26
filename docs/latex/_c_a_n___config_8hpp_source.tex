@@ -1,0 +1,646 @@
+\doxysection{CAN\+\_\+\+Config.\+hpp}
+\hypertarget{_c_a_n___config_8hpp_source}{}\label{_c_a_n___config_8hpp_source}\index{ECU\_25/components/CAN/CAN\_Config.hpp@{ECU\_25/components/CAN/CAN\_Config.hpp}}
+\mbox{\hyperlink{_c_a_n___config_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#ifndef\ \_\_CAN\_CONFIG\_\_}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#define\ \_\_CAN\_CONFIG\_\_}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_c_a_n___signal_8hpp}{CAN\_Signal.hpp}}"{}}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}etl/map.h"{}}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}etl/vector.h"{}}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ "{}etl/set.h"{}}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{comment}{//\ Defining\ the\ CAN\_IDs\ \&\ Signals}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#define\ VCU\_PDM\_REAR\_CMD\ 2012}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#define\ M173\_MODULATION\_AND\_FLUX\_INFO\ 173}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#define\ M172\_TORQUE\_AND\_TIMER\_INFO\ 172}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#define\ M194\_READ\_WRITE\_PARAM\_RESPONSE\ 194}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#define\ M193\_READ\_WRITE\_PARAM\_COMMAND\ 193}}
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{\#define\ M192\_COMMAND\_MESSAGE\ 192}}
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\#define\ M171\_FAULT\_CODES\ 171}}
+\DoxyCodeLine{00021\ \textcolor{preprocessor}{\#define\ M170\_INTERNAL\_STATES\ 170}}
+\DoxyCodeLine{00022\ \textcolor{preprocessor}{\#define\ M169\_INTERNAL\_VOLTAGES\ 169}}
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\#define\ M168\_FLUX\_ID\_IQ\_INFO\ 168}}
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#define\ M167\_VOLTAGE\_INFO\ 167}}
+\DoxyCodeLine{00025\ \textcolor{preprocessor}{\#define\ M166\_CURRENT\_INFO\ 166}}
+\DoxyCodeLine{00026\ \textcolor{preprocessor}{\#define\ M165\_MOTOR\_POSITION\_INFO\ 165}}
+\DoxyCodeLine{00027\ \textcolor{preprocessor}{\#define\ M164\_DIGITAL\_INPUT\_STATUS\ 164}}
+\DoxyCodeLine{00028\ \textcolor{preprocessor}{\#define\ M163\_ANALOG\_INPUT\_VOLTAGES\ 163}}
+\DoxyCodeLine{00029\ \textcolor{preprocessor}{\#define\ M162\_TEMPERATURE\_SET\_3\ 162}}
+\DoxyCodeLine{00030\ \textcolor{preprocessor}{\#define\ M161\_TEMPERATURE\_SET\_2\ 161}}
+\DoxyCodeLine{00031\ \textcolor{preprocessor}{\#define\ M160\_TEMPERATURE\_SET\_1\ 160}}
+\DoxyCodeLine{00032\ \textcolor{preprocessor}{\#define\ M174\_FIRMWARE\_INFO\ 174}}
+\DoxyCodeLine{00033\ \textcolor{preprocessor}{\#define\ M175\_DIAG\_DATA\_MESSAGE\ 175}}
+\DoxyCodeLine{00034\ \textcolor{preprocessor}{\#define\ BMS\_CURRENT\_LIMIT\ 514}}
+\DoxyCodeLine{00035\ \textcolor{preprocessor}{\#define\ M176\_FAST\_INFO\ 176}}
+\DoxyCodeLine{00036\ \textcolor{preprocessor}{\#define\ VCU\_PEDAL\_INFO\ 2000}}
+\DoxyCodeLine{00037\ \textcolor{preprocessor}{\#define\ VCU\_PDM\_FRONT\ 2001}}
+\DoxyCodeLine{00038\ \textcolor{preprocessor}{\#define\ VCU\_STATE\_INFO\ 2002}}
+\DoxyCodeLine{00039\ \textcolor{preprocessor}{\#define\ VCU\_PRECHARGE\ 2003}}
+\DoxyCodeLine{00040\ \textcolor{preprocessor}{\#define\ VCU\_PDM\_REAR\ 2004}}
+\DoxyCodeLine{00041\ \textcolor{preprocessor}{\#define\ M177\_TORQUE\_CAPABILITY\ 177}}
+\DoxyCodeLine{00042\ \textcolor{preprocessor}{\#define\ PACKSTATUS\ 1056}}
+\DoxyCodeLine{00043\ \textcolor{preprocessor}{\#define\ ELCON\_LIMITS\ 403105268}}
+\DoxyCodeLine{00044\ \textcolor{preprocessor}{\#define\ VCU\_FRONT\_SENSORS\_1\ 2014}}
+\DoxyCodeLine{00045\ \textcolor{preprocessor}{\#define\ VCU\_FRONT\_SENSORS\_2\ 2015}}
+\DoxyCodeLine{00046\ \textcolor{preprocessor}{\#define\ VCU\_FRONT\_SENSORS\_3\ 2016}}
+\DoxyCodeLine{00047\ \textcolor{preprocessor}{\#define\ VCU\_FRONT\_SENSORS\_4\ 2017}}
+\DoxyCodeLine{00048\ \textcolor{preprocessor}{\#define\ VCU\_REAR\_SENSORS\_1\ 2018}}
+\DoxyCodeLine{00049\ \textcolor{preprocessor}{\#define\ VCU\_REAR\_SENSORS\_2\ 2019}}
+\DoxyCodeLine{00050\ \textcolor{preprocessor}{\#define\ VCU\_REAR\_SENSORS\_3\ 2020}}
+\DoxyCodeLine{00051\ \textcolor{preprocessor}{\#define\ VCU\_REAR\_SENSORS\_4\ 2021}}
+\DoxyCodeLine{00052\ \textcolor{preprocessor}{\#define\ BMS\_MIN\_VCELL\ 999}}
+\DoxyCodeLine{00053\ \textcolor{preprocessor}{\#define\ VCU\_APPS\_CALIBRATION\ 2022}}
+\DoxyCodeLine{00054\ \textcolor{preprocessor}{\#define\ VCU\_APPS\_AUTOCALIBRATE\ 2023}}
+\DoxyCodeLine{00055\ \textcolor{preprocessor}{\#define\ VCU\_FRONT\_IMU\_1\ 2024}}
+\DoxyCodeLine{00056\ \textcolor{preprocessor}{\#define\ VCU\_FRONT\_IMU\_2\ 2025}}
+\DoxyCodeLine{00057\ \textcolor{preprocessor}{\#define\ VCU\_WHEELSPEED\_INFO\ 2013}}
+\DoxyCodeLine{00058\ \textcolor{preprocessor}{\#define\ VCU\_REAR\_IMU\_1\ 2026}}
+\DoxyCodeLine{00059\ \textcolor{preprocessor}{\#define\ VCU\_REAR\_IMU\_2\ 2027}}
+\DoxyCodeLine{00060\ \textcolor{preprocessor}{\#define\ VCU\_FRONT\_WHEEL\_LEFT\ 2028}}
+\DoxyCodeLine{00061\ \textcolor{preprocessor}{\#define\ VCU\_FRONT\_WHEEL\_RIGHT\ 2029}}
+\DoxyCodeLine{00062\ \textcolor{preprocessor}{\#define\ PACKINFO\ 1057}}
+\DoxyCodeLine{00063\ }
+\DoxyCodeLine{00064\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ HSD1\_ID2012\{\textcolor{keyword}{true},\ 0,\ 8\};}
+\DoxyCodeLine{00065\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ HSD2\_ID2012\{\textcolor{keyword}{true},\ 8,\ 8\};}
+\DoxyCodeLine{00066\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ HSD3\_ID2012\{\textcolor{keyword}{true},\ 16,\ 8\};}
+\DoxyCodeLine{00067\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ HSD4\_ID2012\{\textcolor{keyword}{true},\ 24,\ 8\};}
+\DoxyCodeLine{00068\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ HSD5\_ID2012\{\textcolor{keyword}{true},\ 32,\ 8\};}
+\DoxyCodeLine{00069\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ HSD6\_ID2012\{\textcolor{keyword}{true},\ 40,\ 8\};}
+\DoxyCodeLine{00070\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ HSD7\_ID2012\{\textcolor{keyword}{true},\ 48,\ 8\};}
+\DoxyCodeLine{00071\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ HSD8\_ID2012\{\textcolor{keyword}{true},\ 56,\ 8\};}
+\DoxyCodeLine{00072\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Modulation\_Index\_ID173\{\textcolor{keyword}{true},\ 0,\ 16,\ 0.0001f\};}
+\DoxyCodeLine{00073\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Flux\_Weakening\_Output\_ID173\{\textcolor{keyword}{true},\ 16,\ 16,\ 0.1f\};}
+\DoxyCodeLine{00074\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Id\_Command\_ID173\{\textcolor{keyword}{true},\ 32,\ 16,\ 0.1f\};}
+\DoxyCodeLine{00075\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Iq\_Command\_ID173\{\textcolor{keyword}{true},\ 48,\ 16,\ 0.1f\};}
+\DoxyCodeLine{00076\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Commanded\_Torque\_ID172\{\textcolor{keyword}{true},\ 0,\ 16,\ 0.1f\};}
+\DoxyCodeLine{00077\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Torque\_Feedback\_ID172\{\textcolor{keyword}{true},\ 16,\ 16,\ 0.1f\};}
+\DoxyCodeLine{00078\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Power\_On\_Timer\_ID172\{\textcolor{keyword}{true},\ 32,\ 32,\ 0.003f\};}
+\DoxyCodeLine{00079\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Parameter\_Response\_Addr\_ID194\{\textcolor{keyword}{true},\ 0,\ 16\};}
+\DoxyCodeLine{00080\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Parameter\_Response\_Write\_OK\_ID194\{\textcolor{keyword}{true},\ 16,\ 1\};}
+\DoxyCodeLine{00081\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Parameter\_Response\_Data\_ID194\{\textcolor{keyword}{true},\ 32,\ 16\};}
+\DoxyCodeLine{00082\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ VCU\_INV\_Parameter\_Address\_ID193\{\textcolor{keyword}{true},\ 0,\ 16\};}
+\DoxyCodeLine{00083\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ VCU\_INV\_Parameter\_RW\_Command\_ID193\{\textcolor{keyword}{true},\ 16,\ 1\};}
+\DoxyCodeLine{00084\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ VCU\_INV\_Parameter\_Data\_ID193\{\textcolor{keyword}{true},\ 32,\ 16\};}
+\DoxyCodeLine{00085\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ VCU\_INV\_Torque\_Command\_ID192\{\textcolor{keyword}{true},\ 0,\ 16,\ 0.1f\};}
+\DoxyCodeLine{00086\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ VCU\_INV\_Speed\_Command\_ID192\{\textcolor{keyword}{true},\ 16,\ 16\};}
+\DoxyCodeLine{00087\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ VCU\_INV\_Direction\_Command\_ID192\{\textcolor{keyword}{true},\ 32,\ 1\};}
+\DoxyCodeLine{00088\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ VCU\_INV\_Inverter\_Enable\_ID192\{\textcolor{keyword}{true},\ 40,\ 1\};}
+\DoxyCodeLine{00089\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ VCU\_INV\_Inverter\_Discharge\_ID192\{\textcolor{keyword}{true},\ 41,\ 1\};}
+\DoxyCodeLine{00090\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ VCU\_INV\_Speed\_Mode\_Enable\_ID192\{\textcolor{keyword}{true},\ 42,\ 1\};}
+\DoxyCodeLine{00091\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ VCU\_INV\_Torque\_Limit\_Command\_ID192\{\textcolor{keyword}{true},\ 48,\ 16,\ 0.1f\};}
+\DoxyCodeLine{00092\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Post\_Fault\_Lo\_ID171\{\textcolor{keyword}{true},\ 0,\ 16\};}
+\DoxyCodeLine{00093\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Post\_Fault\_Hi\_ID171\{\textcolor{keyword}{true},\ 16,\ 16\};}
+\DoxyCodeLine{00094\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Run\_Fault\_Lo\_ID171\{\textcolor{keyword}{true},\ 32,\ 16\};}
+\DoxyCodeLine{00095\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Run\_Fault\_Hi\_ID171\{\textcolor{keyword}{true},\ 48,\ 16\};}
+\DoxyCodeLine{00096\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_VSM\_State\_ID170\{\textcolor{keyword}{true},\ 0,\ 8\};}
+\DoxyCodeLine{00097\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_PWM\_Frequency\_ID170\{\textcolor{keyword}{true},\ 8,\ 8\};}
+\DoxyCodeLine{00098\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Inverter\_State\_ID170\{\textcolor{keyword}{true},\ 16,\ 8\};}
+\DoxyCodeLine{00099\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Relay\_1\_Status\_ID170\{\textcolor{keyword}{true},\ 24,\ 1\};}
+\DoxyCodeLine{00100\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Relay\_2\_Status\_ID170\{\textcolor{keyword}{true},\ 25,\ 1\};}
+\DoxyCodeLine{00101\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Relay\_3\_Status\_ID170\{\textcolor{keyword}{true},\ 26,\ 1\};}
+\DoxyCodeLine{00102\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Relay\_4\_Status\_ID170\{\textcolor{keyword}{true},\ 27,\ 1\};}
+\DoxyCodeLine{00103\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Relay\_5\_Status\_ID170\{\textcolor{keyword}{true},\ 28,\ 1\};}
+\DoxyCodeLine{00104\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Relay\_6\_Status\_ID170\{\textcolor{keyword}{true},\ 29,\ 1\};}
+\DoxyCodeLine{00105\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Inverter\_Run\_Mode\_ID170\{\textcolor{keyword}{true},\ 32,\ 1\};}
+\DoxyCodeLine{00106\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Self\_Sensing\_Assist\_Enable\_ID170\{\textcolor{keyword}{true},\ 33,\ 1\};}
+\DoxyCodeLine{00107\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Inverter\_Discharge\_State\_ID170\{\textcolor{keyword}{true},\ 37,\ 3\};}
+\DoxyCodeLine{00108\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Inverter\_Command\_Mode\_ID170\{\textcolor{keyword}{true},\ 40,\ 1\};}
+\DoxyCodeLine{00109\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Rolling\_Counter\_ID170\{\textcolor{keyword}{true},\ 44,\ 4\};}
+\DoxyCodeLine{00110\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Inverter\_Enable\_State\_ID170\{\textcolor{keyword}{true},\ 48,\ 1\};}
+\DoxyCodeLine{00111\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Burst\_Model\_Mode\_ID170\{\textcolor{keyword}{true},\ 49,\ 1\};}
+\DoxyCodeLine{00112\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Key\_Switch\_Start\_Status\_ID170\{\textcolor{keyword}{true},\ 54,\ 1\};}
+\DoxyCodeLine{00113\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Inverter\_Enable\_Lockout\_ID170\{\textcolor{keyword}{true},\ 55,\ 1\};}
+\DoxyCodeLine{00114\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Direction\_Command\_ID170\{\textcolor{keyword}{true},\ 56,\ 1\};}
+\DoxyCodeLine{00115\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_BMS\_Active\_ID170\{\textcolor{keyword}{true},\ 57,\ 1\};}
+\DoxyCodeLine{00116\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_BMS\_Torque\_Limiting\_ID170\{\textcolor{keyword}{true},\ 58,\ 1\};}
+\DoxyCodeLine{00117\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Limit\_Max\_Speed\_ID170\{\textcolor{keyword}{true},\ 59,\ 1\};}
+\DoxyCodeLine{00118\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Limit\_Hot\_Spot\_ID170\{\textcolor{keyword}{true},\ 60,\ 1\};}
+\DoxyCodeLine{00119\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Low\_Speed\_Limiting\_ID170\{\textcolor{keyword}{true},\ 61,\ 1\};}
+\DoxyCodeLine{00120\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Limit\_Coolant\_Derating\_ID170\{\textcolor{keyword}{true},\ 62,\ 1\};}
+\DoxyCodeLine{00121\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Limit\_Stall\_Burst\_Model\_ID170\{\textcolor{keyword}{true},\ 63,\ 1\};}
+\DoxyCodeLine{00122\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Ref\_Voltage\_1\_5\_ID169\{\textcolor{keyword}{true},\ 0,\ 16,\ 0.01f\};}
+\DoxyCodeLine{00123\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Ref\_Voltage\_2\_5\_ID169\{\textcolor{keyword}{true},\ 16,\ 16,\ 0.01f\};}
+\DoxyCodeLine{00124\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Ref\_Voltage\_5\_0\_ID169\{\textcolor{keyword}{true},\ 32,\ 16,\ 0.01f\};}
+\DoxyCodeLine{00125\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Ref\_Voltage\_12\_0\_ID169\{\textcolor{keyword}{true},\ 48,\ 16,\ 0.01f\};}
+\DoxyCodeLine{00126\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Vd\_ff\_ID168\{\textcolor{keyword}{true},\ 0,\ 16,\ 0.1f\};}
+\DoxyCodeLine{00127\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Vq\_ff\_ID168\{\textcolor{keyword}{true},\ 16,\ 16,\ 0.1f\};}
+\DoxyCodeLine{00128\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Id\_ID168\{\textcolor{keyword}{true},\ 32,\ 16,\ 0.1f\};}
+\DoxyCodeLine{00129\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Iq\_ID168\{\textcolor{keyword}{true},\ 48,\ 16,\ 0.1f\};}
+\DoxyCodeLine{00130\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_DC\_Bus\_Voltage\_ID167\{\textcolor{keyword}{true},\ 0,\ 16,\ 0.1f\};}
+\DoxyCodeLine{00131\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Output\_Voltage\_ID167\{\textcolor{keyword}{true},\ 16,\ 16,\ 0.1f\};}
+\DoxyCodeLine{00132\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_VAB\_Vd\_Voltage\_ID167\{\textcolor{keyword}{true},\ 32,\ 16,\ 0.1f\};}
+\DoxyCodeLine{00133\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_VBC\_Vq\_Voltage\_ID167\{\textcolor{keyword}{true},\ 48,\ 16,\ 0.1f\};}
+\DoxyCodeLine{00134\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Phase\_A\_Current\_ID166\{\textcolor{keyword}{true},\ 0,\ 16,\ 0.1f\};}
+\DoxyCodeLine{00135\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Phase\_B\_Current\_ID166\{\textcolor{keyword}{true},\ 16,\ 16,\ 0.1f\};}
+\DoxyCodeLine{00136\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Phase\_C\_Current\_ID166\{\textcolor{keyword}{true},\ 32,\ 16,\ 0.1f\};}
+\DoxyCodeLine{00137\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_DC\_Bus\_Current\_ID166\{\textcolor{keyword}{true},\ 48,\ 16,\ 0.1f\};}
+\DoxyCodeLine{00138\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Motor\_Angle\_Electrical\_ID165\{\textcolor{keyword}{true},\ 0,\ 16,\ 0.1f\};}
+\DoxyCodeLine{00139\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Motor\_Speed\_ID165\{\textcolor{keyword}{true},\ 16,\ 16\};}
+\DoxyCodeLine{00140\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Electrical\_Output\_Frequency\_ID165\{\textcolor{keyword}{true},\ 32,\ 16,\ 0.1f\};}
+\DoxyCodeLine{00141\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Delta\_Resolver\_Filtered\_ID165\{\textcolor{keyword}{true},\ 48,\ 16,\ 0.1f\};}
+\DoxyCodeLine{00142\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Digital\_Input\_1\_ID164\{\textcolor{keyword}{true},\ 0,\ 1\};}
+\DoxyCodeLine{00143\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Digital\_Input\_2\_ID164\{\textcolor{keyword}{true},\ 8,\ 1\};}
+\DoxyCodeLine{00144\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Digital\_Input\_3\_ID164\{\textcolor{keyword}{true},\ 16,\ 1\};}
+\DoxyCodeLine{00145\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Digital\_Input\_4\_ID164\{\textcolor{keyword}{true},\ 24,\ 1\};}
+\DoxyCodeLine{00146\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Digital\_Input\_5\_ID164\{\textcolor{keyword}{true},\ 32,\ 1\};}
+\DoxyCodeLine{00147\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Digital\_Input\_6\_ID164\{\textcolor{keyword}{true},\ 40,\ 1\};}
+\DoxyCodeLine{00148\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Digital\_Input\_7\_ID164\{\textcolor{keyword}{true},\ 48,\ 1\};}
+\DoxyCodeLine{00149\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Digital\_Input\_8\_ID164\{\textcolor{keyword}{true},\ 56,\ 1\};}
+\DoxyCodeLine{00150\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Analog\_Input\_1\_ID163\{\textcolor{keyword}{true},\ 0,\ 10,\ 0.01f\};}
+\DoxyCodeLine{00151\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Analog\_Input\_2\_ID163\{\textcolor{keyword}{true},\ 10,\ 10,\ 0.01f\};}
+\DoxyCodeLine{00152\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Analog\_Input\_3\_ID163\{\textcolor{keyword}{true},\ 20,\ 10,\ 0.01f\};}
+\DoxyCodeLine{00153\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Analog\_Input\_4\_ID163\{\textcolor{keyword}{true},\ 32,\ 10,\ 0.01f\};}
+\DoxyCodeLine{00154\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Analog\_Input\_5\_ID163\{\textcolor{keyword}{true},\ 42,\ 10,\ 0.01f\};}
+\DoxyCodeLine{00155\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Analog\_Input\_6\_ID163\{\textcolor{keyword}{true},\ 52,\ 10,\ 0.01f\};}
+\DoxyCodeLine{00156\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Coolant\_Temp\_ID162\{\textcolor{keyword}{true},\ 0,\ 16,\ 0.1f\};}
+\DoxyCodeLine{00157\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Hot\_Spot\_Temp\_ID162\{\textcolor{keyword}{true},\ 16,\ 16,\ 0.1f\};}
+\DoxyCodeLine{00158\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Motor\_Temp\_ID162\{\textcolor{keyword}{true},\ 32,\ 16,\ 0.1f\};}
+\DoxyCodeLine{00159\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Torque\_Shudder\_ID162\{\textcolor{keyword}{true},\ 48,\ 16,\ 0.1f\};}
+\DoxyCodeLine{00160\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Control\_Board\_Temp\_ID161\{\textcolor{keyword}{true},\ 0,\ 16,\ 0.1f\};}
+\DoxyCodeLine{00161\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_RTD1\_Temperature\_ID161\{\textcolor{keyword}{true},\ 16,\ 16,\ 0.1f\};}
+\DoxyCodeLine{00162\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_RTD2\_Temperature\_ID161\{\textcolor{keyword}{true},\ 32,\ 16,\ 0.1f\};}
+\DoxyCodeLine{00163\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Stall\_Burst\_Model\_Temp\_ID161\{\textcolor{keyword}{true},\ 48,\ 16,\ 0.1f\};}
+\DoxyCodeLine{00164\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Module\_A\_Temp\_ID160\{\textcolor{keyword}{true},\ 0,\ 16,\ 0.1f\};}
+\DoxyCodeLine{00165\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Module\_B\_Temp\_ID160\{\textcolor{keyword}{true},\ 16,\ 16,\ 0.1f\};}
+\DoxyCodeLine{00166\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Module\_C\_Temp\_ID160\{\textcolor{keyword}{true},\ 32,\ 16,\ 0.1f\};}
+\DoxyCodeLine{00167\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Gate\_Driver\_Board\_Temp\_ID160\{\textcolor{keyword}{true},\ 48,\ 16,\ 0.1f\};}
+\DoxyCodeLine{00168\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Project\_Code\_EEP\_Ver\_ID174\{\textcolor{keyword}{true},\ 0,\ 16\};}
+\DoxyCodeLine{00169\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_SW\_Version\_ID174\{\textcolor{keyword}{true},\ 16,\ 16\};}
+\DoxyCodeLine{00170\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_DateCode\_MMDD\_ID174\{\textcolor{keyword}{true},\ 32,\ 16\};}
+\DoxyCodeLine{00171\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_DateCode\_YYYY\_ID174\{\textcolor{keyword}{true},\ 48,\ 16\};}
+\DoxyCodeLine{00172\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Diag\_Record\_ID175\{\textcolor{keyword}{true},\ 0,\ 8\};}
+\DoxyCodeLine{00173\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Diag\_Segment\_ID175\{\textcolor{keyword}{true},\ 8,\ 8\};}
+\DoxyCodeLine{00174\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Diag\_Gamma\_Resolver\_ID175\{\textcolor{keyword}{true},\ 16,\ 16,\ 0.1f\};}
+\DoxyCodeLine{00175\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Diag\_Cos\_Used\_ID175\{\textcolor{keyword}{true},\ 16,\ 16\};}
+\DoxyCodeLine{00176\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Diag\_Ic\_ID175\{\textcolor{keyword}{true},\ 16,\ 16,\ 0.1f\};}
+\DoxyCodeLine{00177\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Diag\_Id\_cmd\_ID175\{\textcolor{keyword}{true},\ 16,\ 16,\ 0.1f\};}
+\DoxyCodeLine{00178\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Diag\_Vq\_Cmd\_ID175\{\textcolor{keyword}{true},\ 16,\ 16,\ 0.1f\};}
+\DoxyCodeLine{00179\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Diag\_PWM\_Freq\_ID175\{\textcolor{keyword}{true},\ 16,\ 16\};}
+\DoxyCodeLine{00180\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Diag\_Gamma\_Observer\_ID175\{\textcolor{keyword}{true},\ 32,\ 16,\ 0.1f\};}
+\DoxyCodeLine{00181\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Diag\_Ia\_ID175\{\textcolor{keyword}{true},\ 32,\ 16,\ 0.1f\};}
+\DoxyCodeLine{00182\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Diag\_Vdc\_ID175\{\textcolor{keyword}{true},\ 32,\ 16,\ 0.1f\};}
+\DoxyCodeLine{00183\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Diag\_Mod\_Index\_ID175\{\textcolor{keyword}{true},\ 32,\ 16,\ 0.0001f\};}
+\DoxyCodeLine{00184\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Diag\_Vd\_Cmd\_ID175\{\textcolor{keyword}{true},\ 32,\ 16,\ 0.1f\};}
+\DoxyCodeLine{00185\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Diag\_Run\_Faults\_Lo\_ID175\{\textcolor{keyword}{true},\ 32,\ 16\};}
+\DoxyCodeLine{00186\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Diag\_Sin\_Used\_ID175\{\textcolor{keyword}{true},\ 48,\ 16\};}
+\DoxyCodeLine{00187\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Diag\_Ib\_ID175\{\textcolor{keyword}{true},\ 48,\ 16,\ 0.1f\};}
+\DoxyCodeLine{00188\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Diag\_Iq\_cmd\_ID175\{\textcolor{keyword}{true},\ 48,\ 16,\ 0.1f\};}
+\DoxyCodeLine{00189\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Diag\_FW\_Output\_ID175\{\textcolor{keyword}{true},\ 48,\ 16,\ 0.1f\};}
+\DoxyCodeLine{00190\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Diag\_Vqs\_Cmd\_ID175\{\textcolor{keyword}{true},\ 48,\ 16,\ 0.1f\};}
+\DoxyCodeLine{00191\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Diag\_Run\_Faults\_Hi\_ID175\{\textcolor{keyword}{true},\ 48,\ 16\};}
+\DoxyCodeLine{00192\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ BMS\_Max\_Discharge\_Current\_ID514\{\textcolor{keyword}{true},\ 0,\ 16\};}
+\DoxyCodeLine{00193\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ BMS\_Max\_Charge\_Current\_ID514\{\textcolor{keyword}{true},\ 16,\ 16\};}
+\DoxyCodeLine{00194\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Fast\_Torque\_Command\_ID176\{\textcolor{keyword}{true},\ 0,\ 16,\ 0.1f\};}
+\DoxyCodeLine{00195\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Fast\_Torque\_Feedback\_ID176\{\textcolor{keyword}{true},\ 16,\ 16,\ 0.1f\};}
+\DoxyCodeLine{00196\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Fast\_Motor\_Speed\_ID176\{\textcolor{keyword}{true},\ 32,\ 16\};}
+\DoxyCodeLine{00197\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Fast\_DC\_Bus\_Voltage\_ID176\{\textcolor{keyword}{true},\ 48,\ 16,\ 0.1f\};}
+\DoxyCodeLine{00198\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ sensorPlausibility\_ID2000\{\textcolor{keyword}{true},\ 0,\ 1\};}
+\DoxyCodeLine{00199\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ pedalPosition\_ID2000\{\textcolor{keyword}{true},\ 8,\ 8\};}
+\DoxyCodeLine{00200\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ sensor1Position\_ID2000\{\textcolor{keyword}{true},\ 16,\ 8\};}
+\DoxyCodeLine{00201\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ sensor2Position\_ID2000\{\textcolor{keyword}{true},\ 24,\ 8\};}
+\DoxyCodeLine{00202\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ brakePressure1Signal\_ID2000\{\textcolor{keyword}{true},\ 32,\ 16,\ 0.01f\};}
+\DoxyCodeLine{00203\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ brakePressure2Signal\_ID2000\{\textcolor{keyword}{true},\ 48,\ 16,\ 0.01f\};}
+\DoxyCodeLine{00204\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ HSD1\_ID2001\{\textcolor{keyword}{true},\ 0,\ 1\};}
+\DoxyCodeLine{00205\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ HSD2\_ID2001\{\textcolor{keyword}{true},\ 1,\ 1\};}
+\DoxyCodeLine{00206\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ HSD3\_ID2001\{\textcolor{keyword}{true},\ 2,\ 1\};}
+\DoxyCodeLine{00207\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ HSD4\_ID2001\{\textcolor{keyword}{true},\ 3,\ 1\};}
+\DoxyCodeLine{00208\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ HSD5\_ID2001\{\textcolor{keyword}{true},\ 4,\ 1\};}
+\DoxyCodeLine{00209\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ HSD6\_ID2001\{\textcolor{keyword}{true},\ 5,\ 1\};}
+\DoxyCodeLine{00210\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ HSD7\_ID2001\{\textcolor{keyword}{true},\ 6,\ 1\};}
+\DoxyCodeLine{00211\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ HSD8\_ID2001\{\textcolor{keyword}{true},\ 7,\ 1\};}
+\DoxyCodeLine{00212\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ RTD\_Button\_ID2002\{\textcolor{keyword}{true},\ 0,\ 1\};}
+\DoxyCodeLine{00213\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ State\_ID2002\{\textcolor{keyword}{true},\ 8,\ 8\};}
+\DoxyCodeLine{00214\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ Throttle\_ID2002\{\textcolor{keyword}{true},\ 16,\ 8,\ 0.01f\};}
+\DoxyCodeLine{00215\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ Brake\_Percent\_ID2002\{\textcolor{keyword}{true},\ 24,\ 16,\ 0.01f\};}
+\DoxyCodeLine{00216\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ Precharge\_Enable\_ID2003\{\textcolor{keyword}{true},\ 0,\ 1\};}
+\DoxyCodeLine{00217\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ Precharge\_OK\_ID2003\{\textcolor{keyword}{true},\ 1,\ 1\};}
+\DoxyCodeLine{00218\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ HSD1\_ID2004\{\textcolor{keyword}{true},\ 0,\ 1\};}
+\DoxyCodeLine{00219\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ HSD2\_ID2004\{\textcolor{keyword}{true},\ 1,\ 1\};}
+\DoxyCodeLine{00220\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ HSD3\_ID2004\{\textcolor{keyword}{true},\ 2,\ 1\};}
+\DoxyCodeLine{00221\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ HSD4\_ID2004\{\textcolor{keyword}{true},\ 3,\ 1\};}
+\DoxyCodeLine{00222\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ HSD5\_ID2004\{\textcolor{keyword}{true},\ 4,\ 1\};}
+\DoxyCodeLine{00223\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ HSD6\_ID2004\{\textcolor{keyword}{true},\ 5,\ 1\};}
+\DoxyCodeLine{00224\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ HSD7\_ID2004\{\textcolor{keyword}{true},\ 6,\ 1\};}
+\DoxyCodeLine{00225\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ HSD8\_ID2004\{\textcolor{keyword}{true},\ 7,\ 1\};}
+\DoxyCodeLine{00226\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ INV\_Torque\_Capability\_ID177\{\textcolor{keyword}{true},\ 0,\ 16,\ 0.1f\};}
+\DoxyCodeLine{00227\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ PackCurrent\_ID1056\{\textcolor{keyword}{true},\ 0,\ 16,\ 0.1f\};}
+\DoxyCodeLine{00228\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ IMDRelay\_ID1056\{\textcolor{keyword}{true},\ 16,\ 1\};}
+\DoxyCodeLine{00229\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ AMSRelay\_ID1056\{\textcolor{keyword}{true},\ 17,\ 1\};}
+\DoxyCodeLine{00230\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ BSPDRelay\_ID1056\{\textcolor{keyword}{true},\ 18,\ 1\};}
+\DoxyCodeLine{00231\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ LatchRelay\_ID1056\{\textcolor{keyword}{true},\ 19,\ 1\};}
+\DoxyCodeLine{00232\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ Safetyloop\_return\_ID1056\{\textcolor{keyword}{true},\ 20,\ 1\};}
+\DoxyCodeLine{00233\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ HV\_Active\_ID1056\{\textcolor{keyword}{true},\ 21,\ 1\};}
+\DoxyCodeLine{00234\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ SOC\_ID1056\{\textcolor{keyword}{true},\ 24,\ 16,\ 0.01f\};}
+\DoxyCodeLine{00235\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ PackStatus\_ID1056\{\textcolor{keyword}{true},\ 40,\ 8\};}
+\DoxyCodeLine{00236\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ Fault\_ID1056\{\textcolor{keyword}{true},\ 48,\ 8\};}
+\DoxyCodeLine{00237\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ Max\_charge\_voltage\_ID403105268\{\textcolor{keyword}{false},\ 7,\ 16,\ 0.1f\};}
+\DoxyCodeLine{00238\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ Max\_charge\_current\_ID403105268\{\textcolor{keyword}{false},\ 23,\ 16,\ 0.1f\};}
+\DoxyCodeLine{00239\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ Control\_ID403105268\{\textcolor{keyword}{true},\ 32,\ 8\};}
+\DoxyCodeLine{00240\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ A1\_ID2014\{\textcolor{keyword}{true},\ 0,\ 16,\ 0.01f\};}
+\DoxyCodeLine{00241\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ A2\_ID2014\{\textcolor{keyword}{true},\ 16,\ 16,\ 0.01f\};}
+\DoxyCodeLine{00242\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ A3\_ID2014\{\textcolor{keyword}{true},\ 32,\ 16,\ 0.01f\};}
+\DoxyCodeLine{00243\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ A4\_ID2014\{\textcolor{keyword}{true},\ 48,\ 16,\ 0.01f\};}
+\DoxyCodeLine{00244\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ A5\_ID2015\{\textcolor{keyword}{true},\ 0,\ 16,\ 0.01f\};}
+\DoxyCodeLine{00245\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ A6\_ID2015\{\textcolor{keyword}{true},\ 16,\ 16,\ 0.01f\};}
+\DoxyCodeLine{00246\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ A7\_ID2015\{\textcolor{keyword}{true},\ 32,\ 16,\ 0.01f\};}
+\DoxyCodeLine{00247\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ A8\_ID2015\{\textcolor{keyword}{true},\ 48,\ 16,\ 0.01f\};}
+\DoxyCodeLine{00248\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ A9\_ID2016\{\textcolor{keyword}{true},\ 0,\ 16,\ 0.01f\};}
+\DoxyCodeLine{00249\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ A10\_ID2016\{\textcolor{keyword}{true},\ 16,\ 16,\ 0.01f\};}
+\DoxyCodeLine{00250\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ A11\_ID2016\{\textcolor{keyword}{true},\ 32,\ 16,\ 0.01f\};}
+\DoxyCodeLine{00251\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ A12\_ID2016\{\textcolor{keyword}{true},\ 48,\ 16,\ 0.01f\};}
+\DoxyCodeLine{00252\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ A13\_ID2017\{\textcolor{keyword}{true},\ 0,\ 16,\ 0.01f\};}
+\DoxyCodeLine{00253\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ A14\_ID2017\{\textcolor{keyword}{true},\ 16,\ 16,\ 0.01f\};}
+\DoxyCodeLine{00254\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ A15\_ID2017\{\textcolor{keyword}{true},\ 32,\ 16,\ 0.01f\};}
+\DoxyCodeLine{00255\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ A16\_ID2017\{\textcolor{keyword}{true},\ 48,\ 16,\ 0.01f\};}
+\DoxyCodeLine{00256\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ A1\_ID2018\{\textcolor{keyword}{true},\ 0,\ 16,\ 0.01f\};}
+\DoxyCodeLine{00257\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ A2\_ID2018\{\textcolor{keyword}{true},\ 16,\ 16,\ 0.01f\};}
+\DoxyCodeLine{00258\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ A3\_ID2018\{\textcolor{keyword}{true},\ 32,\ 16,\ 0.01f\};}
+\DoxyCodeLine{00259\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ A4\_ID2018\{\textcolor{keyword}{true},\ 48,\ 16,\ 0.01f\};}
+\DoxyCodeLine{00260\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ A5\_ID2019\{\textcolor{keyword}{true},\ 0,\ 16,\ 0.01f\};}
+\DoxyCodeLine{00261\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ A6\_ID2019\{\textcolor{keyword}{true},\ 16,\ 16,\ 0.01f\};}
+\DoxyCodeLine{00262\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ A7\_ID2019\{\textcolor{keyword}{true},\ 32,\ 16,\ 0.01f\};}
+\DoxyCodeLine{00263\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ A8\_ID2019\{\textcolor{keyword}{true},\ 48,\ 16,\ 0.01f\};}
+\DoxyCodeLine{00264\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ A9\_ID2020\{\textcolor{keyword}{true},\ 0,\ 16,\ 0.01f\};}
+\DoxyCodeLine{00265\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ A10\_ID2020\{\textcolor{keyword}{true},\ 16,\ 16,\ 0.01f\};}
+\DoxyCodeLine{00266\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ A11\_ID2020\{\textcolor{keyword}{true},\ 32,\ 16,\ 0.01f\};}
+\DoxyCodeLine{00267\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ A12\_ID2020\{\textcolor{keyword}{true},\ 48,\ 16,\ 0.01f\};}
+\DoxyCodeLine{00268\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ A13\_ID2021\{\textcolor{keyword}{true},\ 0,\ 16,\ 0.01f\};}
+\DoxyCodeLine{00269\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ A14\_ID2021\{\textcolor{keyword}{true},\ 16,\ 16,\ 0.01f\};}
+\DoxyCodeLine{00270\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ A15\_ID2021\{\textcolor{keyword}{true},\ 32,\ 16,\ 0.01f\};}
+\DoxyCodeLine{00271\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ A16\_ID2021\{\textcolor{keyword}{true},\ 48,\ 16,\ 0.01f\};}
+\DoxyCodeLine{00272\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ Absolute\_min\_cell\_voltage\_ID999\{\textcolor{keyword}{true},\ 0,\ 16,\ 0.0001f\};}
+\DoxyCodeLine{00273\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ apps1\_min\_ID2022\{\textcolor{keyword}{true},\ 0,\ 16,\ 0.01f\};}
+\DoxyCodeLine{00274\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ apps1\_max\_ID2022\{\textcolor{keyword}{true},\ 16,\ 16,\ 0.01f\};}
+\DoxyCodeLine{00275\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ apps2\_min\_ID2022\{\textcolor{keyword}{true},\ 32,\ 16,\ 0.01f\};}
+\DoxyCodeLine{00276\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ apps2\_max\_ID2022\{\textcolor{keyword}{true},\ 48,\ 16,\ 0.01f\};}
+\DoxyCodeLine{00277\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ set\_min\_ID2023\{\textcolor{keyword}{true},\ 0,\ 8\};}
+\DoxyCodeLine{00278\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ set\_max\_ID2023\{\textcolor{keyword}{true},\ 8,\ 8\};}
+\DoxyCodeLine{00279\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ Accel\_X\_ID2024\{\textcolor{keyword}{true},\ 0,\ 16,\ 0.01f\};}
+\DoxyCodeLine{00280\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ Accel\_Y\_ID2024\{\textcolor{keyword}{true},\ 16,\ 16,\ 0.01f\};}
+\DoxyCodeLine{00281\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ Accel\_Z\_ID2024\{\textcolor{keyword}{true},\ 32,\ 16,\ 0.01f\};}
+\DoxyCodeLine{00282\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ Gyro\_X\_ID2025\{\textcolor{keyword}{true},\ 0,\ 16\};}
+\DoxyCodeLine{00283\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ Gyro\_Y\_ID2025\{\textcolor{keyword}{true},\ 16,\ 16\};}
+\DoxyCodeLine{00284\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ Gyro\_Z\_ID2025\{\textcolor{keyword}{true},\ 32,\ 16\};}
+\DoxyCodeLine{00285\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ Left\_RPM\_ID2013\{\textcolor{keyword}{true},\ 0,\ 16\};}
+\DoxyCodeLine{00286\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ Right\_RPM\_ID2013\{\textcolor{keyword}{true},\ 16,\ 16\};}
+\DoxyCodeLine{00287\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ Accel\_X\_ID2026\{\textcolor{keyword}{true},\ 0,\ 16,\ 0.01f\};}
+\DoxyCodeLine{00288\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ Accel\_Y\_ID2026\{\textcolor{keyword}{true},\ 16,\ 16,\ 0.01f\};}
+\DoxyCodeLine{00289\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ Accel\_Z\_ID2026\{\textcolor{keyword}{true},\ 32,\ 16,\ 0.01f\};}
+\DoxyCodeLine{00290\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ Gyro\_X\_ID2027\{\textcolor{keyword}{true},\ 0,\ 16\};}
+\DoxyCodeLine{00291\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ Gyro\_Y\_ID2027\{\textcolor{keyword}{true},\ 16,\ 16\};}
+\DoxyCodeLine{00292\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ Gyro\_Z\_ID2027\{\textcolor{keyword}{true},\ 32,\ 16\};}
+\DoxyCodeLine{00293\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ Front\_Left\_Ticker\_ID2028\{\textcolor{keyword}{true},\ 0,\ 64\};}
+\DoxyCodeLine{00294\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ Front\_Right\_Ticker\_ID2029\{\textcolor{keyword}{true},\ 0,\ 64\};}
+\DoxyCodeLine{00295\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ MinTemp\_ID1057\{\textcolor{keyword}{true},\ 0,\ 16,\ 0.1f\};}
+\DoxyCodeLine{00296\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ MaxTemp\_ID1057\{\textcolor{keyword}{true},\ 16,\ 16,\ 0.1f\};}
+\DoxyCodeLine{00297\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ MinCellVoltage\_ID1057\{\textcolor{keyword}{true},\ 32,\ 16,\ 0.001f\};}
+\DoxyCodeLine{00298\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_c_a_n___signal}{CAN\_Signal}}\ MaxCellVoltage\_ID1057\{\textcolor{keyword}{true},\ 48,\ 16,\ 0.001f\};}
+\DoxyCodeLine{00299\ }
+\DoxyCodeLine{00314\ \textcolor{keyword}{inline}\ etl::map\ CAN\_Map}
+\DoxyCodeLine{00315\ \{\ }
+\DoxyCodeLine{00316\ \ \ \ \ etl::pair\{VCU\_PDM\_REAR\_CMD,\ etl::vector<CAN\_Signal*,\ 16>\{\ }
+\DoxyCodeLine{00317\ \ \ \ \ \ \ \ \ \&HSD1\_ID2012,}
+\DoxyCodeLine{00318\ \ \ \ \ \ \ \ \ \&HSD2\_ID2012,}
+\DoxyCodeLine{00319\ \ \ \ \ \ \ \ \ \&HSD3\_ID2012,}
+\DoxyCodeLine{00320\ \ \ \ \ \ \ \ \ \&HSD4\_ID2012,}
+\DoxyCodeLine{00321\ \ \ \ \ \ \ \ \ \&HSD5\_ID2012,}
+\DoxyCodeLine{00322\ \ \ \ \ \ \ \ \ \&HSD6\_ID2012,}
+\DoxyCodeLine{00323\ \ \ \ \ \ \ \ \ \&HSD7\_ID2012,}
+\DoxyCodeLine{00324\ \ \ \ \ \ \ \ \ \&HSD8\_ID2012\ }
+\DoxyCodeLine{00325\ \ \ \ \ \ \ \ \ \}\ \},}
+\DoxyCodeLine{00326\ \ \ \ \ etl::pair\{M173\_MODULATION\_AND\_FLUX\_INFO,\ etl::vector<CAN\_Signal*,\ 16>\{\ }
+\DoxyCodeLine{00327\ \ \ \ \ \ \ \ \ \&INV\_Modulation\_Index\_ID173,}
+\DoxyCodeLine{00328\ \ \ \ \ \ \ \ \ \&INV\_Flux\_Weakening\_Output\_ID173,}
+\DoxyCodeLine{00329\ \ \ \ \ \ \ \ \ \&INV\_Id\_Command\_ID173,}
+\DoxyCodeLine{00330\ \ \ \ \ \ \ \ \ \&INV\_Iq\_Command\_ID173\ }
+\DoxyCodeLine{00331\ \ \ \ \ \ \ \ \ \}\ \},}
+\DoxyCodeLine{00332\ \ \ \ \ etl::pair\{M172\_TORQUE\_AND\_TIMER\_INFO,\ etl::vector<CAN\_Signal*,\ 16>\{\ }
+\DoxyCodeLine{00333\ \ \ \ \ \ \ \ \ \&INV\_Commanded\_Torque\_ID172,}
+\DoxyCodeLine{00334\ \ \ \ \ \ \ \ \ \&INV\_Torque\_Feedback\_ID172,}
+\DoxyCodeLine{00335\ \ \ \ \ \ \ \ \ \&INV\_Power\_On\_Timer\_ID172\ }
+\DoxyCodeLine{00336\ \ \ \ \ \ \ \ \ \}\ \},}
+\DoxyCodeLine{00337\ \ \ \ \ etl::pair\{M194\_READ\_WRITE\_PARAM\_RESPONSE,\ etl::vector<CAN\_Signal*,\ 16>\{\ }
+\DoxyCodeLine{00338\ \ \ \ \ \ \ \ \ \&INV\_Parameter\_Response\_Addr\_ID194,}
+\DoxyCodeLine{00339\ \ \ \ \ \ \ \ \ \&INV\_Parameter\_Response\_Write\_OK\_ID194,}
+\DoxyCodeLine{00340\ \ \ \ \ \ \ \ \ \&INV\_Parameter\_Response\_Data\_ID194\ }
+\DoxyCodeLine{00341\ \ \ \ \ \ \ \ \ \}\ \},}
+\DoxyCodeLine{00342\ \ \ \ \ etl::pair\{M193\_READ\_WRITE\_PARAM\_COMMAND,\ etl::vector<CAN\_Signal*,\ 16>\{\ }
+\DoxyCodeLine{00343\ \ \ \ \ \ \ \ \ \&VCU\_INV\_Parameter\_Address\_ID193,}
+\DoxyCodeLine{00344\ \ \ \ \ \ \ \ \ \&VCU\_INV\_Parameter\_RW\_Command\_ID193,}
+\DoxyCodeLine{00345\ \ \ \ \ \ \ \ \ \&VCU\_INV\_Parameter\_Data\_ID193\ }
+\DoxyCodeLine{00346\ \ \ \ \ \ \ \ \ \}\ \},}
+\DoxyCodeLine{00347\ \ \ \ \ etl::pair\{M192\_COMMAND\_MESSAGE,\ etl::vector<CAN\_Signal*,\ 16>\{\ }
+\DoxyCodeLine{00348\ \ \ \ \ \ \ \ \ \&VCU\_INV\_Torque\_Command\_ID192,}
+\DoxyCodeLine{00349\ \ \ \ \ \ \ \ \ \&VCU\_INV\_Speed\_Command\_ID192,}
+\DoxyCodeLine{00350\ \ \ \ \ \ \ \ \ \&VCU\_INV\_Direction\_Command\_ID192,}
+\DoxyCodeLine{00351\ \ \ \ \ \ \ \ \ \&VCU\_INV\_Inverter\_Enable\_ID192,}
+\DoxyCodeLine{00352\ \ \ \ \ \ \ \ \ \&VCU\_INV\_Inverter\_Discharge\_ID192,}
+\DoxyCodeLine{00353\ \ \ \ \ \ \ \ \ \&VCU\_INV\_Speed\_Mode\_Enable\_ID192,}
+\DoxyCodeLine{00354\ \ \ \ \ \ \ \ \ \&VCU\_INV\_Torque\_Limit\_Command\_ID192\ }
+\DoxyCodeLine{00355\ \ \ \ \ \ \ \ \ \}\ \},}
+\DoxyCodeLine{00356\ \ \ \ \ etl::pair\{M171\_FAULT\_CODES,\ etl::vector<CAN\_Signal*,\ 16>\{\ }
+\DoxyCodeLine{00357\ \ \ \ \ \ \ \ \ \&INV\_Post\_Fault\_Lo\_ID171,}
+\DoxyCodeLine{00358\ \ \ \ \ \ \ \ \ \&INV\_Post\_Fault\_Hi\_ID171,}
+\DoxyCodeLine{00359\ \ \ \ \ \ \ \ \ \&INV\_Run\_Fault\_Lo\_ID171,}
+\DoxyCodeLine{00360\ \ \ \ \ \ \ \ \ \&INV\_Run\_Fault\_Hi\_ID171\ }
+\DoxyCodeLine{00361\ \ \ \ \ \ \ \ \ \}\ \},}
+\DoxyCodeLine{00362\ \ \ \ \ etl::pair\{M170\_INTERNAL\_STATES,\ etl::vector<CAN\_Signal*,\ 16>\{\ }
+\DoxyCodeLine{00363\ \ \ \ \ \ \ \ \ \&INV\_VSM\_State\_ID170,}
+\DoxyCodeLine{00364\ \ \ \ \ \ \ \ \ \&INV\_PWM\_Frequency\_ID170,}
+\DoxyCodeLine{00365\ \ \ \ \ \ \ \ \ \&INV\_Inverter\_State\_ID170,}
+\DoxyCodeLine{00366\ \ \ \ \ \ \ \ \ \&INV\_Relay\_1\_Status\_ID170,}
+\DoxyCodeLine{00367\ \ \ \ \ \ \ \ \ \&INV\_Relay\_2\_Status\_ID170,}
+\DoxyCodeLine{00368\ \ \ \ \ \ \ \ \ \&INV\_Relay\_3\_Status\_ID170,}
+\DoxyCodeLine{00369\ \ \ \ \ \ \ \ \ \&INV\_Relay\_4\_Status\_ID170,}
+\DoxyCodeLine{00370\ \ \ \ \ \ \ \ \ \&INV\_Relay\_5\_Status\_ID170,}
+\DoxyCodeLine{00371\ \ \ \ \ \ \ \ \ \&INV\_Relay\_6\_Status\_ID170,}
+\DoxyCodeLine{00372\ \ \ \ \ \ \ \ \ \&INV\_Inverter\_Run\_Mode\_ID170,}
+\DoxyCodeLine{00373\ \ \ \ \ \ \ \ \ \&INV\_Self\_Sensing\_Assist\_Enable\_ID170,}
+\DoxyCodeLine{00374\ \ \ \ \ \ \ \ \ \&INV\_Inverter\_Discharge\_State\_ID170,}
+\DoxyCodeLine{00375\ \ \ \ \ \ \ \ \ \&INV\_Inverter\_Command\_Mode\_ID170,}
+\DoxyCodeLine{00376\ \ \ \ \ \ \ \ \ \&INV\_Rolling\_Counter\_ID170,}
+\DoxyCodeLine{00377\ \ \ \ \ \ \ \ \ \&INV\_Inverter\_Enable\_State\_ID170,}
+\DoxyCodeLine{00378\ \ \ \ \ \ \ \ \ \&INV\_Burst\_Model\_Mode\_ID170,}
+\DoxyCodeLine{00379\ \ \ \ \ \ \ \ \ \&INV\_Key\_Switch\_Start\_Status\_ID170,}
+\DoxyCodeLine{00380\ \ \ \ \ \ \ \ \ \&INV\_Inverter\_Enable\_Lockout\_ID170,}
+\DoxyCodeLine{00381\ \ \ \ \ \ \ \ \ \&INV\_Direction\_Command\_ID170,}
+\DoxyCodeLine{00382\ \ \ \ \ \ \ \ \ \&INV\_BMS\_Active\_ID170,}
+\DoxyCodeLine{00383\ \ \ \ \ \ \ \ \ \&INV\_BMS\_Torque\_Limiting\_ID170,}
+\DoxyCodeLine{00384\ \ \ \ \ \ \ \ \ \&INV\_Limit\_Max\_Speed\_ID170,}
+\DoxyCodeLine{00385\ \ \ \ \ \ \ \ \ \&INV\_Limit\_Hot\_Spot\_ID170,}
+\DoxyCodeLine{00386\ \ \ \ \ \ \ \ \ \&INV\_Low\_Speed\_Limiting\_ID170,}
+\DoxyCodeLine{00387\ \ \ \ \ \ \ \ \ \&INV\_Limit\_Coolant\_Derating\_ID170,}
+\DoxyCodeLine{00388\ \ \ \ \ \ \ \ \ \&INV\_Limit\_Stall\_Burst\_Model\_ID170\ }
+\DoxyCodeLine{00389\ \ \ \ \ \ \ \ \ \}\ \},}
+\DoxyCodeLine{00390\ \ \ \ \ etl::pair\{M169\_INTERNAL\_VOLTAGES,\ etl::vector<CAN\_Signal*,\ 16>\{\ }
+\DoxyCodeLine{00391\ \ \ \ \ \ \ \ \ \&INV\_Ref\_Voltage\_1\_5\_ID169,}
+\DoxyCodeLine{00392\ \ \ \ \ \ \ \ \ \&INV\_Ref\_Voltage\_2\_5\_ID169,}
+\DoxyCodeLine{00393\ \ \ \ \ \ \ \ \ \&INV\_Ref\_Voltage\_5\_0\_ID169,}
+\DoxyCodeLine{00394\ \ \ \ \ \ \ \ \ \&INV\_Ref\_Voltage\_12\_0\_ID169\ }
+\DoxyCodeLine{00395\ \ \ \ \ \ \ \ \ \}\ \},}
+\DoxyCodeLine{00396\ \ \ \ \ etl::pair\{M168\_FLUX\_ID\_IQ\_INFO,\ etl::vector<CAN\_Signal*,\ 16>\{\ }
+\DoxyCodeLine{00397\ \ \ \ \ \ \ \ \ \&INV\_Vd\_ff\_ID168,}
+\DoxyCodeLine{00398\ \ \ \ \ \ \ \ \ \&INV\_Vq\_ff\_ID168,}
+\DoxyCodeLine{00399\ \ \ \ \ \ \ \ \ \&INV\_Id\_ID168,}
+\DoxyCodeLine{00400\ \ \ \ \ \ \ \ \ \&INV\_Iq\_ID168\ }
+\DoxyCodeLine{00401\ \ \ \ \ \ \ \ \ \}\ \},}
+\DoxyCodeLine{00402\ \ \ \ \ etl::pair\{M167\_VOLTAGE\_INFO,\ etl::vector<CAN\_Signal*,\ 16>\{\ }
+\DoxyCodeLine{00403\ \ \ \ \ \ \ \ \ \&INV\_DC\_Bus\_Voltage\_ID167,}
+\DoxyCodeLine{00404\ \ \ \ \ \ \ \ \ \&INV\_Output\_Voltage\_ID167,}
+\DoxyCodeLine{00405\ \ \ \ \ \ \ \ \ \&INV\_VAB\_Vd\_Voltage\_ID167,}
+\DoxyCodeLine{00406\ \ \ \ \ \ \ \ \ \&INV\_VBC\_Vq\_Voltage\_ID167\ }
+\DoxyCodeLine{00407\ \ \ \ \ \ \ \ \ \}\ \},}
+\DoxyCodeLine{00408\ \ \ \ \ etl::pair\{M166\_CURRENT\_INFO,\ etl::vector<CAN\_Signal*,\ 16>\{\ }
+\DoxyCodeLine{00409\ \ \ \ \ \ \ \ \ \&INV\_Phase\_A\_Current\_ID166,}
+\DoxyCodeLine{00410\ \ \ \ \ \ \ \ \ \&INV\_Phase\_B\_Current\_ID166,}
+\DoxyCodeLine{00411\ \ \ \ \ \ \ \ \ \&INV\_Phase\_C\_Current\_ID166,}
+\DoxyCodeLine{00412\ \ \ \ \ \ \ \ \ \&INV\_DC\_Bus\_Current\_ID166\ }
+\DoxyCodeLine{00413\ \ \ \ \ \ \ \ \ \}\ \},}
+\DoxyCodeLine{00414\ \ \ \ \ etl::pair\{M165\_MOTOR\_POSITION\_INFO,\ etl::vector<CAN\_Signal*,\ 16>\{\ }
+\DoxyCodeLine{00415\ \ \ \ \ \ \ \ \ \&INV\_Motor\_Angle\_Electrical\_ID165,}
+\DoxyCodeLine{00416\ \ \ \ \ \ \ \ \ \&INV\_Motor\_Speed\_ID165,}
+\DoxyCodeLine{00417\ \ \ \ \ \ \ \ \ \&INV\_Electrical\_Output\_Frequency\_ID165,}
+\DoxyCodeLine{00418\ \ \ \ \ \ \ \ \ \&INV\_Delta\_Resolver\_Filtered\_ID165\ }
+\DoxyCodeLine{00419\ \ \ \ \ \ \ \ \ \}\ \},}
+\DoxyCodeLine{00420\ \ \ \ \ etl::pair\{M164\_DIGITAL\_INPUT\_STATUS,\ etl::vector<CAN\_Signal*,\ 16>\{\ }
+\DoxyCodeLine{00421\ \ \ \ \ \ \ \ \ \&INV\_Digital\_Input\_1\_ID164,}
+\DoxyCodeLine{00422\ \ \ \ \ \ \ \ \ \&INV\_Digital\_Input\_2\_ID164,}
+\DoxyCodeLine{00423\ \ \ \ \ \ \ \ \ \&INV\_Digital\_Input\_3\_ID164,}
+\DoxyCodeLine{00424\ \ \ \ \ \ \ \ \ \&INV\_Digital\_Input\_4\_ID164,}
+\DoxyCodeLine{00425\ \ \ \ \ \ \ \ \ \&INV\_Digital\_Input\_5\_ID164,}
+\DoxyCodeLine{00426\ \ \ \ \ \ \ \ \ \&INV\_Digital\_Input\_6\_ID164,}
+\DoxyCodeLine{00427\ \ \ \ \ \ \ \ \ \&INV\_Digital\_Input\_7\_ID164,}
+\DoxyCodeLine{00428\ \ \ \ \ \ \ \ \ \&INV\_Digital\_Input\_8\_ID164\ }
+\DoxyCodeLine{00429\ \ \ \ \ \ \ \ \ \}\ \},}
+\DoxyCodeLine{00430\ \ \ \ \ etl::pair\{M163\_ANALOG\_INPUT\_VOLTAGES,\ etl::vector<CAN\_Signal*,\ 16>\{\ }
+\DoxyCodeLine{00431\ \ \ \ \ \ \ \ \ \&INV\_Analog\_Input\_1\_ID163,}
+\DoxyCodeLine{00432\ \ \ \ \ \ \ \ \ \&INV\_Analog\_Input\_2\_ID163,}
+\DoxyCodeLine{00433\ \ \ \ \ \ \ \ \ \&INV\_Analog\_Input\_3\_ID163,}
+\DoxyCodeLine{00434\ \ \ \ \ \ \ \ \ \&INV\_Analog\_Input\_4\_ID163,}
+\DoxyCodeLine{00435\ \ \ \ \ \ \ \ \ \&INV\_Analog\_Input\_5\_ID163,}
+\DoxyCodeLine{00436\ \ \ \ \ \ \ \ \ \&INV\_Analog\_Input\_6\_ID163\ }
+\DoxyCodeLine{00437\ \ \ \ \ \ \ \ \ \}\ \},}
+\DoxyCodeLine{00438\ \ \ \ \ etl::pair\{M162\_TEMPERATURE\_SET\_3,\ etl::vector<CAN\_Signal*,\ 16>\{\ }
+\DoxyCodeLine{00439\ \ \ \ \ \ \ \ \ \&INV\_Coolant\_Temp\_ID162,}
+\DoxyCodeLine{00440\ \ \ \ \ \ \ \ \ \&INV\_Hot\_Spot\_Temp\_ID162,}
+\DoxyCodeLine{00441\ \ \ \ \ \ \ \ \ \&INV\_Motor\_Temp\_ID162,}
+\DoxyCodeLine{00442\ \ \ \ \ \ \ \ \ \&INV\_Torque\_Shudder\_ID162\ }
+\DoxyCodeLine{00443\ \ \ \ \ \ \ \ \ \}\ \},}
+\DoxyCodeLine{00444\ \ \ \ \ etl::pair\{M161\_TEMPERATURE\_SET\_2,\ etl::vector<CAN\_Signal*,\ 16>\{\ }
+\DoxyCodeLine{00445\ \ \ \ \ \ \ \ \ \&INV\_Control\_Board\_Temp\_ID161,}
+\DoxyCodeLine{00446\ \ \ \ \ \ \ \ \ \&INV\_RTD1\_Temperature\_ID161,}
+\DoxyCodeLine{00447\ \ \ \ \ \ \ \ \ \&INV\_RTD2\_Temperature\_ID161,}
+\DoxyCodeLine{00448\ \ \ \ \ \ \ \ \ \&INV\_Stall\_Burst\_Model\_Temp\_ID161\ }
+\DoxyCodeLine{00449\ \ \ \ \ \ \ \ \ \}\ \},}
+\DoxyCodeLine{00450\ \ \ \ \ etl::pair\{M160\_TEMPERATURE\_SET\_1,\ etl::vector<CAN\_Signal*,\ 16>\{\ }
+\DoxyCodeLine{00451\ \ \ \ \ \ \ \ \ \&INV\_Module\_A\_Temp\_ID160,}
+\DoxyCodeLine{00452\ \ \ \ \ \ \ \ \ \&INV\_Module\_B\_Temp\_ID160,}
+\DoxyCodeLine{00453\ \ \ \ \ \ \ \ \ \&INV\_Module\_C\_Temp\_ID160,}
+\DoxyCodeLine{00454\ \ \ \ \ \ \ \ \ \&INV\_Gate\_Driver\_Board\_Temp\_ID160\ }
+\DoxyCodeLine{00455\ \ \ \ \ \ \ \ \ \}\ \},}
+\DoxyCodeLine{00456\ \ \ \ \ etl::pair\{M174\_FIRMWARE\_INFO,\ etl::vector<CAN\_Signal*,\ 16>\{\ }
+\DoxyCodeLine{00457\ \ \ \ \ \ \ \ \ \&INV\_Project\_Code\_EEP\_Ver\_ID174,}
+\DoxyCodeLine{00458\ \ \ \ \ \ \ \ \ \&INV\_SW\_Version\_ID174,}
+\DoxyCodeLine{00459\ \ \ \ \ \ \ \ \ \&INV\_DateCode\_MMDD\_ID174,}
+\DoxyCodeLine{00460\ \ \ \ \ \ \ \ \ \&INV\_DateCode\_YYYY\_ID174\ }
+\DoxyCodeLine{00461\ \ \ \ \ \ \ \ \ \}\ \},}
+\DoxyCodeLine{00462\ \ \ \ \ etl::pair\{M175\_DIAG\_DATA\_MESSAGE,\ etl::vector<CAN\_Signal*,\ 16>\{\ }
+\DoxyCodeLine{00463\ \ \ \ \ \ \ \ \ \&INV\_Diag\_Record\_ID175,}
+\DoxyCodeLine{00464\ \ \ \ \ \ \ \ \ \&INV\_Diag\_Segment\_ID175,}
+\DoxyCodeLine{00465\ \ \ \ \ \ \ \ \ \&INV\_Diag\_Gamma\_Resolver\_ID175,}
+\DoxyCodeLine{00466\ \ \ \ \ \ \ \ \ \&INV\_Diag\_Cos\_Used\_ID175,}
+\DoxyCodeLine{00467\ \ \ \ \ \ \ \ \ \&INV\_Diag\_Ic\_ID175,}
+\DoxyCodeLine{00468\ \ \ \ \ \ \ \ \ \&INV\_Diag\_Id\_cmd\_ID175,}
+\DoxyCodeLine{00469\ \ \ \ \ \ \ \ \ \&INV\_Diag\_Vq\_Cmd\_ID175,}
+\DoxyCodeLine{00470\ \ \ \ \ \ \ \ \ \&INV\_Diag\_PWM\_Freq\_ID175,}
+\DoxyCodeLine{00471\ \ \ \ \ \ \ \ \ \&INV\_Diag\_Gamma\_Observer\_ID175,}
+\DoxyCodeLine{00472\ \ \ \ \ \ \ \ \ \&INV\_Diag\_Ia\_ID175,}
+\DoxyCodeLine{00473\ \ \ \ \ \ \ \ \ \&INV\_Diag\_Vdc\_ID175,}
+\DoxyCodeLine{00474\ \ \ \ \ \ \ \ \ \&INV\_Diag\_Mod\_Index\_ID175,}
+\DoxyCodeLine{00475\ \ \ \ \ \ \ \ \ \&INV\_Diag\_Vd\_Cmd\_ID175,}
+\DoxyCodeLine{00476\ \ \ \ \ \ \ \ \ \&INV\_Diag\_Run\_Faults\_Lo\_ID175,}
+\DoxyCodeLine{00477\ \ \ \ \ \ \ \ \ \&INV\_Diag\_Sin\_Used\_ID175,}
+\DoxyCodeLine{00478\ \ \ \ \ \ \ \ \ \&INV\_Diag\_Ib\_ID175,}
+\DoxyCodeLine{00479\ \ \ \ \ \ \ \ \ \&INV\_Diag\_Iq\_cmd\_ID175,}
+\DoxyCodeLine{00480\ \ \ \ \ \ \ \ \ \&INV\_Diag\_FW\_Output\_ID175,}
+\DoxyCodeLine{00481\ \ \ \ \ \ \ \ \ \&INV\_Diag\_Vqs\_Cmd\_ID175,}
+\DoxyCodeLine{00482\ \ \ \ \ \ \ \ \ \&INV\_Diag\_Run\_Faults\_Hi\_ID175\ }
+\DoxyCodeLine{00483\ \ \ \ \ \ \ \ \ \}\ \},}
+\DoxyCodeLine{00484\ \ \ \ \ etl::pair\{BMS\_CURRENT\_LIMIT,\ etl::vector<CAN\_Signal*,\ 16>\{\ }
+\DoxyCodeLine{00485\ \ \ \ \ \ \ \ \ \&BMS\_Max\_Discharge\_Current\_ID514,}
+\DoxyCodeLine{00486\ \ \ \ \ \ \ \ \ \&BMS\_Max\_Charge\_Current\_ID514\ }
+\DoxyCodeLine{00487\ \ \ \ \ \ \ \ \ \}\ \},}
+\DoxyCodeLine{00488\ \ \ \ \ etl::pair\{M176\_FAST\_INFO,\ etl::vector<CAN\_Signal*,\ 16>\{\ }
+\DoxyCodeLine{00489\ \ \ \ \ \ \ \ \ \&INV\_Fast\_Torque\_Command\_ID176,}
+\DoxyCodeLine{00490\ \ \ \ \ \ \ \ \ \&INV\_Fast\_Torque\_Feedback\_ID176,}
+\DoxyCodeLine{00491\ \ \ \ \ \ \ \ \ \&INV\_Fast\_Motor\_Speed\_ID176,}
+\DoxyCodeLine{00492\ \ \ \ \ \ \ \ \ \&INV\_Fast\_DC\_Bus\_Voltage\_ID176\ }
+\DoxyCodeLine{00493\ \ \ \ \ \ \ \ \ \}\ \},}
+\DoxyCodeLine{00494\ \ \ \ \ etl::pair\{VCU\_PEDAL\_INFO,\ etl::vector<CAN\_Signal*,\ 16>\{\ }
+\DoxyCodeLine{00495\ \ \ \ \ \ \ \ \ \&sensorPlausibility\_ID2000,}
+\DoxyCodeLine{00496\ \ \ \ \ \ \ \ \ \&pedalPosition\_ID2000,}
+\DoxyCodeLine{00497\ \ \ \ \ \ \ \ \ \&sensor1Position\_ID2000,}
+\DoxyCodeLine{00498\ \ \ \ \ \ \ \ \ \&sensor2Position\_ID2000,}
+\DoxyCodeLine{00499\ \ \ \ \ \ \ \ \ \&brakePressure1Signal\_ID2000,}
+\DoxyCodeLine{00500\ \ \ \ \ \ \ \ \ \&brakePressure2Signal\_ID2000\ }
+\DoxyCodeLine{00501\ \ \ \ \ \ \ \ \ \}\ \},}
+\DoxyCodeLine{00502\ \ \ \ \ etl::pair\{VCU\_PDM\_FRONT,\ etl::vector<CAN\_Signal*,\ 16>\{\ }
+\DoxyCodeLine{00503\ \ \ \ \ \ \ \ \ \&HSD1\_ID2001,}
+\DoxyCodeLine{00504\ \ \ \ \ \ \ \ \ \&HSD2\_ID2001,}
+\DoxyCodeLine{00505\ \ \ \ \ \ \ \ \ \&HSD3\_ID2001,}
+\DoxyCodeLine{00506\ \ \ \ \ \ \ \ \ \&HSD4\_ID2001,}
+\DoxyCodeLine{00507\ \ \ \ \ \ \ \ \ \&HSD5\_ID2001,}
+\DoxyCodeLine{00508\ \ \ \ \ \ \ \ \ \&HSD6\_ID2001,}
+\DoxyCodeLine{00509\ \ \ \ \ \ \ \ \ \&HSD7\_ID2001,}
+\DoxyCodeLine{00510\ \ \ \ \ \ \ \ \ \&HSD8\_ID2001\ }
+\DoxyCodeLine{00511\ \ \ \ \ \ \ \ \ \}\ \},}
+\DoxyCodeLine{00512\ \ \ \ \ etl::pair\{VCU\_STATE\_INFO,\ etl::vector<CAN\_Signal*,\ 16>\{\ }
+\DoxyCodeLine{00513\ \ \ \ \ \ \ \ \ \&RTD\_Button\_ID2002,}
+\DoxyCodeLine{00514\ \ \ \ \ \ \ \ \ \&State\_ID2002,}
+\DoxyCodeLine{00515\ \ \ \ \ \ \ \ \ \&Throttle\_ID2002,}
+\DoxyCodeLine{00516\ \ \ \ \ \ \ \ \ \&Brake\_Percent\_ID2002\ }
+\DoxyCodeLine{00517\ \ \ \ \ \ \ \ \ \}\ \},}
+\DoxyCodeLine{00518\ \ \ \ \ etl::pair\{VCU\_PRECHARGE,\ etl::vector<CAN\_Signal*,\ 16>\{\ }
+\DoxyCodeLine{00519\ \ \ \ \ \ \ \ \ \&Precharge\_Enable\_ID2003,}
+\DoxyCodeLine{00520\ \ \ \ \ \ \ \ \ \&Precharge\_OK\_ID2003\ }
+\DoxyCodeLine{00521\ \ \ \ \ \ \ \ \ \}\ \},}
+\DoxyCodeLine{00522\ \ \ \ \ etl::pair\{VCU\_PDM\_REAR,\ etl::vector<CAN\_Signal*,\ 16>\{\ }
+\DoxyCodeLine{00523\ \ \ \ \ \ \ \ \ \&HSD1\_ID2004,}
+\DoxyCodeLine{00524\ \ \ \ \ \ \ \ \ \&HSD2\_ID2004,}
+\DoxyCodeLine{00525\ \ \ \ \ \ \ \ \ \&HSD3\_ID2004,}
+\DoxyCodeLine{00526\ \ \ \ \ \ \ \ \ \&HSD4\_ID2004,}
+\DoxyCodeLine{00527\ \ \ \ \ \ \ \ \ \&HSD5\_ID2004,}
+\DoxyCodeLine{00528\ \ \ \ \ \ \ \ \ \&HSD6\_ID2004,}
+\DoxyCodeLine{00529\ \ \ \ \ \ \ \ \ \&HSD7\_ID2004,}
+\DoxyCodeLine{00530\ \ \ \ \ \ \ \ \ \&HSD8\_ID2004\ }
+\DoxyCodeLine{00531\ \ \ \ \ \ \ \ \ \}\ \},}
+\DoxyCodeLine{00532\ \ \ \ \ etl::pair\{M177\_TORQUE\_CAPABILITY,\ etl::vector<CAN\_Signal*,\ 16>\{\ }
+\DoxyCodeLine{00533\ \ \ \ \ \ \ \ \ \&INV\_Torque\_Capability\_ID177\ }
+\DoxyCodeLine{00534\ \ \ \ \ \ \ \ \ \}\ \},}
+\DoxyCodeLine{00535\ \ \ \ \ etl::pair\{PACKSTATUS,\ etl::vector<CAN\_Signal*,\ 16>\{\ }
+\DoxyCodeLine{00536\ \ \ \ \ \ \ \ \ \&PackCurrent\_ID1056,}
+\DoxyCodeLine{00537\ \ \ \ \ \ \ \ \ \&IMDRelay\_ID1056,}
+\DoxyCodeLine{00538\ \ \ \ \ \ \ \ \ \&AMSRelay\_ID1056,}
+\DoxyCodeLine{00539\ \ \ \ \ \ \ \ \ \&BSPDRelay\_ID1056,}
+\DoxyCodeLine{00540\ \ \ \ \ \ \ \ \ \&LatchRelay\_ID1056,}
+\DoxyCodeLine{00541\ \ \ \ \ \ \ \ \ \&Safetyloop\_return\_ID1056,}
+\DoxyCodeLine{00542\ \ \ \ \ \ \ \ \ \&HV\_Active\_ID1056,}
+\DoxyCodeLine{00543\ \ \ \ \ \ \ \ \ \&SOC\_ID1056,}
+\DoxyCodeLine{00544\ \ \ \ \ \ \ \ \ \&PackStatus\_ID1056,}
+\DoxyCodeLine{00545\ \ \ \ \ \ \ \ \ \&Fault\_ID1056\ }
+\DoxyCodeLine{00546\ \ \ \ \ \ \ \ \ \}\ \},}
+\DoxyCodeLine{00547\ \ \ \ \ etl::pair\{ELCON\_LIMITS,\ etl::vector<CAN\_Signal*,\ 16>\{\ }
+\DoxyCodeLine{00548\ \ \ \ \ \ \ \ \ \&Max\_charge\_voltage\_ID403105268,}
+\DoxyCodeLine{00549\ \ \ \ \ \ \ \ \ \&Max\_charge\_current\_ID403105268,}
+\DoxyCodeLine{00550\ \ \ \ \ \ \ \ \ \&Control\_ID403105268\ }
+\DoxyCodeLine{00551\ \ \ \ \ \ \ \ \ \}\ \},}
+\DoxyCodeLine{00552\ \ \ \ \ etl::pair\{VCU\_FRONT\_SENSORS\_1,\ etl::vector<CAN\_Signal*,\ 16>\{\ }
+\DoxyCodeLine{00553\ \ \ \ \ \ \ \ \ \&A1\_ID2014,}
+\DoxyCodeLine{00554\ \ \ \ \ \ \ \ \ \&A2\_ID2014,}
+\DoxyCodeLine{00555\ \ \ \ \ \ \ \ \ \&A3\_ID2014,}
+\DoxyCodeLine{00556\ \ \ \ \ \ \ \ \ \&A4\_ID2014\ }
+\DoxyCodeLine{00557\ \ \ \ \ \ \ \ \ \}\ \},}
+\DoxyCodeLine{00558\ \ \ \ \ etl::pair\{VCU\_FRONT\_SENSORS\_2,\ etl::vector<CAN\_Signal*,\ 16>\{\ }
+\DoxyCodeLine{00559\ \ \ \ \ \ \ \ \ \&A5\_ID2015,}
+\DoxyCodeLine{00560\ \ \ \ \ \ \ \ \ \&A6\_ID2015,}
+\DoxyCodeLine{00561\ \ \ \ \ \ \ \ \ \&A7\_ID2015,}
+\DoxyCodeLine{00562\ \ \ \ \ \ \ \ \ \&A8\_ID2015\ }
+\DoxyCodeLine{00563\ \ \ \ \ \ \ \ \ \}\ \},}
+\DoxyCodeLine{00564\ \ \ \ \ etl::pair\{VCU\_FRONT\_SENSORS\_3,\ etl::vector<CAN\_Signal*,\ 16>\{\ }
+\DoxyCodeLine{00565\ \ \ \ \ \ \ \ \ \&A9\_ID2016,}
+\DoxyCodeLine{00566\ \ \ \ \ \ \ \ \ \&A10\_ID2016,}
+\DoxyCodeLine{00567\ \ \ \ \ \ \ \ \ \&A11\_ID2016,}
+\DoxyCodeLine{00568\ \ \ \ \ \ \ \ \ \&A12\_ID2016\ }
+\DoxyCodeLine{00569\ \ \ \ \ \ \ \ \ \}\ \},}
+\DoxyCodeLine{00570\ \ \ \ \ etl::pair\{VCU\_FRONT\_SENSORS\_4,\ etl::vector<CAN\_Signal*,\ 16>\{\ }
+\DoxyCodeLine{00571\ \ \ \ \ \ \ \ \ \&A13\_ID2017,}
+\DoxyCodeLine{00572\ \ \ \ \ \ \ \ \ \&A14\_ID2017,}
+\DoxyCodeLine{00573\ \ \ \ \ \ \ \ \ \&A15\_ID2017,}
+\DoxyCodeLine{00574\ \ \ \ \ \ \ \ \ \&A16\_ID2017\ }
+\DoxyCodeLine{00575\ \ \ \ \ \ \ \ \ \}\ \},}
+\DoxyCodeLine{00576\ \ \ \ \ etl::pair\{VCU\_REAR\_SENSORS\_1,\ etl::vector<CAN\_Signal*,\ 16>\{\ }
+\DoxyCodeLine{00577\ \ \ \ \ \ \ \ \ \&A1\_ID2018,}
+\DoxyCodeLine{00578\ \ \ \ \ \ \ \ \ \&A2\_ID2018,}
+\DoxyCodeLine{00579\ \ \ \ \ \ \ \ \ \&A3\_ID2018,}
+\DoxyCodeLine{00580\ \ \ \ \ \ \ \ \ \&A4\_ID2018\ }
+\DoxyCodeLine{00581\ \ \ \ \ \ \ \ \ \}\ \},}
+\DoxyCodeLine{00582\ \ \ \ \ etl::pair\{VCU\_REAR\_SENSORS\_2,\ etl::vector<CAN\_Signal*,\ 16>\{\ }
+\DoxyCodeLine{00583\ \ \ \ \ \ \ \ \ \&A5\_ID2019,}
+\DoxyCodeLine{00584\ \ \ \ \ \ \ \ \ \&A6\_ID2019,}
+\DoxyCodeLine{00585\ \ \ \ \ \ \ \ \ \&A7\_ID2019,}
+\DoxyCodeLine{00586\ \ \ \ \ \ \ \ \ \&A8\_ID2019\ }
+\DoxyCodeLine{00587\ \ \ \ \ \ \ \ \ \}\ \},}
+\DoxyCodeLine{00588\ \ \ \ \ etl::pair\{VCU\_REAR\_SENSORS\_3,\ etl::vector<CAN\_Signal*,\ 16>\{\ }
+\DoxyCodeLine{00589\ \ \ \ \ \ \ \ \ \&A9\_ID2020,}
+\DoxyCodeLine{00590\ \ \ \ \ \ \ \ \ \&A10\_ID2020,}
+\DoxyCodeLine{00591\ \ \ \ \ \ \ \ \ \&A11\_ID2020,}
+\DoxyCodeLine{00592\ \ \ \ \ \ \ \ \ \&A12\_ID2020\ }
+\DoxyCodeLine{00593\ \ \ \ \ \ \ \ \ \}\ \},}
+\DoxyCodeLine{00594\ \ \ \ \ etl::pair\{VCU\_REAR\_SENSORS\_4,\ etl::vector<CAN\_Signal*,\ 16>\{\ }
+\DoxyCodeLine{00595\ \ \ \ \ \ \ \ \ \&A13\_ID2021,}
+\DoxyCodeLine{00596\ \ \ \ \ \ \ \ \ \&A14\_ID2021,}
+\DoxyCodeLine{00597\ \ \ \ \ \ \ \ \ \&A15\_ID2021,}
+\DoxyCodeLine{00598\ \ \ \ \ \ \ \ \ \&A16\_ID2021\ }
+\DoxyCodeLine{00599\ \ \ \ \ \ \ \ \ \}\ \},}
+\DoxyCodeLine{00600\ \ \ \ \ etl::pair\{BMS\_MIN\_VCELL,\ etl::vector<CAN\_Signal*,\ 16>\{\ }
+\DoxyCodeLine{00601\ \ \ \ \ \ \ \ \ \&Absolute\_min\_cell\_voltage\_ID999\ }
+\DoxyCodeLine{00602\ \ \ \ \ \ \ \ \ \}\ \},}
+\DoxyCodeLine{00603\ \ \ \ \ etl::pair\{VCU\_APPS\_CALIBRATION,\ etl::vector<CAN\_Signal*,\ 16>\{\ }
+\DoxyCodeLine{00604\ \ \ \ \ \ \ \ \ \&apps1\_min\_ID2022,}
+\DoxyCodeLine{00605\ \ \ \ \ \ \ \ \ \&apps1\_max\_ID2022,}
+\DoxyCodeLine{00606\ \ \ \ \ \ \ \ \ \&apps2\_min\_ID2022,}
+\DoxyCodeLine{00607\ \ \ \ \ \ \ \ \ \&apps2\_max\_ID2022\ }
+\DoxyCodeLine{00608\ \ \ \ \ \ \ \ \ \}\ \},}
+\DoxyCodeLine{00609\ \ \ \ \ etl::pair\{VCU\_APPS\_AUTOCALIBRATE,\ etl::vector<CAN\_Signal*,\ 16>\{\ }
+\DoxyCodeLine{00610\ \ \ \ \ \ \ \ \ \&set\_min\_ID2023,}
+\DoxyCodeLine{00611\ \ \ \ \ \ \ \ \ \&set\_max\_ID2023\ }
+\DoxyCodeLine{00612\ \ \ \ \ \ \ \ \ \}\ \},}
+\DoxyCodeLine{00613\ \ \ \ \ etl::pair\{VCU\_FRONT\_IMU\_1,\ etl::vector<CAN\_Signal*,\ 16>\{\ }
+\DoxyCodeLine{00614\ \ \ \ \ \ \ \ \ \&Accel\_X\_ID2024,}
+\DoxyCodeLine{00615\ \ \ \ \ \ \ \ \ \&Accel\_Y\_ID2024,}
+\DoxyCodeLine{00616\ \ \ \ \ \ \ \ \ \&Accel\_Z\_ID2024\ }
+\DoxyCodeLine{00617\ \ \ \ \ \ \ \ \ \}\ \},}
+\DoxyCodeLine{00618\ \ \ \ \ etl::pair\{VCU\_FRONT\_IMU\_2,\ etl::vector<CAN\_Signal*,\ 16>\{\ }
+\DoxyCodeLine{00619\ \ \ \ \ \ \ \ \ \&Gyro\_X\_ID2025,}
+\DoxyCodeLine{00620\ \ \ \ \ \ \ \ \ \&Gyro\_Y\_ID2025,}
+\DoxyCodeLine{00621\ \ \ \ \ \ \ \ \ \&Gyro\_Z\_ID2025\ }
+\DoxyCodeLine{00622\ \ \ \ \ \ \ \ \ \}\ \},}
+\DoxyCodeLine{00623\ \ \ \ \ etl::pair\{VCU\_WHEELSPEED\_INFO,\ etl::vector<CAN\_Signal*,\ 16>\{\ }
+\DoxyCodeLine{00624\ \ \ \ \ \ \ \ \ \&Left\_RPM\_ID2013,}
+\DoxyCodeLine{00625\ \ \ \ \ \ \ \ \ \&Right\_RPM\_ID2013\ }
+\DoxyCodeLine{00626\ \ \ \ \ \ \ \ \ \}\ \},}
+\DoxyCodeLine{00627\ \ \ \ \ etl::pair\{VCU\_REAR\_IMU\_1,\ etl::vector<CAN\_Signal*,\ 16>\{\ }
+\DoxyCodeLine{00628\ \ \ \ \ \ \ \ \ \&Accel\_X\_ID2026,}
+\DoxyCodeLine{00629\ \ \ \ \ \ \ \ \ \&Accel\_Y\_ID2026,}
+\DoxyCodeLine{00630\ \ \ \ \ \ \ \ \ \&Accel\_Z\_ID2026\ }
+\DoxyCodeLine{00631\ \ \ \ \ \ \ \ \ \}\ \},}
+\DoxyCodeLine{00632\ \ \ \ \ etl::pair\{VCU\_REAR\_IMU\_2,\ etl::vector<CAN\_Signal*,\ 16>\{\ }
+\DoxyCodeLine{00633\ \ \ \ \ \ \ \ \ \&Gyro\_X\_ID2027,}
+\DoxyCodeLine{00634\ \ \ \ \ \ \ \ \ \&Gyro\_Y\_ID2027,}
+\DoxyCodeLine{00635\ \ \ \ \ \ \ \ \ \&Gyro\_Z\_ID2027\ }
+\DoxyCodeLine{00636\ \ \ \ \ \ \ \ \ \}\ \},}
+\DoxyCodeLine{00637\ \ \ \ \ etl::pair\{VCU\_FRONT\_WHEEL\_LEFT,\ etl::vector<CAN\_Signal*,\ 16>\{\ }
+\DoxyCodeLine{00638\ \ \ \ \ \ \ \ \ \&Front\_Left\_Ticker\_ID2028\ }
+\DoxyCodeLine{00639\ \ \ \ \ \ \ \ \ \}\ \},}
+\DoxyCodeLine{00640\ \ \ \ \ etl::pair\{VCU\_FRONT\_WHEEL\_RIGHT,\ etl::vector<CAN\_Signal*,\ 16>\{\ }
+\DoxyCodeLine{00641\ \ \ \ \ \ \ \ \ \&Front\_Right\_Ticker\_ID2029\ }
+\DoxyCodeLine{00642\ \ \ \ \ \ \ \ \ \}\ \},}
+\DoxyCodeLine{00643\ \ \ \ \ etl::pair\{PACKINFO,\ etl::vector<CAN\_Signal*,\ 16>\{\ }
+\DoxyCodeLine{00644\ \ \ \ \ \ \ \ \ \&MinTemp\_ID1057,}
+\DoxyCodeLine{00645\ \ \ \ \ \ \ \ \ \&MaxTemp\_ID1057,}
+\DoxyCodeLine{00646\ \ \ \ \ \ \ \ \ \&MinCellVoltage\_ID1057,}
+\DoxyCodeLine{00647\ \ \ \ \ \ \ \ \ \&MaxCellVoltage\_ID1057\ }
+\DoxyCodeLine{00648\ \ \ \ \ \ \ \ \ \}\ \}}
+\DoxyCodeLine{00649\ \};}
+\DoxyCodeLine{00650\ \textcolor{keyword}{inline}\ etl::set\ CAN\_Rx\_IDs\ =\ \{PACKINFO,\ 2023,\ 2022,\ 173,\ 172,\ 194,\ 171,\ 170,\ 169,\ 168,\ 167,\ 166,\ 165,\ 164,\ 163,\ 162,\ 161,\ 160,\ 174,\ 175,\ 514,\ 176,\ 1712,\ 1713,\ 1714,\ 406451072,\ 406451073,\ 406451074,\ 406451075,\ 406451076,\ 177,\ 1000,\ 1006,\ 1007,\ 1008,\ 1009,\ 1010,\ 1011,\ 1012,\ 1013,\ 1014,\ 1015,\ 1016,\ 1017,\ 1018,\ 1019,\ 1020,\ 1021,\ 1022,\ 1023,\ 1024,\ 1025,\ 1026,\ 1027,\ 1028,\ 1029,\ 1030,\ 1031,\ 1032,\ 1033,\ 1034,\ 1035,\ 1036,\ 1037,\ 1038,\ 1039,\ 1040,\ 1041,\ 1042,\ 1043,\ 1044,\ 1045,\ 1046,\ 1047,\ 1048,\ 1049,\ 1050,\ 1051,\ 1052,\ 1053,\ 1054,\ 1055,\ 1056,\ 403105268,\ 419385573,\ 1001,\ 1002,\ 1003,\ 1004,\ 1005,\ 2012\};}
+\DoxyCodeLine{00651\ }
+\DoxyCodeLine{00652\ \textcolor{keyword}{inline}\ etl::set\ CAN\_Tx\_10ms\_IDs\ =\ \{M192\_COMMAND\_MESSAGE\};}
+\DoxyCodeLine{00653\ \textcolor{keyword}{inline}\ etl::set\ CAN\_Tx\_100ms\_IDs\ =\ \{VCU\_WHEELSPEED\_INFO,\ VCU\_FRONT\_IMU\_1,\ VCU\_FRONT\_IMU\_2,\ BMS\_CURRENT\_LIMIT,\ VCU\_STATE\_INFO,\ VCU\_FRONT\_SENSORS\_1,\ VCU\_FRONT\_SENSORS\_2,\ VCU\_FRONT\_SENSORS\_3,\ VCU\_FRONT\_SENSORS\_4,\ VCU\_PDM\_REAR\_CMD,\ VCU\_FRONT\_WHEEL\_LEFT,\ VCU\_FRONT\_WHEEL\_RIGHT\};}
+\DoxyCodeLine{00654\ \textcolor{keyword}{inline}\ etl::set\ CAN\_Tx\_1000ms\_IDs\ =\ \{192\};}
+\DoxyCodeLine{00655\ ;}
+\DoxyCodeLine{00656\ \textcolor{comment}{//\ they\ don't\ like\ to\ be\ empty}}
+\DoxyCodeLine{00657\ }
+\DoxyCodeLine{00658\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

@@ -1,3 +1,18 @@
+/**
+ * @file main.cpp
+ * @author Yamaan Bakir
+*  @brief Main entry point for the ECU firmware.
+ * @details This file contains the FreeRTOS app_main() function which initializes the CAN interface,
+ * selects either the front or rear ECU mode based on a GPIO pin, and continuously monitors the CAN
+ * bus state for errors. It sets up the required tasks (StateMachine or RearECU) accordingly and
+ * handles TWAI bus recovery and logging.
+ * @version 0.1
+ * @date 2025-07-08
+ * 
+ * @copyright Copyright (c) 2025
+ * 
+ */
+
 #include <stdio.h>
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
@@ -22,6 +37,9 @@
 
 static const char* TAG = "Main"; //Used for ESP_LOGx commands. See ESP-IDF Documentation
 CAN can0{GPIO_NUM_16, GPIO_NUM_15, TWAI_MODE_NORMAL};
+
+
+
 const char* get_twai_error_state_text(twai_status_info_t* status)
 {
     if (status->state == TWAI_STATE_STOPPED) return "Stopped";

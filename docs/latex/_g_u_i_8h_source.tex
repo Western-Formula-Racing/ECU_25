@@ -1,0 +1,162 @@
+\doxysection{GUI.\+h}
+\hypertarget{_g_u_i_8h_source}{}\label{_g_u_i_8h_source}\index{ECU\_25/components/GUI/GUI.h@{ECU\_25/components/GUI/GUI.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ \_GUI\_}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ \_GUI\_}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <esp\_log.h>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <esp\_http\_server.h>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <esp\_wifi.h>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <nvs\_flash.h>}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <esp\_spiffs.h>}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <stdio.h>}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <cstring>}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ <unordered\_map>}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ <Recievable.h>}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ <FloatRecievable.h>}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ <IntRecievable.h>}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ <StringRecievable.h>}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ <Option.h>}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ <ButtonRecievable.h>}}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{\#define\ WIFI\_SSID\ "{}WFR-\/ECU-\/AP"{}}}
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\#define\ WIFI\_PASS\ "{}123456789"{}\ }}
+\DoxyCodeLine{00021\ \textcolor{preprocessor}{\#define\ SERVER\_PORT\ 80}}
+\DoxyCodeLine{00022\ \textcolor{preprocessor}{\#define\ ENTRY\_BUFFER\_SIZE\ 200}}
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\#define\ BUTTON\_BUFFER\_SIZE\ 50}}
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#define\ HTML\_SIZE\ 4953}}
+\DoxyCodeLine{00025\ \textcolor{preprocessor}{\#define\ JS\_SIZE\ 5889}}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \textcolor{keyword}{class\ }GUI}
+\DoxyCodeLine{00028\ \{}
+\DoxyCodeLine{00029\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{comment}{//\ Singleton\ device\ class\ structure}}
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keyword}{static}\ GUI\ *instancePtr;}
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keyword}{static}\ SemaphoreHandle\_t\ mutex;}
+\DoxyCodeLine{00033\ \ \ \ \ GUI();}
+\DoxyCodeLine{00034\ \ \ \ \ }
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{comment}{//\ Destructor}}
+\DoxyCodeLine{00036\ \ \ \ \ \string~GUI();}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{comment}{//\ Handles}}
+\DoxyCodeLine{00039\ \ \ \ \ httpd\_handle\_t\ server\ =\ NULL;}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{comment}{//\ WiFi}}
+\DoxyCodeLine{00042\ \ \ \ \ esp\_err\_t\ start\_soft\_ap(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00043\ \ \ \ \ esp\_err\_t\ stop\_soft\_ap(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{comment}{//\ Webserver}}
+\DoxyCodeLine{00046\ \ \ \ \ esp\_err\_t\ start\_webserver(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00047\ \ \ \ \ esp\_err\_t\ stop\_webserver(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ \ \ \ \ \textcolor{comment}{//\ Handlers}}
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keyword}{static}\ esp\_err\_t\ handle\_root(httpd\_req\_t\ *req);}
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keyword}{static}\ esp\_err\_t\ handle\_js(httpd\_req\_t\ *req);}
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keyword}{static}\ esp\_err\_t\ handle\_update(httpd\_req\_t\ *req);}
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keyword}{static}\ esp\_err\_t\ handle\_recievable(httpd\_req\_t\ *req);}
+\DoxyCodeLine{00054\ \ \ \ \ \textcolor{keyword}{static}\ esp\_err\_t\ handle\_fetch\_recievables(httpd\_req\_t\ *req);}
+\DoxyCodeLine{00055\ \ \ \ \ \textcolor{keyword}{static}\ esp\_err\_t\ handle\_button\_command(httpd\_req\_t\ *req);}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00057\ \ \ \ \ \textcolor{comment}{//\ Serialize\ sendables\ to\ json}}
+\DoxyCodeLine{00058\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{char}*\ serialize\_sndb\_to\_json(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00060\ \ \ \ \ \textcolor{comment}{//\ Serialize\ sendables\ to\ json}}
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{char}*\ serialize\_rcvb\_to\_json(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00062\ }
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{comment}{//\ For\ maps}}
+\DoxyCodeLine{00064\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_g_u_i_1_1_c_string_hash}{CStringHash}}}
+\DoxyCodeLine{00065\ \ \ \ \ \{}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ operator()(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ s)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00067\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::hash<std::string>()(std::string(s));}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00070\ \ \ \ \ \};}
+\DoxyCodeLine{00071\ \ \ \ \ }
+\DoxyCodeLine{00072\ }
+\DoxyCodeLine{00073\ \ \ \ \ \textcolor{comment}{//\ Comparison\ for\ char*\ for\ maps}}
+\DoxyCodeLine{00074\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_g_u_i_1_1_c_string_equal}{CStringEqual}}}
+\DoxyCodeLine{00075\ \ \ \ \ \{}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ operator()(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ s1,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ s2)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00077\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ strcmp(s1,\ s2)\ ==\ 0;}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00080\ \ \ \ \ \};}
+\DoxyCodeLine{00081\ \ \ \ \ }
+\DoxyCodeLine{00082\ \ \ \ \ \textcolor{comment}{//\ Maps}}
+\DoxyCodeLine{00083\ \ \ \ \ \textcolor{keyword}{static}\ std::unordered\_map<\textcolor{keywordtype}{char}*,\ int(*)(),\ \mbox{\hyperlink{struct_g_u_i_1_1_c_string_hash}{CStringHash}},\ \mbox{\hyperlink{struct_g_u_i_1_1_c_string_equal}{CStringEqual}}>\ int\_callables;}
+\DoxyCodeLine{00084\ \ \ \ \ \textcolor{keyword}{static}\ std::unordered\_map<\textcolor{keywordtype}{char}*,\ float(*)(),\ \mbox{\hyperlink{struct_g_u_i_1_1_c_string_hash}{CStringHash}},\ \mbox{\hyperlink{struct_g_u_i_1_1_c_string_equal}{CStringEqual}}>\ float\_callables;}
+\DoxyCodeLine{00085\ \ \ \ \ \textcolor{keyword}{static}\ std::unordered\_map<\textcolor{keywordtype}{char}*,\ \textcolor{keywordtype}{char}*(*)(),\ \mbox{\hyperlink{struct_g_u_i_1_1_c_string_hash}{CStringHash}},\ \mbox{\hyperlink{struct_g_u_i_1_1_c_string_equal}{CStringEqual}}>\ string\_callables;}
+\DoxyCodeLine{00086\ \ \ \ \ \textcolor{keyword}{static}\ std::unordered\_map<\textcolor{keywordtype}{char}*,\ bool(*)(),\ \mbox{\hyperlink{struct_g_u_i_1_1_c_string_hash}{CStringHash}},\ \mbox{\hyperlink{struct_g_u_i_1_1_c_string_equal}{CStringEqual}}>\ bool\_callables;}
+\DoxyCodeLine{00087\ }
+\DoxyCodeLine{00088\ \ \ \ \ \textcolor{keyword}{static}\ std::unordered\_map<char*,\ Recievable<int>*,\ \mbox{\hyperlink{struct_g_u_i_1_1_c_string_hash}{CStringHash}},\ \mbox{\hyperlink{struct_g_u_i_1_1_c_string_equal}{CStringEqual}}>\ int\_recievables;}
+\DoxyCodeLine{00089\ \ \ \ \ \textcolor{keyword}{static}\ std::unordered\_map<char*,\ Recievable<float>*,\ \mbox{\hyperlink{struct_g_u_i_1_1_c_string_hash}{CStringHash}},\ \mbox{\hyperlink{struct_g_u_i_1_1_c_string_equal}{CStringEqual}}>\ float\_recievables;}
+\DoxyCodeLine{00090\ \ \ \ \ \textcolor{keyword}{static}\ std::unordered\_map<char*,\ Recievable<char*>*,\ \mbox{\hyperlink{struct_g_u_i_1_1_c_string_hash}{CStringHash}},\ \mbox{\hyperlink{struct_g_u_i_1_1_c_string_equal}{CStringEqual}}>\ string\_recievables;}
+\DoxyCodeLine{00091\ \ \ \ \ \textcolor{keyword}{static}\ std::unordered\_map<char*,\ ButtonRecievable*,\ CStringHash,\ CStringEqual>\ button\_recievables;}
+\DoxyCodeLine{00092\ }
+\DoxyCodeLine{00093\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00094\ \ \ \ \ \textcolor{comment}{//\ Register\ int\ sendables}}
+\DoxyCodeLine{00095\ \ \ \ \ \textcolor{keywordtype}{void}\ register\_int\_sendable(\textcolor{keywordtype}{char}*\ key,\ \textcolor{keywordtype}{int}(*)());}
+\DoxyCodeLine{00096\ }
+\DoxyCodeLine{00097\ \ \ \ \ \textcolor{comment}{//\ Register\ float\ sendables}}
+\DoxyCodeLine{00098\ \ \ \ \ \textcolor{keywordtype}{void}\ register\_float\_sendable(\textcolor{keywordtype}{char}*\ key,\ \textcolor{keywordtype}{float}(*)());}
+\DoxyCodeLine{00099\ }
+\DoxyCodeLine{00100\ \ \ \ \ \textcolor{comment}{//\ Register\ string\ sendables}}
+\DoxyCodeLine{00101\ \ \ \ \ \textcolor{keywordtype}{void}\ register\_string\_sendable(\textcolor{keywordtype}{char}*\ key,\ \textcolor{keywordtype}{char}*(*)());}
+\DoxyCodeLine{00102\ }
+\DoxyCodeLine{00103\ \ \ \ \ \textcolor{comment}{//\ Register\ bool\ sendables}}
+\DoxyCodeLine{00104\ \ \ \ \ \textcolor{keywordtype}{void}\ register\_bool\_sendable(\textcolor{keywordtype}{char}*\ key,\ \textcolor{keywordtype}{bool}(*)());}
+\DoxyCodeLine{00105\ }
+\DoxyCodeLine{00106\ \ \ \ \ \textcolor{comment}{//\ Register\ int\ recievable}}
+\DoxyCodeLine{00107\ \ \ \ \ \textcolor{keywordtype}{void}\ register\_int\_recievable(\textcolor{keywordtype}{char}*\ key,\ \mbox{\hyperlink{class_recievable}{Recievable<int>}}*\ int\_recievable);}
+\DoxyCodeLine{00108\ }
+\DoxyCodeLine{00109\ \ \ \ \ \textcolor{comment}{//\ Register\ float\ recievable}}
+\DoxyCodeLine{00110\ \ \ \ \ \textcolor{keywordtype}{void}\ register\_float\_recievable(\textcolor{keywordtype}{char}*\ key,\ \mbox{\hyperlink{class_recievable}{Recievable<float>}}*\ float\_recievable);}
+\DoxyCodeLine{00111\ }
+\DoxyCodeLine{00112\ \ \ \ \ \textcolor{comment}{//\ Register\ string\ recievable}}
+\DoxyCodeLine{00113\ \ \ \ \ \textcolor{keywordtype}{void}\ register\_string\_recievable(\textcolor{keywordtype}{char}*\ key,\ \mbox{\hyperlink{class_recievable}{Recievable<char*>}}*\ string\_recievable);}
+\DoxyCodeLine{00114\ }
+\DoxyCodeLine{00115\ \ \ \ \ \textcolor{comment}{//\ Register\ button\ recievable}}
+\DoxyCodeLine{00116\ \ \ \ \ \textcolor{keywordtype}{void}\ register\_button\_recievable(\textcolor{keywordtype}{char}*\ key,\ \mbox{\hyperlink{class_button_recievable}{ButtonRecievable}}*\ button\_recievable);}
+\DoxyCodeLine{00117\ }
+\DoxyCodeLine{00118\ \ \ \ \ \textcolor{comment}{//\ Get\ int\ recievable}}
+\DoxyCodeLine{00119\ \ \ \ \ \mbox{\hyperlink{class_recievable}{Recievable<int>}}*\ get\_int\_recievable(\textcolor{keywordtype}{char}*\ key);}
+\DoxyCodeLine{00120\ }
+\DoxyCodeLine{00121\ \ \ \ \ \textcolor{comment}{//\ Get\ float\ recievable}}
+\DoxyCodeLine{00122\ \ \ \ \ \mbox{\hyperlink{class_recievable}{Recievable<float>}}*\ get\_float\_recievable(\textcolor{keywordtype}{char}*\ key);}
+\DoxyCodeLine{00123\ }
+\DoxyCodeLine{00124\ \ \ \ \ \textcolor{comment}{//\ Get\ string\ recievable}}
+\DoxyCodeLine{00125\ \ \ \ \ \mbox{\hyperlink{class_recievable}{Recievable<char*>}}*\ get\_string\_recievable(\textcolor{keywordtype}{char}*\ key);}
+\DoxyCodeLine{00126\ }
+\DoxyCodeLine{00127\ \ \ \ \ \textcolor{comment}{//\ Update\ int\ sendable}}
+\DoxyCodeLine{00128\ \ \ \ \ \textcolor{keywordtype}{void}\ update\_int\_sendable(\textcolor{keywordtype}{char}*\ key,\ \textcolor{keywordtype}{int}(*callable)());}
+\DoxyCodeLine{00129\ }
+\DoxyCodeLine{00130\ \ \ \ \ \textcolor{comment}{//\ Update\ float\ sendable}}
+\DoxyCodeLine{00131\ \ \ \ \ \textcolor{keywordtype}{void}\ update\_float\_sendable(\textcolor{keywordtype}{char}*\ key,\ \textcolor{keywordtype}{float}(*callable)());}
+\DoxyCodeLine{00132\ }
+\DoxyCodeLine{00133\ \ \ \ \ \textcolor{comment}{//\ Update\ string\ sendable}}
+\DoxyCodeLine{00134\ \ \ \ \ \textcolor{keywordtype}{void}\ update\_string\_sendable(\textcolor{keywordtype}{char}*\ key,\ \textcolor{keywordtype}{char}*(*callable)());}
+\DoxyCodeLine{00135\ }
+\DoxyCodeLine{00136\ \ \ \ \ \textcolor{comment}{//\ Update\ bool\ sendable}}
+\DoxyCodeLine{00137\ \ \ \ \ \textcolor{keywordtype}{void}\ update\_bool\_sendable(\textcolor{keywordtype}{char}*\ key,\ \textcolor{keywordtype}{bool}(*callable)());}
+\DoxyCodeLine{00138\ }
+\DoxyCodeLine{00139\ \ \ \ \ \textcolor{comment}{//\ Removes\ sendable}}
+\DoxyCodeLine{00140\ \ \ \ \ \textcolor{keywordtype}{void}\ remove\_sendable(\textcolor{keywordtype}{char}*\ key);}
+\DoxyCodeLine{00141\ }
+\DoxyCodeLine{00142\ \ \ \ \ \textcolor{comment}{//\ Checks\ sendable\ is\ registered\ from\ key}}
+\DoxyCodeLine{00143\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ is\_sendable\_registered(\textcolor{keywordtype}{char}*\ key);}
+\DoxyCodeLine{00144\ }
+\DoxyCodeLine{00145\ \ \ \ \ \textcolor{comment}{//\ Checks\ if\ recievable\ exists}}
+\DoxyCodeLine{00146\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ is\_recievable\_registered(\textcolor{keywordtype}{char}*\ key);}
+\DoxyCodeLine{00147\ }
+\DoxyCodeLine{00148\ \ \ \ \ \textcolor{comment}{//\ Deleting\ the\ copy\ constructor\ and\ copy\ reference\ constructor\ to\ prevent\ copies}}
+\DoxyCodeLine{00149\ \ \ \ \ GUI(\textcolor{keyword}{const}\ GUI\ \&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00150\ \ \ \ \ GUI\ \&operator=(\textcolor{keyword}{const}\ GUI\ \&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00151\ \ \ \ \ GUI(GUI\ \&\&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00152\ \ \ \ \ GUI\ \&operator=(GUI\ \&\&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00153\ \ \ \ \ \textcolor{keyword}{static}\ GUI\ *Get();}
+\DoxyCodeLine{00154\ \};}
+\DoxyCodeLine{00155\ }
+\DoxyCodeLine{00156\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

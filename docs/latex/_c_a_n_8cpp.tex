@@ -1,0 +1,55 @@
+\doxysection{ECU\+\_\+25/components/\+CAN/\+CAN.cpp File Reference}
+\hypertarget{_c_a_n_8cpp}{}\label{_c_a_n_8cpp}\index{ECU\_25/components/CAN/CAN.cpp@{ECU\_25/components/CAN/CAN.cpp}}
+
+
+Initalizes the \doxylink{class_c_a_n}{CAN} communication starting the receive/transmit loops, and talks to other devices on the network.  
+
+
+{\ttfamily \#include "{}CAN.\+h"{}}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include "{}esp\+\_\+log.\+h"{}}\newline
+{\ttfamily \#include "{}CAN\+\_\+\+Config.\+hpp"{}}\newline
+{\ttfamily \#include "{}can\+\_\+helpers.\+hpp"{}}\newline
+{\ttfamily \#include "{}Logger.\+h"{}}\newline
+Include dependency graph for CAN.\+cpp\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_c_a_n_8cpp__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{_c_a_n_8cpp_a39295d717d171cbf3ea72c957d29c1ab}{give\+\_\+zero}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{_c_a_n_8cpp_a8c98482f663dc463f54304cc2bcb04a3}\label{_c_a_n_8cpp_a8c98482f663dc463f54304cc2bcb04a3} 
+Task\+Handle\+\_\+t {\bfseries rx\+Task\+Handle} = nullptr
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Initalizes the \doxylink{class_c_a_n}{CAN} communication starting the receive/transmit loops, and talks to other devices on the network. 
+
+
+
+\label{doc-func-members}
+\Hypertarget{_c_a_n_8cpp_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{_c_a_n_8cpp_a39295d717d171cbf3ea72c957d29c1ab}\index{CAN.cpp@{CAN.cpp}!give\_zero@{give\_zero}}
+\index{give\_zero@{give\_zero}!CAN.cpp@{CAN.cpp}}
+\doxysubsubsection{\texorpdfstring{give\_zero()}{give\_zero()}}
+{\footnotesize\ttfamily \label{_c_a_n_8cpp_a39295d717d171cbf3ea72c957d29c1ab} 
+int give\+\_\+zero (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00037\ \{}
+\DoxyCodeLine{00038\ \ \ \ \ printf(\textcolor{stringliteral}{"{}kill\ me\ please\ I\ can't\ keep\ doing\ this\(\backslash\)n"{}});}
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{00040\ \}}
+
+\end{DoxyCode}

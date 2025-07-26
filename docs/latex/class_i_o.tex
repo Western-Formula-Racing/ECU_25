@@ -1,0 +1,410 @@
+\doxysection{IO Class Reference}
+\hypertarget{class_i_o}{}\label{class_i_o}\index{IO@{IO}}
+
+
+Collaboration diagram for IO\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_i_o__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_i_o_a114e98e991ba512c3ef61609363b07b3}\label{class_i_o_a114e98e991ba512c3ef61609363b07b3} 
+{\bfseries IO} (const \mbox{\hyperlink{class_i_o}{IO}} \&)=delete
+\item 
+\Hypertarget{class_i_o_a019e6a95e2757b471b3d43423d9c7838}\label{class_i_o_a019e6a95e2757b471b3d43423d9c7838} 
+\mbox{\hyperlink{class_i_o}{IO}} \& {\bfseries operator=} (const \mbox{\hyperlink{class_i_o}{IO}} \&)=delete
+\item 
+\Hypertarget{class_i_o_a06c0b4478fd4da4cc56f0c8ec72bc152}\label{class_i_o_a06c0b4478fd4da4cc56f0c8ec72bc152} 
+{\bfseries IO} (\mbox{\hyperlink{class_i_o}{IO}} \&\&)=delete
+\item 
+\Hypertarget{class_i_o_a49b043d4d4913024bedd5bf35d35a2c3}\label{class_i_o_a49b043d4d4913024bedd5bf35d35a2c3} 
+\mbox{\hyperlink{class_i_o}{IO}} \& {\bfseries operator=} (\mbox{\hyperlink{class_i_o}{IO}} \&\&)=delete
+\item 
+void \mbox{\hyperlink{class_i_o_a5ba8b2c61c3533d3d98d830789196f2d}{setup\+SPI}} ()
+\item 
+int \mbox{\hyperlink{class_i_o_adc794e3c57257bf6863d19f3679f1388}{analog\+Read}} (ECU\+\_\+\+ANALOG\+\_\+\+PIN pin)
+\item 
+float \mbox{\hyperlink{class_i_o_aac1b73ecc7b7529d3f6ec72db24bd2fd}{analog\+Read\+Voltage}} (ECU\+\_\+\+ANALOG\+\_\+\+PIN pin)
+\item 
+int \mbox{\hyperlink{class_i_o_a7a91685e1802db209f9a2246b4fb5e02}{digital\+Read}} (ECU\+\_\+\+IO\+\_\+\+PIN pin)
+\item 
+\Hypertarget{class_i_o_a7aebe4182f2bda9a3c98f4362cc211c5}\label{class_i_o_a7aebe4182f2bda9a3c98f4362cc211c5} 
+void {\bfseries digital\+Write} (ECU\+\_\+\+IO\+\_\+\+PIN pin)
+\item 
+void \mbox{\hyperlink{class_i_o_ae39d7ac217caff520858e7ca637974ef}{setup\+I2C}} ()
+\item 
+void \mbox{\hyperlink{class_i_o_ae1966d19242953605a67e6923b333f82}{HSDWrite}} (ECU\+\_\+\+HSD\+\_\+\+PIN channel, bool level)
+\item 
+float \mbox{\hyperlink{class_i_o_a3be28d64745f95f3a180aaef2b9ba2c6}{get\+AccelX}} ()
+\item 
+float \mbox{\hyperlink{class_i_o_a33e45dd3f51cb1b2b57ae18d34b75f23}{get\+AccelY}} ()
+\item 
+float \mbox{\hyperlink{class_i_o_a200784efc97348d5bc51cd4b8085776d}{get\+AccelZ}} ()
+\item 
+float \mbox{\hyperlink{class_i_o_ae8503478eb18194f875bc210c28e04cb}{get\+GyroX}} ()
+\item 
+float \mbox{\hyperlink{class_i_o_a80f18455c8b2fd29b100eeb330e6c653}{get\+GyroY}} ()
+\item 
+float \mbox{\hyperlink{class_i_o_abe8b72dc790a9d74233ad5cad3f79b2d}{get\+GyroZ}} ()
+\item 
+float \mbox{\hyperlink{class_i_o_a214c578dfa1a749dd616ca6bc0657278}{get\+Right\+Wheel\+Speed}} ()
+\item 
+float \mbox{\hyperlink{class_i_o_acc92f30ef0ee0723c7401c13c78e1578}{get\+Left\+Wheel\+Speed}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{class_i_o}{IO}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_i_o_af7fdc4474e0b82656ff80e273aba27d5}{Get}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_i_o_ab64d461e4da11677c7fab9804b3a0db0}\label{class_i_o_ab64d461e4da11677c7fab9804b3a0db0} 
+\mbox{\hyperlink{class_d_s3231}{DS3231}} \texorpdfstring{$\ast$}{*} {\bfseries rtc\+\_\+handle}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_i_o_a8b5853124e474f89b586cb0bea38b2f4}\label{class_i_o_a8b5853124e474f89b586cb0bea38b2f4} 
+static \mbox{\hyperlink{class_t_l_a2518}{TLA2518}} \texorpdfstring{$\ast$}{*} {\bfseries adc1\+\_\+handle} = nullptr
+\item 
+\Hypertarget{class_i_o_a238f53986710c3637e3dca8ae52f897a}\label{class_i_o_a238f53986710c3637e3dca8ae52f897a} 
+static \mbox{\hyperlink{class_t_l_a2518}{TLA2518}} \texorpdfstring{$\ast$}{*} {\bfseries adc2\+\_\+handle} = nullptr
+\item 
+\Hypertarget{class_i_o_a045ba0baf5e9d862c3b6e28ac094f640}\label{class_i_o_a045ba0baf5e9d862c3b6e28ac094f640} 
+static volatile uint64\+\_\+t {\bfseries right\+\_\+wheel\+\_\+tick} = 0
+\item 
+\Hypertarget{class_i_o_acdc43e99809579a9b5ae09595317e2a0}\label{class_i_o_acdc43e99809579a9b5ae09595317e2a0} 
+static volatile uint64\+\_\+t {\bfseries left\+\_\+wheel\+\_\+tick} = 0
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_i_o_aa27f52caa5c51ebb40a8c331e0385fd2}\label{class_i_o_aa27f52caa5c51ebb40a8c331e0385fd2} 
+i2c\+\_\+master\+\_\+bus\+\_\+handle\+\_\+t {\bfseries i2c\+\_\+handle}
+\item 
+\Hypertarget{class_i_o_ae6f067d61cda48692ad4b240934b9ef9}\label{class_i_o_ae6f067d61cda48692ad4b240934b9ef9} 
+\mbox{\hyperlink{class_f_x_l6408_u_m_x}{FXL6408\+UMX}} \texorpdfstring{$\ast$}{*} {\bfseries hsd\+\_\+handle}
+\item 
+\Hypertarget{class_i_o_a138d8dd85b03c22fcb031f66086bdc2a}\label{class_i_o_a138d8dd85b03c22fcb031f66086bdc2a} 
+\mbox{\hyperlink{class_i_c_m20948}{ICM20948}} \texorpdfstring{$\ast$}{*} {\bfseries imu\+\_\+handle}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_i_o_aa5bb762e1c75560bac04b5139a9a1c0e}\label{class_i_o_aa5bb762e1c75560bac04b5139a9a1c0e} 
+static \mbox{\hyperlink{class_i_o}{IO}} \texorpdfstring{$\ast$}{*} {\bfseries instance\+Ptr} = nullptr
+\item 
+\Hypertarget{class_i_o_adef88f9f642be64da6316255b0745c46}\label{class_i_o_adef88f9f642be64da6316255b0745c46} 
+static Semaphore\+Handle\+\_\+t {\bfseries mutex} = x\+Semaphore\+Create\+Mutex()
+\end{DoxyCompactItemize}
+
+
+\label{doc-constructors}
+\Hypertarget{class_i_o_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_i_o_a49b27a2ee79bce0de4e3ef163cbebd30}\index{IO@{IO}!IO@{IO}}
+\index{IO@{IO}!IO@{IO}}
+\doxysubsubsection{\texorpdfstring{IO()}{IO()}}
+{\footnotesize\ttfamily \label{class_i_o_a49b27a2ee79bce0de4e3ef163cbebd30} 
+IO\+::\+IO (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00025\ \{}
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{comment}{//setup\ ESP32\ native\ GPIO}}
+\DoxyCodeLine{00027\ \ \ \ \ gpio\_config\_t\ io\_conf\ =\ \{\};}
+\DoxyCodeLine{00028\ \ \ \ \ io\_conf.intr\_type\ =\ GPIO\_INTR\_DISABLE;}
+\DoxyCodeLine{00029\ \ \ \ \ io\_conf.mode\ =\ GPIO\_MODE\_OUTPUT;}
+\DoxyCodeLine{00030\ \ \ \ \ io\_conf.pin\_bit\_mask\ =\ (1ULL<<GPIO\_NUM\_48);}
+\DoxyCodeLine{00031\ \ \ \ \ io\_conf.pull\_down\_en\ =\ GPIO\_PULLDOWN\_DISABLE;}
+\DoxyCodeLine{00032\ \ \ \ \ io\_conf.pull\_up\_en\ =\ GPIO\_PULLUP\_DISABLE;}
+\DoxyCodeLine{00033\ \ \ \ \ gpio\_config(\&io\_conf);}
+\DoxyCodeLine{00034\ \ \ \ \ }
+\DoxyCodeLine{00035\ \ \ \ \ io\_conf\ =\ \{\};}
+\DoxyCodeLine{00036\ \ \ \ \ io\_conf.intr\_type\ =\ GPIO\_INTR\_DISABLE;}
+\DoxyCodeLine{00037\ \ \ \ \ io\_conf.mode\ =\ GPIO\_MODE\_INPUT;}
+\DoxyCodeLine{00038\ \ \ \ \ io\_conf.pin\_bit\_mask\ =\ (1ULL<<ECU\_TEST)\ |\ (1ULL<<ECU\_10\_IO1)\ |\ (1ULL<<ECU\_11\_IO2)\ |\ (1ULL<<ECU\_12\_IO3)\ |\ (1ULL<<ECU\_SELECT);}
+\DoxyCodeLine{00039\ \ \ \ \ io\_conf.pull\_down\_en\ =\ GPIO\_PULLDOWN\_DISABLE;}
+\DoxyCodeLine{00040\ \ \ \ \ io\_conf.pull\_up\_en\ =\ GPIO\_PULLUP\_DISABLE;}
+\DoxyCodeLine{00041\ \ \ \ \ io\_conf.intr\_type\ =\ GPIO\_INTR\_NEGEDGE;}
+\DoxyCodeLine{00042\ \ \ \ \ gpio\_config(\&io\_conf);}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ \ \ \ \ gpio\_install\_isr\_service(ESP\_INTR\_FLAG\_DEFAULT);}
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{comment}{//hook\ isr\ handler\ for\ specific\ gpio\ pin}}
+\DoxyCodeLine{00046\ \ \ \ \ gpio\_isr\_handler\_add((gpio\_num\_t)\ ECU\_11\_IO2,\ gpio\_isr\_handler,\ (\textcolor{keywordtype}{void}*)\ ECU\_11\_IO2);}
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{comment}{//hook\ isr\ handler\ for\ specific\ gpio\ pin}}
+\DoxyCodeLine{00048\ \ \ \ \ gpio\_isr\_handler\_add((gpio\_num\_t)\ ECU\_12\_IO3,\ gpio\_isr\_handler,\ (\textcolor{keywordtype}{void}*)\ ECU\_12\_IO3);}
+\DoxyCodeLine{00049\ \ \ \ \ }
+\DoxyCodeLine{00050\ \ \ \ \ setupSPI();}
+\DoxyCodeLine{00051\ \ \ \ \ setupI2C();}
+\DoxyCodeLine{00052\ \ \ \ \ adc1\_handle\ =\ \ \textcolor{keyword}{new}\ TLA2518(SPI2\_HOST,\ GPIO\_NUM\_41);}
+\DoxyCodeLine{00053\ \ \ \ \ adc2\_handle\ =\ \textcolor{keyword}{new}\ TLA2518(SPI2\_HOST,\ GPIO\_NUM\_42);}
+\DoxyCodeLine{00054\ \ \ \ \ imu\_handle\ =\ \textcolor{keyword}{new}\ ICM20948(SPI2\_HOST,IMU\_CS);}
+\DoxyCodeLine{00055\ \ \ \ \ ESP\_LOGI(TAG,\ \textcolor{stringliteral}{"{}IO\ Initialized"{}});}
+\DoxyCodeLine{00056\ \ \ \ \ }
+\DoxyCodeLine{00057\ \}}
+
+\end{DoxyCode}
+
+
+\label{doc-func-members}
+\Hypertarget{class_i_o_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_i_o_adc794e3c57257bf6863d19f3679f1388}\index{IO@{IO}!analogRead@{analogRead}}
+\index{analogRead@{analogRead}!IO@{IO}}
+\doxysubsubsection{\texorpdfstring{analogRead()}{analogRead()}}
+{\footnotesize\ttfamily \label{class_i_o_adc794e3c57257bf6863d19f3679f1388} 
+int IO\+::analog\+Read (\begin{DoxyParamCaption}\item[{ECU\+\_\+\+ANALOG\+\_\+\+PIN}]{pin}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00094\ \{}
+\DoxyCodeLine{00095\ \ \ \ \ \textcolor{keywordflow}{if}(pin\ <=\ ECU\_8\_A8)\{}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ IO::adc1\_handle-\/>readChannel(pin);}
+\DoxyCodeLine{00097\ \ \ \ \ \}}
+\DoxyCodeLine{00098\ \ \ \ \ \textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ pin\ =\ \textcolor{keyword}{static\_cast<}ECU\_ANALOG\_PIN\textcolor{keyword}{>}(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(pin)\ -\/\ 8);}
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ IO::adc2\_handle-\/>readChannel(pin);}
+\DoxyCodeLine{00101\ \ \ \ \ \}}
+\DoxyCodeLine{00102\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_i_o_aac1b73ecc7b7529d3f6ec72db24bd2fd}\index{IO@{IO}!analogReadVoltage@{analogReadVoltage}}
+\index{analogReadVoltage@{analogReadVoltage}!IO@{IO}}
+\doxysubsubsection{\texorpdfstring{analogReadVoltage()}{analogReadVoltage()}}
+{\footnotesize\ttfamily \label{class_i_o_aac1b73ecc7b7529d3f6ec72db24bd2fd} 
+float IO\+::analog\+Read\+Voltage (\begin{DoxyParamCaption}\item[{ECU\+\_\+\+ANALOG\+\_\+\+PIN}]{pin}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00104\ \{}
+\DoxyCodeLine{00105\ \ \ \ \ \textcolor{keywordflow}{if}(pin\ >=\ 8)\{}
+\DoxyCodeLine{00106\ \ \ \ \ \ \ pin\ =\ \textcolor{keyword}{static\_cast<}ECU\_ANALOG\_PIN\textcolor{keyword}{>}(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(pin)\ -\/\ 8);}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ value\ =\ IO::adc2\_handle-\/>readVoltage(pin);}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ value;}
+\DoxyCodeLine{00109\ \ \ \ \ \}}
+\DoxyCodeLine{00110\ \ \ \ \ \textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ value\ =\ IO::adc1\_handle-\/>readVoltage(pin);}
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ value;}
+\DoxyCodeLine{00113\ \ \ \ \ \}}
+\DoxyCodeLine{00114\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_i_o_a7a91685e1802db209f9a2246b4fb5e02}\index{IO@{IO}!digitalRead@{digitalRead}}
+\index{digitalRead@{digitalRead}!IO@{IO}}
+\doxysubsubsection{\texorpdfstring{digitalRead()}{digitalRead()}}
+{\footnotesize\ttfamily \label{class_i_o_a7a91685e1802db209f9a2246b4fb5e02} 
+int IO\+::digital\+Read (\begin{DoxyParamCaption}\item[{ECU\+\_\+\+IO\+\_\+\+PIN}]{pin}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00139\ \ \ \ \ \textcolor{keywordflow}{return}\ gpio\_get\_level((gpio\_num\_t)pin);}
+\DoxyCodeLine{00140\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_i_o_af7fdc4474e0b82656ff80e273aba27d5}\index{IO@{IO}!Get@{Get}}
+\index{Get@{Get}!IO@{IO}}
+\doxysubsubsection{\texorpdfstring{Get()}{Get()}}
+{\footnotesize\ttfamily \label{class_i_o_af7fdc4474e0b82656ff80e273aba27d5} 
+\mbox{\hyperlink{class_i_o}{IO}} \texorpdfstring{$\ast$}{*} IO\+::\+Get (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00060\ \{}
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{keywordflow}{if}\ (instancePtr\ ==\ \textcolor{keyword}{nullptr}\ \&\&\ IO::mutex)}
+\DoxyCodeLine{00062\ \ \ \ \ \{}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (xSemaphoreTake(IO::mutex,\ (TickType\_t)10)\ ==\ pdTRUE)}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \ \ \ \ IO*\ temp\ =\ \textcolor{keyword}{new}\ IO();\ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \ \ \ \ instancePtr\ =\ temp;}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \ \ \ \ xSemaphoreGive(IO::mutex);}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \ \ \ \ ESP\_LOGW(TAG,\ \textcolor{stringliteral}{"{}Mutex\ couldn't\ be\ obtained"{}});}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00073\ \ \ \ \ \}\ }
+\DoxyCodeLine{00074\ \ \ \ \ \textcolor{keywordflow}{return}\ instancePtr;}
+\DoxyCodeLine{00075\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_i_o_a3be28d64745f95f3a180aaef2b9ba2c6}\index{IO@{IO}!getAccelX@{getAccelX}}
+\index{getAccelX@{getAccelX}!IO@{IO}}
+\doxysubsubsection{\texorpdfstring{getAccelX()}{getAccelX()}}
+{\footnotesize\ttfamily \label{class_i_o_a3be28d64745f95f3a180aaef2b9ba2c6} 
+float IO\+::get\+AccelX (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00143\ \ \ \textcolor{keywordflow}{return}\ imu\_handle-\/>getAccelX();}
+\DoxyCodeLine{00144\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_i_o_a33e45dd3f51cb1b2b57ae18d34b75f23}\index{IO@{IO}!getAccelY@{getAccelY}}
+\index{getAccelY@{getAccelY}!IO@{IO}}
+\doxysubsubsection{\texorpdfstring{getAccelY()}{getAccelY()}}
+{\footnotesize\ttfamily \label{class_i_o_a33e45dd3f51cb1b2b57ae18d34b75f23} 
+float IO\+::get\+AccelY (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00146\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00147\ \ \ \textcolor{keywordflow}{return}\ imu\_handle-\/>getAccelY();}
+\DoxyCodeLine{00148\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_i_o_a200784efc97348d5bc51cd4b8085776d}\index{IO@{IO}!getAccelZ@{getAccelZ}}
+\index{getAccelZ@{getAccelZ}!IO@{IO}}
+\doxysubsubsection{\texorpdfstring{getAccelZ()}{getAccelZ()}}
+{\footnotesize\ttfamily \label{class_i_o_a200784efc97348d5bc51cd4b8085776d} 
+float IO\+::get\+AccelZ (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00150\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00151\ \ \ \textcolor{keywordflow}{return}\ imu\_handle-\/>getAccelZ();}
+\DoxyCodeLine{00152\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_i_o_ae8503478eb18194f875bc210c28e04cb}\index{IO@{IO}!getGyroX@{getGyroX}}
+\index{getGyroX@{getGyroX}!IO@{IO}}
+\doxysubsubsection{\texorpdfstring{getGyroX()}{getGyroX()}}
+{\footnotesize\ttfamily \label{class_i_o_ae8503478eb18194f875bc210c28e04cb} 
+float IO\+::get\+GyroX (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00155\ \ \ \textcolor{keywordflow}{return}\ imu\_handle-\/>getGyroX();}
+\DoxyCodeLine{00156\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_i_o_a80f18455c8b2fd29b100eeb330e6c653}\index{IO@{IO}!getGyroY@{getGyroY}}
+\index{getGyroY@{getGyroY}!IO@{IO}}
+\doxysubsubsection{\texorpdfstring{getGyroY()}{getGyroY()}}
+{\footnotesize\ttfamily \label{class_i_o_a80f18455c8b2fd29b100eeb330e6c653} 
+float IO\+::get\+GyroY (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00158\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00159\ \ \ \textcolor{keywordflow}{return}\ imu\_handle-\/>getGyroY();}
+\DoxyCodeLine{00160\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_i_o_abe8b72dc790a9d74233ad5cad3f79b2d}\index{IO@{IO}!getGyroZ@{getGyroZ}}
+\index{getGyroZ@{getGyroZ}!IO@{IO}}
+\doxysubsubsection{\texorpdfstring{getGyroZ()}{getGyroZ()}}
+{\footnotesize\ttfamily \label{class_i_o_abe8b72dc790a9d74233ad5cad3f79b2d} 
+float IO\+::get\+GyroZ (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00163\ \ \ \textcolor{keywordflow}{return}\ imu\_handle-\/>getGyroZ();}
+\DoxyCodeLine{00164\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_i_o_acc92f30ef0ee0723c7401c13c78e1578}\index{IO@{IO}!getLeftWheelSpeed@{getLeftWheelSpeed}}
+\index{getLeftWheelSpeed@{getLeftWheelSpeed}!IO@{IO}}
+\doxysubsubsection{\texorpdfstring{getLeftWheelSpeed()}{getLeftWheelSpeed()}}
+{\footnotesize\ttfamily \label{class_i_o_acc92f30ef0ee0723c7401c13c78e1578} 
+float IO\+::get\+Left\+Wheel\+Speed (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00167\ \{}
+\DoxyCodeLine{00168\ \ \ \textcolor{keywordflow}{return}\ 0.0f;}
+\DoxyCodeLine{00169\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_i_o_a214c578dfa1a749dd616ca6bc0657278}\index{IO@{IO}!getRightWheelSpeed@{getRightWheelSpeed}}
+\index{getRightWheelSpeed@{getRightWheelSpeed}!IO@{IO}}
+\doxysubsubsection{\texorpdfstring{getRightWheelSpeed()}{getRightWheelSpeed()}}
+{\footnotesize\ttfamily \label{class_i_o_a214c578dfa1a749dd616ca6bc0657278} 
+float IO\+::get\+Right\+Wheel\+Speed (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00171\ \{}
+\DoxyCodeLine{00172\ \ \ \textcolor{keywordflow}{return}\ 0.0f;}
+\DoxyCodeLine{00173\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_i_o_ae1966d19242953605a67e6923b333f82}\index{IO@{IO}!HSDWrite@{HSDWrite}}
+\index{HSDWrite@{HSDWrite}!IO@{IO}}
+\doxysubsubsection{\texorpdfstring{HSDWrite()}{HSDWrite()}}
+{\footnotesize\ttfamily \label{class_i_o_ae1966d19242953605a67e6923b333f82} 
+void IO\+::\+HSDWrite (\begin{DoxyParamCaption}\item[{ECU\+\_\+\+HSD\+\_\+\+PIN}]{channel}{, }\item[{bool}]{level}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00134\ \ \ \ \ hsd\_handle-\/>writeLevel(channel,level);}
+\DoxyCodeLine{00135\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_i_o_ae39d7ac217caff520858e7ca637974ef}\index{IO@{IO}!setupI2C@{setupI2C}}
+\index{setupI2C@{setupI2C}!IO@{IO}}
+\doxysubsubsection{\texorpdfstring{setupI2C()}{setupI2C()}}
+{\footnotesize\ttfamily \label{class_i_o_ae39d7ac217caff520858e7ca637974ef} 
+void IO\+::setup\+I2C (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00117\ \ \ i2c\_master\_bus\_config\_t\ i2c\_mst\_config\ =\ \{}
+\DoxyCodeLine{00118\ \ \ \ \ .i2c\_port\ =\ I2C\_NUM\_0,}
+\DoxyCodeLine{00119\ \ \ \ \ .sda\_io\_num\ =\ (gpio\_num\_t)I2C\_SDA\_PIN,}
+\DoxyCodeLine{00120\ \ \ \ \ .scl\_io\_num\ =\ (gpio\_num\_t)I2C\_SCL\_PIN,}
+\DoxyCodeLine{00121\ \ \ \ \ .clk\_source\ =\ I2C\_CLK\_SRC\_DEFAULT,}
+\DoxyCodeLine{00122\ \ \ \ \ .glitch\_ignore\_cnt\ =\ 7,}
+\DoxyCodeLine{00123\ \ \ \ \ .flags\ =\ \{}
+\DoxyCodeLine{00124\ \ \ \ \ \ \ .enable\_internal\_pullup\ =\ \textcolor{keyword}{true}}
+\DoxyCodeLine{00125\ \ \ \ \ \}}
+\DoxyCodeLine{00126\ \ \ \};}
+\DoxyCodeLine{00127\ }
+\DoxyCodeLine{00128\ \ \ ESP\_ERROR\_CHECK(i2c\_new\_master\_bus(\&i2c\_mst\_config,\ \&i2c\_handle));}
+\DoxyCodeLine{00129\ \ \ hsd\_handle\ =\ \textcolor{keyword}{new}\ FXL6408UMX(i2c\_handle);}
+\DoxyCodeLine{00130\ \ \ rtc\_handle\ =\ \textcolor{keyword}{new}\ DS3231(i2c\_handle);}
+\DoxyCodeLine{00131\ \};}
+
+\end{DoxyCode}
+\Hypertarget{class_i_o_a5ba8b2c61c3533d3d98d830789196f2d}\index{IO@{IO}!setupSPI@{setupSPI}}
+\index{setupSPI@{setupSPI}!IO@{IO}}
+\doxysubsubsection{\texorpdfstring{setupSPI()}{setupSPI()}}
+{\footnotesize\ttfamily \label{class_i_o_a5ba8b2c61c3533d3d98d830789196f2d} 
+void IO\+::setup\+SPI (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00078\ }
+\DoxyCodeLine{00079\ \ \ spi\_bus\_config\_t\ spiConfig\ =\ \{}
+\DoxyCodeLine{00080\ \ \ \ \ }
+\DoxyCodeLine{00081\ \ \ \ \ .mosi\_io\_num\ =\ MOSI\_PIN,}
+\DoxyCodeLine{00082\ \ \ \ \ .miso\_io\_num\ =\ MISO\_PIN,}
+\DoxyCodeLine{00083\ \ \ \ \ .sclk\_io\_num\ =\ SPI\_CLK\_PIN,}
+\DoxyCodeLine{00084\ \ \ \ \ .quadwp\_io\_num\ =\ -\/1,\ \ \textcolor{comment}{//\ Required\ for\ non-\/quad\ SPI}}
+\DoxyCodeLine{00085\ \ \ \ \ .quadhd\_io\_num\ =\ -\/1,\ \ \textcolor{comment}{//\ Required\ for\ non-\/quad\ SPI}}
+\DoxyCodeLine{00086\ \ \ \ \ .max\_transfer\_sz\ =\ SOC\_SPI\_MAXIMUM\_BUFFER\_SIZE,}
+\DoxyCodeLine{00087\ \ \ \ \ .flags\ =\ SPICOMMON\_BUSFLAG\_MASTER,\ }
+\DoxyCodeLine{00088\ \ \ \};}
+\DoxyCodeLine{00089\ }
+\DoxyCodeLine{00090\ \ \ ESP\_ERROR\_CHECK(spi\_bus\_initialize(SPI2\_HOST,\&spiConfig,SPI\_DMA\_CH\_AUTO));}
+\DoxyCodeLine{00091\ \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+ECU\+\_\+25/components/\+IO/IO.\+h\item 
+ECU\+\_\+25/components/\+IO/IO.\+cpp\end{DoxyCompactItemize}

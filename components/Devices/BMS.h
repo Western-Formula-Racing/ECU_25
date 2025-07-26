@@ -1,3 +1,14 @@
+/**
+ * @file BMS.h
+ * @author Yamaan Bakir
+ * @brief Declares the BMS class, defines variables and methods we need to store and/or use from the BMS such as pack state and current limits.
+ * @version 0.1
+ * @date 2025-07-10
+ * 
+ * @copyright Copyright (c) 2025
+ * 
+*/
+
 #ifndef _BMS_
 #define _BMS_
 #include <stdio.h>
@@ -6,6 +17,10 @@
 #include "freertos/semphr.h"
 #include "CAN_Config.hpp"
 
+/**
+ * @brief Stores all the data we collect from the BMS, and 
+ * defines the functions we will use to share some of that data.
+ */
 class BMS
 {
 private:
@@ -23,6 +38,7 @@ public:
     BMS(BMS &&) = delete;
     BMS &operator=(BMS &&) = delete;
     static BMS *Get();
+
 
     enum STATE
     {

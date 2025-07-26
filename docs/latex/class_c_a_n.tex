@@ -1,0 +1,439 @@
+\doxysection{CAN Class Reference}
+\hypertarget{class_c_a_n}{}\label{class_c_a_n}\index{CAN@{CAN}}
+
+
+Manages \doxylink{class_c_a_n}{CAN} bus communication using the ESP32 TWAI driver.  
+
+
+
+
+{\ttfamily \#include $<$CAN.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_c_a_n_ac50e5e08377516dc2fdb9e6de8976300}{CAN}} (gpio\+\_\+num\+\_\+t CAN\+\_\+\+TX\+\_\+\+Pin, gpio\+\_\+num\+\_\+t CAN\+\_\+\+RX\+\_\+\+Pin, twai\+\_\+mode\+\_\+t twai\+\_\+mode)
+\begin{DoxyCompactList}\small\item\em Construct a new \doxylink{class_c_a_n_ac50e5e08377516dc2fdb9e6de8976300}{CAN\+::\+CAN} object. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_c_a_n_a911978cbfa0cf26a09d8fd3d9f32e5f0}{begin}} ()
+\item 
+void \mbox{\hyperlink{class_c_a_n_ab348142e2b52ef5268cb9eba82b66ebc}{restart}} (gpio\+\_\+num\+\_\+t CAN\+\_\+\+TX\+\_\+\+Pin, gpio\+\_\+num\+\_\+t CAN\+\_\+\+RX\+\_\+\+Pin, twai\+\_\+mode\+\_\+t twai\+\_\+mode)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_c_a_n_a0b93fb571ec9bdd97434d40962052bef}\label{class_c_a_n_a0b93fb571ec9bdd97434d40962052bef} 
+bool {\bfseries logging}
+\begin{DoxyCompactList}\small\item\em Whether or not we will be logging can data to an SD card. \end{DoxyCompactList}\item 
+\Hypertarget{class_c_a_n_a3a3e68339465fb985f1ef658da2db4fb}\label{class_c_a_n_a3a3e68339465fb985f1ef658da2db4fb} 
+int {\bfseries restart\+\_\+counter}
+\begin{DoxyCompactList}\small\item\em Keeps track of the number of times the \doxylink{class_c_a_n}{CAN} network as been restarted. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_c_a_n_a2444a7605d0636524ad4a8c385fce173}{tx\+\_\+\+Call\+Back}} ()
+\begin{DoxyCompactList}\small\item\em Periodically transmits \doxylink{class_c_a_n}{CAN} messages at 10ms, 100ms, and 1000ms intervals. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_c_a_n_aa1a7ab203ea8c0b69464d342cc1081f1}{rx\+\_\+task}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \mbox{\hyperlink{class_c_a_n_a96255eef11c8c6e5c9a36733ccda9e36}{rx\+\_\+task\+\_\+wrapper}} (void \texorpdfstring{$\ast$}{*}arg)
+\item 
+static void \mbox{\hyperlink{class_c_a_n_a6b7720633850ed724eafffcc314d5f72}{tx\+\_\+\+Call\+Back\+\_\+wrapper}} (Timer\+Handle\+\_\+t x\+Timer)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_c_a_n_a98804cbd6d0cd3949486ced9cdde6704}\label{class_c_a_n_a98804cbd6d0cd3949486ced9cdde6704} 
+twai\+\_\+handle\+\_\+t {\bfseries twai\+\_\+handle}
+\item 
+\Hypertarget{class_c_a_n_acddb7a6b26619fb7f855a9cb3afa0167}\label{class_c_a_n_acddb7a6b26619fb7f855a9cb3afa0167} 
+twai\+\_\+general\+\_\+config\+\_\+t {\bfseries g\+\_\+config}
+\item 
+\Hypertarget{class_c_a_n_a14acd4a4257118c3553e971b66532016}\label{class_c_a_n_a14acd4a4257118c3553e971b66532016} 
+twai\+\_\+timing\+\_\+config\+\_\+t {\bfseries t\+\_\+config}
+\item 
+\Hypertarget{class_c_a_n_ab27d54d26df3dd33b002a8aa149a51d2}\label{class_c_a_n_ab27d54d26df3dd33b002a8aa149a51d2} 
+twai\+\_\+filter\+\_\+config\+\_\+t {\bfseries f\+\_\+config}
+\item 
+\Hypertarget{class_c_a_n_a5b70381409d244ee5bddb7fe68fccca8}\label{class_c_a_n_a5b70381409d244ee5bddb7fe68fccca8} 
+uint32\+\_\+t {\bfseries twai\+\_\+alerts}
+\item 
+\Hypertarget{class_c_a_n_ae4cfdbc8314020160b788b48c5853e63}\label{class_c_a_n_ae4cfdbc8314020160b788b48c5853e63} 
+uint16\+\_\+t {\bfseries tx\+Call\+Back\+Counter}
+\begin{DoxyCompactList}\small\item\em We use this counter with a modulo to calculate when a \doxylink{class_c_a_n}{CAN} message should be sent again based off an interval. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Manages \doxylink{class_c_a_n}{CAN} bus communication using the ESP32 TWAI driver. 
+
+This class handles \doxylink{class_c_a_n}{CAN} initialization, reception, and periodic transmission of \doxylink{class_c_a_n}{CAN} messages. It supports configurable TX/\+RX pins and mode, signal-\/level mapping, and optional logging of messages for diagnostics or telemetry. 
+
+\label{doc-constructors}
+\Hypertarget{class_c_a_n_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_c_a_n_ac50e5e08377516dc2fdb9e6de8976300}\index{CAN@{CAN}!CAN@{CAN}}
+\index{CAN@{CAN}!CAN@{CAN}}
+\doxysubsubsection{\texorpdfstring{CAN()}{CAN()}}
+{\footnotesize\ttfamily \label{class_c_a_n_ac50e5e08377516dc2fdb9e6de8976300} 
+CAN\+::\+CAN (\begin{DoxyParamCaption}\item[{gpio\+\_\+num\+\_\+t}]{CAN\+\_\+\+TX\+\_\+\+Pin}{, }\item[{gpio\+\_\+num\+\_\+t}]{CAN\+\_\+\+RX\+\_\+\+Pin}{, }\item[{twai\+\_\+mode\+\_\+t}]{twai\+\_\+mode}{}\end{DoxyParamCaption})}
+
+
+
+Construct a new \doxylink{class_c_a_n_ac50e5e08377516dc2fdb9e6de8976300}{CAN\+::\+CAN} object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em CAN\+\_\+\+TX\+\_\+\+Pin} & TX pin on the ECU \\
+\hline
+{\em CAN\+\_\+\+RX\+\_\+\+Pin} & RX pin on the ECU \\
+\hline
+{\em twai\+\_\+mode} & Can set various TWAI modes. See TWAI documentation \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00050\ \{}
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{comment}{//Set\ to\ defaults}}
+\DoxyCodeLine{00052\ \ \ \ \ \mbox{\hyperlink{class_c_a_n_a0b93fb571ec9bdd97434d40962052bef}{logging}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00053\ \ \ \ \ \mbox{\hyperlink{class_c_a_n_a3a3e68339465fb985f1ef658da2db4fb}{restart\_counter}}\ =\ 0;}
+\DoxyCodeLine{00054\ \ \ \ \ }
+\DoxyCodeLine{00055\ \ \ \ \ \textcolor{comment}{//Configure\ the\ setting\ for\ CAN,\ such\ as\ pins,\ baudrate,\ message\ queue\ length,etc....}}
+\DoxyCodeLine{00056\ \ \ \ \ twai\_general\_config\_t\ g\_config\ =\ TWAI\_GENERAL\_CONFIG\_DEFAULT(CAN\_TX\_Pin,\ CAN\_RX\_Pin,\ twai\_mode);}
+\DoxyCodeLine{00057\ \ \ \ \ g\_config.rx\_queue\_len\ =\ 1000;}
+\DoxyCodeLine{00058\ \ \ \ \ twai\_timing\_config\_t\ t\_config\ =\ TWAI\_TIMING\_CONFIG\_500KBITS();}
+\DoxyCodeLine{00059\ \ \ \ \ twai\_filter\_config\_t\ f\_config\ =\ TWAI\_FILTER\_CONFIG\_ACCEPT\_ALL();}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{comment}{//Defines\ which\ CAN\ contoller\ on\ the\ ESP\ to\ use.}}
+\DoxyCodeLine{00062\ \ \ \ \ g\_config.controller\_id\ =\ 0;}
+\DoxyCodeLine{00063\ }
+\DoxyCodeLine{00064\ \ \ \ \ \mbox{\hyperlink{class_c_a_n_ae4cfdbc8314020160b788b48c5853e63}{txCallBackCounter}}\ =\ 0;}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{comment}{//Check\ if\ we\ have\ the\ drivers\ installed\ and\ if\ they\ are\ running/run\ them.}}
+\DoxyCodeLine{00067\ \ \ \ \ \textcolor{keywordflow}{if}\ (twai\_driver\_install\_v2(\&g\_config,\ \&t\_config,\ \&f\_config,\ \&twai\_handle)\ ==\ ESP\_OK)}
+\DoxyCodeLine{00068\ \ \ \ \ \{}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ ESP\_LOGI(TAG,\ \textcolor{stringliteral}{"{}Driver\ installed\(\backslash\)n"{}});}
+\DoxyCodeLine{00070\ \ \ \ \ \}}
+\DoxyCodeLine{00071\ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00072\ \ \ \ \ \{}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ ESP\_LOGI(TAG,\ \textcolor{stringliteral}{"{}Failed\ to\ install\ driver\(\backslash\)n"{}});}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00075\ \ \ \ \ \}}
+\DoxyCodeLine{00076\ \ \ \ \ \textcolor{keywordflow}{if}\ (twai\_start\_v2(twai\_handle)\ ==\ ESP\_OK)}
+\DoxyCodeLine{00077\ \ \ \ \ \{}
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ ESP\_LOGI(TAG,\ \textcolor{stringliteral}{"{}Driver\ started\(\backslash\)n"{}});}
+\DoxyCodeLine{00079\ \ \ \ \ \}}
+\DoxyCodeLine{00080\ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00081\ \ \ \ \ \{}
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ ESP\_LOGE(TAG,\ \textcolor{stringliteral}{"{}Failed\ to\ start\ driver\(\backslash\)n"{}});}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00084\ \ \ \ \ \}}
+\DoxyCodeLine{00085\ \}}
+
+\end{DoxyCode}
+
+
+\label{doc-func-members}
+\Hypertarget{class_c_a_n_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_c_a_n_a911978cbfa0cf26a09d8fd3d9f32e5f0}\index{CAN@{CAN}!begin@{begin}}
+\index{begin@{begin}!CAN@{CAN}}
+\doxysubsubsection{\texorpdfstring{begin()}{begin()}}
+{\footnotesize\ttfamily \label{class_c_a_n_a911978cbfa0cf26a09d8fd3d9f32e5f0} 
+void CAN\+::begin (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00122\ \{}
+\DoxyCodeLine{00123\ \ \ \ \ xSemaphoreGive(rx\_sem);\ \textcolor{comment}{//\ you\ have\ to\ give\ the\ semaphore\ on\ startup\ lol}}
+\DoxyCodeLine{00124\ \ \ \ \ \textcolor{comment}{//\ Create\ the\ task}}
+\DoxyCodeLine{00125\ \ \ \ \ twai\_reconfigure\_alerts\_v2(twai\_handle,\ TWAI\_ALERT\_RX\_QUEUE\_FULL,\ NULL);}
+\DoxyCodeLine{00126\ \ \ \ \ timerHandle\ =\ xTimerCreate(\textcolor{stringliteral}{"{}canTx"{}},\ pdMS\_TO\_TICKS(10),\ pdTRUE,\ (\textcolor{keywordtype}{void}\ *)\textcolor{keyword}{this},\ tx\_CallBack\_wrapper);}
+\DoxyCodeLine{00127\ \ \ \ \ \textcolor{keywordflow}{if}\ (timerHandle\ ==\ NULL)}
+\DoxyCodeLine{00128\ \ \ \ \ \{}
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ ESP\_LOGE(TAG,\ \textcolor{stringliteral}{"{}failed\ to\ start\ CAN\ TxTimer\(\backslash\)n"{}});}
+\DoxyCodeLine{00130\ \ \ \ \ \}}
+\DoxyCodeLine{00131\ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00132\ \ \ \ \ \{}
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (xTimerStart(timerHandle,\ 0)\ !=\ pdPASS)}
+\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ \ \ \ \ ESP\_LOGE(TAG,\ \textcolor{stringliteral}{"{}failed\ to\ start\ CAN\ TxTimer\(\backslash\)n"{}});}
+\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00137\ \ \ \ \ \}}
+\DoxyCodeLine{00138\ \ \ \ \ xTaskCreatePinnedToCore(CAN::rx\_task\_wrapper,\ \textcolor{stringliteral}{"{}CAN\_rx"{}},\ 4096,\ \textcolor{keyword}{this},\ configMAX\_PRIORITIES\ -\/\ 20,\ \&rxTaskHandle,\ 1);}
+\DoxyCodeLine{00139\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_c_a_n_ab348142e2b52ef5268cb9eba82b66ebc}\index{CAN@{CAN}!restart@{restart}}
+\index{restart@{restart}!CAN@{CAN}}
+\doxysubsubsection{\texorpdfstring{restart()}{restart()}}
+{\footnotesize\ttfamily \label{class_c_a_n_ab348142e2b52ef5268cb9eba82b66ebc} 
+void CAN\+::restart (\begin{DoxyParamCaption}\item[{gpio\+\_\+num\+\_\+t}]{CAN\+\_\+\+TX\+\_\+\+Pin}{, }\item[{gpio\+\_\+num\+\_\+t}]{CAN\+\_\+\+RX\+\_\+\+Pin}{, }\item[{twai\+\_\+mode\+\_\+t}]{twai\+\_\+mode}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00088\ \ \ \ \ twai\_driver\_uninstall\_v2(twai\_handle);}
+\DoxyCodeLine{00089\ \ \ \ \ twai\_general\_config\_t\ g\_config\ =\ TWAI\_GENERAL\_CONFIG\_DEFAULT(CAN\_TX\_Pin,\ CAN\_RX\_Pin,\ twai\_mode);}
+\DoxyCodeLine{00090\ \ \ \ \ g\_config.rx\_queue\_len\ =\ 1000;}
+\DoxyCodeLine{00091\ \ \ \ \ twai\_timing\_config\_t\ t\_config\ =\ TWAI\_TIMING\_CONFIG\_500KBITS();}
+\DoxyCodeLine{00092\ \ \ \ \ twai\_filter\_config\_t\ f\_config\ =\ TWAI\_FILTER\_CONFIG\_ACCEPT\_ALL();}
+\DoxyCodeLine{00093\ \ \ \ \ g\_config.controller\_id\ =\ 0;}
+\DoxyCodeLine{00094\ }
+\DoxyCodeLine{00095\ \ \ \ \ \mbox{\hyperlink{class_c_a_n_ae4cfdbc8314020160b788b48c5853e63}{txCallBackCounter}}\ =\ 0;}
+\DoxyCodeLine{00096\ }
+\DoxyCodeLine{00097\ \ \ \ \ \textcolor{keywordflow}{if}\ (twai\_driver\_install\_v2(\&g\_config,\ \&t\_config,\ \&f\_config,\ \&twai\_handle)\ ==\ ESP\_OK)}
+\DoxyCodeLine{00098\ \ \ \ \ \{}
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ ESP\_LOGI(TAG,\ \textcolor{stringliteral}{"{}Driver\ installed\(\backslash\)n"{}});}
+\DoxyCodeLine{00100\ \ \ \ \ \}}
+\DoxyCodeLine{00101\ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00102\ \ \ \ \ \{}
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ ESP\_LOGI(TAG,\ \textcolor{stringliteral}{"{}Failed\ to\ install\ driver\(\backslash\)n"{}});}
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00105\ \ \ \ \ \}}
+\DoxyCodeLine{00106\ \ \ \ \ \textcolor{keywordflow}{if}\ (twai\_start\_v2(twai\_handle)\ ==\ ESP\_OK)}
+\DoxyCodeLine{00107\ \ \ \ \ \{}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ ESP\_LOGI(TAG,\ \textcolor{stringliteral}{"{}Driver\ started\(\backslash\)n"{}});}
+\DoxyCodeLine{00109\ \ \ \ \ \}}
+\DoxyCodeLine{00110\ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00111\ \ \ \ \ \{}
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ ESP\_LOGE(TAG,\ \textcolor{stringliteral}{"{}Failed\ to\ start\ driver\(\backslash\)n"{}});}
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00114\ \ \ \ \ \}}
+\DoxyCodeLine{00115\ \ \ \ \ twai\_reconfigure\_alerts\_v2(twai\_handle,\ TWAI\_ALERT\_RX\_QUEUE\_FULL,\ NULL);}
+\DoxyCodeLine{00116\ \ \ \ \ xSemaphoreGive(rx\_sem);}
+\DoxyCodeLine{00117\ \ \ \ \ xTaskCreatePinnedToCore(CAN::rx\_task\_wrapper,\ \textcolor{stringliteral}{"{}CAN\_rx"{}},\ 4096,\ \textcolor{keyword}{this},\ configMAX\_PRIORITIES\ -\/\ 20,\ \&rxTaskHandle,\ 1);}
+\DoxyCodeLine{00118\ }
+\DoxyCodeLine{00119\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_c_a_n_aa1a7ab203ea8c0b69464d342cc1081f1}\index{CAN@{CAN}!rx\_task@{rx\_task}}
+\index{rx\_task@{rx\_task}!CAN@{CAN}}
+\doxysubsubsection{\texorpdfstring{rx\_task()}{rx\_task()}}
+{\footnotesize\ttfamily \label{class_c_a_n_aa1a7ab203ea8c0b69464d342cc1081f1} 
+void CAN\+::rx\+\_\+task (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00161\ \{}
+\DoxyCodeLine{00162\ \ \ \ \ \textcolor{keywordtype}{char}\ log\_string[256];}
+\DoxyCodeLine{00163\ \ \ \ \ \textcolor{keywordflow}{while}\ (\textcolor{keyword}{true})}
+\DoxyCodeLine{00164\ \ \ \ \ \{}
+\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Try\ to\ take\ the\ semaphore\ without\ blocking}}
+\DoxyCodeLine{00166\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (xSemaphoreTake(rx\_sem,\ 0)\ ==\ pdTRUE)}
+\DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ \ \ \ \ twai\_message\_t\ rx\_msg;}
+\DoxyCodeLine{00169\ \ \ \ \ \ \ \ \ \ \ \ \ twai\_read\_alerts\_v2(twai\_handle,\ \&twai\_alerts,\ 0);}
+\DoxyCodeLine{00170\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (twai\_alerts\ \&\ TWAI\_ALERT\_RX\_QUEUE\_FULL)}
+\DoxyCodeLine{00171\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00172\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ESP\_LOGW(TAG,\ \textcolor{stringliteral}{"{}rx\ queue\ full:\ msg\ dropped"{}});}
+\DoxyCodeLine{00173\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00174\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (twai\_receive(\&rx\_msg,\ portMAX\_DELAY)\ ==\ ESP\_OK)}
+\DoxyCodeLine{00175\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00176\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{class_c_a_n_a0b93fb571ec9bdd97434d40962052bef}{logging}})}
+\DoxyCodeLine{00177\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00178\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ sprintf(log\_string,\ "{}\%ld,"{},\ rx\_msg.identifier);}}
+\DoxyCodeLine{00179\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint8\_t\ can\_bytes[8]\ =\ \{0,\ 0,\ 0,\ 0,\ 0,\ 0,\ 0,\ 0\};}
+\DoxyCodeLine{00180\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ rx\_msg.data\_length\_code;\ i++)}
+\DoxyCodeLine{00181\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00182\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ can\_bytes[i]\ =\ rx\_msg.data[i];}
+\DoxyCodeLine{00183\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ char\ val[5];}}
+\DoxyCodeLine{00184\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ sprintf(val,\ "{}\%d,"{},rx\_msg.data[i]);}}
+\DoxyCodeLine{00185\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ strcat(log\_string,\ val);}}
+\DoxyCodeLine{00186\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00187\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sprintf(log\_string,\ \textcolor{stringliteral}{"{}\%ld,\%d,\%d,\%d,\%d,\%d,\%d,\%d,\%d"{}},\ rx\_msg.identifier,}
+\DoxyCodeLine{00188\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ can\_bytes[0],\ can\_bytes[1],\ can\_bytes[2],\ can\_bytes[3],\ can\_bytes[4],}
+\DoxyCodeLine{00189\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ can\_bytes[5],\ can\_bytes[6],\ can\_bytes[7]);}
+\DoxyCodeLine{00190\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Logger::LogMessage\_t\ log\_message;}
+\DoxyCodeLine{00191\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sprintf(log\_message.label,\ \textcolor{stringliteral}{"{}CAN"{}});}
+\DoxyCodeLine{00192\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sprintf(log\_message.message,\ \textcolor{stringliteral}{"{}\%s"{}},\ log\_string);}
+\DoxyCodeLine{00193\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Logger::log(log\_message);}
+\DoxyCodeLine{00194\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00195\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (CAN\_Rx\_IDs.find(rx\_msg.identifier)\ !=\ CAN\_Rx\_IDs.end())}
+\DoxyCodeLine{00196\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00197\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ESP\_LOGI(TAG,\ \textcolor{stringliteral}{"{}Rx'd\ ID\ \%"{}}\ PRIu32,\ rx\_msg.identifier);}
+\DoxyCodeLine{00198\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ rx\_msg.data\_length\_code;\ i++)}
+\DoxyCodeLine{00199\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00200\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ESP\_LOGI(TAG,\ \textcolor{stringliteral}{"{}\ \ \%d"{}},\ rx\_msg.data[i]);}
+\DoxyCodeLine{00201\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00202\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{_c_a_n___config_8hpp_a68de8ef23b51dead982cee83e780cf4e}{CAN\_Map}}.find(rx\_msg.identifier)\ !=\ \mbox{\hyperlink{_c_a_n___config_8hpp_a68de8ef23b51dead982cee83e780cf4e}{CAN\_Map}}.end())}
+\DoxyCodeLine{00203\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00204\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ \&signal\ :\ \mbox{\hyperlink{_c_a_n___config_8hpp_a68de8ef23b51dead982cee83e780cf4e}{CAN\_Map}}[rx\_msg.identifier])}
+\DoxyCodeLine{00205\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00206\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ signal-\/>set\_raw(can\_getSignal<uint64\_t>(rx\_msg.data,\ signal-\/>startBit,\ signal-\/>length,\ signal-\/>isIntel));}
+\DoxyCodeLine{00207\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00208\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00209\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00210\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00211\ \ \ \ \ \ \ \ \ \ \ \ \ xSemaphoreGive(rx\_sem);}
+\DoxyCodeLine{00212\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00213\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00214\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00215\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Could\ not\ get\ semaphore,\ yield}}
+\DoxyCodeLine{00216\ \ \ \ \ \ \ \ \ \ \ \ \ taskYIELD();}
+\DoxyCodeLine{00217\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00218\ \ \ \ \ \}}
+\DoxyCodeLine{00219\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_c_a_n_a96255eef11c8c6e5c9a36733ccda9e36}\index{CAN@{CAN}!rx\_task\_wrapper@{rx\_task\_wrapper}}
+\index{rx\_task\_wrapper@{rx\_task\_wrapper}!CAN@{CAN}}
+\doxysubsubsection{\texorpdfstring{rx\_task\_wrapper()}{rx\_task\_wrapper()}}
+{\footnotesize\ttfamily \label{class_c_a_n_a96255eef11c8c6e5c9a36733ccda9e36} 
+void CAN\+::rx\+\_\+task\+\_\+wrapper (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}}]{arg}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00142\ \{}
+\DoxyCodeLine{00143\ \ \ \ \ \mbox{\hyperlink{class_c_a_n_ac50e5e08377516dc2fdb9e6de8976300}{CAN}}\ *instance\ =\ \textcolor{keyword}{static\_cast<}\mbox{\hyperlink{class_c_a_n_ac50e5e08377516dc2fdb9e6de8976300}{CAN}}\ *\textcolor{keyword}{>}(arg);}
+\DoxyCodeLine{00144\ \ \ \ \ instance-\/>rx\_task();}
+\DoxyCodeLine{00145\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_c_a_n_a2444a7605d0636524ad4a8c385fce173}\index{CAN@{CAN}!tx\_CallBack@{tx\_CallBack}}
+\index{tx\_CallBack@{tx\_CallBack}!CAN@{CAN}}
+\doxysubsubsection{\texorpdfstring{tx\_CallBack()}{tx\_CallBack()}}
+{\footnotesize\ttfamily \label{class_c_a_n_a2444a7605d0636524ad4a8c385fce173} 
+void CAN\+::tx\+\_\+\+Call\+Back (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Periodically transmits \doxylink{class_c_a_n}{CAN} messages at 10ms, 100ms, and 1000ms intervals. 
+
+Triggered every 10ms by a timer, this function both builds and transmits \doxylink{class_c_a_n}{CAN} messages. It iterates over preset ids and signals with the help of the various other \doxylink{class_c_a_n}{CAN} classes, each message is then populated using the latest data from CAN\+\_\+\+Map and sent over the network. If logging is enabled then this function also logs the messages.
+
+ 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00232\ \{}
+\DoxyCodeLine{00233\ \ \ \ \ \mbox{\hyperlink{class_c_a_n_ae4cfdbc8314020160b788b48c5853e63}{txCallBackCounter}}\ =\ (\mbox{\hyperlink{class_c_a_n_ae4cfdbc8314020160b788b48c5853e63}{txCallBackCounter}}\ <\ 1000)\ ?\ \mbox{\hyperlink{class_c_a_n_ae4cfdbc8314020160b788b48c5853e63}{txCallBackCounter}}\ +\ 1\ :\ 0;}
+\DoxyCodeLine{00234\ \ \ \ \ \textcolor{keywordtype}{char}\ log\_string[256];}
+\DoxyCodeLine{00235\ \ \ \ \ \textcolor{comment}{//\ I\ don't\ believe\ in\ 1ms\ messages\ in\ 2025.\ nothing's\ that\ important}}
+\DoxyCodeLine{00236\ }
+\DoxyCodeLine{00237\ }
+\DoxyCodeLine{00238\ \ \ \ \ \textcolor{comment}{//\ 10ms\ messages}}
+\DoxyCodeLine{00239\ \ \ \ \ \textcolor{comment}{//\ For\ all\ the\ messages\ in\ CAN\_Tx\_10ms\_IDs\ that\ is\ defined\ in\ CAN\_Config,\ the\ same\ thing\ happens\ for\ all\ other\ times.\ }}
+\DoxyCodeLine{00240\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ \&identifier\ :\ CAN\_Tx\_10ms\_IDs)}
+\DoxyCodeLine{00241\ \ \ \ \ \{}
+\DoxyCodeLine{00242\ \ \ \ \ \ \ \ \ \textcolor{comment}{//Then\ for\ all\ the\ signals\ in\ that\ messages\ map\ we\ will\ construct\ a\ CAN\ message.}}
+\DoxyCodeLine{00243\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ \&signal\ :\ \mbox{\hyperlink{_c_a_n___config_8hpp_a68de8ef23b51dead982cee83e780cf4e}{CAN\_Map}}[identifier])}
+\DoxyCodeLine{00244\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00245\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//Set\ up\ the\ message\ for\ creation\ }}
+\DoxyCodeLine{00246\ \ \ \ \ \ \ \ \ \ \ \ \ tx\_message.identifier\ =\ identifier;}
+\DoxyCodeLine{00247\ \ \ \ \ \ \ \ \ \ \ \ \ tx\_message.data\_length\_code\ =\ 8;}
+\DoxyCodeLine{00248\ }
+\DoxyCodeLine{00249\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Convert\ the\ signal’s\ raw\ value\ to\ bitfield\ data}}
+\DoxyCodeLine{00250\ \ \ \ \ \ \ \ \ \ \ \ \ can\_setSignal<uint64\_t>(}
+\DoxyCodeLine{00251\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ tx\_message.data,\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Target\ CAN\ message's\ data\ field\ (8\ bytes)}}
+\DoxyCodeLine{00252\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ signal-\/>get\_raw(),\ \ \ \ \ \ \ \textcolor{comment}{//\ The\ raw\ data\ value\ of\ the\ signal\ }}
+\DoxyCodeLine{00253\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ signal-\/>startBit,\ \ \ \ \ \ \ \ \textcolor{comment}{//\ The\ offset\ for\ which\ the\ signal\ starts\ at}}
+\DoxyCodeLine{00254\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ signal-\/>length,\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ How\ many\ bits\ this\ signal\ occupies}}
+\DoxyCodeLine{00255\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ signal-\/>isIntel\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ True\ =\ little-\/endian,\ False\ =\ big-\/endian}}
+\DoxyCodeLine{00256\ \ \ \ \ \ \ \ \ \ \ \ \ );}
+\DoxyCodeLine{00257\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00258\ \ \ \ \ \ \ \ \ \textcolor{comment}{//If\ we\ are\ logging\ data,\ then\ write\ to\ the\ SD\ card.\ }}
+\DoxyCodeLine{00259\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{class_c_a_n_a0b93fb571ec9bdd97434d40962052bef}{logging}})}
+\DoxyCodeLine{00260\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00261\ \ \ \ \ \ \ \ \ \ \ \ \ sprintf(log\_string,\ \textcolor{stringliteral}{"{}\%ld,"{}},\ tx\_message.identifier);}
+\DoxyCodeLine{00262\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ tx\_message.data\_length\_code;\ i++)}
+\DoxyCodeLine{00263\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00264\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{char}\ val[5];}
+\DoxyCodeLine{00265\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sprintf(val,\ \textcolor{stringliteral}{"{}\%d,"{}},\ tx\_message.data[i]);}
+\DoxyCodeLine{00266\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ strcat(log\_string,\ val);}
+\DoxyCodeLine{00267\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00268\ \ \ \ \ \ \ \ \ \ \ \ \ Logger::LogMessage\_t\ log\_message;}
+\DoxyCodeLine{00269\ \ \ \ \ \ \ \ \ \ \ \ \ sprintf(log\_message.label,\ \textcolor{stringliteral}{"{}CAN"{}});}
+\DoxyCodeLine{00270\ \ \ \ \ \ \ \ \ \ \ \ \ sprintf(log\_message.message,\ \textcolor{stringliteral}{"{}\%s"{}},\ log\_string);}
+\DoxyCodeLine{00271\ \ \ \ \ \ \ \ \ \ \ \ \ Logger::log(log\_message);}
+\DoxyCodeLine{00272\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00273\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (twai\_transmit(\&tx\_message,\ pdMS\_TO\_TICKS(1000))\ !=\ ESP\_OK)}
+\DoxyCodeLine{00274\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00275\ \ \ \ \ \ \ \ \ \ \ \ \ ESP\_LOGE(TAG,\ \textcolor{stringliteral}{"{}failed\ to\ tx\ message\(\backslash\)n"{}});}
+\DoxyCodeLine{00276\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00277\ \ \ \ \ \}}
+\DoxyCodeLine{00278\ \ \ \ \ \textcolor{comment}{//\ 100ms\ messages}}
+\DoxyCodeLine{00279\ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{class_c_a_n_ae4cfdbc8314020160b788b48c5853e63}{txCallBackCounter}}\ \%\ 10\ ==\ 0)}
+\DoxyCodeLine{00280\ \ \ \ \ \{}
+\DoxyCodeLine{00281\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ \&identifier\ :\ CAN\_Tx\_100ms\_IDs)}
+\DoxyCodeLine{00282\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00283\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ \&signal\ :\ \mbox{\hyperlink{_c_a_n___config_8hpp_a68de8ef23b51dead982cee83e780cf4e}{CAN\_Map}}[identifier])}
+\DoxyCodeLine{00284\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00285\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ tx\_message.identifier\ =\ identifier;}
+\DoxyCodeLine{00286\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ tx\_message.data\_length\_code\ =\ 8;}
+\DoxyCodeLine{00287\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ can\_setSignal<uint64\_t>(tx\_message.data,\ signal-\/>get\_raw(),\ signal-\/>startBit,\ signal-\/>length,\ signal-\/>isIntel);}
+\DoxyCodeLine{00288\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00289\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{class_c_a_n_a0b93fb571ec9bdd97434d40962052bef}{logging}})}
+\DoxyCodeLine{00290\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00291\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sprintf(log\_string,\ \textcolor{stringliteral}{"{}\%ld,"{}},\ tx\_message.identifier);}
+\DoxyCodeLine{00292\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ tx\_message.data\_length\_code;\ i++)}
+\DoxyCodeLine{00293\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00294\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{char}\ val[5];}
+\DoxyCodeLine{00295\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sprintf(val,\ \textcolor{stringliteral}{"{}\%d,"{}},\ tx\_message.data[i]);}
+\DoxyCodeLine{00296\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ strcat(log\_string,\ val);}
+\DoxyCodeLine{00297\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00298\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Logger::LogMessage\_t\ log\_message;}
+\DoxyCodeLine{00299\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sprintf(log\_message.label,\ \textcolor{stringliteral}{"{}CAN"{}});}
+\DoxyCodeLine{00300\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sprintf(log\_message.message,\ \textcolor{stringliteral}{"{}\%s"{}},\ log\_string);}
+\DoxyCodeLine{00301\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Logger::log(log\_message);}
+\DoxyCodeLine{00302\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00303\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (twai\_transmit(\&tx\_message,\ pdMS\_TO\_TICKS(1000))\ !=\ ESP\_OK)}
+\DoxyCodeLine{00304\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00305\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ESP\_LOGE(TAG,\ \textcolor{stringliteral}{"{}failed\ to\ tx\ message\(\backslash\)n"{}});}
+\DoxyCodeLine{00306\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00307\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00308\ \ \ \ \ \}}
+\DoxyCodeLine{00309\ \ \ \ \ }
+\DoxyCodeLine{00310\ \ \ \ \ \textcolor{comment}{//\ 1000ms\ messages}}
+\DoxyCodeLine{00311\ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{class_c_a_n_ae4cfdbc8314020160b788b48c5853e63}{txCallBackCounter}}\ \%\ 100\ ==\ 0)}
+\DoxyCodeLine{00312\ \ \ \ \ \{}
+\DoxyCodeLine{00313\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ \&identifier\ :\ CAN\_Tx\_1000ms\_IDs)}
+\DoxyCodeLine{00314\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00315\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ \&signal\ :\ \mbox{\hyperlink{_c_a_n___config_8hpp_a68de8ef23b51dead982cee83e780cf4e}{CAN\_Map}}[identifier])}
+\DoxyCodeLine{00316\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00317\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ tx\_message.identifier\ =\ identifier;}
+\DoxyCodeLine{00318\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ tx\_message.data\_length\_code\ =\ 8;}
+\DoxyCodeLine{00319\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ can\_setSignal<uint64\_t>(tx\_message.data,\ signal-\/>get\_raw(),\ signal-\/>startBit,\ signal-\/>length,\ signal-\/>isIntel);}
+\DoxyCodeLine{00320\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00321\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{class_c_a_n_a0b93fb571ec9bdd97434d40962052bef}{logging}})}
+\DoxyCodeLine{00322\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00323\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sprintf(log\_string,\ \textcolor{stringliteral}{"{}\%ld,"{}},\ tx\_message.identifier);}
+\DoxyCodeLine{00324\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ tx\_message.data\_length\_code;\ i++)}
+\DoxyCodeLine{00325\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00326\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{char}\ val[5];}
+\DoxyCodeLine{00327\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sprintf(val,\ \textcolor{stringliteral}{"{}\%d,"{}},\ tx\_message.data[i]);}
+\DoxyCodeLine{00328\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ strcat(log\_string,\ val);}
+\DoxyCodeLine{00329\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00330\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Logger::LogMessage\_t\ log\_message;}
+\DoxyCodeLine{00331\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sprintf(log\_message.label,\ \textcolor{stringliteral}{"{}CAN"{}});}
+\DoxyCodeLine{00332\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sprintf(log\_message.message,\ \textcolor{stringliteral}{"{}\%s"{}},\ log\_string);}
+\DoxyCodeLine{00333\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Logger::log(log\_message);}
+\DoxyCodeLine{00334\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00335\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (twai\_transmit(\&tx\_message,\ pdMS\_TO\_TICKS(1000))\ !=\ ESP\_OK)}
+\DoxyCodeLine{00336\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00337\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ESP\_LOGE(TAG,\ \textcolor{stringliteral}{"{}failed\ to\ tx\ message\(\backslash\)n"{}});}
+\DoxyCodeLine{00338\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00339\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00340\ \ \ \ \ \}}
+\DoxyCodeLine{00341\ }
+\DoxyCodeLine{00342\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_c_a_n_a6b7720633850ed724eafffcc314d5f72}\index{CAN@{CAN}!tx\_CallBack\_wrapper@{tx\_CallBack\_wrapper}}
+\index{tx\_CallBack\_wrapper@{tx\_CallBack\_wrapper}!CAN@{CAN}}
+\doxysubsubsection{\texorpdfstring{tx\_CallBack\_wrapper()}{tx\_CallBack\_wrapper()}}
+{\footnotesize\ttfamily \label{class_c_a_n_a6b7720633850ed724eafffcc314d5f72} 
+void CAN\+::tx\+\_\+\+Call\+Back\+\_\+wrapper (\begin{DoxyParamCaption}\item[{Timer\+Handle\+\_\+t}]{x\+Timer}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00148\ \{}
+\DoxyCodeLine{00149\ \ \ \ \ \mbox{\hyperlink{class_c_a_n_ac50e5e08377516dc2fdb9e6de8976300}{CAN}}\ *instance\ =\ \textcolor{keyword}{static\_cast<}\mbox{\hyperlink{class_c_a_n_ac50e5e08377516dc2fdb9e6de8976300}{CAN}}\ *\textcolor{keyword}{>}(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{void}\ *\textcolor{keyword}{>}(xTimer));}
+\DoxyCodeLine{00150\ \ \ \ \ instance-\/>\mbox{\hyperlink{class_c_a_n_a2444a7605d0636524ad4a8c385fce173}{tx\_CallBack}}();}
+\DoxyCodeLine{00151\ \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+ECU\+\_\+25/components/\+CAN/CAN.\+h\item 
+ECU\+\_\+25/components/\+CAN/\mbox{\hyperlink{_c_a_n_8cpp}{CAN.\+cpp}}\end{DoxyCompactItemize}

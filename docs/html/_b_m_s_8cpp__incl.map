@@ -1,0 +1,31 @@
+<map id="ECU_25/components/Devices/BMS.cpp" name="ECU_25/components/Devices/BMS.cpp">
+<area shape="rect" id="Node000001" title="Handles logic and communicates with the the BMS." alt="" coords="343,5,541,46"/>
+<area shape="rect" id="Node000002" href="$_b_m_s_8h.html" title="Declares the BMS class, defines variables and methods we need to store and/or use from the BMS such a..." alt="" coords="290,94,351,120"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="413,49,353,88,350,83,410,44"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="508,315,586,341"/>
+<area shape="poly" id="edge15_Node000001_Node000009" title=" " alt="" coords="477,44,522,76,572,120,596,146,617,176,634,207,646,241,649,255,645,268,625,293,598,310,595,306,621,289,641,266,644,255,641,242,629,209,613,178,592,150,568,124,519,80,474,49"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="36,315,96,341"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="290,112,223,117,141,127,67,144,39,156,21,169,12,184,9,201,14,237,30,272,49,301,44,304,25,274,9,238,4,201,7,182,17,166,36,151,65,139,140,122,222,112,289,107"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="31,168,175,193"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="290,121,155,165,153,160,288,116"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="198,168,304,193"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="311,122,275,158,271,155,307,118"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="327,168,450,193"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="334,118,369,155,365,158,330,122"/>
+<area shape="rect" id="Node000007" href="$_c_a_n___config_8hpp.html" title="Defines the configuration of all components on the CAN network." alt="" coords="474,168,594,193"/>
+<area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="352,116,484,160,482,165,351,121"/>
+<area shape="rect" id="Node000008" href="$_c_a_n___signal_8hpp.html" title="Defines the individual CAN signals for the messages." alt="" coords="211,241,329,267"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="490,196,330,239,328,234,488,191"/>
+<area shape="rect" id="Node000012" title=" " alt="" coords="353,241,429,267"/>
+<area shape="poly" id="edge12_Node000007_Node000012" title=" " alt="" coords="511,196,430,236,428,232,508,191"/>
+<area shape="rect" id="Node000013" title=" " alt="" coords="452,241,538,267"/>
+<area shape="poly" id="edge13_Node000007_Node000013" title=" " alt="" coords="530,195,511,229,507,226,525,192"/>
+<area shape="rect" id="Node000014" title=" " alt="" coords="562,241,631,267"/>
+<area shape="poly" id="edge14_Node000007_Node000014" title=" " alt="" coords="546,192,578,228,574,231,542,195"/>
+<area shape="poly" id="edge8_Node000008_Node000003" title=" " alt="" coords="236,270,111,313,110,308,234,265"/>
+<area shape="poly" id="edge9_Node000008_Node000009" title=" " alt="" coords="317,265,494,310,493,315,316,270"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="190,315,251,341"/>
+<area shape="poly" id="edge10_Node000008_Node000010" title=" " alt="" coords="264,269,239,304,235,301,259,266"/>
+<area shape="rect" id="Node000011" title=" " alt="" coords="275,315,363,341"/>
+<area shape="poly" id="edge11_Node000008_Node000011" title=" " alt="" coords="280,266,304,301,300,304,276,269"/>
+</map>

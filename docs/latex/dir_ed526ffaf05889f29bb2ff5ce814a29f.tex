@@ -1,0 +1,216 @@
+\doxysection{/\+Users/mhmdabdlnabi/\+ECU\+\_\+25/components/\+GUI Directory Reference}
+\hypertarget{dir_ed526ffaf05889f29bb2ff5ce814a29f}{}\label{dir_ed526ffaf05889f29bb2ff5ce814a29f}\index{/Users/mhmdabdlnabi/ECU\_25/components/GUI Directory Reference@{/Users/mhmdabdlnabi/ECU\_25/components/GUI Directory Reference}}
+Directory dependency graph for GUI\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=165pt]{dir_ed526ffaf05889f29bb2ff5ce814a29f_dep}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Files}
+\begin{DoxyCompactItemize}
+\item 
+file {\bfseries Button\+Recievable.\+h}
+\item 
+file {\bfseries Float\+Recievable.\+h}
+\item 
+file {\bfseries GUI.\+h}
+\item 
+file {\bfseries Int\+Recievable.\+h}
+\item 
+file {\bfseries Option.\+h}
+\item 
+file {\bfseries Recievable.\+h}
+\item 
+file {\bfseries String\+Recievable.\+h}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\hypertarget{readme.md_autotoc_md0}{}\doxysubsection{\texorpdfstring{GUI}{GUI}}\label{readme.md_autotoc_md0}
+Transmits data to and from a webpage through the ESP\textquotesingle{}s Access Point.\hypertarget{readme.md_autotoc_md1}{}\doxysubsection{\texorpdfstring{Getting Started}{Getting Started}}\label{readme.md_autotoc_md1}
+{\bfseries{Before trying to run the \doxylink{class_g_u_i}{GUI}, the filesystem must be built and uploaded onto the ESP. To do this, click on the platformio icon on the sidebar in VS Code, under platform, click on build filesystem image and then upload filesystem image, while the ESP is connected to your computer, the port to which the ESP is connected is selected.}}
+
+To use the \doxylink{class_g_u_i}{GUI}, it should be initialized at the start of the code. 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{GUI\ gui\ =\ GUI::Get();}
+
+\end{DoxyCode}
+ \texorpdfstring{$>$}{>}\mbox{[}!\+IMPORTANT\mbox{]} \texorpdfstring{$>$}{>}The \doxylink{class_g_u_i}{GUI} can be accessed at \href{http://192.168.4.1}{\texttt{http\+://192.\+168.\+4.\+1}} when connect to the ESP\textquotesingle{}s AP.\hypertarget{readme.md_autotoc_md2}{}\doxysubsubsection{\texorpdfstring{Potential Issues}{Potential Issues}}\label{readme.md_autotoc_md2}
+
+\begin{DoxyItemize}
+\item SPIFFS partition not found\+: If the SPIFFS partition is not present, the \doxylink{class_g_u_i}{GUI} cannot work. To fix this, first make sure SPIFFS is present in the partition table (look \href{https://docs.espressif.com/projects/esp-idf/en/stable/esp32/api-guides/partition-tables.html\#creating-custom-tables}{\texttt{here}} for more info). If this has not yet solved the issues make sure the configuration, {\ttfamily board\+\_\+build.\+partitions = path-\/to-\/partition-\/table} is in your platformio.\+ini file for each project environment.
+\end{DoxyItemize}\hypertarget{readme.md_autotoc_md3}{}\doxysubsection{\texorpdfstring{Sendables}{Sendables}}\label{readme.md_autotoc_md3}
+Sendables are entries in the webpage that only display values.
+
+Ideally, sendables should be registered at the beginning of the program.
+
+\texorpdfstring{$>$}{>}\mbox{[}!\+WARNING\mbox{]} \texorpdfstring{$>$}{>}ALL CALLABLES MUST RETURN A VALUE OF THE SAME TYPE AS THEIR RESPECTIVE SENDABLE\hypertarget{readme.md_autotoc_md4}{}\doxysubsubsection{\texorpdfstring{Display Integer}{Display Integer}}\label{readme.md_autotoc_md4}
+To display integers on the webpage, use the command {\ttfamily GUI\+::register\+\_\+int\+\_\+sendable(key, callable)}
+
+
+\begin{DoxyItemize}
+\item Example\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{//\ Display\ random\ integer}
+\DoxyCodeLine{gui-\/>register\_int\_sendable("{}Random\ Int"{},\ rand());}
+\DoxyCodeLine{}
+\DoxyCodeLine{//\ Display\ constant\ integer}
+\DoxyCodeLine{gui-\/>register\_int\_sendable("{}Constant\ Int"{},\ []()\ \{}
+\DoxyCodeLine{\ \ return\ 1;}
+\DoxyCodeLine{\});}
+
+\end{DoxyCode}
+
+\end{DoxyItemize}\hypertarget{readme.md_autotoc_md5}{}\doxysubsubsection{\texorpdfstring{Display Float}{Display Float}}\label{readme.md_autotoc_md5}
+Register float entries using the following command, {\ttfamily GUI\+::register\+\_\+float\+\_\+sendable(key, callable);}
+
+
+\begin{DoxyItemize}
+\item Example 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{//\ Display\ random\ float}
+\DoxyCodeLine{gui-\/>register\_int\_sendable("{}Random\ Int"{},\ []()\ -\/>\ float\ \{}
+\DoxyCodeLine{\ \ return\ static\_cast<float>(rand()\ /\ static\_cast<float>(RAND\_MAX));}
+\DoxyCodeLine{\});}
+\DoxyCodeLine{}
+\DoxyCodeLine{//\ Display\ constant\ float}
+\DoxyCodeLine{gui-\/>register\_int\_sendable("{}Constant\ Float"{},\ []()\ -\/>\ float\ \{}
+\DoxyCodeLine{\ \ return\ 2.4f;}
+\DoxyCodeLine{\});}
+
+\end{DoxyCode}
+
+\end{DoxyItemize}\hypertarget{readme.md_autotoc_md6}{}\doxysubsubsection{\texorpdfstring{Display String}{Display String}}\label{readme.md_autotoc_md6}
+Register string entries using the following command, {\ttfamily GUI\+::register\+\_\+string\+\_\+sendable(key, callable)}
+
+
+\begin{DoxyItemize}
+\item Example 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{gui-\/>register\_string\_sendable("{}Some\ String"{},\ []()\ \{}
+\DoxyCodeLine{\ \ return\ "{}Hello\ World"{};}
+\DoxyCodeLine{\});}
+
+\end{DoxyCode}
+
+\end{DoxyItemize}\hypertarget{readme.md_autotoc_md7}{}\doxysubsubsection{\texorpdfstring{Display Bool}{Display Bool}}\label{readme.md_autotoc_md7}
+Register boolean entries using the following command, {\ttfamily GUI\+::register\+\_\+bool\+\_\+sendable(key, callable)}
+
+
+\begin{DoxyItemize}
+\item Example 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{//\ Checks\ if\ a\ random\ number\ is\ even\ or\ odd}
+\DoxyCodeLine{int\ random\ =\ rand();}
+\DoxyCodeLine{gui-\/>register\_bool\_sendable("{}IsEven"{},\ []()\ \{}
+\DoxyCodeLine{\ \ return\ random\ \%\ 2\ ==\ 0;}
+\DoxyCodeLine{\});}
+
+\end{DoxyCode}
+
+\end{DoxyItemize}\hypertarget{readme.md_autotoc_md8}{}\doxysubsection{\texorpdfstring{Recievables}{Recievables}}\label{readme.md_autotoc_md8}
+Recievables are entries in the webpage that send values to the ESP.
+
+\texorpdfstring{$>$}{>}\mbox{[}!\+CAUTION\mbox{]} \begin{quote}
+Recievables that are not registered at beginning of the code might not be registered on the webpage \end{quote}
+\hypertarget{readme.md_autotoc_md9}{}\doxysubsubsection{\texorpdfstring{Int\+Recievable}{Int\+Recievable}}\label{readme.md_autotoc_md9}
+Int Recievables provide input boxes to send integer values to the ESP.
+
+Int Recievables are registered in the command, {\ttfamily GUI\+::register\+\_\+int\+\_\+recievable(char\texorpdfstring{$\ast$}{*} key, \doxylink{class_recievable}{Recievable}\texorpdfstring{$<$}{<}int\texorpdfstring{$>$}{>}\texorpdfstring{$\ast$}{*});}
+
+Example 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{//\ Create\ recievable\ object}
+\DoxyCodeLine{IntRecievable\ int\_recievable\{0\};}
+\DoxyCodeLine{}
+\DoxyCodeLine{//\ Register\ recievable}
+\DoxyCodeLine{gui-\/>register\_int\_reciebable("{}Int\ Recievable"{},\ \&int\_recievable);}
+\DoxyCodeLine{}
+\DoxyCodeLine{//\ Obtain\ recievable\ value}
+\DoxyCodeLine{int\ value\ =\ int\_recievable.get\_value();}
+
+\end{DoxyCode}
+\hypertarget{readme.md_autotoc_md10}{}\doxysubsubsection{\texorpdfstring{Float\+Recievable}{Float\+Recievable}}\label{readme.md_autotoc_md10}
+Float Recievables provide input boxes to send float values to the ESP.
+
+Float\+Recievables are registered in the command, {\ttfamily GUI\+::register\+\_\+float\+\_\+recievable(char\texorpdfstring{$\ast$}{*} key, \doxylink{class_recievable}{Recievable}\texorpdfstring{$<$}{<}float\texorpdfstring{$>$}{>}\texorpdfstring{$\ast$}{*});}
+
+Example 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{//\ Create\ recievable\ object}
+\DoxyCodeLine{FloatRecievable\ float\_recievable\{0.0f\};}
+\DoxyCodeLine{}
+\DoxyCodeLine{//\ Register\ recievable}
+\DoxyCodeLine{gui-\/>register\_float\_reciebable("{}Float\ Recievable"{},\ \&float\_recievable);}
+\DoxyCodeLine{}
+\DoxyCodeLine{//\ Obtain\ recievable\ value}
+\DoxyCodeLine{float\ value\ =\ float\_recievable.get\_value();}
+
+\end{DoxyCode}
+\hypertarget{readme.md_autotoc_md11}{}\doxysubsubsection{\texorpdfstring{String\+Recievable}{String\+Recievable}}\label{readme.md_autotoc_md11}
+String Recievables provide input boxes to send string values to the ESP.
+
+String\+Recievables are registered in the command, {\ttfamily GUI\+::register\+\_\+string\+\_\+recievable(char\texorpdfstring{$\ast$}{*} key, \doxylink{class_recievable}{Recievable}\texorpdfstring{$<$}{<}char\texorpdfstring{$\ast$}{*}\texorpdfstring{$>$}{>}\texorpdfstring{$\ast$}{*});}
+
+Example 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{//\ Create\ recievable\ object}
+\DoxyCodeLine{StringRecievable\ string\_recievable\{"{}"{}\};}
+\DoxyCodeLine{}
+\DoxyCodeLine{//\ Register\ recievable}
+\DoxyCodeLine{gui-\/>register\_string\_reciebable("{}String\ Recievable"{},\ \&string\_recievable);}
+\DoxyCodeLine{}
+\DoxyCodeLine{//\ Obtain\ recievable\ value}
+\DoxyCodeLine{char*\ str\ =\ string\_recievable.get\_value();}
+
+\end{DoxyCode}
+\hypertarget{readme.md_autotoc_md12}{}\doxysubsubsection{\texorpdfstring{Option}{Option}}\label{readme.md_autotoc_md12}
+Options provide select inputs on the webpage to send some option input to the ESP.
+
+\doxylink{class_option}{Option} Recievables are registered based on their type, so if and option recievable is of type {\itshape char\texorpdfstring{$\ast$}{*}} the command, {\ttfamily GUI\+::register\+\_\+string\+\_\+recievable(char\texorpdfstring{$\ast$}{*} key, \doxylink{class_recievable}{Recievable}\texorpdfstring{$<$}{<}char\texorpdfstring{$\ast$}{*}\texorpdfstring{$>$}{>}\texorpdfstring{$\ast$}{*});} would be appropriate.
+
+\texorpdfstring{$>$}{>}\mbox{[}!\+WARNING\mbox{]} \texorpdfstring{$>$}{>}\doxylink{class_option}{Option} Recievables can only have the types int, float, and string
+
+Example 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{//\ Create\ string\ option\ object}
+\DoxyCodeLine{Option<char*>\ idle\_mode\_option\{\{"{}Brake\ Mode"{},\ "{}Coast\ Mode"{}\},\ 1\};\ //\ Initial\ mode\ is\ Coast\ mode\ at\ index\ 1}
+\DoxyCodeLine{}
+\DoxyCodeLine{//\ Create\ float\ option\ object}
+\DoxyCodeLine{Option<float>\ float\_option\{\{2.3,\ 6.7,\ 3.2\}\};\ //\ Initial\ Value\ at\ index\ 0}
+\DoxyCodeLine{}
+\DoxyCodeLine{//\ Register\ options}
+\DoxyCodeLine{gui-\/>register\_string\_recievable("{}Idle\ Mode"{},\ \&idle\_mode\_option);}
+\DoxyCodeLine{gui-\/>register\_float\_recievable("{}Float\ Option"{},\ \&float\_option);}
+\DoxyCodeLine{}
+\DoxyCodeLine{//\ Access\ values}
+\DoxyCodeLine{char*\ current\_idle\_mode\ =\ idle\_mode\_option.get\_value();}
+\DoxyCodeLine{float\ value\ =\ float\_option.get\_value()}
+
+\end{DoxyCode}
+\hypertarget{readme.md_autotoc_md13}{}\doxysubsubsection{\texorpdfstring{Button\+Recievable}{Button\+Recievable}}\label{readme.md_autotoc_md13}
+Button Recievables provide a button on the webpage that execute some callable on the ESP.
+
+Button Recievables are registered using the command {\ttfamily GUI\+::register\+\_\+button\+\_\+recievable(char\texorpdfstring{$\ast$}{*} key, Button\+Recievable\texorpdfstring{$\ast$}{*});}
+
+\texorpdfstring{$>$}{>}\mbox{[}!\+CAUTION\mbox{]} \begin{quote}
+Callables that return some value may result in the code crashing. \end{quote}
+
+
+Example 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{//\ Hello\ world\ function}
+\DoxyCodeLine{void\ helloWorld()\ \{}
+\DoxyCodeLine{\ \ printf("{}Hello\ World"{});}
+\DoxyCodeLine{\}}
+\DoxyCodeLine{}
+\DoxyCodeLine{//\ Create\ Button\ Recievable\ object}
+\DoxyCodeLine{ButtonRecievable\{helloWorld\};}
+\DoxyCodeLine{}
+\DoxyCodeLine{//\ Register\ button\ recievable}
+\DoxyCodeLine{gui-\/>register\_button\_recievable("{}Hello\ World"{},\ helloWorld);}
+
+\end{DoxyCode}
+ 

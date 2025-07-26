@@ -1,0 +1,62 @@
+\doxysection{TLA2518.\+h}
+\hypertarget{_t_l_a2518_8h_source}{}\label{_t_l_a2518_8h_source}\index{ECU\_25/components/IO/TLA2518.h@{ECU\_25/components/IO/TLA2518.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/**************************}}
+\DoxyCodeLine{00002\ \textcolor{comment}{*\ }}
+\DoxyCodeLine{00003\ \textcolor{comment}{*\ Driver\ for\ the\ TLA2518\ 8-\/channel\ 12-\/bit\ ADC}}
+\DoxyCodeLine{00004\ \textcolor{comment}{*\ https://www.ti.com/product/TLA2518}}
+\DoxyCodeLine{00005\ \textcolor{comment}{*}}
+\DoxyCodeLine{00006\ \textcolor{comment}{*}}
+\DoxyCodeLine{00007\ \textcolor{comment}{*\ TODO:\ }}
+\DoxyCodeLine{00008\ \textcolor{comment}{*\ -\/\ Add\ support\ for\ using\ channels\ in\ GPIO\ mode}}
+\DoxyCodeLine{00009\ \textcolor{comment}{*\ -\/\ Add\ option\ for\ continuous\ reading\ instead\ of\ one-\/shot}}
+\DoxyCodeLine{00010\ \textcolor{comment}{*\ -\/\ i.e.\ expose\ more\ chip\ functionality}}
+\DoxyCodeLine{00011\ \textcolor{comment}{*}}
+\DoxyCodeLine{00012\ \textcolor{comment}{***************************/}\ }
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#ifndef\ TLA2518\_H}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#define\ TLA2518\_H}}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ "{}driver/spi\_master.h"{}}}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \textcolor{comment}{//\ Commands}}
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\#define\ TLA\_CMD\_READ\ \ \ \ \ \ 0b00010000}}
+\DoxyCodeLine{00021\ \textcolor{preprocessor}{\#define\ TLA\_CMD\_WRITE\ \ \ \ \ 0b00001000}}
+\DoxyCodeLine{00022\ \textcolor{preprocessor}{\#define\ TLA\_CMD\_SET\_BIT\ \ \ 0b00011000}}
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\#define\ TLA\_CMD\_CLEAR\_BIT\ 0b00100000}}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \textcolor{comment}{//\ Registers}}
+\DoxyCodeLine{00026\ \textcolor{preprocessor}{\#define\ TLA\_SYSTEM\_STATUS\ \ \ 0x0}}
+\DoxyCodeLine{00027\ \textcolor{preprocessor}{\#define\ TLA\_GENERAL\_CFG\ \ \ \ \ 0x1}}
+\DoxyCodeLine{00028\ \textcolor{preprocessor}{\#define\ TLA\_DATA\_CFG\ \ \ \ \ \ \ \ 0x2}}
+\DoxyCodeLine{00029\ \textcolor{preprocessor}{\#define\ TLA\_OSR\_CFG\ \ \ \ \ \ \ \ \ 0x3}}
+\DoxyCodeLine{00030\ \textcolor{preprocessor}{\#define\ TLA\_OPMODE\_CFG\ \ \ \ \ \ 0x4}}
+\DoxyCodeLine{00031\ \textcolor{preprocessor}{\#define\ TLA\_PIN\_CFG\ \ \ \ \ \ \ \ \ 0x5}}
+\DoxyCodeLine{00032\ \textcolor{preprocessor}{\#define\ TLA\_GPIO\_CFG\ \ \ \ \ \ \ \ 0x7}}
+\DoxyCodeLine{00033\ \textcolor{preprocessor}{\#define\ TLA\_GPIO\_DRIVE\_CFG\ \ 0x9}}
+\DoxyCodeLine{00034\ \textcolor{preprocessor}{\#define\ TLA\_GPO\_VALUE\ \ \ \ \ \ \ 0xB}}
+\DoxyCodeLine{00035\ \textcolor{preprocessor}{\#define\ TLA\_GPI\_VALUE\ \ \ \ \ \ \ 0xD}}
+\DoxyCodeLine{00036\ \textcolor{preprocessor}{\#define\ TLA\_SEQUENCE\_CFG\ \ \ \ 0x10}}
+\DoxyCodeLine{00037\ \textcolor{preprocessor}{\#define\ TLA\_CHANNEL\_SEL\ \ \ \ \ 0x11}}
+\DoxyCodeLine{00038\ \textcolor{preprocessor}{\#define\ TLA\_AUTO\_SEQ\_CH\_SEL\ 0x12}}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \textcolor{preprocessor}{\#define\ ADC\_VOLTAGE\_SCALE\_FACTOR\ (5.0f/4096.0f)}}
+\DoxyCodeLine{00041\ \textcolor{keyword}{class\ }TLA2518\{}
+\DoxyCodeLine{00042\ \ \ }
+\DoxyCodeLine{00043\ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00045\ \ \ spi\_device\_handle\_t\ adcHandle;}
+\DoxyCodeLine{00046\ \ \ spi\_device\_interface\_config\_t\ adcCfg;}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00049\ \ \ }
+\DoxyCodeLine{00050\ \ \ TLA2518(spi\_host\_device\_t\ spiHost,\ \textcolor{keywordtype}{int}\ cs\_pin);\ }
+\DoxyCodeLine{00051\ \ \ \textcolor{keywordtype}{int}\ readChannel(uint8\_t\ channel);}
+\DoxyCodeLine{00052\ \ \ \textcolor{keywordtype}{float}\ readVoltage(uint8\_t\ channel);}
+\DoxyCodeLine{00053\ \ \ \textcolor{keywordtype}{void}\ writeRegister(uint8\_t\ address,\ uint8\_t\ value);}
+\DoxyCodeLine{00054\ \};}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

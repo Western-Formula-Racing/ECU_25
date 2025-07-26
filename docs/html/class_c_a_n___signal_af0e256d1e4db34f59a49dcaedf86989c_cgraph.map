@@ -1,0 +1,5 @@
+<map id="CAN_Signal::get_uint64" name="CAN_Signal::get_uint64">
+<area shape="rect" id="Node000001" title="Returns the scaled value of the signal as a unsigned, 64bit int." alt="" coords="5,5,167,31"/>
+<area shape="rect" id="Node000002" href="$class_c_a_n___signal.html#a92bd913f786c453eadfec208b19909ed" title="Returns the raw, unscaled value for the signal." alt="" coords="215,5,362,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="167,16,199,16,199,21,167,21"/>
+</map>

@@ -1,0 +1,11 @@
+<map id="CAN_Signal::get_raw" name="CAN_Signal::get_raw">
+<area shape="rect" id="Node000001" title="Returns the raw, unscaled value for the signal." alt="" coords="215,80,362,106"/>
+<area shape="rect" id="Node000002" href="$class_c_a_n___signal.html#a87f56ae8d19a32731406b969f66e63f5" title=" " alt="" coords="11,5,161,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="243,76,166,45,134,34,135,29,168,40,245,71"/>
+<area shape="rect" id="Node000003" href="$class_c_a_n___signal.html#a8ef357d28481db29dfc4cc82954da8f3" title="Returns the scaled signal value as a float." alt="" coords="10,55,162,80"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="199,84,162,80,163,74,200,79"/>
+<area shape="rect" id="Node000004" href="$class_c_a_n___signal.html#a880b7c9723bd1e8c693b9595a78840cd" title="Get the length of the singal value." alt="" coords="16,104,156,130"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="200,106,157,111,156,106,199,101"/>
+<area shape="rect" id="Node000005" href="$class_c_a_n___signal.html#af0e256d1e4db34f59a49dcaedf86989c" title="Returns the scaled value of the signal as a unsigned, 64bit int." alt="" coords="5,153,167,179"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="244,115,168,145,135,155,134,150,166,140,242,110"/>
+</map>

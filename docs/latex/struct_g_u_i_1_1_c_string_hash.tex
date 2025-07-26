@@ -1,0 +1,30 @@
+\doxysection{GUI\+::CString\+Hash Struct Reference}
+\hypertarget{struct_g_u_i_1_1_c_string_hash}{}\label{struct_g_u_i_1_1_c_string_hash}\index{GUI::CStringHash@{GUI::CStringHash}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+size\+\_\+t \mbox{\hyperlink{struct_g_u_i_1_1_c_string_hash_a5d8bcb24acb59607c2f7c59bedaee0d7}{operator()}} (const char \texorpdfstring{$\ast$}{*}s) const
+\end{DoxyCompactItemize}
+
+
+\label{doc-func-members}
+\Hypertarget{struct_g_u_i_1_1_c_string_hash_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{struct_g_u_i_1_1_c_string_hash_a5d8bcb24acb59607c2f7c59bedaee0d7}\index{GUI::CStringHash@{GUI::CStringHash}!operator()@{operator()}}
+\index{operator()@{operator()}!GUI::CStringHash@{GUI::CStringHash}}
+\doxysubsubsection{\texorpdfstring{operator()()}{operator()()}}
+{\footnotesize\ttfamily \label{struct_g_u_i_1_1_c_string_hash_a5d8bcb24acb59607c2f7c59bedaee0d7} 
+size\+\_\+t GUI\+::\+CString\+Hash\+::operator() (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{s}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::hash<std::string>()(std::string(s));}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \}}
+
+\end{DoxyCode}
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+ECU\+\_\+25/components/\+GUI/GUI.\+h\end{DoxyCompactItemize}

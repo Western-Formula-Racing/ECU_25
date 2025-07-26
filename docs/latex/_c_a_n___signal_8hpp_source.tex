@@ -1,0 +1,54 @@
+\doxysection{CAN\+\_\+\+Signal.\+hpp}
+\hypertarget{_c_a_n___signal_8hpp_source}{}\label{_c_a_n___signal_8hpp_source}\index{ECU\_25/components/CAN/CAN\_Signal.hpp@{ECU\_25/components/CAN/CAN\_Signal.hpp}}
+\mbox{\hyperlink{_c_a_n___signal_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#ifndef\ \_\_CANSIGNAL\_\_}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#define\ \_\_CANSIGNAL\_\_}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <stdio.h>}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}esp\_log.h"{}}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <variant>}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ "{}esp\_timer.h"{}}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{comment}{//If\ a\ signal\ is\ not\ recieved\ for\ longer\ then\ TIMEOUT\ then\ we\ return\ the\ default\ value.\ }}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#define\ TIMEOUT\ 2000}}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00024\ \textcolor{keyword}{class\ }CAN\_Signal}
+\DoxyCodeLine{00025\ \{}
+\DoxyCodeLine{00026\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00027\ \ \ \ \ CAN\_Signal(\textcolor{keywordtype}{bool}\ isIntel,\ uint8\_t\ startBit,\ uint8\_t\ length,\ }
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keywordtype}{float}\ scale\ =\ 1.0f,\ \textcolor{keywordtype}{float}\ offset\ =\ 0.0f,}
+\DoxyCodeLine{00029\ \ \ \ \ int32\_t\ default\_value\ =\ 0);}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \ \ \ \ uint64\_t\ \mbox{\hyperlink{class_c_a_n___signal_a92bd913f786c453eadfec208b19909ed}{get\_raw}}();}
+\DoxyCodeLine{00032\ \ \ \ \ uint64\_t\ \mbox{\hyperlink{class_c_a_n___signal_af0e256d1e4db34f59a49dcaedf86989c}{get\_uint64}}();}
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_c_a_n___signal_a880b7c9723bd1e8c693b9595a78840cd}{get\_int}}();}
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_c_a_n___signal_a87f56ae8d19a32731406b969f66e63f5}{get\_bool}}();}
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{class_c_a_n___signal_a8ef357d28481db29dfc4cc82954da8f3}{get\_float}}();}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_c_a_n___signal_a66e8fcbfe25986dc94794d191c13d875}{set}}(uint64\_t\ value);\ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_c_a_n___signal_a66e8fcbfe25986dc94794d191c13d875}{set}}(\textcolor{keywordtype}{int}\ value);}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_c_a_n___signal_a66e8fcbfe25986dc94794d191c13d875}{set}}(\textcolor{keywordtype}{bool}\ value);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00059\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_c_a_n___signal_a66e8fcbfe25986dc94794d191c13d875}{set}}(\textcolor{keywordtype}{float}\ value);\ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00067\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_c_a_n___signal_a2322bd1550d5e97e819ff51af7590dc3}{set\_raw}}(uint64\_t\ raw\_value);}
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00069\ \ \ \ \ }
+\DoxyCodeLine{00070\ \ \ \ \ \textcolor{keywordtype}{bool}\ isIntel;}
+\DoxyCodeLine{00071\ \ \ \ \ uint8\_t\ startBit;}
+\DoxyCodeLine{00072\ \ \ \ \ uint8\_t\ length;}
+\DoxyCodeLine{00073\ \ \ \ \ \textcolor{keywordtype}{float}\ scale;}
+\DoxyCodeLine{00074\ \ \ \ \ \textcolor{keywordtype}{float}\ offset;}
+\DoxyCodeLine{00075\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00076\ \ \ \ \ uint64\_t\ raw\_value;}
+\DoxyCodeLine{00077\ \ \ \ \ uint64\_t\ last\_recieved;}
+\DoxyCodeLine{00078\ \ \ \ \ uint64\_t\ default\_value;}
+\DoxyCodeLine{00079\ }
+\DoxyCodeLine{00080\ \};}
+\DoxyCodeLine{00081\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

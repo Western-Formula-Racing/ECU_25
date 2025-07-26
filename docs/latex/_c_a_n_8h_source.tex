@@ -1,0 +1,45 @@
+\doxysection{CAN.\+h}
+\hypertarget{_c_a_n_8h_source}{}\label{_c_a_n_8h_source}\index{ECU\_25/components/CAN/CAN.h@{ECU\_25/components/CAN/CAN.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ \_\_CAN\_\_}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ \_\_CAN\_\_}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <map>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}driver/twai.h"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}etl/vector.h"{}}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <stdio.h>}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}esp\_log.h"{}}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <variant>}}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00018\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_c_a_n_ac50e5e08377516dc2fdb9e6de8976300}{CAN}}}
+\DoxyCodeLine{00019\ \{}
+\DoxyCodeLine{00020\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00021\ \ \ \ \ \mbox{\hyperlink{class_c_a_n_ac50e5e08377516dc2fdb9e6de8976300}{CAN}}(gpio\_num\_t\ CAN\_TX\_Pin,\ gpio\_num\_t\ CAN\_RX\_Pin,\ twai\_mode\_t\ twai\_mode);}
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keywordtype}{void}\ begin();}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_c_a_n_a0b93fb571ec9bdd97434d40962052bef}{logging}};\ \ \ \ \ }
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_c_a_n_a3a3e68339465fb985f1ef658da2db4fb}{restart\_counter}};\ \ \ \ \ \ \ }
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keywordtype}{void}\ restart(gpio\_num\_t\ CAN\_TX\_Pin,\ gpio\_num\_t\ CAN\_RX\_Pin,\ twai\_mode\_t\ twai\_mode);}
+\DoxyCodeLine{00030\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00031\ \ \ \ \ twai\_handle\_t\ twai\_handle;}
+\DoxyCodeLine{00032\ \ \ \ \ twai\_general\_config\_t\ g\_config;}
+\DoxyCodeLine{00033\ \ \ \ \ twai\_timing\_config\_t\ t\_config;}
+\DoxyCodeLine{00034\ \ \ \ \ twai\_filter\_config\_t\ f\_config;}
+\DoxyCodeLine{00035\ \ \ \ \ uint32\_t\ twai\_alerts;}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00038\ \ \ \ \ uint16\_t\ \mbox{\hyperlink{class_c_a_n_ae4cfdbc8314020160b788b48c5853e63}{txCallBackCounter}};\ }
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ rx\_task\_wrapper(\textcolor{keywordtype}{void}\ *arg);\ \textcolor{comment}{//\ Wrapper\ function}}
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ tx\_CallBack\_wrapper(TimerHandle\_t\ xTimer);\ \textcolor{comment}{//\ Wrapper\ function}}
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_c_a_n_a2444a7605d0636524ad4a8c385fce173}{tx\_CallBack}}();\ \textcolor{comment}{//\ Non-\/static\ member\ function}}
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keywordtype}{void}\ rx\_task();\ \textcolor{comment}{//\ Non-\/static\ member\ function}}
+\DoxyCodeLine{00044\ \ \ \ \ }
+\DoxyCodeLine{00045\ \};}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ \textcolor{keywordtype}{int}\ give\_zero();}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

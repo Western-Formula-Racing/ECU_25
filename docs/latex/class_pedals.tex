@@ -1,0 +1,307 @@
+\doxysection{Pedals Class Reference}
+\hypertarget{class_pedals}{}\label{class_pedals}\index{Pedals@{Pedals}}
+
+
+Collaboration diagram for Pedals\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=200pt]{class_pedals__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_pedals_adabb50a09321a99f52fffc556a026592}\label{class_pedals_adabb50a09321a99f52fffc556a026592} 
+{\bfseries Pedals} (const \mbox{\hyperlink{class_pedals}{Pedals}} \&)=delete
+\item 
+\Hypertarget{class_pedals_afde99cdb60b7808ab5214a36b218f24a}\label{class_pedals_afde99cdb60b7808ab5214a36b218f24a} 
+\mbox{\hyperlink{class_pedals}{Pedals}} \& {\bfseries operator=} (const \mbox{\hyperlink{class_pedals}{Pedals}} \&)=delete
+\item 
+\Hypertarget{class_pedals_a202b50beb2c8664c8cb62c1c611ea603}\label{class_pedals_a202b50beb2c8664c8cb62c1c611ea603} 
+{\bfseries Pedals} (\mbox{\hyperlink{class_pedals}{Pedals}} \&\&)=delete
+\item 
+\Hypertarget{class_pedals_acaffb9abb4f45e3e7f7bd76bd6d98f38}\label{class_pedals_acaffb9abb4f45e3e7f7bd76bd6d98f38} 
+\mbox{\hyperlink{class_pedals}{Pedals}} \& {\bfseries operator=} (\mbox{\hyperlink{class_pedals}{Pedals}} \&\&)=delete
+\item 
+float \mbox{\hyperlink{class_pedals_a61fa537cbeccb9e322cf3ab436f41414}{get\+Throttle}} ()
+\item 
+float \mbox{\hyperlink{class_pedals_aea02d529445b1f86ddc1966617e257e1}{get\+Brake\+Pressure}} ()
+\item 
+void \mbox{\hyperlink{class_pedals_ac999ea86c79a97c59f6688f60e90aa36}{update\+Apps\+Calibration}} (float app1\+\_\+min, float app1\+\_\+max, float app2\+\_\+min, float app2\+\_\+max)
+\item 
+void \mbox{\hyperlink{class_pedals_acc0e600da42714ba6463c316b04ea967}{set\+\_\+min}} (float apps1, float apps2)
+\item 
+void \mbox{\hyperlink{class_pedals_a5b4927abfb9082ff1de06869e238ced5}{set\+\_\+max}} (float apps1, float apps2)
+\item 
+float \mbox{\hyperlink{class_pedals_a6ab1fe2c02232206cffaca73b4d83634}{get\+\_\+apps1\+\_\+voltage}} ()
+\item 
+float \mbox{\hyperlink{class_pedals_a9017c465fd55162c9b8292004f911f07}{get\+\_\+apps2\+\_\+voltage}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{class_pedals}{Pedals}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_pedals_addd79e3132990cc7982c10547e347737}{Get}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_pedals_a7a1875027f7bc59122e0a50200252de1}\label{class_pedals_a7a1875027f7bc59122e0a50200252de1} 
+float {\bfseries apps1\+\_\+min\+\_\+voltage}
+\item 
+\Hypertarget{class_pedals_a17aaf1f2bd950d31273c479fe6b2fa11}\label{class_pedals_a17aaf1f2bd950d31273c479fe6b2fa11} 
+float {\bfseries apps1\+\_\+max\+\_\+voltage}
+\item 
+\Hypertarget{class_pedals_aa743a4af6025b5487d67143acefb5861}\label{class_pedals_aa743a4af6025b5487d67143acefb5861} 
+float {\bfseries apps2\+\_\+min\+\_\+voltage}
+\item 
+\Hypertarget{class_pedals_a6e7addf44bf49febb627b37144af6a36}\label{class_pedals_a6e7addf44bf49febb627b37144af6a36} 
+float {\bfseries apps2\+\_\+max\+\_\+voltage}
+\item 
+\Hypertarget{class_pedals_a068ab3794597e9494873908bf5ee20e5}\label{class_pedals_a068ab3794597e9494873908bf5ee20e5} 
+float {\bfseries apps1\+\_\+voltage}
+\item 
+\Hypertarget{class_pedals_af0f80dca02c72503d553bb75b908fd60}\label{class_pedals_af0f80dca02c72503d553bb75b908fd60} 
+float {\bfseries apps2\+\_\+voltage}
+\item 
+\Hypertarget{class_pedals_a9bf2c0ae88cb10242bcc893ca7d6d25e}\label{class_pedals_a9bf2c0ae88cb10242bcc893ca7d6d25e} 
+float {\bfseries apps\+\_\+sensor1\+\_\+percent}
+\item 
+\Hypertarget{class_pedals_a8e126b669defd1893561e05477a15c35}\label{class_pedals_a8e126b669defd1893561e05477a15c35} 
+float {\bfseries apps\+\_\+sensor2\+\_\+percent}
+\item 
+\Hypertarget{class_pedals_a13048c47516b51ad962e983cb22a7aea}\label{class_pedals_a13048c47516b51ad962e983cb22a7aea} 
+float {\bfseries throttle}
+\item 
+\Hypertarget{class_pedals_a5610f8c3cee8c892a7ae0835dd89dd8c}\label{class_pedals_a5610f8c3cee8c892a7ae0835dd89dd8c} 
+float {\bfseries brake\+Pressure\+\_\+front}
+\item 
+\Hypertarget{class_pedals_a74cc59f1d982617eb4cdd514f59344ed}\label{class_pedals_a74cc59f1d982617eb4cdd514f59344ed} 
+float {\bfseries brake\+Pressure\+\_\+rear}
+\item 
+\Hypertarget{class_pedals_aae5f5d7a989e3d1ede8694b4c5248106}\label{class_pedals_aae5f5d7a989e3d1ede8694b4c5248106} 
+bool {\bfseries fault\+\_\+latch}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_pedals_a1e16b45253af7404b06c238a3f934173}\label{class_pedals_a1e16b45253af7404b06c238a3f934173} 
+static \mbox{\hyperlink{class_pedals}{Pedals}} \texorpdfstring{$\ast$}{*} {\bfseries instance\+Ptr} = nullptr
+\item 
+\Hypertarget{class_pedals_a2fb64018cf13c9b2d3f7e229c51789a3}\label{class_pedals_a2fb64018cf13c9b2d3f7e229c51789a3} 
+static Semaphore\+Handle\+\_\+t {\bfseries mutex} = x\+Semaphore\+Create\+Mutex()
+\end{DoxyCompactItemize}
+
+
+\label{doc-constructors}
+\Hypertarget{class_pedals_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_pedals_a172c1d491ac83c6662dd33cb4a07ce66}\index{Pedals@{Pedals}!Pedals@{Pedals}}
+\index{Pedals@{Pedals}!Pedals@{Pedals}}
+\doxysubsubsection{\texorpdfstring{Pedals()}{Pedals()}}
+{\footnotesize\ttfamily \label{class_pedals_a172c1d491ac83c6662dd33cb4a07ce66} 
+Pedals\+::\+Pedals (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00009\ \{}
+\DoxyCodeLine{00010\ \ \ \ \ \textcolor{comment}{//\ Temporary\ test\ values}}
+\DoxyCodeLine{00011\ \ \ \ \ apps1\_min\_voltage\ =\ 2.64f;}
+\DoxyCodeLine{00012\ \ \ \ \ apps2\_min\_voltage\ =\ 2.32f;}
+\DoxyCodeLine{00013\ \ \ \ \ apps1\_max\_voltage\ =\ 3.44f;}
+\DoxyCodeLine{00014\ \ \ \ \ apps2\_max\_voltage\ =\ 1.52f;}
+\DoxyCodeLine{00015\ \ \ \ \ fault\_latch\ =\ 0;}
+\DoxyCodeLine{00016\ \ \ \ \ ESP\_LOGI(TAG,\ \textcolor{stringliteral}{"{}Pedals\ Initialized"{}});}
+\DoxyCodeLine{00017\ \}}
+
+\end{DoxyCode}
+
+
+\label{doc-func-members}
+\Hypertarget{class_pedals_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_pedals_addd79e3132990cc7982c10547e347737}\index{Pedals@{Pedals}!Get@{Get}}
+\index{Get@{Get}!Pedals@{Pedals}}
+\doxysubsubsection{\texorpdfstring{Get()}{Get()}}
+{\footnotesize\ttfamily \label{class_pedals_addd79e3132990cc7982c10547e347737} 
+\mbox{\hyperlink{class_pedals}{Pedals}} \texorpdfstring{$\ast$}{*} Pedals\+::\+Get (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00020\ \{}
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keywordflow}{if}\ (instancePtr\ ==\ \textcolor{keyword}{nullptr}\ \&\&\ Pedals::mutex)}
+\DoxyCodeLine{00022\ \ \ \ \ \{}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (xSemaphoreTake(Pedals::mutex,\ (TickType\_t)10)\ ==\ pdTRUE)}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \ \ \ \ instancePtr\ =\ \textcolor{keyword}{new}\ Pedals();}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \ \ \ \ xSemaphoreGive(Pedals::mutex);}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \ \ \ \ ESP\_LOGW(TAG,\ \textcolor{stringliteral}{"{}Mutex\ couldn't\ be\ obtained"{}});}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00032\ \ \ \ \ \}}
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keywordflow}{return}\ instancePtr;}
+\DoxyCodeLine{00034\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_pedals_a6ab1fe2c02232206cffaca73b4d83634}\index{Pedals@{Pedals}!get\_apps1\_voltage@{get\_apps1\_voltage}}
+\index{get\_apps1\_voltage@{get\_apps1\_voltage}!Pedals@{Pedals}}
+\doxysubsubsection{\texorpdfstring{get\_apps1\_voltage()}{get\_apps1\_voltage()}}
+{\footnotesize\ttfamily \label{class_pedals_a6ab1fe2c02232206cffaca73b4d83634} 
+float Pedals\+::get\+\_\+apps1\+\_\+voltage (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00123\ \{}
+\DoxyCodeLine{00124\ \ \ \ \ \textcolor{keywordflow}{return}\ apps1\_voltage;}
+\DoxyCodeLine{00125\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_pedals_a9017c465fd55162c9b8292004f911f07}\index{Pedals@{Pedals}!get\_apps2\_voltage@{get\_apps2\_voltage}}
+\index{get\_apps2\_voltage@{get\_apps2\_voltage}!Pedals@{Pedals}}
+\doxysubsubsection{\texorpdfstring{get\_apps2\_voltage()}{get\_apps2\_voltage()}}
+{\footnotesize\ttfamily \label{class_pedals_a9017c465fd55162c9b8292004f911f07} 
+float Pedals\+::get\+\_\+apps2\+\_\+voltage (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00127\ \{}
+\DoxyCodeLine{00128\ \ \ \ \ \textcolor{keywordflow}{return}\ apps2\_voltage;}
+\DoxyCodeLine{00129\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_pedals_aea02d529445b1f86ddc1966617e257e1}\index{Pedals@{Pedals}!getBrakePressure@{getBrakePressure}}
+\index{getBrakePressure@{getBrakePressure}!Pedals@{Pedals}}
+\doxysubsubsection{\texorpdfstring{getBrakePressure()}{getBrakePressure()}}
+{\footnotesize\ttfamily \label{class_pedals_aea02d529445b1f86ddc1966617e257e1} 
+float Pedals\+::get\+Brake\+Pressure (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00088\ \{}
+\DoxyCodeLine{00089\ \ \ \ \ \textcolor{keywordflow}{return}\ (Sensors::Get()-\/>get\_sensor\_voltage(Sensors::BPS1)\ +\ Sensors::Get()-\/>get\_sensor\_voltage(Sensors::BPS2))\ /\ 2;}
+\DoxyCodeLine{00090\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_pedals_a61fa537cbeccb9e322cf3ab436f41414}\index{Pedals@{Pedals}!getThrottle@{getThrottle}}
+\index{getThrottle@{getThrottle}!Pedals@{Pedals}}
+\doxysubsubsection{\texorpdfstring{getThrottle()}{getThrottle()}}
+{\footnotesize\ttfamily \label{class_pedals_a61fa537cbeccb9e322cf3ab436f41414} 
+float Pedals\+::get\+Throttle (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00037\ \{}
+\DoxyCodeLine{00038\ \ \ \ \ throttle\ =\ 0;}
+\DoxyCodeLine{00039\ \ \ \ \ apps1\_voltage\ =\ Sensors::Get()-\/>get\_sensor\_voltage(Sensors::APPS1);}
+\DoxyCodeLine{00040\ \ \ \ \ apps2\_voltage\ =\ Sensors::Get()-\/>get\_sensor\_voltage(Sensors::APPS2);}
+\DoxyCodeLine{00041\ \ \ \ \ printf(\textcolor{stringliteral}{"{}>sensor1:\%.2f\(\backslash\)n>sensor2:\%.2f\(\backslash\)n"{}},\ apps1\_voltage,\ apps2\_voltage);}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \ \ \ \ apps\_sensor1\_percent\ =\ min(1,\ max(0,\ (apps1\_voltage\ -\/\ apps1\_min\_voltage)\ /\ (apps1\_max\_voltage\ -\/\ apps1\_min\_voltage)));}
+\DoxyCodeLine{00044\ \ \ \ \ apps\_sensor2\_percent\ =\ min(1,\ max(0,\ (apps2\_voltage\ -\/\ apps2\_min\_voltage)\ /\ (apps2\_max\_voltage\ -\/\ apps2\_min\_voltage)));}
+\DoxyCodeLine{00045\ \ \ \ \ throttle\ =\ (apps\_sensor1\_percent\ +\ apps\_sensor2\_percent)\ /\ 2;}
+\DoxyCodeLine{00046\ \ \ \ \ printf(\textcolor{stringliteral}{"{}>apps1\_min:\%.2f\(\backslash\)n>apps1\_max:\%.2f\(\backslash\)n"{}},\ apps1\_min\_voltage,\ apps1\_max\_voltage);}
+\DoxyCodeLine{00047\ \ \ \ \ printf(\textcolor{stringliteral}{"{}>apps2\_min:\%.2f\(\backslash\)n>apps2\_max:\%.2f\(\backslash\)n"{}},\ apps2\_min\_voltage,\ apps1\_max\_voltage);}
+\DoxyCodeLine{00048\ \ \ \ \ printf(\textcolor{stringliteral}{"{}>sensor1\_percent:\%.2f\(\backslash\)n>sensor2\_percent:\%.2f\(\backslash\)n"{}},\ apps\_sensor1\_percent,\ apps\_sensor2\_percent);}
+\DoxyCodeLine{00049\ \ \ \ \ printf(\textcolor{stringliteral}{"{}>fault:\%d\(\backslash\)n"{}},\ fault\_latch);}
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{comment}{//\ Case\ 1:\ sensor\ open\ circuit}}
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keywordflow}{if}\ (apps1\_voltage\ <=\ 0.01f\ ||\ apps2\_voltage\ <=\ 0.01f)}
+\DoxyCodeLine{00052\ \ \ \ \ \{}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ ESP\_LOGW(TAG,\ \textcolor{stringliteral}{"{}open\ circuit\(\backslash\)n"{}});}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ fault\_latch\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ throttle\ =\ 0;}
+\DoxyCodeLine{00056\ \ \ \ \ \}}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00058\ \ \ \ \ \textcolor{comment}{//\ Case\ 2:\ pedal\ implausability}}
+\DoxyCodeLine{00059\ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ ((max(apps\_sensor1\_percent,\ apps\_sensor2\_percent)\ -\/\ min(apps\_sensor1\_percent,\ apps\_sensor2\_percent))\ >=\ APPS\_PLAUSABILITY\_THRESHOLD)}
+\DoxyCodeLine{00060\ \ \ \ \ \{}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ ESP\_LOGW(TAG,\ \textcolor{stringliteral}{"{}implausability\(\backslash\)n"{}});}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ fault\_latch\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ throttle\ =\ 0;}
+\DoxyCodeLine{00064\ \ \ \ \ \}}
+\DoxyCodeLine{00065\ \ \ \ \ \textcolor{comment}{//\ Case\ 3:\ brakes\ pressed}}
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (getBrakePressure()\ >=\ BRAKE\_PLAUSABILITY\_THRESHOLD)}
+\DoxyCodeLine{00067\ \ \ \ \ \{}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ ESP\_LOGW(TAG,\ \textcolor{stringliteral}{"{}brake\ pressed\(\backslash\)n"{}});}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ fault\_latch\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ throttle\ =\ 0;}
+\DoxyCodeLine{00071\ \ \ \ \ \}}
+\DoxyCodeLine{00072\ }
+\DoxyCodeLine{00073\ \ \ \ \ \textcolor{comment}{//\ clear\ faults}}
+\DoxyCodeLine{00074\ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (throttle\ <=\ 0.08f)}
+\DoxyCodeLine{00075\ \ \ \ \ \{}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ fault\_latch\ =\ 0;}
+\DoxyCodeLine{00077\ \ \ \ \ \}}
+\DoxyCodeLine{00078\ }
+\DoxyCodeLine{00079\ \ \ \ \ \textcolor{keywordflow}{if}\ (fault\_latch)}
+\DoxyCodeLine{00080\ \ \ \ \ \{}
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ throttle\ =\ 0;}
+\DoxyCodeLine{00082\ \ \ \ \ \}}
+\DoxyCodeLine{00083\ }
+\DoxyCodeLine{00084\ \ \ \ \ \textcolor{keywordflow}{return}\ throttle;}
+\DoxyCodeLine{00085\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_pedals_a5b4927abfb9082ff1de06869e238ced5}\index{Pedals@{Pedals}!set\_max@{set\_max}}
+\index{set\_max@{set\_max}!Pedals@{Pedals}}
+\doxysubsubsection{\texorpdfstring{set\_max()}{set\_max()}}
+{\footnotesize\ttfamily \label{class_pedals_a5b4927abfb9082ff1de06869e238ced5} 
+void Pedals\+::set\+\_\+max (\begin{DoxyParamCaption}\item[{float}]{apps1}{, }\item[{float}]{apps2}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00118\ \{}
+\DoxyCodeLine{00119\ \ \ \ \ apps1\_max\_voltage\ =\ apps1;}
+\DoxyCodeLine{00120\ \ \ \ \ apps2\_max\_voltage\ =\ apps2;}
+\DoxyCodeLine{00121\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_pedals_acc0e600da42714ba6463c316b04ea967}\index{Pedals@{Pedals}!set\_min@{set\_min}}
+\index{set\_min@{set\_min}!Pedals@{Pedals}}
+\doxysubsubsection{\texorpdfstring{set\_min()}{set\_min()}}
+{\footnotesize\ttfamily \label{class_pedals_acc0e600da42714ba6463c316b04ea967} 
+void Pedals\+::set\+\_\+min (\begin{DoxyParamCaption}\item[{float}]{apps1}{, }\item[{float}]{apps2}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00113\ \{}
+\DoxyCodeLine{00114\ \ \ \ \ apps1\_min\_voltage\ =\ apps1;}
+\DoxyCodeLine{00115\ \ \ \ \ apps2\_min\_voltage\ =\ apps2;}
+\DoxyCodeLine{00116\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_pedals_ac999ea86c79a97c59f6688f60e90aa36}\index{Pedals@{Pedals}!updateAppsCalibration@{updateAppsCalibration}}
+\index{updateAppsCalibration@{updateAppsCalibration}!Pedals@{Pedals}}
+\doxysubsubsection{\texorpdfstring{updateAppsCalibration()}{updateAppsCalibration()}}
+{\footnotesize\ttfamily \label{class_pedals_ac999ea86c79a97c59f6688f60e90aa36} 
+void Pedals\+::update\+Apps\+Calibration (\begin{DoxyParamCaption}\item[{float}]{app1\+\_\+min}{, }\item[{float}]{app1\+\_\+max}{, }\item[{float}]{app2\+\_\+min}{, }\item[{float}]{app2\+\_\+max}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00093\ \{}
+\DoxyCodeLine{00094\ \ \ \ \ \textcolor{keywordflow}{if}\ (app1\_min\ !=\ apps1\_min\_voltage)}
+\DoxyCodeLine{00095\ \ \ \ \ \{}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ apps1\_min\_voltage\ =\ app1\_min;}
+\DoxyCodeLine{00097\ \ \ \ \ \}}
+\DoxyCodeLine{00098\ \ \ \ \ \textcolor{keywordflow}{if}\ (app1\_max\ !=\ apps1\_max\_voltage)}
+\DoxyCodeLine{00099\ \ \ \ \ \{}
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ apps1\_max\_voltage\ =\ app1\_max;}
+\DoxyCodeLine{00101\ \ \ \ \ \}}
+\DoxyCodeLine{00102\ \ \ \ \ \textcolor{keywordflow}{if}\ (app2\_min\ !=\ apps2\_min\_voltage)}
+\DoxyCodeLine{00103\ \ \ \ \ \{}
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ apps2\_min\_voltage\ =\ app2\_min;}
+\DoxyCodeLine{00105\ \ \ \ \ \}}
+\DoxyCodeLine{00106\ \ \ \ \ \textcolor{keywordflow}{if}\ (app2\_max\ !=\ apps1\_max\_voltage)}
+\DoxyCodeLine{00107\ \ \ \ \ \{}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ apps2\_max\_voltage\ =\ app2\_max;}
+\DoxyCodeLine{00109\ \ \ \ \ \}}
+\DoxyCodeLine{00110\ \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+ECU\+\_\+25/components/\+Devices/Pedals.\+h\item 
+ECU\+\_\+25/components/\+Devices/Pedals.\+cpp\end{DoxyCompactItemize}

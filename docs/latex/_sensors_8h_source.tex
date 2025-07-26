@@ -1,0 +1,46 @@
+\doxysection{Sensors.\+h}
+\hypertarget{_sensors_8h_source}{}\label{_sensors_8h_source}\index{ECU\_25/components/Sensors/Sensors.h@{ECU\_25/components/Sensors/Sensors.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ \_SENSORS\_}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ \_SENSORS\_}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <stdio.h>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}freertos/FreeRTOS.h"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}freertos/task.h"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}freertos/semphr.h"{}}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}IO.h"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}etl/array.h"{}}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_c_a_n___config_8hpp}{CAN\_Config.hpp}}"{}}}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \textcolor{keyword}{class\ }Sensors\{}
+\DoxyCodeLine{00012\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00013\ \ \ \ \ \textcolor{comment}{//Singleton\ device\ class\ structure}}
+\DoxyCodeLine{00014\ \ \ \ \ \textcolor{keyword}{static}\ Sensors*\ instancePtr;}
+\DoxyCodeLine{00015\ \ \ \ \ \textcolor{keyword}{static}\ SemaphoreHandle\_t\ mutex;}
+\DoxyCodeLine{00016\ \ \ \ \ Sensors();}
+\DoxyCodeLine{00017\ \ \ \ \ etl::array<float,\ 14>\ sensor\_voltages;}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\{}
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ APPS1\ =\ ECU\_9\_A9,}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ APPS2\ =\ ECU\_17\_A14,}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ BPS1\ =\ ECU\_3\_A3,}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ BPS2\ =\ ECU\_4\_A4,}
+\DoxyCodeLine{00025\ \ \ \ \ \}SENSOR\_INDEX;}
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{comment}{//Deleting\ the\ copy\ constructor\ and\ copy\ reference\ constructor\ to\ prevent\ copies}}
+\DoxyCodeLine{00027\ \ \ \ \ Sensors(\textcolor{keyword}{const}\ Sensors\ \&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00028\ \ \ \ \ Sensors\ \&operator=(\textcolor{keyword}{const}\ Sensors\ \&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00029\ \ \ \ \ Sensors(Sensors\ \&\&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00030\ \ \ \ \ Sensors\ \&operator=(Sensors\ \&\&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keyword}{static}\ Sensors*\ Get();}
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keywordtype}{void}\ poll\_sensors();}
+\DoxyCodeLine{00033\ \ \ \ \ etl::array<float,14>\ get\_sensor\_voltages();}
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keywordtype}{float}\ get\_sensor\_voltage(SENSOR\_INDEX\ index);}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \ \ \ \ }
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \};}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}
