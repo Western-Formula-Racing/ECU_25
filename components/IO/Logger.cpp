@@ -94,7 +94,10 @@ void Logger::writeLine(LogMessage_t message)
 
 void Logger::log(LogMessage_t message)
 {
-    message.timestamp = esp_timer_get_time()/1000;
+    // Only use relative time if timestamp is not set (0)
+    if (message.timestamp == 0) {
+        message.timestamp = esp_timer_get_time()/1000;
+    }
     if (logQueue != NULL)
     {
         if (xQueueSendToBack(logQueue, &message, 0) != pdTRUE)
