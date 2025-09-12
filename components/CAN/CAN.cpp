@@ -9,6 +9,16 @@
 
 
 static const char *TAG = "CAN"; // Used for ESP_LOGx commands. See ESP-IDF Documentation
+
+// Helper function to get real-time timestamp in milliseconds
+static int64_t get_real_timestamp() {
+    tm time_struct;
+    if (IO::Get()->rtc_handle->getTime(time_struct) == ESP_OK) {
+        time_t epoch = mktime(&time_struct);
+        return (int64_t)epoch * 1000LL;
+    }
+    return 0; // fallback to relative time will be handled by Logger
+}
 static SemaphoreHandle_t rx_sem = xSemaphoreCreateBinary();
 static TimerHandle_t timerHandle;
 static twai_message_t tx_message = {
@@ -167,14 +177,7 @@ void CAN::rx_task()
                     Logger::LogMessage_t log_message;
                     sprintf(log_message.label, "CAN");
                     sprintf(log_message.message, "%s", log_string);
-                    tm time_struct;
-                    if (IO::Get()->rtc_handle->getTime(time_struct) == ESP_OK) {
-                        time_t epoch = mktime(&time_struct);
-                        log_message.timestamp = (int64_t)epoch * 1000LL;
-                        // gets real time and conver to unix epoch in milliseconds
-                    } else {
-                        log_message.timestamp = 0; // use relative time as fallback
-                    }
+                    log_message.timestamp = get_real_timestamp();
                     Logger::log(log_message);
                 }
                 if (CAN_Rx_IDs.find(rx_msg.identifier) != CAN_Rx_IDs.end())
@@ -230,14 +233,7 @@ void CAN::tx_CallBack()
             Logger::LogMessage_t log_message;
             sprintf(log_message.label, "CAN");
             sprintf(log_message.message, "%s", log_string);
-            tm time_struct;
-            if (IO::Get()->rtc_handle->getTime(time_struct) == ESP_OK) {
-                time_t epoch = mktime(&time_struct);
-                log_message.timestamp = (int64_t)epoch * 1000LL;
-                // gets real time and conver to unix epoch in milliseconds
-            } else {
-                log_message.timestamp = 0; // use relative time as fallback
-            }
+            log_message.timestamp = get_real_timestamp();
             Logger::log(log_message);
         }
         if (twai_transmit(&tx_message, pdMS_TO_TICKS(1000)) != ESP_OK)
@@ -268,14 +264,7 @@ void CAN::tx_CallBack()
                 Logger::LogMessage_t log_message;
                 sprintf(log_message.label, "CAN");
                 sprintf(log_message.message, "%s", log_string);
-                tm time_struct;
-                if (IO::Get()->rtc_handle->getTime(time_struct) == ESP_OK) {
-                    time_t epoch = mktime(&time_struct);
-                    log_message.timestamp = (int64_t)epoch * 1000LL;
-                    // gets real time and conver to unix epoch in milliseconds
-                } else {
-                    log_message.timestamp = 0; // use relative time as fallback
-                }
+                log_message.timestamp = get_real_timestamp();
                 Logger::log(log_message);
             }
             if (twai_transmit(&tx_message, pdMS_TO_TICKS(1000)) != ESP_OK)
@@ -308,14 +297,7 @@ void CAN::tx_CallBack()
                 Logger::LogMessage_t log_message;
                 sprintf(log_message.label, "CAN");
                 sprintf(log_message.message, "%s", log_string);
-                tm time_struct;
-                if (IO::Get()->rtc_handle->getTime(time_struct) == ESP_OK) {
-                    time_t epoch = mktime(&time_struct);
-                    log_message.timestamp = (int64_t)epoch * 1000LL;
-                    // gets real time and conver to unix epoch in milliseconds
-                } else {
-                    log_message.timestamp = 0; // use relative time as fallback
-                }
+                log_message.timestamp = get_real_timestamp();
                 Logger::log(log_message);
             }
             if (twai_transmit(&tx_message, pdMS_TO_TICKS(1000)) != ESP_OK)
