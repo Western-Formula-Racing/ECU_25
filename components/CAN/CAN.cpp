@@ -230,6 +230,14 @@ void CAN::tx_CallBack()
             Logger::LogMessage_t log_message;
             sprintf(log_message.label, "CAN");
             sprintf(log_message.message, "%s", log_string);
+            tm time_struct;
+            if (IO::Get()->rtc_handle->getTime(time_struct) == ESP_OK) {
+                time_t epoch = mktime(&time_struct);
+                log_message.timestamp = (int64_t)epoch * 1000LL;
+                // gets real time and conver to unix epoch in milliseconds
+            } else {
+                log_message.timestamp = 0; // use relative time as fallback
+            }
             Logger::log(log_message);
         }
         if (twai_transmit(&tx_message, pdMS_TO_TICKS(1000)) != ESP_OK)
@@ -260,6 +268,14 @@ void CAN::tx_CallBack()
                 Logger::LogMessage_t log_message;
                 sprintf(log_message.label, "CAN");
                 sprintf(log_message.message, "%s", log_string);
+                tm time_struct;
+                if (IO::Get()->rtc_handle->getTime(time_struct) == ESP_OK) {
+                    time_t epoch = mktime(&time_struct);
+                    log_message.timestamp = (int64_t)epoch * 1000LL;
+                    // gets real time and conver to unix epoch in milliseconds
+                } else {
+                    log_message.timestamp = 0; // use relative time as fallback
+                }
                 Logger::log(log_message);
             }
             if (twai_transmit(&tx_message, pdMS_TO_TICKS(1000)) != ESP_OK)
@@ -292,6 +308,14 @@ void CAN::tx_CallBack()
                 Logger::LogMessage_t log_message;
                 sprintf(log_message.label, "CAN");
                 sprintf(log_message.message, "%s", log_string);
+                tm time_struct;
+                if (IO::Get()->rtc_handle->getTime(time_struct) == ESP_OK) {
+                    time_t epoch = mktime(&time_struct);
+                    log_message.timestamp = (int64_t)epoch * 1000LL;
+                    // gets real time and conver to unix epoch in milliseconds
+                } else {
+                    log_message.timestamp = 0; // use relative time as fallback
+                }
                 Logger::log(log_message);
             }
             if (twai_transmit(&tx_message, pdMS_TO_TICKS(1000)) != ESP_OK)
