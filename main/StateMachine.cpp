@@ -61,7 +61,7 @@ State StateMachine::handle_precharge_ok()
     State nextState = PRECHARGE_OK;
     Inverter::Get()->Disable();
     IO::Get()->HSDWrite(ECU_39_HSD3, false);
-    if (MinCellVoltage_ID1057.get_float() >= 2.8f && MaxCellVoltage_ID1057.get_float() <= 4.2f && pack_status == BMS::ACTIVE && rtd_button && (brake_pressure >= BRAKE_RTD_THRESHOLD))
+    if (pack_status == BMS::ACTIVE && rtd_button && (brake_pressure >= BRAKE_RTD_THRESHOLD))
     {
         rtd_start_time = esp_timer_get_time() / 1000;
         nextState = STARTUP_DELAY;
@@ -121,9 +121,9 @@ State StateMachine::handle_drive()
         }
         
     }
-    if (MinCellVoltage_ID1057.get_float() <= 2.1f){
-        nextState = START;
-    }
+    // if (MinCellVoltage_ID1057.get_float() <= 2.1f){
+    //     nextState = START;
+    // }
     return nextState;
 }
 State StateMachine::handle_precharge_error()
@@ -241,7 +241,7 @@ void StateMachine::StateMachineLoop(void *)
                 //flash TSSI red >: (
                 tssi_latch = true;
              }
-             if(MaxTemp_ID1057.get_float() > 60){
+             if(!AMSRelay_ID1056.get_bool()){
                 tssi_latch = true;
              }
         }

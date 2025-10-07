@@ -13,7 +13,7 @@
 #define BRAKE_PRESSURE_OFFSET 0.0f
 #define BRAKE_RTD_THRESHOLD 1.0f
 #define BRAKE_PLAUSABILITY_THRESHOLD 2.0f
-#define APPS_PLAUSABILITY_THRESHOLD 0.05f
+#define APPS_PLAUSABILITY_THRESHOLD 0.25f
 #define BRAKES_MAX 3.5f
 
 #define max(a, b) ((a) >= (b) ? (a) : (b))
