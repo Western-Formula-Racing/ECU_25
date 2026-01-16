@@ -12,6 +12,7 @@ float right_rpm;
 float left_rpm;
 BMS::STATE pack_status;
 nvs_handle_t nvs_storage_handle;
+State state = START; 
 static const char *TAG = "State Machine"; // Used for ESP_LOGx commands. See ESP-IDF Documentation
 
 State StateMachine::handle_start()
@@ -150,7 +151,7 @@ void StateMachine::StateMachineLoop(void *)
         handle_precharge_error,
         handle_device_fault,
     };
-    State state = START;
+    state = START;
 
     setupAppsCalibration();
     int64_t startup_time = esp_timer_get_time() / 1000;
@@ -208,6 +209,11 @@ void StateMachine::StateMachineLoop(void *)
 
         Throttle_ID2002.set(throttle);
         Brake_Percent_ID2002.set(brake_pressure / BRAKES_MAX);
+
+        // VCU_PEDAL_INFO (ID 2000)
+        sensorPlausibility_ID2000.set(Pedals::Get()->is_faulted());
+        implausibilityCounter_ID2000.set(Pedals::Get()->get_implausibility_counter());
+        
         // lights
         IO::Get()->HSDWrite(ECU_48_HSD6, false);
         HSD4_ID2012.set(true);
@@ -345,51 +351,281 @@ void StateMachine::setupAppsCalibration()
 }
 
 void StateMachine::checkNewAppsCalibration()
+
 {
-    float app1_min = apps1_min_ID2022.get_float();
-    float app1_max = apps1_max_ID2022.get_float();
-    float app2_min = apps2_min_ID2022.get_float();
-    float app2_max = apps2_max_ID2022.get_float();
-    if (app1_min != 0.0f && app1_max != 0.0f && app2_min != 0.0f && app2_max != 0.0f)
+
+    // Safety Guard: Only allow calibration when the car is in the START state
+
+    if (state != START)
+
     {
-        // store values
-        esp_err_t err = nvs_set_u16(nvs_storage_handle, "app1_stored_min", static_cast<uint16_t>(app1_min * 100.0f));
-        ESP_LOGW(TAG, "app1_min = %.2f", app1_min);
-        printf((err != ESP_OK) ? "Failed!\n" : "Done\n");
-        err = nvs_set_u16(nvs_storage_handle, "app1_stored_max", static_cast<uint16_t>(app1_max * 100.0f));
-        ESP_LOGE(TAG, "app1_max = %.2f", app1_max);
-        printf((err != ESP_OK) ? "Failed!\n" : "Done\n");
-        err = nvs_set_u16(nvs_storage_handle, "app2_stored_min", static_cast<uint16_t>(app2_min * 100.0f));
-        ESP_LOGW(TAG, "app2_min = %.2f", app1_min);
-        printf((err != ESP_OK) ? "Failed!\n" : "Done\n");
-        err = nvs_set_u16(nvs_storage_handle, "app2_stored_max", static_cast<uint16_t>(app2_max * 100.0f));
-        printf("app2_max = %.2f", app2_max);
-        printf((err != ESP_OK) ? "Failed!\n" : "Done\n");
-        Pedals::Get()->updateAppsCalibration(app1_min, app1_max, app2_min, app2_max);
+
+        // If we were sampling and the car suddenly left the START state, abort
+
+        if (calib_state != CALIB_IDLE)
+
+        {
+
+            ESP_LOGW(TAG, "Calibration ABORTED: State changed from START to %d", state);
+
+            calib_state = CALIB_IDLE;
+
+            calib_target = TARGET_NONE;
+
+        }
+
+        return;
+
     }
 
-    if (set_min_ID2023.get_bool())
-    {
-        app1_min = Pedals::Get()->get_apps1_voltage();
-        app2_min = Pedals::Get()->get_apps2_voltage();
-        Pedals::Get()->set_min(app1_min, app2_min);
-        esp_err_t err = nvs_set_u16(nvs_storage_handle, "app1_stored_min", static_cast<uint16_t>(app1_min * 100.0f));
-        ESP_LOGW(TAG, "app1_min = %.2f", app1_min);
-        printf((err != ESP_OK) ? "Failed!\n" : "Done\n");
-        err = nvs_set_u16(nvs_storage_handle, "app2_stored_min", static_cast<uint16_t>(app2_min * 100.0f));
-        ESP_LOGW(TAG, "app2_min = %.2f", app1_min);
-        printf((err != ESP_OK) ? "Failed!\n" : "Done\n");
+
+
+
+
+    // Manual Set (ID 2022) - Keep this for manual overrides if needed
+
+
+
+    float app1_min = apps1_min_ID2022.get_float();
+
+    float app1_max = apps1_max_ID2022.get_float();
+
+    float app2_min = apps2_min_ID2022.get_float();
+
+    float app2_max = apps2_max_ID2022.get_float();
+
+        if (app1_min != 0.0f && app1_max != 0.0f && app2_min != 0.0f && app2_max != 0.0f)
+
+        {
+
+            nvs_set_u16(nvs_storage_handle, "app1_stored_min", static_cast<uint16_t>(app1_min * 100.0f));
+
+            nvs_set_u16(nvs_storage_handle, "app1_stored_max", static_cast<uint16_t>(app1_max * 100.0f));
+
+            nvs_set_u16(nvs_storage_handle, "app2_stored_min", static_cast<uint16_t>(app2_min * 100.0f));
+
+            nvs_set_u16(nvs_storage_handle, "app2_stored_max", static_cast<uint16_t>(app2_max * 100.0f));
+
+            Pedals::Get()->updateAppsCalibration(app1_min, app1_max, app2_min, app2_max);
+
+    
+
+        
+
+        // Reset manual inputs to 0 to prevent re-triggering
+
+        // Note: This relies on the sender stopping the message, as we can't clear RX signals easily.
+
     }
-    else if (set_max_ID2023.get_bool())
+
+
+
+    // State Machine for Auto-Calibration (ID 2023)
+
+    int64_t current_time = esp_timer_get_time() / 1000;
+
+
+
+    switch (calib_state)
+
     {
-        app1_max = Pedals::Get()->get_apps1_voltage();
-        app2_max = Pedals::Get()->get_apps2_voltage();
-        Pedals::Get()->set_max(app1_max, app2_max);
-        esp_err_t err = nvs_set_u16(nvs_storage_handle, "app1_stored_max", static_cast<uint16_t>(app1_max * 100.0f));
-        ESP_LOGE(TAG, "app1_max = %.2f", app1_max);
-        printf((err != ESP_OK) ? "Failed!\n" : "Done\n");
-        err = nvs_set_u16(nvs_storage_handle, "app2_stored_max", static_cast<uint16_t>(app2_max * 100.0f));
-        printf("app2_max = %.2f", app2_max);
-        printf((err != ESP_OK) ? "Failed!\n" : "Done\n");
+
+    case CALIB_IDLE:
+
+        if (set_min_ID2023.get_bool())
+
+        {
+
+            ESP_LOGI(TAG, "Calibration: MIN requested. Waiting 1s...");
+
+            calib_target = TARGET_MIN;
+
+            calib_state = CALIB_WAIT;
+
+            calib_timer = current_time;
+
+        }
+
+        else if (set_max_ID2023.get_bool())
+
+        {
+
+            ESP_LOGI(TAG, "Calibration: MAX requested. Waiting 1s...");
+
+            calib_target = TARGET_MAX;
+
+            calib_state = CALIB_WAIT;
+
+            calib_timer = current_time;
+
+        }
+
+        break;
+
+
+
+    case CALIB_WAIT:
+
+        if ((current_time - calib_timer) >= 1000)
+
+        {
+
+            ESP_LOGI(TAG, "Calibration: Starting 3s sampling...");
+
+            calib_state = CALIB_SAMPLING;
+
+            calib_timer = current_time;
+
+            calib_samples_apps1.clear();
+
+            calib_samples_apps2.clear();
+
+        }
+
+        break;
+
+
+
+    case CALIB_SAMPLING:
+
+        // Collect samples
+
+        calib_samples_apps1.push_back(Pedals::Get()->get_apps1_voltage());
+
+        calib_samples_apps2.push_back(Pedals::Get()->get_apps2_voltage());
+
+
+
+        // Check if 3s has passed or vector full
+
+        if ((current_time - calib_timer) >= 3000 || calib_samples_apps1.full())
+
+        {
+
+            ESP_LOGI(TAG, "Calibration: Sampling complete. Processing...");
+
+            
+
+            if (calib_samples_apps1.empty()) {
+
+                calib_state = CALIB_IDLE;
+
+                break;
+
+            }
+
+
+
+            // Sort to find median
+
+            std::sort(calib_samples_apps1.begin(), calib_samples_apps1.end());
+
+            std::sort(calib_samples_apps2.begin(), calib_samples_apps2.end());
+
+
+
+            // Calculate stats
+
+            float min1 = calib_samples_apps1.front();
+
+            float max1 = calib_samples_apps1.back();
+
+            float median1 = calib_samples_apps1[calib_samples_apps1.size() / 2];
+
+
+
+            float min2 = calib_samples_apps2.front();
+
+            float max2 = calib_samples_apps2.back();
+
+            float median2 = calib_samples_apps2[calib_samples_apps2.size() / 2];
+
+
+
+            ESP_LOGI(TAG, "Stats A9: Min=%.2f, Max=%.2f, Median=%.2f", min1, max1, median1);
+
+            ESP_LOGI(TAG, "Stats A14: Min=%.2f, Max=%.2f, Median=%.2f", min2, max2, median2);
+
+
+
+            // Apply Calibration
+
+            if (calib_target == TARGET_MIN)
+
+            {
+
+                // Safety check: Don't calibrate if voltage is essentially 0 (open circuit)
+
+                if (median1 < 0.5f || median2 < 0.5f) { // Assuming APPS2 isn't inverted to 0V at idle, check schematic if needed
+
+                     // Actually APPS2 is inverted (High at 0%). 
+
+                     // Wait, at 0% Throttle: APPS1 ~2.6V, APPS2 ~2.3V (based on Pedals.cpp init)
+
+                     // So < 0.5V is definitely bad for both.
+
+                }
+
+
+
+                                // Ideally we should use the stored max from NVS/Pedals class, but Pedals::set_min updates min only.
+
+
+
+                                // We'll update the class and NVS.
+
+
+
+                
+
+                
+
+                Pedals::Get()->set_min(median1, median2);
+
+                nvs_set_u16(nvs_storage_handle, "app1_stored_min", static_cast<uint16_t>(median1 * 100.0f));
+
+                nvs_set_u16(nvs_storage_handle, "app2_stored_min", static_cast<uint16_t>(median2 * 100.0f));
+
+                
+
+                // Update CAN reporting signals
+
+                apps1_min_ID2022.set(median1);
+
+                apps2_min_ID2022.set(median2);
+
+            }
+
+            else if (calib_target == TARGET_MAX)
+
+            {
+
+                Pedals::Get()->set_max(median1, median2);
+
+                nvs_set_u16(nvs_storage_handle, "app1_stored_max", static_cast<uint16_t>(median1 * 100.0f));
+
+                nvs_set_u16(nvs_storage_handle, "app2_stored_max", static_cast<uint16_t>(median2 * 100.0f));
+
+
+
+                // Update CAN reporting signals
+
+                apps1_max_ID2022.set(median1);
+
+                apps2_max_ID2022.set(median2);
+
+            }
+
+
+
+            calib_state = CALIB_IDLE;
+
+            calib_target = TARGET_NONE;
+
+        }
+
+        break;
+
     }
+
 }

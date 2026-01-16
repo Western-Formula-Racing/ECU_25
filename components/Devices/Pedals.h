@@ -13,7 +13,7 @@
 #define BRAKE_PRESSURE_OFFSET 0.0f
 #define BRAKE_RTD_THRESHOLD 1.0f
 #define BRAKE_PLAUSABILITY_THRESHOLD 2.0f
-#define APPS_PLAUSABILITY_THRESHOLD 0.25f
+#define APPS_PLAUSABILITY_THRESHOLD 0.10f
 #define BRAKES_MAX 3.5f
 
 #define max(a, b) ((a) >= (b) ? (a) : (b))
@@ -40,6 +40,7 @@ private:
     float brakePressure_rear;
 
     bool fault_latch;
+    int implausibility_counter;
 
 public:
     // Deleting the copy constructor and copy reference constructor to prevent copies
@@ -55,6 +56,8 @@ public:
     void set_max(float apps1, float apps2);
     float get_apps1_voltage();
     float get_apps2_voltage();
+    int get_implausibility_counter();
+    bool is_faulted();
 };
 
 #endif

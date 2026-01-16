@@ -39,8 +39,25 @@ State handle_startup_delay();
 State handle_drive();
 State handle_precharge_error();
 State handle_device_fault();
-void setupAppsCalibration();
-void checkNewAppsCalibration();
+    void setupAppsCalibration();
+    void checkNewAppsCalibration();
 
+    enum CalibState {
+        CALIB_IDLE,
+        CALIB_WAIT,
+        CALIB_SAMPLING
+    };
+
+    enum CalibTarget {
+        TARGET_NONE,
+        TARGET_MIN,
+        TARGET_MAX
+    };
+
+    inline CalibState calib_state = CALIB_IDLE;
+    inline CalibTarget calib_target = TARGET_NONE;
+    inline int64_t calib_timer = 0;
+    inline etl::vector<float, 300> calib_samples_apps1; // 10ms * 300 = 3s
+    inline etl::vector<float, 300> calib_samples_apps2;
 }
 #endif
