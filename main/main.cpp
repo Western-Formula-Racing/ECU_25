@@ -72,7 +72,7 @@ extern "C" void app_main(void)
                    status.tx_error_counter,
                    status.rx_error_counter,
                    status.bus_error_count);
-            if(status.state == TWAI_STATE_STOPPED  || status.state == TWAI_STATE_BUS_OFF){
+            if(status.state == TWAI_STATE_STOPPED  || status.state == TWAI_STATE_BUS_OFF||status.bus_error_count >1000){
                 printf("attempting bus recovery...\n");
                 if(twai_initiate_recovery()==ESP_OK){
                     printf("recovery started\n");
