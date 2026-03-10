@@ -224,7 +224,7 @@ void StateMachine::StateMachineLoop(void *)
         printf(">tssi_latch:%d\n", tssi_latch);
         
         
-        if(pack_status == BMS::ACTIVE or pack_status == BMS::PRECHARGE_START or pack_status == BMS::PRECHARGING){
+        if(pack_status == BMS::ACTIVE or pack_status == BMS::PRECHARGING){
             IO::Get()->HSDWrite(ECU_38_HSD2, true);
         }
         else{

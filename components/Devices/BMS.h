@@ -27,7 +27,6 @@ public:
     enum STATE
     {
         IDLE,
-        PRECHARGE_START,
         PRECHARGING,
         ACTIVE,
         CHARGING,
