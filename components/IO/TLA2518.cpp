@@ -24,7 +24,7 @@ void TLA2518::writeRegister(uint8_t address, uint8_t value){
   spi_transaction_t t = {};
   t.length = 8*sizeof(tx_buffer);
   t.tx_buffer = (const void*)tx_buffer;
-  spi_device_transmit(adcHandle,&t);
+  //spi_device_transmit(adcHandle,&t);
 };
 
 int TLA2518::readChannel(uint8_t channel){
@@ -35,9 +35,9 @@ int TLA2518::readChannel(uint8_t channel){
   t.tx_buffer = (const void*)tx_buffer;
   t.rxlength = 8*sizeof(rx_buffer);
   t.rx_buffer = (void*)rx_buffer;  
-  spi_device_transmit(adcHandle,&t);  
-  spi_device_transmit(adcHandle,&t);
-  spi_device_transmit(adcHandle,&t);
+  //spi_device_transmit(adcHandle,&t);  
+  //spi_device_transmit(adcHandle,&t);
+  //spi_device_transmit(adcHandle,&t);
   int val = ((int)rx_buffer[0]<<4 | (int)rx_buffer[1]>>4);
   return val;
 

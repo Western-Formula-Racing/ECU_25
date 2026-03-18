@@ -44,7 +44,7 @@ void ICM20948::selfTest(){
   t.tx_buffer = tx_buffer;
   t.rxlength = 8*sizeof(rx_buffer);
   t.rx_buffer = rx_buffer;
-  spi_device_transmit(imuHandle,&t);
+  //spi_device_transmit(imuHandle,&t);
 
   printf("Recieved Data: %d, %d",rx_buffer[0],rx_buffer[1]);
 }
@@ -56,17 +56,17 @@ uint8_t ICM20948::readRegister(uint8_t bank, uint8_t addr){
   spi_transaction_t t0 = {};
   t0.length = 8*sizeof(tx_buffer0);
   t0.tx_buffer = tx_buffer0;
-  spi_device_transmit(imuHandle,&t0);
+  //spi_device_transmit(imuHandle,&t0);
   //read data
   addr |= 128;
   uint8_t tx_buffer[2] = {addr,0};
-  uint8_t rx_buffer[2];
+  uint8_t rx_buffer[2] = {0,0};
   spi_transaction_t t = {};
   t.length = 8*sizeof(tx_buffer);
   t.tx_buffer = tx_buffer;
   t.rxlength = 8*sizeof(rx_buffer);
   t.rx_buffer = rx_buffer;
-  spi_device_transmit(imuHandle,&t);
+  //spi_device_transmit(imuHandle,&t);
 
   return rx_buffer[1]; // for some reason this writes the data in the second byte of rx_buffer
 }
@@ -77,13 +77,13 @@ void ICM20948::writeRegister(uint8_t bank, uint8_t addr,uint8_t data){
   spi_transaction_t t0 = {};
   t0.length = 8*sizeof(tx_buffer0);
   t0.tx_buffer = tx_buffer0;
-  spi_device_transmit(imuHandle,&t0);
+  //spi_device_transmit(imuHandle,&t0);
   //write data
   uint8_t tx_buffer[2] = {addr,data};
   spi_transaction_t t = {};
   t.length = 8*sizeof(tx_buffer);
   t.tx_buffer = tx_buffer;
-  spi_device_transmit(imuHandle,&t);
+  //spi_device_transmit(imuHandle,&t);
 }
 /* BAD MAGNETOMETER CODE
 void ICM20948::writeMagnetometer(uint8_t addr, uint8_t data){

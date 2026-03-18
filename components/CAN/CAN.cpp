@@ -5,6 +5,10 @@
 #include "can_helpers.hpp"
 #include "Logger.h"
 
+#ifdef VIRTUAL_ENV
+extern bool virtual_rtd_button;
+#endif
+
 
 static const char *TAG = "CAN"; // Used for ESP_LOGx commands. See ESP-IDF Documentation
 static SemaphoreHandle_t rx_sem = xSemaphoreCreateBinary();
@@ -182,6 +186,14 @@ void CAN::rx_task()
                         }
                     }
                 }
+#ifdef VIRTUAL_ENV
+                else if (rx_msg.identifier == 0x600) {
+                    virtual_rtd_button = (rx_msg.data[0] & (1 << 0)) > 0;
+                    BSPDRelay_ID1056.set_raw((rx_msg.data[0] & (1 << 4)) > 0 ? 1 : 0);
+                    IMDRelay_ID1056.set_raw( (rx_msg.data[0] & (1 << 5)) > 0 ? 1 : 0);
+                    AMSRelay_ID1056.set_raw( (rx_msg.data[0] & (1 << 6)) > 0 ? 1 : 0);
+                }
+#endif
             }
             xSemaphoreGive(rx_sem);
         }

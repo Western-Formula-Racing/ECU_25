@@ -12,7 +12,11 @@ float right_rpm;
 float left_rpm;
 BMS::STATE pack_status;
 nvs_handle_t nvs_storage_handle;
-static const char *TAG = "State Machine"; // Used for ESP_LOGx commands. See ESP-IDF Documentation
+static const char *TAG = "State Machine";
+
+#ifdef VIRTUAL_ENV
+bool virtual_rtd_button = false;
+#endif // Used for ESP_LOGx commands. See ESP-IDF Documentation
 
 State StateMachine::handle_start()
 {
@@ -25,7 +29,7 @@ State StateMachine::handle_start()
         nextState = DEVICE_FAULT;
     }
 
-    else if (pack_status == BMS::PRECHARGING)
+    else if (pack_status == BMS::PRECHARGE_START || pack_status == BMS::PRECHARGING)
     {
         nextState = PRECHARGE_ENABLE;
     }
@@ -172,7 +176,11 @@ void StateMachine::StateMachineLoop(void *)
         Gyro_Y_ID2025.set(IO::Get()->getGyroY());
         Gyro_Z_ID2025.set(IO::Get()->getGyroZ());
         pack_status = BMS::Get()->getPackState();
+#ifdef VIRTUAL_ENV
+        rtd_button = virtual_rtd_button;
+#else
         rtd_button = !IO::Get()->digitalRead(ECU_10_IO1);
+#endif
         throttle = Pedals::Get()->getThrottle();
         brake_pressure = Pedals::Get()->getBrakePressure();
         State_ID2002.set(state);
@@ -224,7 +232,7 @@ void StateMachine::StateMachineLoop(void *)
         printf(">tssi_latch:%d\n", tssi_latch);
         
         
-        if(pack_status == BMS::ACTIVE or pack_status == BMS::PRECHARGING){
+        if(pack_status == BMS::ACTIVE or pack_status == BMS::PRECHARGE_START or pack_status == BMS::PRECHARGING){
             IO::Get()->HSDWrite(ECU_38_HSD2, true);
         }
         else{

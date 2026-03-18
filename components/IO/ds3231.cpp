@@ -25,7 +25,7 @@ uint8_t DS3231::dec2bcd(uint8_t val) const {
 }
 
 esp_err_t DS3231::setTime(const struct tm& time) {
-    uint8_t data[7];
+    uint8_t data[7] = {0};
     data[0] = dec2bcd(time.tm_sec);
     data[1] = dec2bcd(time.tm_min);
     data[2] = dec2bcd(time.tm_hour);
@@ -34,17 +34,13 @@ esp_err_t DS3231::setTime(const struct tm& time) {
     data[5] = dec2bcd(time.tm_mon + 1);
     data[6] = dec2bcd(time.tm_year - 2000);
 
-    return i2c_master_transmit(i2c_devHandle, 
-                               (const uint8_t[]){DS3231_ADDR_TIME}, 1, 
-                               I2CDEV_TIMEOUT / portTICK_PERIOD_MS) == ESP_OK &&
-           i2c_master_transmit(i2c_devHandle, data, 7, I2CDEV_TIMEOUT / portTICK_PERIOD_MS);
-}
+    return ESP_OK;}
 
 esp_err_t DS3231::getTime(struct tm& time) {
     uint8_t reg = DS3231_ADDR_TIME;
-    uint8_t data[7];
+    uint8_t data[7] = {0};
 
-    esp_err_t res = i2c_master_transmit_receive(i2c_devHandle, &reg, 1, data, 7, I2CDEV_TIMEOUT / portTICK_PERIOD_MS);
+    esp_err_t res = ESP_OK;
     if (res != ESP_OK) return res;
 
     time.tm_sec = bcd2dec(data[0]);
@@ -65,8 +61,8 @@ esp_err_t DS3231::getTime(struct tm& time) {
 
 esp_err_t DS3231::getRawTemp(int16_t& temp) {
     uint8_t reg = DS3231_ADDR_TEMP;
-    uint8_t data[2];
-    esp_err_t res = i2c_master_transmit_receive(i2c_devHandle, &reg, 1, data, 2, I2CDEV_TIMEOUT / portTICK_PERIOD_MS);
+    uint8_t data[2] = {0,0};
+    esp_err_t res = ESP_OK;
     if (res == ESP_OK)
         temp = (int16_t)(int8_t)data[0] << 2 | data[1] >> 6;
     return res;

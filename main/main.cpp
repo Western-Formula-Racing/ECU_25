@@ -44,7 +44,18 @@ extern "C" void app_main(void)
     ESP_LOGI(TAG, "Main Has begun");
     can0.begin();// this may cause an issue when the 2 ecus briefly send the same messages at the same time
     
-    if(IO::Get()->digitalRead(ECU_SELECT)){
+    bool is_front_ecu;
+#ifdef QEMU_SIMULATION
+    #ifdef QEMU_IS_FRONT
+        is_front_ecu = true;
+    #else
+        is_front_ecu = false;
+    #endif
+#else
+    is_front_ecu = IO::Get()->digitalRead(ECU_SELECT);
+#endif
+
+    if(is_front_ecu){
         //Front ECU
         printf("FRONT ECU SELECTED!\n");
         CAN_Tx_1000ms_IDs.clear();
