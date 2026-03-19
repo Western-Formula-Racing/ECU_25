@@ -26,13 +26,13 @@ public:
 
     enum STATE
     {
-        IDLE,
-        PRECHARGE_START,
-        PRECHARGING,
-        ACTIVE,
-        CHARGING,
-        CHARGE_COMPLETE,
-        FAULT
+        IDLE = 0,
+        PRECHARGE_START = 1,
+        PRECHARGING = 1,
+        ACTIVE = 2,
+        CHARGING = 3,
+        CHARGE_COMPLETE = 4,
+        FAULT = 5
     };
 
     int getPackVoltage();
