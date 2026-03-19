@@ -23,6 +23,12 @@ static void IRAM_ATTR gpio_isr_handler(void* arg)
 
 IO::IO()
 {
+  i2c_handle = nullptr;
+  hsd_handle = nullptr;
+  rtc_handle = nullptr;
+  imu_handle = nullptr;
+
+#ifndef VIRTUAL_ENV
     //setup ESP32 native GPIO
     gpio_config_t io_conf = {};
     io_conf.intr_type = GPIO_INTR_DISABLE;
@@ -46,12 +52,18 @@ IO::IO()
     gpio_isr_handler_add((gpio_num_t) ECU_11_IO2, gpio_isr_handler, (void*) ECU_11_IO2);
     //hook isr handler for specific gpio pin
     gpio_isr_handler_add((gpio_num_t) ECU_12_IO3, gpio_isr_handler, (void*) ECU_12_IO3);
+#endif
     
     setupSPI();
     setupI2C();
-    adc1_handle =  new TLA2518(SPI2_HOST, GPIO_NUM_41);
-    adc2_handle = new TLA2518(SPI2_HOST, GPIO_NUM_42);
-    imu_handle = new ICM20948(SPI2_HOST,IMU_CS);
+#ifndef VIRTUAL_ENV
+  adc1_handle =  new TLA2518(SPI2_HOST, GPIO_NUM_41);
+  adc2_handle = new TLA2518(SPI2_HOST, GPIO_NUM_42);
+  imu_handle = new ICM20948(SPI2_HOST,IMU_CS);
+#else
+  adc1_handle = nullptr;
+  adc2_handle = nullptr;
+#endif
     ESP_LOGI(TAG, "IO Initialized");
     
 }
@@ -75,23 +87,28 @@ IO*  IO::Get()
 }
 
 void IO::setupSPI()  {
-
+#ifndef VIRTUAL_ENV
   spi_bus_config_t spiConfig = {
     
     .mosi_io_num = MOSI_PIN,
-    .miso_io_num = MISO_PIN,
     .sclk_io_num = SPI_CLK_PIN,
     .quadwp_io_num = -1,  // Required for non-quad SPI
     .quadhd_io_num = -1,  // Required for non-quad SPI
     .max_transfer_sz = SOC_SPI_MAXIMUM_BUFFER_SIZE,
     .flags = SPICOMMON_BUSFLAG_MASTER, 
   };
+  spiConfig.miso_io_num = MISO_PIN;
 
   ESP_ERROR_CHECK(spi_bus_initialize(SPI2_HOST,&spiConfig,SPI_DMA_CH_AUTO));
+#endif
 }
 
 int IO::analogRead(ECU_ANALOG_PIN pin)
 {
+  if (IO::adc1_handle == nullptr || IO::adc2_handle == nullptr) {
+    return 0;
+  }
+
     if(pin <= ECU_8_A8){
         return IO::adc1_handle->readChannel(pin);
     }
@@ -102,6 +119,10 @@ int IO::analogRead(ECU_ANALOG_PIN pin)
 }
 float IO::analogReadVoltage(ECU_ANALOG_PIN pin)
 {
+  if (IO::adc1_handle == nullptr || IO::adc2_handle == nullptr) {
+    return 0.0f;
+  }
+
     if(pin >= 8){
       pin = static_cast<ECU_ANALOG_PIN>(static_cast<int>(pin) - 8);
       float value = IO::adc2_handle->readVoltage(pin);
@@ -114,6 +135,7 @@ float IO::analogReadVoltage(ECU_ANALOG_PIN pin)
 }
 
 void IO::setupI2C(){
+#ifndef VIRTUAL_ENV
   i2c_master_bus_config_t i2c_mst_config = {
     .i2c_port = I2C_NUM_0,
     .sda_io_num = (gpio_num_t)I2C_SDA_PIN,
@@ -128,39 +150,75 @@ void IO::setupI2C(){
   ESP_ERROR_CHECK(i2c_new_master_bus(&i2c_mst_config, &i2c_handle));
   hsd_handle = new FXL6408UMX(i2c_handle);
   rtc_handle = new DS3231(i2c_handle);
+#else
+  // In QEMU simulation, skip physical I2C peripherals.
+  hsd_handle = nullptr;
+  rtc_handle = nullptr;
+#endif
 };
 
 void IO::HSDWrite(ECU_HSD_PIN channel, bool level){
-    hsd_handle->writeLevel(channel,level);
+    if (hsd_handle) {
+        hsd_handle->writeLevel(channel,level);
+    }
+}
+
+bool IO::HSDRead(ECU_HSD_PIN channel){
+    if (hsd_handle) {
+        return hsd_handle->readLevel(channel);
+    }
+    return false;
 }
 
 
 int IO::digitalRead(ECU_IO_PIN pin){
+#ifndef VIRTUAL_ENV
     return gpio_get_level((gpio_num_t)pin);
+#else
+    return 0; // Or some other default value for simulation
+#endif
 }
 
 float IO::getAccelX(){
-  return imu_handle->getAccelX();
+  if (imu_handle) {
+    return imu_handle->getAccelX();
+  }
+  return 0.0f;
 }
 
 float IO::getAccelY(){
-  return imu_handle->getAccelY();
+  if (imu_handle) {
+    return imu_handle->getAccelY();
+  }
+  return 0.0f;
 }
 
 float IO::getAccelZ(){
-  return imu_handle->getAccelZ();
+  if (imu_handle) {
+    return imu_handle->getAccelZ();
+  }
+  return 0.0f;
 }
 
 float IO::getGyroX(){
-  return imu_handle->getGyroX();
+  if (imu_handle) {
+    return imu_handle->getGyroX();
+  }
+  return 0.0f;
 }
 
 float IO::getGyroY(){
-  return imu_handle->getGyroY();
+  if (imu_handle) {
+    return imu_handle->getGyroY();
+  }
+  return 0.0f;
 }
 
 float IO::getGyroZ(){
-  return imu_handle->getGyroZ();
+  if (imu_handle) {
+    return imu_handle->getGyroZ();
+  }
+  return 0.0f;
 }
 
 float IO::getLeftWheelSpeed()
