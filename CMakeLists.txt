@@ -5,11 +5,11 @@
 cmake_minimum_required(VERSION 3.5)
 
 include($ENV{IDF_PATH}/tools/cmake/project.cmake)
-# You gotta do this for every library you add btw
-# Add the ETL library from PlatformIO's libdeps folder
-set(ETL_LIB_PATH "${CMAKE_SOURCE_DIR}/.pio/libdeps/esp32-s3-devkitm-1/Embedded Template Library/include")
-# Add ETL to the global include directories
-include_directories("${ETL_LIB_PATH}")
+# Find ETL from whichever PlatformIO environment has installed it
+file(GLOB ETL_INCLUDE_DIRS "${CMAKE_SOURCE_DIR}/.pio/libdeps/*/Embedded Template Library/include")
+foreach(ETL_INC ${ETL_INCLUDE_DIRS})
+    include_directories("${ETL_INC}")
+endforeach()
 
 project(ECU_25)
 

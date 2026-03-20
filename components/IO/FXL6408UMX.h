@@ -15,4 +15,5 @@ class FXL6408UMX{
   FXL6408UMX(i2c_master_bus_handle_t busHandle);
   void test();
   void writeLevel(int channel, bool level);
+  bool readLevel(int channel) { return (outputStatus >> channel) & 1; }
 };

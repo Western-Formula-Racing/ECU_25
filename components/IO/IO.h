@@ -38,6 +38,7 @@ private:
     void digitalWrite(ECU_IO_PIN pin);   
     void setupI2C();
     void HSDWrite(ECU_HSD_PIN channel, bool level);
+    bool HSDRead(ECU_HSD_PIN channel);
     float getAccelX();
     float getAccelY();
     float getAccelZ();
