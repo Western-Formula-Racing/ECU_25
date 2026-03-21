@@ -3,3 +3,4 @@ sdkconfig.*
 .vscode
 .pio
 .venv
+.DS_Store
