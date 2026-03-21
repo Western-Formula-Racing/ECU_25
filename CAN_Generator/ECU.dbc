@@ -341,6 +341,12 @@ BO_ 2011 VCU_BrakeLight: 1 VCU
 
 BO_ 2013 VCU_rearLinPots: 8 VCU
 
+BO_ 2028 VCU_Front_Wheel_Left: 2 VCU
+ SG_ Front_Left_Wheelspeed : 0|16@1+ (0.1,0) [0|6553.5] "RPM" Vector__XXX
+
+BO_ 2029 VCU_Front_Wheel_Right: 2 VCU
+ SG_ Front_Right_Wheelspeed : 0|16@1+ (0.1,0) [0|6553.5] "RPM" Vector__XXX
+
 BO_ 177 M177_Torque_Capability: 8 INV
  SG_ INV_Torque_Capability : 0|16@1+ (0.1,0) [0|0] "" Vector__XXX
 

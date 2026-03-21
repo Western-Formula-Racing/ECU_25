@@ -285,8 +285,8 @@ inline CAN_Signal Accel_Z_ID2026{true, 32, 16, 0.01f};
 inline CAN_Signal Gyro_X_ID2027{true, 0, 16};
 inline CAN_Signal Gyro_Y_ID2027{true, 16, 16};
 inline CAN_Signal Gyro_Z_ID2027{true, 32, 16};
-inline CAN_Signal Front_Left_Ticker_ID2028{true, 0, 64};
-inline CAN_Signal Front_Right_Ticker_ID2029{true, 0, 64};
+inline CAN_Signal Front_Left_Wheelspeed_ID2028{true, 0, 16, 0.1f};
+inline CAN_Signal Front_Right_Wheelspeed_ID2029{true, 0, 16, 0.1f};
 inline CAN_Signal MinTemp_ID1057{true, 0, 16, 0.1f};
 inline CAN_Signal MaxTemp_ID1057{true, 16, 16, 0.1f};
 inline CAN_Signal MinCellVoltage_ID1057{true, 32, 16, 0.001f};
@@ -616,11 +616,11 @@ inline etl::map CAN_Map
         &Gyro_Y_ID2027,
         &Gyro_Z_ID2027 
         } },
-    etl::pair{VCU_FRONT_WHEEL_LEFT, etl::vector<CAN_Signal*, 16>{ 
-        &Front_Left_Ticker_ID2028 
+    etl::pair{VCU_FRONT_WHEEL_LEFT, etl::vector<CAN_Signal*, 16>{
+        &Front_Left_Wheelspeed_ID2028
         } },
-    etl::pair{VCU_FRONT_WHEEL_RIGHT, etl::vector<CAN_Signal*, 16>{ 
-        &Front_Right_Ticker_ID2029 
+    etl::pair{VCU_FRONT_WHEEL_RIGHT, etl::vector<CAN_Signal*, 16>{
+        &Front_Right_Wheelspeed_ID2029
         } },
     etl::pair{PACKINFO, etl::vector<CAN_Signal*, 16>{ 
         &MinTemp_ID1057,
