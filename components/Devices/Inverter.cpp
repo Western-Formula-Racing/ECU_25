@@ -43,5 +43,6 @@ void Inverter::Enable()
 
 void Inverter::SetTorqueRequest(float throttle)
 {
+    VCU_INV_Direction_Command_ID192.set(1);
     VCU_INV_Torque_Command_ID192.set(throttle*torqueLimit);
 }
