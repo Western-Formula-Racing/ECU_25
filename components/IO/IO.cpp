@@ -37,7 +37,7 @@ IO::IO()
     io_conf.mode = GPIO_MODE_INPUT;
     io_conf.pin_bit_mask = (1ULL<<ECU_TEST) | (1ULL<<ECU_10_IO1) | (1ULL<<ECU_11_IO2) | (1ULL<<ECU_12_IO3) | (1ULL<<ECU_SELECT);
     io_conf.pull_down_en = GPIO_PULLDOWN_DISABLE;
-    io_conf.pull_up_en = GPIO_PULLUP_DISABLE;
+    io_conf.pull_up_en = GPIO_PULLUP_ENABLE;
     io_conf.intr_type = GPIO_INTR_NEGEDGE;
     gpio_config(&io_conf);
 
@@ -46,7 +46,8 @@ IO::IO()
     gpio_isr_handler_add((gpio_num_t) ECU_11_IO2, gpio_isr_handler, (void*) ECU_11_IO2);
     //hook isr handler for specific gpio pin
     gpio_isr_handler_add((gpio_num_t) ECU_12_IO3, gpio_isr_handler, (void*) ECU_12_IO3);
-    
+    ESP_LOGI(TAG, "Wheel speed ISR configured - Left: GPIO5, Right: GPIO6");
+
     setupSPI();
     setupI2C();
     adc1_handle =  new TLA2518(SPI2_HOST, GPIO_NUM_41);

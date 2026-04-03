@@ -200,6 +200,8 @@ void StateMachine::StateMachineLoop(void *)
         printf(">gyro_z:%.2f\n", IO::Get()->getGyroZ());
         printf(">rightWheel_rpm:%.1f\n", right_rpm);
         printf(">leftWheel_rpm:%.1f\n", left_rpm);
+        printf(">left_tick:%llu\n", (unsigned long long)IO::left_wheel_tick);
+        printf(">right_tick:%llu\n", (unsigned long long)IO::right_wheel_tick);
         printf(">minCellVoltage:%.2f\n", MinCellVoltage_ID1057.get_float());
         printf(">maxCellVoltage:%.2f\n", MaxCellVoltage_ID1057.get_float());
 
