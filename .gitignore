@@ -4,3 +4,5 @@ sdkconfig.*
 .pio
 .venv
 .DS_Store
+ECU_25.code-workspace
+/.claude
