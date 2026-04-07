@@ -8,6 +8,7 @@
 #include "CAN_Config.hpp"
 #include "IO.h"
 #include "Sensors.h"
+#include "pwm.h"
 
 namespace RearECU{
 

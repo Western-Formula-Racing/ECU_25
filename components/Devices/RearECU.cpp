@@ -20,6 +20,12 @@ void RearECU::rearECU_Task(void*)
     CAN_Tx_100ms_IDs.insert(VCU_REAR_SENSORS_4);
     CAN_Tx_100ms_IDs.insert(VCU_REAR_IMU_1);
     CAN_Tx_100ms_IDs.insert(VCU_REAR_IMU_2);
+
+    pwm_init();
+    int pump_duty_cycle = 100; 
+
+
+
     for(;;){
         // poll sensors
         Sensors::Get()->poll_sensors();
@@ -62,6 +68,12 @@ void RearECU::rearECU_Task(void*)
         Gyro_X_ID2027.set(IO::Get()->getGyroX());
         Gyro_Y_ID2027.set(IO::Get()->getGyroY());
         Gyro_Z_ID2027.set(IO::Get()->getGyroZ());
+
+        // dynamic pump pwm for cooling
+        //25% bias, then ramp up to 60 degrees for max
+        pump_duty_cycle =  25 +  (75*INV_Coolant_Temp_ID162.get_float()/60);
+        printf(">pump_duty_cycle:%d\n", pump_duty_cycle);
+        pwm_set_duty(pump_duty_cycle);
 
         vTaskDelay(pdMS_TO_TICKS(100));
 
