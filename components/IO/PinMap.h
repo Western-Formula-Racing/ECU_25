@@ -46,8 +46,10 @@ typedef enum{
     ECU_48_HSD6 = 3,
     ECU_49_HSD7 = 2,
     ECU_50_HSD8 = 1,
-  
-  
+    IMD_LIGHT = ECU_41_HSD5,
+    AMS_LIGHT = ECU_40_HSD4,
+    HVP_LIGHT = ECU_37_HSD1,
+    RTD_LIGHT = ECU_38_HSD2,
 }ECU_HSD_PIN;
 
 #endif

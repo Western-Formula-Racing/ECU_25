@@ -18,7 +18,7 @@ State StateMachine::handle_start()
 {
     State nextState = START;
     Inverter::Get()->Disable();
-    IO::Get()->HSDWrite(ECU_39_HSD3, false);
+    IO::Get()->HSDWrite(RTD_LIGHT, false);
     if (pack_status == BMS::FAULT)
     {
         ESP_LOGE(TAG, "BMS FAULT Detected");
@@ -42,7 +42,7 @@ State StateMachine::handle_precharge_enable()
 {
     State nextState = PRECHARGE_ENABLE;
     Inverter::Get()->Disable();
-    IO::Get()->HSDWrite(ECU_39_HSD3, false);
+    IO::Get()->HSDWrite(RTD_LIGHT, false);
     if (pack_status == BMS::FAULT)
     {
         ESP_LOGE(TAG, "BMS Encountered an error during precharge");
@@ -60,7 +60,7 @@ State StateMachine::handle_precharge_ok()
 {
     State nextState = PRECHARGE_OK;
     Inverter::Get()->Disable();
-    IO::Get()->HSDWrite(ECU_39_HSD3, false);
+    IO::Get()->HSDWrite(RTD_LIGHT, false);
     if (pack_status == BMS::ACTIVE && rtd_button && (brake_pressure >= BRAKE_RTD_THRESHOLD))
     {
         rtd_start_time = esp_timer_get_time() / 1000;
@@ -79,7 +79,7 @@ State StateMachine::handle_startup_delay()
 {
     State nextState = START;
     Inverter::Get()->Disable();
-    IO::Get()->HSDWrite(ECU_39_HSD3, false);
+    IO::Get()->HSDWrite(RTD_LIGHT, false);
 
     int64_t current_time = esp_timer_get_time() / 1000;
     if (pack_status == BMS::FAULT)
@@ -103,7 +103,7 @@ State StateMachine::handle_drive()
 {
     State nextState = START;
     Inverter::Get()->Enable();
-    IO::Get()->HSDWrite(ECU_39_HSD3, true);
+    IO::Get()->HSDWrite(RTD_LIGHT, true); //turn on RTD light
     if (pack_status == BMS::FAULT)
     {
         ESP_LOGE(TAG, "BMS FAULT Detected during drive");
@@ -129,13 +129,13 @@ State StateMachine::handle_drive()
 State StateMachine::handle_precharge_error()
 {
     Inverter::Get()->Disable();
-    IO::Get()->HSDWrite(ECU_39_HSD3, false);
+    IO::Get()->HSDWrite(RTD_LIGHT, false);
     return PRECHARGE_ERROR;
 }
 State StateMachine::handle_device_fault()
 {
     Inverter::Get()->Disable();
-    IO::Get()->HSDWrite(ECU_39_HSD3, false);
+    IO::Get()->HSDWrite(RTD_LIGHT, false);
     return DEVICE_FAULT;
 }
 
@@ -225,18 +225,18 @@ void StateMachine::StateMachineLoop(void *)
         
         
         if(pack_status == BMS::ACTIVE or pack_status == BMS::PRECHARGING){
-            IO::Get()->HSDWrite(ECU_38_HSD2, true);
+            IO::Get()->HSDWrite(HVP_LIGHT, true);
         }
         else{
-            IO::Get()->HSDWrite(ECU_38_HSD2, false);
+            IO::Get()->HSDWrite(HVP_LIGHT, false);
             // HSD3_ID2012.set(false);
         }
         
         if(((esp_timer_get_time() / 1000) - startup_time) >= 3000){
             if (!IMDRelay_ID1056.get_bool()){
-                IO::Get()->HSDWrite(ECU_41_HSD5, true);
+                IO::Get()->HSDWrite(IMD_LIGHT, true);
              }
-             IO::Get()->HSDWrite(ECU_40_HSD4, !AMSRelay_ID1056.get_bool());
+             IO::Get()->HSDWrite(AMS_LIGHT, !AMSRelay_ID1056.get_bool());
              if(!IMDRelay_ID1056.get_bool()){
                 //flash TSSI red >: (
                 tssi_latch = true;
