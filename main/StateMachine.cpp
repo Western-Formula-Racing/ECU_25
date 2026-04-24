@@ -251,7 +251,12 @@ void StateMachine::StateMachineLoop(void *)
         else{
             HSD3_ID2012.set(false);
         }
-
+        if (pack_status == BMS::ACTIVE || pack_status == BMS::PRECHARGE_START || pack_status == BMS::PRECHARGING || INV_DC_Bus_Voltage_ID167.get_float() >= 60.0f){
+            HSD1_ID2012.set(true);
+        }
+        else{
+            HSD1_ID2012.set(false);
+        }
 
         
         state = states[state]();

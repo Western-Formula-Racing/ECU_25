@@ -80,6 +80,7 @@ extern "C" void app_main(void)
                 else{
                     printf("failed to recover bus, hard resetting");
                     can0.restart(GPIO_NUM_16, GPIO_NUM_15, TWAI_MODE_NORMAL);
+                    status.bus_error_count = 0;
                     can0.restart_counter++;
                 }
             }
