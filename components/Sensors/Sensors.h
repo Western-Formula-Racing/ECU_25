@@ -22,6 +22,7 @@ public:
         APPS2 = ECU_17_A14,
         BPS1 = ECU_3_A3,
         BPS2 = ECU_4_A4,
+        PITOT = ECU_5_A5,
     }SENSOR_INDEX;
     //Deleting the copy constructor and copy reference constructor to prevent copies
     Sensors(const Sensors &) = delete;
