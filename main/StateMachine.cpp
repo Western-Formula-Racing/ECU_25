@@ -12,6 +12,7 @@ float right_rpm;
 float left_rpm;
 BMS::STATE pack_status;
 nvs_handle_t nvs_storage_handle;
+int mobo_fault; 
 static const char *TAG = "State Machine"; // Used for ESP_LOGx commands. See ESP-IDF Documentation
 
 State StateMachine::handle_start()
@@ -155,8 +156,8 @@ void StateMachine::StateMachineLoop(void *)
     setupAppsCalibration();
     int64_t startup_time = esp_timer_get_time() / 1000;
     //tssi enable
-    HSD3_ID2012.set(true);
-    HSD4_ID2012.set(true);
+    Rear_Cmd_HSD3_ID2012.set(true);
+    Rear_Cmd_HSD4_ID2012.set(true);
     bool tssi_latch = false;
     for (;;)
     {
@@ -165,17 +166,18 @@ void StateMachine::StateMachineLoop(void *)
         Sensors::Get()->poll_sensors();
         checkNewAppsCalibration();
 
-        Accel_X_ID2024.set(IO::Get()->getAccelX());
-        Accel_Y_ID2024.set(IO::Get()->getAccelY());
-        Accel_Z_ID2024.set(IO::Get()->getAccelZ());
-        Gyro_X_ID2025.set(IO::Get()->getGyroX());
-        Gyro_Y_ID2025.set(IO::Get()->getGyroY());
-        Gyro_Z_ID2025.set(IO::Get()->getGyroZ());
+        Front_Accel_X_ID2024.set(IO::Get()->getAccelX());
+        Front_Accel_Y_ID2024.set(IO::Get()->getAccelY());
+        Front_Accel_Z_ID2024.set(IO::Get()->getAccelZ());
+        Front_Gyro_X_ID2025.set(IO::Get()->getGyroX());
+        Front_Gyro_Y_ID2025.set(IO::Get()->getGyroY());
+        Front_Gyro_Z_ID2025.set(IO::Get()->getGyroZ());
         pack_status = BMS::Get()->getPackState();
         rtd_button = !IO::Get()->digitalRead(ECU_10_IO1);
         throttle = Pedals::Get()->getThrottle();
         brake_pressure = Pedals::Get()->getBrakePressure();
         State_ID2002.set(state);
+        mobo_fault = Fault_ID1056.get_int();
         // calculate wheel RPM
         // current_time = esp_timer_get_time();
         // right_rpm = (IO::right_wheel_tick - last_right_tick);
@@ -210,14 +212,14 @@ void StateMachine::StateMachineLoop(void *)
         Brake_Percent_ID2002.set(brake_pressure / BRAKES_MAX);
         // lights
         IO::Get()->HSDWrite(ECU_48_HSD6, false);
-        HSD4_ID2012.set(true);
+        Rear_Cmd_HSD4_ID2012.set(true);
         if (Pedals::Get()->getBrakePressure() >= BRAKE_LIGHT_THRESHOLD)
         {
-            HSD5_ID2012.set(true);
+            Rear_Cmd_HSD5_ID2012.set(true);
         }
         else
         {
-            HSD5_ID2012.set(false);
+            Rear_Cmd_HSD5_ID2012.set(false);
         }
         printf(">IMD_light:%d\n", !IMDRelay_ID1056.get_bool());
         printf(">AMS_light:%d\n", !AMSRelay_ID1056.get_bool());
@@ -229,7 +231,7 @@ void StateMachine::StateMachineLoop(void *)
         }
         else{
             IO::Get()->HSDWrite(HVP_LIGHT, false);
-            // HSD3_ID2012.set(false);
+            // Rear_Cmd_HSD3_ID2012.set(false);
         }
         
         if(((esp_timer_get_time() / 1000) - startup_time) >= 3000){
@@ -242,20 +244,23 @@ void StateMachine::StateMachineLoop(void *)
                 tssi_latch = true;
              }
              if(!AMSRelay_ID1056.get_bool()){
-                tssi_latch = true;
+                // only set to red if it's a real fault:
+                if (mobo_fault >= 69 && mobo_fault <= 87){
+                    tssi_latch = true;
+                }
              }
         }
         if(!tssi_latch){
-            HSD3_ID2012.set(true);
+            Rear_Cmd_HSD3_ID2012.set(true);
         }
         else{
-            HSD3_ID2012.set(false);
+            Rear_Cmd_HSD3_ID2012.set(false);
         }
         if (pack_status == BMS::ACTIVE || pack_status == BMS::PRECHARGE_START || pack_status == BMS::PRECHARGING || INV_DC_Bus_Voltage_ID167.get_float() >= 60.0f){
-            HSD1_ID2012.set(true);
+            Rear_Cmd_HSD1_ID2012.set(true);
         }
         else{
-            HSD1_ID2012.set(false);
+            Rear_Cmd_HSD1_ID2012.set(false);
         }
 
         
