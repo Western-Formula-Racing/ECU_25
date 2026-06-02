@@ -103,7 +103,7 @@ void Pedals::updateAppsCalibration(float app1_min, float app1_max, float app2_mi
     {
         apps2_min_voltage = app2_min;
     }
-    if (app2_max != apps1_max_voltage)
+    if (app2_max != apps2_max_voltage)
     {
         apps2_max_voltage = app2_max;
     }
