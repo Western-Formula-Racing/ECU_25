@@ -14,6 +14,7 @@ private:
     static SemaphoreHandle_t mutex;
     Inverter();
     float torqueLimit;
+    float speedLimit;
 public:
     //Deleting the copy constructor and copy reference constructor to prevent copies
     Inverter(const Inverter &) = delete;
@@ -25,6 +26,7 @@ public:
     void Disable();
     void Enable();
     void SetTorqueRequest(float throttle);
+    void SetSpeedRequest(float throttle);
 
 
 };

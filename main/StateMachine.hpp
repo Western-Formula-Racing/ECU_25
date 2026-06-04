@@ -13,6 +13,7 @@
 #include "nvs.h"
 
 #define RTD_TIME 2000
+#define STATE_CHANGE_DELAY_TIME 2000
 #define BRAKE_LIGHT_THRESHOLD 0.7f
 namespace StateMachine{
 enum State
@@ -24,6 +25,8 @@ enum State
     DRIVE,
     PRECHARGE_ERROR,
     DEVICE_FAULT,
+    SPEED_MODE_ENABLE,
+    DRIVE_SPEED_MODE
 };
 
 
@@ -37,6 +40,8 @@ State handle_precharge_enable();
 State handle_precharge_ok();
 State handle_startup_delay();
 State handle_drive();
+State handle_enable_speed_mode();
+State handle_drive_speed_mode();
 State handle_precharge_error();
 State handle_device_fault();
 void setupAppsCalibration();

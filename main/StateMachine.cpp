@@ -2,6 +2,7 @@
 
 using namespace StateMachine;
 int64_t rtd_start_time;
+int64_t state_change_time;
 float throttle;
 float brake_pressure;
 int rtd_button;
@@ -96,6 +97,7 @@ State StateMachine::handle_startup_delay()
     else if (rtd_button && (current_time - rtd_start_time) >= RTD_TIME)
     {
         nextState = DRIVE;
+        state_change_time = current_time;
     }
     return nextState;
 }
@@ -105,6 +107,7 @@ State StateMachine::handle_drive()
     State nextState = START;
     Inverter::Get()->Enable();
     IO::Get()->HSDWrite(RTD_LIGHT, true); //turn on RTD light
+    int64_t current_time = esp_timer_get_time() / 1000;
     if (pack_status == BMS::FAULT)
     {
         ESP_LOGE(TAG, "BMS FAULT Detected during drive");
@@ -120,6 +123,11 @@ State StateMachine::handle_drive()
         else{
             Inverter::Get()->SetTorqueRequest(0);
         }
+        if (rtd_button && (current_time - state_change_time) >= STATE_CHANGE_DELAY_TIME)
+        {
+            rtd_start_time = esp_timer_get_time() / 1000;
+            nextState = SPEED_MODE_ENABLE;
+        }
         
     }
     // if (MinCellVoltage_ID1057.get_float() <= 2.1f){
@@ -127,6 +135,60 @@ State StateMachine::handle_drive()
     // }
     return nextState;
 }
+
+State StateMachine::handle_enable_speed_mode()
+{
+    State nextState = DRIVE;
+    IO::Get()->HSDWrite(RTD_LIGHT, false);
+    int64_t current_time = esp_timer_get_time() / 1000;
+    if (rtd_button && (current_time - rtd_start_time) < RTD_TIME)
+    {
+        // IO::Get()->HSDWrite(ECU_48_HSD6, true);
+        nextState = SPEED_MODE_ENABLE;
+    }
+    else if (rtd_button && (current_time - rtd_start_time) >= RTD_TIME)
+    {
+        nextState = DRIVE_SPEED_MODE;
+        state_change_time = current_time;
+    }
+    return nextState;
+
+}
+
+State StateMachine::handle_drive_speed_mode()
+{
+    State nextState = START;
+    Inverter::Get()->Enable();
+    IO::Get()->HSDWrite(RTD_LIGHT, true); //turn on RTD light
+    int64_t current_time = esp_timer_get_time() / 1000;
+    if (pack_status == BMS::FAULT)
+    {
+        ESP_LOGE(TAG, "BMS FAULT Detected during drive");
+        nextState = DEVICE_FAULT;
+    }
+
+    else if (pack_status == BMS::ACTIVE)
+    {
+        nextState = DRIVE_SPEED_MODE;
+        if(throttle>=0.05){
+            Inverter::Get()->SetSpeedRequest(throttle-0.05);
+        }
+        else{
+            Inverter::Get()->SetSpeedRequest(0);
+        }
+        if (rtd_button && (current_time - state_change_time) >= STATE_CHANGE_DELAY_TIME)
+        {
+            rtd_start_time = esp_timer_get_time() / 1000;
+            nextState = STARTUP_DELAY;
+        }
+        
+    }
+    // if (MinCellVoltage_ID1057.get_float() <= 2.1f){
+    //     nextState = START;
+    // }
+    return nextState;
+}
+
 State StateMachine::handle_precharge_error()
 {
     Inverter::Get()->Disable();
@@ -142,7 +204,7 @@ State StateMachine::handle_device_fault()
 
 void StateMachine::StateMachineLoop(void *)
 {
-    etl::array<state_function_t, 8> states = {
+    etl::array<state_function_t, 10> states = {
         handle_start,
         handle_precharge_enable,
         handle_precharge_ok,
@@ -150,6 +212,8 @@ void StateMachine::StateMachineLoop(void *)
         handle_drive,
         handle_precharge_error,
         handle_device_fault,
+        handle_enable_speed_mode,
+        handle_drive_speed_mode,
     };
     State state = START;
 

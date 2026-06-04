@@ -7,7 +7,8 @@ SemaphoreHandle_t Inverter::mutex = xSemaphoreCreateMutex();
 
 Inverter::Inverter()
 {
-    torqueLimit = 170; // get this from memory later
+    torqueLimit = 200; // get this from memory later
+    speedLimit = 6500;
     VCU_INV_Direction_Command_ID192.set(true); //flip direction cause whatever
     ESP_LOGI(TAG, "Inverter Initialized");
 }
@@ -45,5 +46,12 @@ void Inverter::Enable()
 void Inverter::SetTorqueRequest(float throttle)
 {
     VCU_INV_Direction_Command_ID192.set(1);
+    VCU_INV_Speed_Mode_Enable_ID192.set(0);
     VCU_INV_Torque_Command_ID192.set(throttle*torqueLimit);
+}
+void Inverter::SetSpeedRequest(float throttle)
+{
+    VCU_INV_Direction_Command_ID192.set(1);
+    VCU_INV_Speed_Mode_Enable_ID192.set(1);
+    VCU_INV_Speed_Command_ID192.set(throttle*speedLimit);
 }
