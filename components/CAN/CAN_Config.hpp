@@ -6,6 +6,7 @@
 #include "etl/set.h"
 
 // Defining the CAN_IDs & Signals
+#define STEERING_WHEEL 103
 #define VCU_PDM_REAR_CMD 2012
 #define M173_MODULATION_AND_FLUX_INFO 173
 #define M172_TORQUE_AND_TIMER_INFO 172
@@ -55,6 +56,8 @@
 #define VCU_FRONT_WHEEL_RIGHT 2029
 #define PACKINFO 1057
 
+inline CAN_Signal DRS_Request_ID103{true, 0, 1};
+inline CAN_Signal Torque_Limit_Request_ID103{true, 8, 8};
 inline CAN_Signal Rear_Cmd_HSD1_ID2012{true, 0, 8};
 inline CAN_Signal Rear_Cmd_HSD2_ID2012{true, 8, 8};
 inline CAN_Signal Rear_Cmd_HSD3_ID2012{true, 16, 8};
@@ -293,6 +296,10 @@ inline CAN_Signal MaxCellVoltage_ID1057{true, 48, 16, 0.001f};
 // Define the CAN Map
 inline etl::map CAN_Map
 { 
+    etl::pair{STEERING_WHEEL, etl::vector<CAN_Signal*, 16>{
+    &DRS_Request_ID103,
+    &Torque_Limit_Request_ID103
+    }},
     etl::pair{VCU_PDM_REAR_CMD, etl::vector<CAN_Signal*, 16>{ 
         &Rear_Cmd_HSD1_ID2012,
         &Rear_Cmd_HSD2_ID2012,

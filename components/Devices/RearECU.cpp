@@ -1,5 +1,7 @@
 #include "RearECU.h"
 #include "esp_log.h"
+#include "DRS.hpp"
+
 static const char* TAG = "RearECU"; //Used for ESP_LOGx commands. See ESP-IDF Documentation
 
 using namespace RearECU;
@@ -22,6 +24,7 @@ void RearECU::rearECU_Task(void*)
     CAN_Tx_100ms_IDs.insert(VCU_REAR_IMU_2);
 
     pwm_init();
+    DRS::init();
     int pump_duty_cycle = 100; 
 
 
@@ -76,6 +79,8 @@ void RearECU::rearECU_Task(void*)
         pwm_set_duty(pump_duty_cycle);
 
         vTaskDelay(pdMS_TO_TICKS(100));
+
+        DRS::update();
 
     }
 }
