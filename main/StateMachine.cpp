@@ -2,9 +2,11 @@
 
 using namespace StateMachine;
 int64_t rtd_start_time;
+int64_t state_change_time;
 float throttle;
 float brake_pressure;
 int rtd_button;
+bool rtd_button_debounce_flag = false;
 uint64_t last_right_tick;
 uint64_t last_left_tick;
 uint64_t last_tick_time;
@@ -96,6 +98,7 @@ State StateMachine::handle_startup_delay()
     else if (rtd_button && (current_time - rtd_start_time) >= RTD_TIME)
     {
         nextState = DRIVE;
+        state_change_time = esp_timer_get_time() / 1000;
     }
     return nextState;
 }
@@ -103,6 +106,7 @@ State StateMachine::handle_startup_delay()
 State StateMachine::handle_drive()
 {
     State nextState = START;
+    int64_t time_since_state_change = (esp_timer_get_time() / 1000) - state_change_time;
     Inverter::Get()->Enable();
     IO::Get()->HSDWrite(RTD_LIGHT, true); //turn on RTD light
     if (pack_status == BMS::FAULT)
@@ -122,6 +126,21 @@ State StateMachine::handle_drive()
         }
         
     }
+    if (rtd_button && time_since_state_change >= 2000 && !rtd_button_debounce_flag){
+        // attempt to clear inverter faults
+        IO::Get()->HSDWrite(RTD_LIGHT, false);
+        Inverter::Get()->Disable();
+        VCU_INV_Parameter_Address_ID193.set(0x0014);
+        VCU_INV_Parameter_RW_Command_ID193.set(1);
+        VCU_INV_Parameter_Data_ID193.set(0);
+        CAN_Tx_Single_IDs.emplace(M193_READ_WRITE_PARAM_COMMAND);
+        rtd_button_debounce_flag = true;
+    }
+    if(!rtd_button){ //this is lowkey a cooked way to debounce but whatever
+        rtd_button_debounce_flag = false;
+        Inverter::Get()->Enable();// only re-enables the inverter once you let go 
+    }
+
     // if (MinCellVoltage_ID1057.get_float() <= 2.1f){
     //     nextState = START;
     // }

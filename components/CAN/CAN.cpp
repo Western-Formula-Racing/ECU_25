@@ -199,6 +199,36 @@ void CAN::tx_CallBack()
     char log_string[256];
     // I don't believe in 1ms messages in 2025. nothing's that important
 
+    // single-shot messages
+    while (!CAN_Tx_Single_IDs.empty())
+    {
+        int identifier = CAN_Tx_Single_IDs.front();
+        CAN_Tx_Single_IDs.pop();
+        for (const auto &signal : CAN_Map[identifier])
+        {
+            tx_message.identifier = identifier;
+            tx_message.data_length_code = 8;
+            can_setSignal<uint64_t>(tx_message.data, signal->get_raw(), signal->startBit, signal->length, signal->isIntel);
+        }
+        if (logging)
+        {
+            sprintf(log_string, "%ld,", tx_message.identifier);
+            for (int i = 0; i < tx_message.data_length_code; i++)
+            {
+                char val[5];
+                sprintf(val, "%d,", tx_message.data[i]);
+                strcat(log_string, val);
+            }
+            Logger::LogMessage_t log_message;
+            sprintf(log_message.label, "CAN");
+            sprintf(log_message.message, "%s", log_string);
+            Logger::log(log_message);
+        }
+        if (twai_transmit(&tx_message, pdMS_TO_TICKS(1000)) != ESP_OK)
+        {
+            ESP_LOGE(TAG, "failed to tx message\n");
+        }
+    }
     // 10ms messages
     for (const auto &identifier : CAN_Tx_10ms_IDs)
     {

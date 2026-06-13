@@ -4,6 +4,7 @@
 #include "etl/map.h"
 #include "etl/vector.h"
 #include "etl/set.h"
+#include "etl/queue.h"
 
 // Defining the CAN_IDs & Signals
 #define VCU_PDM_REAR_CMD 2012
@@ -629,6 +630,7 @@ inline etl::set CAN_Rx_IDs = {PACKINFO, 2023,2022,2012,173,172,194,171,170,169,1
 inline etl::set CAN_Tx_10ms_IDs = {M192_COMMAND_MESSAGE};
 inline etl::set CAN_Tx_100ms_IDs = {VCU_WHEELSPEED_INFO, VCU_FRONT_IMU_1, VCU_FRONT_IMU_2, BMS_CURRENT_LIMIT, VCU_STATE_INFO, VCU_FRONT_SENSORS_1, VCU_FRONT_SENSORS_2, VCU_FRONT_SENSORS_3, VCU_FRONT_SENSORS_4, VCU_PDM_REAR_CMD, VCU_FRONT_WHEEL_LEFT, VCU_FRONT_WHEEL_RIGHT};
 inline etl::set CAN_Tx_1000ms_IDs = {192};
+inline etl::queue <int, 100> CAN_Tx_Single_IDs;
 ;
 // they don't like to be empty
 
