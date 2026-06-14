@@ -41,6 +41,7 @@ State handle_precharge_error();
 State handle_device_fault();
 void setupAppsCalibration();
 void checkNewAppsCalibration();
+void checkInverterReset();
 
 }
 #endif

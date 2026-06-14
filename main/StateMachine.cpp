@@ -3,10 +3,12 @@
 using namespace StateMachine;
 int64_t rtd_start_time;
 int64_t state_change_time;
+int64_t time_since_state_change;
 float throttle;
 float brake_pressure;
 int rtd_button;
 bool rtd_button_debounce_flag = false;
+bool inverter_reset_complete = true;
 uint64_t last_right_tick;
 uint64_t last_left_tick;
 uint64_t last_tick_time;
@@ -106,7 +108,7 @@ State StateMachine::handle_startup_delay()
 State StateMachine::handle_drive()
 {
     State nextState = START;
-    int64_t time_since_state_change = (esp_timer_get_time() / 1000) - state_change_time;
+    time_since_state_change = (esp_timer_get_time() / 1000) - state_change_time;
     Inverter::Get()->Enable();
     IO::Get()->HSDWrite(RTD_LIGHT, true); //turn on RTD light
     if (pack_status == BMS::FAULT)
@@ -126,20 +128,7 @@ State StateMachine::handle_drive()
         }
         
     }
-    if (rtd_button && time_since_state_change >= 2000 && !rtd_button_debounce_flag){
-        // attempt to clear inverter faults
-        IO::Get()->HSDWrite(RTD_LIGHT, false);
-        Inverter::Get()->Disable();
-        VCU_INV_Parameter_Address_ID193.set(0x0014);
-        VCU_INV_Parameter_RW_Command_ID193.set(1);
-        VCU_INV_Parameter_Data_ID193.set(0);
-        CAN_Tx_Single_IDs.emplace(M193_READ_WRITE_PARAM_COMMAND);
-        rtd_button_debounce_flag = true;
-    }
-    if(!rtd_button){ //this is lowkey a cooked way to debounce but whatever
-        rtd_button_debounce_flag = false;
-        Inverter::Get()->Enable();// only re-enables the inverter once you let go 
-    }
+    checkInverterReset();
 
     // if (MinCellVoltage_ID1057.get_float() <= 2.1f){
     //     nextState = START;
@@ -254,7 +243,7 @@ void StateMachine::StateMachineLoop(void *)
         }
         
         if(((esp_timer_get_time() / 1000) - startup_time) >= 3000){
-            if (!IMDRelay_ID1056.get_bool()){
+             if (!IMDRelay_ID1056.get_bool()){
                 IO::Get()->HSDWrite(IMD_LIGHT, true);
              }
              IO::Get()->HSDWrite(AMS_LIGHT, !AMSRelay_ID1056.get_bool());
@@ -420,5 +409,30 @@ void StateMachine::checkNewAppsCalibration()
         err = nvs_set_u16(nvs_storage_handle, "app2_stored_max", static_cast<uint16_t>(app2_max * 100.0f));
         printf("app2_max = %.2f", app2_max);
         printf((err != ESP_OK) ? "Failed!\n" : "Done\n");
+    }
+}
+
+void StateMachine::checkInverterReset()
+{
+    printf(">rtd_button_debounce_flag:%d\n", rtd_button_debounce_flag);
+    if (rtd_button && time_since_state_change >= 2000 && !rtd_button_debounce_flag){
+        // attempt to clear inverter faults
+        printf("attempting to clear inverter faults\n");
+        IO::Get()->HSDWrite(RTD_LIGHT, false);
+        Inverter::Get()->Disable();
+        VCU_INV_Parameter_Address_ID193.set(0x0014);
+        VCU_INV_Parameter_RW_Command_ID193.set(1);
+        VCU_INV_Parameter_Data_ID193.set(0);
+        CAN_Tx_Single_IDs.emplace(M193_READ_WRITE_PARAM_COMMAND);
+        rtd_button_debounce_flag = true;
+        inverter_reset_complete = false;
+        vTaskDelay(pdMS_TO_TICKS(1000));
+
+    }
+    if(!rtd_button && !inverter_reset_complete){ //this is lowkey a cooked way to debounce but whatever
+        rtd_button_debounce_flag = false;
+        printf("re-enabling the inverter\n");
+        Inverter::Get()->Enable();// only re-enables the inverter once you let go 
+        inverter_reset_complete = true;
     }
 }
