@@ -12,11 +12,21 @@ float right_rpm;
 float left_rpm;
 BMS::STATE pack_status;
 nvs_handle_t nvs_storage_handle;
+// Autonomous demo state
+static bool autonomous_active = false;
+static int64_t autonomous_start_time = 0;
+static int64_t drive_entry_time = 0;        // timestamp when we first entered DRIVE
+static int64_t rtd_hold_timer = 0;          // accumulated RTD hold time during arming window
+static bool rtd_hold_tracking_started = false;
 static const char *TAG = "State Machine"; // Used for ESP_LOGx commands. See ESP-IDF Documentation
 
 State StateMachine::handle_start()
 {
     State nextState = START;
+    autonomous_active = false;
+    drive_entry_time = 0;
+    rtd_hold_tracking_started = false;
+    rtd_hold_timer = 0;
     Inverter::Get()->Disable();
     IO::Get()->HSDWrite(RTD_LIGHT, false);
     if (pack_status == BMS::FAULT)
@@ -103,23 +113,143 @@ State StateMachine::handle_drive()
 {
     State nextState = START;
     Inverter::Get()->Enable();
-    IO::Get()->HSDWrite(RTD_LIGHT, true); //turn on RTD light
+    IO::Get()->HSDWrite(RTD_LIGHT, false); 
+
     if (pack_status == BMS::FAULT)
     {
         ESP_LOGE(TAG, "BMS FAULT Detected during drive");
         nextState = DEVICE_FAULT;
+        autonomous_active = false;
+        return nextState;
     }
-
     else if (pack_status == BMS::ACTIVE)
     {
         nextState = DRIVE;
-        if(throttle>=0.05){
-            Inverter::Get()->SetTorqueRequest(throttle-0.05);
+
+        // Record first entry into DRIVE
+        if (drive_entry_time == 0)
+        {
+            drive_entry_time = esp_timer_get_time() / 1000;
         }
-        else{
-            Inverter::Get()->SetTorqueRequest(0);
+
+        int64_t current_time = esp_timer_get_time() / 1000;
+        int64_t drive_elapsed = current_time - drive_entry_time;
+
+        // Driver override check (interrupts autonomous if already active)
+        if (autonomous_active &&
+            (brake_pressure >= AUTONOMOUS_BRAKE_THRESH ||
+             throttle >= AUTONOMOUS_THROTTLE_THRESH))
+        {
+            ESP_LOGI(TAG, "Driver input - exiting autonomous mode");
+            autonomous_active = false;
+            IO::Get()->HSDWrite(RTD_LIGHT, true);  // solid ON = normal RTD
         }
-        
+
+        // Autonomous sequence 
+        if (autonomous_active)
+        {
+            int64_t elapsed = current_time - autonomous_start_time;
+
+            // Phase 1: 0-5s  → 10%
+            // Phase 2: 5-10s → 20%
+            // Phase 3: 10–15s → 10%
+            // Phase 4: 15s+   → ends, back to normal RTD
+            float demo_torque = 0.0f;
+            if (elapsed < AUTONOMOUS_PHASE1_MS)
+            {
+                demo_torque = AUTONOMOUS_TORQUE_1;
+            }
+            else if (elapsed < AUTONOMOUS_PHASE2_MS)
+            {
+                demo_torque = AUTONOMOUS_TORQUE_2;
+            }
+            else if (elapsed < AUTONOMOUS_PHASE3_MS)
+            {
+                demo_torque = AUTONOMOUS_TORQUE_1;
+            }
+            else
+            {
+                // Demo complete — exit to START, require fresh RTD
+                ESP_LOGI(TAG, "Autonomous demo finished");
+                autonomous_active = false;
+                Inverter::Get()->Disable();
+                IO::Get()->HSDWrite(RTD_LIGHT, false);
+                Inverter::Get()->SetTorqueRequest(0.0f);
+                nextState = START;  // go back to beginning, require new RTD
+                return nextState;
+            }
+
+            Inverter::Get()->SetTorqueRequest(demo_torque);
+
+            // Blink-blink-stop RTD (Airbus strobe)
+            int64_t cycle_pos = elapsed % AUTONOMOUS_BLINK_CYCLE_MS;
+            bool rtd_on = false;
+            if (cycle_pos < AUTONOMOUS_BLINK_TICK_MS)
+            {
+                rtd_on = true;                                   // 1st blink
+            }
+            else if (cycle_pos < 2 * AUTONOMOUS_BLINK_TICK_MS)
+            {
+                rtd_on = false;                                  // gap
+            }
+            else if (cycle_pos < 3 * AUTONOMOUS_BLINK_TICK_MS)
+            {
+                rtd_on = true;                                   // 2nd blink
+            }
+            else
+            {
+                rtd_on = false;                                  // long off
+            }
+            IO::Get()->HSDWrite(RTD_LIGHT, rtd_on);
+            return nextState;
+        }
+
+        // Arming: within 10s window, track RTD hold
+        if (drive_elapsed <= AUTONOMOUS_ARM_WINDOW_MS)
+        {
+            if (rtd_button)
+            {
+                if (!rtd_hold_tracking_started)
+                {
+                    // RTD just pressed, timer starts
+                    rtd_hold_tracking_started = true;
+                    rtd_hold_timer = current_time;
+                }
+                else if ((current_time - rtd_hold_timer) >= AUTONOMOUS_ARM_HOLD_MS)
+                {
+                    // Held RTD for 3s - ARM
+                    ESP_LOGI(TAG, "Autonomous demo ARMED!");
+                    autonomous_active = true;
+                    autonomous_start_time = current_time;
+                    rtd_hold_tracking_started = false;
+                    rtd_hold_timer = 0;
+                    return nextState;  // sequence starts next tick
+                }
+            }
+            else
+            {
+                // RTD released before 3s, reset counter, can retry
+                rtd_hold_tracking_started = false;
+                rtd_hold_timer = 0;
+            }
+        }
+        else
+        {
+            // Arming window expired, reset tracking
+            rtd_hold_tracking_started = false;
+            rtd_hold_timer = 0;
+        }
+
+        // Normal pedal control
+        if (throttle >= 0.05f)
+        {
+            Inverter::Get()->SetTorqueRequest(throttle - 0.05f);
+        }
+        else
+        {
+            Inverter::Get()->SetTorqueRequest(0.0f);
+        }
+        IO::Get()->HSDWrite(RTD_LIGHT, true);  // solid ON — normal RTD
     }
     // if (MinCellVoltage_ID1057.get_float() <= 2.1f){
     //     nextState = START;
