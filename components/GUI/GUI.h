@@ -5,17 +5,12 @@
 #include <esp_wifi.h>
 #include <nvs_flash.h>
 #include <esp_vfs.h>
-#include <esp_vfs_fat.h>
-#include <driver/sdmmc_host.h>
-#include <sdmmc_cmd.h>
+#include <esp_spiffs.h>
 #include <stdio.h>
 #include <cstring>
-#include <string>
-#include <unordered_map>
+#include <Sendable.h>
 #include <Recievable.h>
-#include <FloatRecievable.h>
-#include <IntRecievable.h>
-#include <StringRecievable.h>
+#include <ValueRecievable.h>
 #include <Option.h>
 #include <ButtonRecievable.h>
 
@@ -23,9 +18,12 @@
 #define WIFI_PASS "123456789" 
 #define SERVER_PORT 80
 #define ENTRY_BUFFER_SIZE 200
-#define BUTTON_BUFFER_SIZE 50
-#define HTML_SIZE 4953
-#define JS_SIZE 5889
+#define BUTTON_BUFFER_SIZE 32
+#define RECV_BUFFER_SIZE 200
+#define HTML_SIZE 6500
+#define JS_SIZE 5400
+#define MAX_SENDABLES 32
+#define MAX_RECIEVABLES 32
 
 class GUI
 {
@@ -55,89 +53,52 @@ private:
     static esp_err_t handle_update(httpd_req_t *req);
     static esp_err_t handle_recievable(httpd_req_t *req);
     static esp_err_t handle_fetch_recievables(httpd_req_t *req);
-    static esp_err_t handle_button_command(httpd_req_t *req);
+    static esp_err_t handle_triggered_command(httpd_req_t *req);
 
-    // Serialize sendables to json
-    static char* serialize_sndb_to_json(void);
+    // Serialize sendables to buffer
+    static void serialize_sndb_to_buffer(void);
 
-    // Serialize sendables to json
-    static char* serialize_rcvb_to_json(void);
+    // Serialize recievables to json
+    static void serialize_rcvb_to_json(void);
 
     // For maps
-    struct CStringHash
+    struct SendableEntry
     {
-        size_t operator()(const char* s) const
-        {
-            return std::hash<std::string>()(std::string(s));
-        }
+        char key[32];
+        BaseSendable* sendable;
     };
-    
 
-    // Comparison for char* for maps
-    struct CStringEqual
+    struct RecievableEntry
     {
-        bool operator()(const char* s1, const char* s2) const
-        {
-            return strcmp(s1, s2) == 0;
-        }
+        char key[32];
+        BaseRecievable* recievable;
     };
-    
-    // Maps
-    static std::unordered_map<char*, int(*)(), CStringHash, CStringEqual> int_callables;
-    static std::unordered_map<char*, float(*)(), CStringHash, CStringEqual> float_callables;
-    static std::unordered_map<char*, char*(*)(), CStringHash, CStringEqual> string_callables;
-    static std::unordered_map<char*, bool(*)(), CStringHash, CStringEqual> bool_callables;
 
-    static std::unordered_map<char*, Recievable<int>*, CStringHash, CStringEqual> int_recievables;
-    static std::unordered_map<char*, Recievable<float>*, CStringHash, CStringEqual> float_recievables;
-    static std::unordered_map<char*, Recievable<char*>*, CStringHash, CStringEqual> string_recievables;
-    static std::unordered_map<char*, ButtonRecievable*, CStringHash, CStringEqual> button_recievables;
+    // Buffer to store recievables json
+    static char* recievables_json_buffer;
+    static size_t json_buffer_size;
+
+    // Buffer to store sendable packet data before sending to client
+    static u_int8_t* sendable_packet_buffer; // Adjust size as needed
+
+    // Arrays to store sendables and recievables
+    static SendableEntry sendables[MAX_SENDABLES];
+    static size_t sendable_count;
+    static RecievableEntry recievables[MAX_RECIEVABLES];
+    static size_t recievable_count;
 
 public:
-    // Register int sendables
-    void register_int_sendable(char* key, int(*)());
+    // Register sendables
+    void register_sendable(char* key, BaseSendable* sendable);
 
-    // Register float sendables
-    void register_float_sendable(char* key, float(*)());
-
-    // Register string sendables
-    void register_string_sendable(char* key, char*(*)());
-
-    // Register bool sendables
-    void register_bool_sendable(char* key, bool(*)());
-
-    // Register int recievable
-    void register_int_recievable(char* key, Recievable<int>* int_recievable);
-
-    // Register float recievable
-    void register_float_recievable(char* key, Recievable<float>* float_recievable);
-
-    // Register string recievable
-    void register_string_recievable(char* key, Recievable<char*>* string_recievable);
-
-    // Register button recievable
-    void register_button_recievable(char* key, ButtonRecievable* button_recievable);
+    // Register recievables
+    void register_recievable(char* key, BaseRecievable* recievable);
 
     // Get int recievable
-    Recievable<int>* get_int_recievable(char* key);
+    static BaseRecievable* get_recievable(char* key);
 
-    // Get float recievable
-    Recievable<float>* get_float_recievable(char* key);
-
-    // Get string recievable
-    Recievable<char*>* get_string_recievable(char* key);
-
-    // Update int sendable
-    void update_int_sendable(char* key, int(*callable)());
-
-    // Update float sendable
-    void update_float_sendable(char* key, float(*callable)());
-
-    // Update string sendable
-    void update_string_sendable(char* key, char*(*callable)());
-
-    // Update bool sendable
-    void update_bool_sendable(char* key, bool(*callable)());
+    // Get sendable
+    static BaseSendable* get_sendable(char* key);
 
     // Removes sendable
     void remove_sendable(char* key);
