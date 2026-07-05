@@ -1,21 +1,23 @@
 #ifndef _BUTTONRECIEVABLE_
 #define _BUTTONRECIEVABLE_
-#include <Recievable.h>
+#include <cstring>
+#include "Recievable.h"
 
-class ButtonRecievable : public Recievable<void(*)()>
+class ButtonRecievable : public Recievable<void (*)(void)>
 {
 private:
 public:
-    // Contructor
-    ButtonRecievable(void(*)());
+    // Constructor
+    ButtonRecievable(const char* key, void (*callable)(void));
 
     inline void call()
     {
         value();
     }
 
-    // Serializes to json
-    char* serialize_to_json(void);
+    size_t get_json_size() override;
+
+    void cat_json(char* buffer, size_t buffer_size) override;
 };
 
 #endif

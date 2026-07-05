@@ -1,11 +1,17 @@
 #include "ButtonRecievable.h"
 
-ButtonRecievable::ButtonRecievable(void (*callable)()):Recievable(callable)
+ButtonRecievable::ButtonRecievable(const char* key, void (*callable)(void))
+    : Recievable<void (*)(void)>(key, callable)
 {
-    value = callable;
+    this->value = callable;
 }
 
-char *ButtonRecievable::serialize_to_json(void)
+size_t ButtonRecievable::get_json_size()
 {
-    return nullptr;
+    return 29;
+}
+
+void ButtonRecievable::cat_json(char *buffer, size_t buffer_size)
+{
+    strncat(buffer, "{\"type\":\"recievable>button\"}", buffer_size - strlen(buffer) - 1);
 }
