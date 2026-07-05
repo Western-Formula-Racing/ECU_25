@@ -2,32 +2,48 @@
 #define _RECIEVABLE_
 #include <cstring>
 #include <stdio.h>
-#define RECV_BUFFER_SIZE 200
+#include <stdexcept>
+#include <type_traits>
+#include <cstdint>
+
+class BaseRecievable {
+public:
+    virtual ~BaseRecievable() = default;
+    virtual size_t get_json_size() = 0; // Get size of JSON representation of this recievable
+    virtual void cat_json(char* buffer, size_t buffer_size) = 0;
+};
 
 template <class T>
-class Recievable
+class Recievable : public BaseRecievable
 {
 protected:
     T value;
-    char* buffer = nullptr;
-    char* allocate_buffer() {
-        if (buffer) {
-            delete[] buffer;
+    char* key = new char[32];
+    char* buffer;
+    virtual char* allocate_buffer() {
+        if (buffer == nullptr) {
+            buffer = new char[this->get_json_size()];
+            memset(buffer, 0, this->get_json_size());
         }
-        buffer = new char[RECV_BUFFER_SIZE];
-        memset(buffer, 0, RECV_BUFFER_SIZE);
         return buffer;
     }
-public:
-    // Constructor
-    Recievable(T init_value) : value(init_value), buffer(nullptr) {}
-
-    // Destructor
-    virtual ~Recievable() {
-        if (buffer != nullptr) {
+    virtual void deallocate_buffer() {
+        if (buffer) {
             delete[] buffer;
             buffer = nullptr;
         }
+    }
+public:
+    // Constructor
+    Recievable(const char* key, T init_value) : value(init_value), buffer(nullptr) 
+    {
+        strncpy(this->key, key, 31);
+        this->key[31] = '\0';
+    }
+
+    // Destructor
+    ~Recievable() {
+        deallocate_buffer();
     }
 
     // Sets value of recievable
@@ -40,8 +56,10 @@ public:
         return value;
     }
 
-    // Serializes data to string
-    virtual char* serialize_to_json() = 0;
+    // Gets key of recievable
+    inline char* get_key() {
+        return key;
+    }
 };
 
 #endif
