@@ -176,10 +176,13 @@ void CAN::rx_task()
                     }
                     if (CAN_Map.find(rx_msg.identifier) != CAN_Map.end())
                     {
+                      if(rx_msg.identifier != 170){
+
                         for (const auto &signal : CAN_Map[rx_msg.identifier])
                         {
                             signal->set_raw(can_getSignal<uint64_t>(rx_msg.data, signal->startBit, signal->length, signal->isIntel));
                         }
+                      }
                     }
                 }
             }
